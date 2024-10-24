@@ -1,0 +1,90 @@
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+import { Main, Components, Hooks, Navigation, Cf, CSS, ENVS,Contribute, NotFound } from "./pages";
+function App() {
+
+  const pages = [
+    {
+      path: "/",
+      component: <Main />,
+      label: "Introduction",
+    },
+    {
+      path: "/components",
+      component: <Components />,
+      label: "Components",
+    },
+    {
+      path: "/hooks",
+      component: <Hooks />,
+      label: "Hooks",
+    },
+    {
+      path: "/navigation",
+      component: <Navigation />,
+      label: "Navigation",
+    },
+    {
+      path: "/config-file",
+      component: <Cf />,
+      label: "Config file",
+    },
+    {
+      path: "/css",
+      component: <CSS />,
+      label: "CSS (Style sheet)",
+    },
+    {
+      path: "/environment-file",
+      component: <ENVS />,
+      label: "Environment file",
+    },
+    {
+      path: "/contribute",
+      component: <Contribute />,
+      label: "Contribute",
+    },
+    {
+      NotFound: <NotFound />,
+      hidde: true
+    },
+  ];
+
+  const { Children, NavLink } = useRouter(pages);
+
+  return (
+    <div ryunix-class="main">
+      <aside ryunix-class="sidebar">
+
+        <nav>
+          <ul>
+            <li>
+              <div className="logo">
+                <img
+                  src="https://raw.githubusercontent.com/UnSetSoft/Ryunixjs/refs/heads/dev/extensions/ryunix/logo-dark.svg"
+                  alt="RyunixJS"
+                />
+              </div>
+            </li>
+            {pages.map((item, index) => {
+              if (item?.hidde) return
+              if (item.length == 0) return;
+              return (
+                <li>
+                   <NavLink to={item.path}>{item.label}</NavLink>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </aside>
+      <div ryunix-class="container">
+        <div ryunix-class="content">
+           <Children />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;

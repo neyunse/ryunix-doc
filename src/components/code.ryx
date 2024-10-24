@@ -1,0 +1,10 @@
+const Code = ({ code, title }) => {
+  return (
+    <pre>
+      <h3 ryunix-class="code-title">{title}</h3>
+      <code ryunix-class="code">{code}</code>
+    </pre>
+  );
+};
+
+export default Code;

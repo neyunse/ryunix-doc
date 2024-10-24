@@ -1,0 +1,19 @@
+{
+  "name": "ryunix-doc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "homepage": "./",
+  "scripts": {
+    "dev": "ryunix server",
+    "build": "ryunix build"
+  },
+  "engines": {
+    "node": ">=18.16.0"
+  },
+  "dependencies": {
+    "@unsetsoft/ryunixjs": "^1.1.2"
+  },
+  "devDependencies": {
+    "@unsetsoft/ryunix-webpack": "^1.1.2"
+  }
+}
