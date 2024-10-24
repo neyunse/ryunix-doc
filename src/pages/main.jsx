@@ -33,7 +33,7 @@ const Main = () => {
       <h2>Getting Started</h2>
       <p>To begin, use the CLI to create a template and start working.</p>
       <Code
-        code={`npx @unsetsoft/cra`}
+        code={`npx @unsetsoft/cra my-page`}
         title="Bash|Shell|Powershell|CMD"
       />
       <Alert>RyunixJS works starting with node 18.16.x</Alert>
