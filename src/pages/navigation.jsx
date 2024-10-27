@@ -29,12 +29,20 @@ const NotFound = () => {
   );
 };
 
+const TestParams = ({params, query}) => {
+  return (
+    <div>
+      <h1>ID: {params.id} | {query.test}</h1>
+    </div>
+  );
+};
 
 const App = () => {
   const routes = [
-    { path: '/', component: <Home /> },
-    { path: '/test', component: <Test /> },
-    { NotFound: <NotFound /> },  
+    { path: '/', component: Home },
+    { path: '/test', component: Test},
+    { path: '/test/:id', component: TestParams},
+    { NotFound: NotFound },  
   ];
   
   const { Children, NavLink } = useRouter(routes);
@@ -45,16 +53,20 @@ const App = () => {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/test">Test</NavLink>
         <NavLink to="/this-not-exist">404</NavLink>
+        <NavLink to="/this-not-exist/abc">404</NavLink>
 
       </nav>
       <div>
         <Children />
+
+        
       </div>
     </div>
   );
 };
 
 export default App
+
 `;
 
 const Navigation = () => {
@@ -66,12 +78,9 @@ const Navigation = () => {
       <Code code={nav} title="App.jsx" />
 
       <Alert type="warning">
-        Navigation only works in environments such as Vercel.
+        Navigation only works in environments such as Vercel & @unsetsoft/ryunix-webpack.
       </Alert>
-      <br />
-      <Alert type="warning">
-        Navigate to pages like "/a/a" cause error
-      </Alert>
+ 
     </>
   );
 };
