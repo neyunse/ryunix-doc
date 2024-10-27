@@ -70,10 +70,7 @@ const Hooks = () => {
       <div>
         <h2 id="effect">useEffect</h2>
         <Code code={effect} title="App.jsx" />
-        <Alert type="warning">
-          useEffect can have problems if used with useStore, it is recommended
-          to use it inside another function that fulfills a valid objective.
-        </Alert>
+      
       </div>
       <div>
         <h2 id="query">useQuery</h2>
