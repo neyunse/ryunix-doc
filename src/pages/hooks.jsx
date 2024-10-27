@@ -39,7 +39,7 @@ export default App;`;
 const query = `import { useQuery } from "@unsetsoft/ryunixjs";
 function App() {
   // /post?id=1
-  const {id} = useQuery
+  const {id} = useQuery()
 
   return (
     <div>
