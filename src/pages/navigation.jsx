@@ -80,7 +80,7 @@ const Navigation = () => {
       <Code code={nav} title="App.jsx" />
 
       <Alert type="warning">
-        Navigation only works in environments such as Vercel & @unsetsoft/ryunix-webpack.
+        Navigation only works in environments such as Vercel & needs @unsetsoft/ryunix-webpack.
       </Alert>
  
     </>
