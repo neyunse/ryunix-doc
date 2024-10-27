@@ -75,6 +75,8 @@ const Navigation = () => {
       <h1>Navigation <span className="beta">Beta</span></h1>
       <h2>Children & Navigate</h2>
 
+      <p>Try navigation <a href="https://demo-navigation-ryunixjs.vercel.app/">here</a></p>
+
       <Code code={nav} title="App.jsx" />
 
       <Alert type="warning">
