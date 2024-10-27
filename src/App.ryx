@@ -6,46 +6,46 @@ function App() {
   const pages = [
     {
       path: "/",
-      component: <Main />,
+      component: Main,
       label: "Introduction",
     },
     {
       path: "/components",
-      component: <Components />,
+      component: Components,
       label: "Components",
     },
     {
       path: "/hooks",
-      component: <Hooks />,
+      component: Hooks,
       label: "Hooks",
     },
     {
       path: "/navigation",
-      component: <Navigation />,
+      component: Navigation,
       label: "Navigation",
     },
     {
       path: "/config-file",
-      component: <Cf />,
+      component: Cf,
       label: "Config file",
     },
     {
       path: "/css",
-      component: <CSS />,
+      component: CSS,
       label: "CSS (Style sheet)",
     },
     {
       path: "/environment-file",
-      component: <ENVS />,
+      component: ENVS,
       label: "Environment file",
     },
     {
       path: "/contribute",
-      component: <Contribute />,
+      component: Contribute,
       label: "Contribute",
     },
     {
-      NotFound: <NotFound />,
+      NotFound: NotFound,
       hidde: true
     },
   ];
