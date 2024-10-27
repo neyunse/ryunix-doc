@@ -65,9 +65,7 @@ const Hooks = () => {
       <div>
         <h2 id="store">useStore</h2>
         <Code code={states} title="App.jsx" />
-        <Alert type="warning">
-          useStore may not work correctly with useRouter
-        </Alert>
+ 
       </div>
       <div>
         <h2 id="effect">useEffect</h2>
