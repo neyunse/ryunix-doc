@@ -11,9 +11,9 @@
     "node": ">=18.16.0"
   },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "^1.1.4"
+    "@unsetsoft/ryunixjs": "latest"
   },
   "devDependencies": {
-    "@unsetsoft/ryunix-webpack": "^1.1.4"
+    "@unsetsoft/ryunix-webpack": "latest"
   }
 }
