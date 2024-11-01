@@ -61,7 +61,7 @@ function App() {
             <li>
               <div className="logo">
                 <img
-                  src="https://raw.githubusercontent.com/UnSetSoft/Ryunixjs/refs/heads/dev/extensions/ryunix/logo-dark.svg"
+                  src="https://raw.githubusercontent.com/UnSetSoft/Ryunixjs/refs/heads/latest/extensions/ryunix/logo-dark.svg"
                   alt="RyunixJS"
                 />
               </div>
