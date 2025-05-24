@@ -1,8 +1,17 @@
 import { useRouter } from "@unsetsoft/ryunixjs";
 
-import { Main, Components, Hooks, Navigation, Cf, CSS, ENVS,Contribute, NotFound } from "./pages";
+import {
+  Main,
+  Components,
+  Hooks,
+  Navigation,
+  Cf,
+  CSS,
+  ENVS,
+  Contribute,
+  NotFound,
+} from "./pages";
 function App() {
-
   const pages = [
     {
       path: "/",
@@ -46,7 +55,7 @@ function App() {
     },
     {
       NotFound: NotFound,
-      hidde: true
+      hidde: true,
     },
   ];
 
@@ -55,23 +64,22 @@ function App() {
   return (
     <div ryunix-class="main">
       <aside ryunix-class="sidebar">
-
         <nav>
           <ul>
             <li>
               <div className="logo">
                 <img
-                  src="https://raw.githubusercontent.com/UnSetSoft/Ryunixjs/refs/heads/dev/extensions/ryunix/logo-dark.svg"
+                  src="https://raw.githubusercontent.com/UnSetSoft/Ryunixjs/refs/heads/canary/extensions/ryunix/logo-dark.svg"
                   alt="RyunixJS"
                 />
               </div>
             </li>
             {pages.map((item, index) => {
-              if (item?.hidde) return
+              if (item?.hidde) return;
               if (item.length == 0) return;
               return (
                 <li>
-                   <NavLink to={item.path}>{item.label}</NavLink>
+                  <NavLink to={item.path}>{item.label}</NavLink>
                 </li>
               );
             })}
@@ -80,7 +88,7 @@ function App() {
       </aside>
       <div ryunix-class="container">
         <div ryunix-class="content">
-           <Children />
+          <Children />
         </div>
       </div>
     </div>

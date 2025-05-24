@@ -9,7 +9,7 @@ function App() {
   const [count, setCount] = useStore(0);
 
   const handleButtonClick = () => {
-    setCount((c) => c + 1);
+    setCount(count + 1);
   };
 
   return (
@@ -51,8 +51,6 @@ function App() {
 export default App;`;
 
 const Hooks = () => {
-
-
   return (
     <div ryunix-class="flex flex-col gap-10">
       <div>
@@ -65,18 +63,15 @@ const Hooks = () => {
       <div>
         <h2 id="store">useStore</h2>
         <Code code={states} title="App.jsx" />
- 
       </div>
       <div>
         <h2 id="effect">useEffect</h2>
         <Code code={effect} title="App.jsx" />
-      
       </div>
       <div>
         <h2 id="query">useQuery</h2>
         <Code code={query} title="App.jsx" />
       </div>
-
     </div>
   );
 };

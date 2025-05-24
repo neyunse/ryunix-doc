@@ -1,4 +1,5 @@
 import Code from "../components/code";
+import Alert from "../components/alert";
 
 const funct = `const Component = (props) => {
   return (
@@ -36,6 +37,9 @@ const Components = () => {
       </p>
       <Code code={funct} title="Component.jsx" />
       <Code code={app} title="App.ryx" />
+      <Alert type="warning">
+        useStore does not currently work within child components.
+      </Alert>
     </>
   );
 };
