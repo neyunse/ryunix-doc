@@ -11,6 +11,8 @@ import {
   Contribute,
   NotFound,
 } from "./pages";
+
+import Logo from "./resources/logo-dark.svg";
 function App() {
   const pages = [
     {
@@ -70,7 +72,7 @@ function App() {
           <ul>
             <li>
               <div className="logo">
-                <Image optimization={"true"} width={400} src="logo-dark.svg" />
+                <Image optimization={"true"} width={400} src={Logo} />
               </div>
             </li>
             {pages.map((item, index) => {
