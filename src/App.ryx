@@ -1,8 +1,8 @@
-import { useRouter } from "@unsetsoft/ryunixjs";
+import Ryunix, { useRouter } from "@unsetsoft/ryunixjs";
 
 import {
   Main,
-  Components,
+  Components as component,
   Hooks,
   Navigation,
   Cf,
@@ -20,7 +20,7 @@ function App() {
     },
     {
       path: "/components",
-      component: Components,
+      component: component,
       label: "Components",
     },
     {
@@ -61,6 +61,8 @@ function App() {
 
   const { Children, NavLink } = useRouter(pages);
 
+  const { Image } = Ryunix.Components;
+
   return (
     <div ryunix-class="main">
       <aside ryunix-class="sidebar">
@@ -68,10 +70,7 @@ function App() {
           <ul>
             <li>
               <div className="logo">
-                <img
-                  src="https://raw.githubusercontent.com/UnSetSoft/Ryunixjs/refs/heads/canary/extensions/ryunix/logo-dark.svg"
-                  alt="RyunixJS"
-                />
+                <Image optimization={"true"} width={400} src="logo-dark.svg" />
               </div>
             </li>
             {pages.map((item, index) => {
