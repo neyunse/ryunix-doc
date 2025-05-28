@@ -25,6 +25,19 @@ const App = () => {
 export default App;
 `;
 
+const image = `import {Image} from "@unsetsoft/ryunixjs"
+import Logo from "/logo.png"
+const App = () => {
+  return (
+    <>
+      <Image src={Logo} />
+    </>
+  );
+};
+
+export default App;
+`;
+
 const Components = () => {
   return (
     <>
@@ -37,9 +50,8 @@ const Components = () => {
       </p>
       <Code code={funct} title="Component.jsx" />
       <Code code={app} title="App.ryx" />
-      <Alert type="warning">
-        useStore does not currently work within child components.
-      </Alert>
+      <h2>Built-in components</h2>
+      <Code code={image} title="App.ryx" />
     </>
   );
 };
