@@ -1,216 +1,119 @@
-*{
-  padding: 0px;
-  margin: 0px;
-  box-sizing: border-box;
-}
 body {
+  background-color: #111113;
+  color: #eee;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #1b1b1d;
-
-}
-
-.main,#__ryunix{
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #1b1b1d;
-}
-
-.main .sidebar{
-  max-width: 496px;
-  width: 100%;
-  height: inherit;
-  background-color: #1b1b1d;
-  border-right: 1px solid #444950;
-
-  padding: 5px;
-
-}
-.main .sidebar nav{
-  position: sticky;
-  top: 8px;
-  height: min-content;
-}
-.main .sidebar .logo {
-  position: relative;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-}
-.main .sidebar .logo img{
-  position: relative;
-
-  width: 100px;
-  height: 100px;
-
-}
-
-.main .sidebar nav ul{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-
-}
-.main .sidebar nav ul li{
-
-  list-style: none;
-  width: 100%;
-
-}
-
-.main .sidebar nav ul li a:hover{
-  background: #2b2b2b;
-  cursor: pointer;
-
-}
-.main .sidebar nav ul li a{
-  text-decoration: none;
-  color: white;
-
-  padding: 10px;
-  border-radius: 5px;
-  display: block;
-  background-color: transparent;
-  font-size: 17px;
-  text-align: end;
-  margin-right: 10px;
-}
-
-
-.main .sidebar nav ul li button:hover{
-  background: #2b2b2b;
-  cursor: pointer;
-
-}
-.main .sidebar nav ul li button{
-  text-decoration: none;
-  color: white;
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  display: block;
-  background-color: transparent;
-  font-size: 17px;
-  text-align: end;
-  margin-right: 10px;
-}
-
-
-.main .container{
-  flex-grow: 1;
-  padding: 20px;
-  max-width: 1107px;
-  right: 0;
-}
-.main .container .content{
-
-  width: 100%;
-
-  margin: 0 auto;
-}
-.main .container .content h1{
-  font-size: 3rem;
-  margin-bottom: calc(1.25 * 1.25 * 1rem);
-}
-.content ul{
-  padding-left: 50px;
-  color: #fff;
-}
-.content ul{
-
-  max-width: 50rem;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-h1, h2, h3, h4, h5, h6, p{
-  color: #fff;
-}
-p{
-  margin-top: 1.25 * 1rem ;
-
-  margin-bottom: 1.25 * 1rem ;
-}
-
-pre{
-  margin-top: 10px;
-  margin-bottom: 1.25 * 1rem ;
-
-}
-.code-title{
-  padding: 10px;
-  background-color: black;
-  border-radius: 10px 10px 0px 0px;
-}
-.code {
-  font-family: Source Code Pro,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-  font-size: 14.6px;
   line-height: 24px;
-  display: block;
-  background: #212121;
-  color: cornflowerblue;
-  padding: 13px;
-  border-radius: 0px 0px 10px 10px;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 0px;
+  box-sizing: border-box;
+}
+.main {
+  max-width: 90rem;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+aside {
+  flex-shrink: 0;
+  width: 18rem;
+ 
+}
+
+.container {
+  width: calc(100% - 34rem);
+  max-width: none;
+  min-height: calc(100vh - var(calc(56rem + 0rem)) - 80px);
+}
+
+.logo > img {
+  width: 91px;
+}
+
+h1 {
+  color: #eceeed;
   font-weight: 800;
+  font-size: 2.46em;
+  margin-top: 0;
+  margin-bottom: 0.8888889em;
+  line-height: 1.1111111;
 }
 
-.Alert {
-  padding: 10px;
-  background: #454545;
-  border-radius: 5px;
+p {
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+a{
+  color: dodgerblue;
+}
+.sidebar > nav > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.sidebar > nav > ul > li {
+  list-style: none;
+}
+.sidebar > nav > ul > li > a {
+  padding: 5px;
+  text-decoration: none;
+  color: inherit;
+  font-size: 1rem;
 }
 
-.Alert p{
-  color: #d3d3d3;
+.code-header {
+  justify-content: space-between;
+  display: flex;
 
+  background: #161618;
+  border-bottom: 1px solid #444;
 }
 
-.Alert.warning{
-  background-color: rgb(182 87 0 / 26%);
+.code-block {
+  font-family: "Fira Code", monospace;
+  color: #d4d4d4;
+  border-radius: 8px;
+  background: #161618;
+
+  margin: 1em 0;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.64);
 }
 
-button{
-  background-color: dodgerblue;
+.code-title {
+  padding: 0.75em 1em;
+  margin: 0;
+  font-size: 1em;
   color: #fff;
-  padding: 10px;
-  border: 0px;
-  border-radius: 5px;
+}
+
+.code-container {
+  position: relative;
+  padding: 0 24px;
+}
+
+.copy-btn {
+  top: 1em;
+  right: 1em;
+    background-color: #2c5ac6;
+  color: white;
+  border: none;
+  border-radius: 0px 0px 0px 0px;
+  padding: 0.4em 0.7em;
+  font-size: 0.8em;
   cursor: pointer;
 }
 
-.flex{
-  display: flex;
-}
-.flex-col{
-  flex-direction: column;
-}
-.gap-10{
-  gap: 10px;
+.copy-btn:hover {
+  background-color: #666;
 }
 
-a{
-  color: white;
-  font-weight: bold;
-}
-
-.beta {
-  font-size: 20px;
-  background-color: brown;
-  padding: 5px;
-  height: min-content;
-  border-radius: 50px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-h1{
-  display: flex;
-  gap: 10px;
-  align-items: center;
+.code-content {
+  white-space: pre;
+  display: block;
+  overflow-x: auto;
+  font-size: 0.9em;
 }

@@ -54,7 +54,9 @@ const Hooks = () => {
   return (
     <div ryunix-class="flex flex-col gap-10">
       <div>
-        <h1>Hooks</h1>
+        <h1>
+          Hooks <span className="beta">Beta</span>
+        </h1>
         <p>
           RyunixJS brings with it an API similar to ReactJS, hooks can be used
           in any component and allow to create more robust applications.

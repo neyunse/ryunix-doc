@@ -1,9 +1,7 @@
 import Code from "../components/code";
 import Alert from "../components/alert";
 
-const nav = `import {
-  useRouter
-} from "@unsetsoft/ryunixjs"
+const nav = `import { RouterProvider, Children, NavLink } from "@unsetsoft/ryunixjs";
 
 function Home() {
   return (
@@ -45,10 +43,8 @@ const App = () => {
     { path: '*', NotFound: NotFound },  
   ];
   
-  const { Children, NavLink } = useRouter(routes);
-
   return (
-    <div>
+    <RouterProvider routes={routes}>
       <nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/test">Test</NavLink>
@@ -58,13 +54,11 @@ const App = () => {
       <div>
         <Children />
       </div>
-    </div>
+    </RouterProvider>
   );
 };
 
-export default App
-
-`;
+export default App`;
 
 const Navigation = () => {
   return (

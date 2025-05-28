@@ -10,6 +10,6 @@ module.exports = {
     },
   },
   webpack: {
-    production: true, // use 'false' for dev mode
+    production: false, // use 'false' for dev mode
   },
 }
