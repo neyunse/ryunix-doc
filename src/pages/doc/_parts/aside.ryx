@@ -1,0 +1,50 @@
+import { NavLink } from "@unsetsoft/ryunixjs";
+import SideBarSection from "./SideBarSection.ryx";
+import { useSideBarContext } from "../../context.ryx";
+
+const SideBar = () => {
+  const cxt = useSideBarContext("sidebar");
+
+  return (
+    <aside ryunix-class={cxt.active ? "sidebar mobile-active" : "sidebar"}>
+      <nav ryunix-class="sidebar-nav">
+        <SideBarSection
+          title="Introduction"
+          links={[
+            {
+              to: "/doc/introduction",
+              label: "Getting Started",
+            },
+            {
+              to: "/doc/components",
+              label: "Components",
+            },
+            {
+              to: "/doc/styles",
+              label: "CSS & Styles",
+            },
+            {
+              to: "/doc/api/hooks",
+              label: "Hooks",
+            },
+          ]}
+        />
+
+        <SideBarSection
+          title="Built-in components"
+          links={[
+            {
+              to: "/doc/components/built-in/image",
+              label: "Image",
+            },
+            {
+              to: "/doc/components/built-in/navigation",
+              label: "Navigation",
+            },
+          ]}
+        />
+      </nav>
+    </aside>
+  );
+};
+export default SideBar;

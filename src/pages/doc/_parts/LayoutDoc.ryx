@@ -1,0 +1,14 @@
+import SideBar from "./aside.ryx";
+const LayoutDoc = ({ children }) => {
+  return (
+    <div ryunix-class="container page-container">
+      <SideBar />
+
+      <div ryunix-class="main-content">
+        <article ryunix-class="prose">{children}</article>
+      </div>
+    </div>
+  );
+};
+
+export default LayoutDoc;

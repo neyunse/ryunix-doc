@@ -1,0 +1,40 @@
+import Home from "./home";
+import Introduction from "./doc/introduction";
+import NotFound from "./404.ryx";
+import Components from "./doc/components.ryx";
+import Styles from "./doc/styles.ryx";
+import ImageComponent from "./doc/image.ryx";
+import Navigation from "./doc/navigation.ryx";
+import Hooks from "./doc/hooks.ryx";
+
+export default [
+  {
+    path: "/",
+    component: Home,
+  },
+  {
+    path: "/doc/introduction",
+    component: Introduction,
+  },
+  {
+    path: "/doc/components",
+    component: Components,
+  },
+  {
+    path: "/doc/styles",
+    component: Styles,
+  },
+  {
+    path: "/doc/components/built-in/image",
+    component: ImageComponent,
+  },
+  {
+    path: "/doc/components/built-in/navigation",
+    component: Navigation,
+  },
+  {
+    path: "/doc/api/hooks",
+    component: Hooks,
+  },
+  { path: "*", NotFound: NotFound, noRenderLink: true },
+];

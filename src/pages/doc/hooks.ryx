@@ -1,0 +1,107 @@
+import Code from "../../components/code.ryx";
+import LayoutDoc from "./_parts/LayoutDoc.ryx";
+import { useStore, useQuery } from "@unsetsoft/ryunixjs";
+const Hooks = () => {
+  const [count, setCount] = useStore(0);
+  const { id } = useQuery();
+  const handleButtonClick = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <LayoutDoc>
+      <h1>Hooks</h1>
+      <p>
+        RyunixJS brings with it an API similar to ReactJS and others, hooks can
+        be used in any component and allow to create more robust applications.
+      </p>
+      <section id="useStore">
+        <h2>useStore</h2>
+        <div>
+          <button ryunix-class="test-button" onClick={handleButtonClick}>
+            Click to increment: {count}
+          </button>
+        </div>
+        <Code>
+          {`import { useStore } from "@unsetsoft/ryunixjs";
+
+function App() {
+  const [count, setCount] = useStore(0);
+
+  const handleButtonClick = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <button onClick={handleButtonClick}> Click to increment: {count}</button>
+    </div>
+  );
+}
+
+export default App;
+`}
+        </Code>
+      </section>
+      <section id="useEffect">
+        <h2>useEffect</h2>
+        <Code>
+          {`import { useEffect } from "@unsetsoft/ryunixjs";
+function App() {
+  useEffect(() => {
+    //... Effect
+  }, []);
+  return (
+    <div>
+      <p>Hello World</p>
+    </div>
+  );
+}
+
+export default App;
+`}
+        </Code>
+      </section>
+      <section id="useQuery">
+        <h2>useQuery</h2>
+        <Code>
+          {`import { useQuery } from "@unsetsoft/ryunixjs";
+function App() {
+  // /post?id=1
+  const {id} = useQuery()
+
+  return (
+    <div>
+      <p>post id: {id}</p>
+    </div>
+  );
+}
+
+export default App;
+`}
+        </Code>
+      </section>
+      <section id="useHash">
+        <h2>useHash</h2>
+        <Code>
+          {`import { useQuery } from "@unsetsoft/ryunixjs";
+function App() {
+  // /hello#world
+  const hash = useHash()
+
+  return (
+    <div>
+      <p>location hash is: {hash}</p>
+    </div>
+  );
+}
+
+export default App;
+`}
+        </Code>
+      </section>
+    </LayoutDoc>
+  );
+};
+
+export default Hooks;

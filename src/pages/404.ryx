@@ -1,0 +1,7 @@
+import LayoutDoc from "./doc/_parts/LayoutDoc";
+
+const NotFound = () => {
+  return <>pp</>;
+};
+
+export default NotFound;

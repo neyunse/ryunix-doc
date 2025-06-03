@@ -1,27 +1,20 @@
-const Code = ({ code, title }) => {
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Copied!");
-    });
-  };
-  return (
-    <div ryunix-class="code-block">
-      <div ryunix-class="code-header">
-        <h3 ryunix-class="code-title">{title}</h3>
-        <button ryunix-class="copy-btn" onClick={() => copyToClipboard(code)}>
-          Copy
-        </button>
-      </div>
-      <div ryunix-class="code-container">
+const Code = ({ code, title, children }) => {
+  if (title) {
+    return (
+      <div ryunix-class="code-example-container">
+        <h3>{title}</h3>
         <pre>
-          <code
-            onClick={() => copyToClipboard(code)}
-            ryunix-class="code-content"
-          >
-            {code}
-          </code>
+          <code>{code ? code.trim() : children}</code>
         </pre>
       </div>
+    );
+  }
+
+  return (
+    <div ryunix-class="code-example-container">
+      <pre>
+        <code>{code ? code.trim() : children}</code>
+      </pre>
     </div>
   );
 };

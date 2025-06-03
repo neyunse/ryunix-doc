@@ -1,0 +1,70 @@
+import Code from "../../components/code.ryx";
+import SideBar from "./_parts/aside.ryx";
+import LayoutDoc from "./_parts/LayoutDoc.ryx";
+
+const Introduction = () => {
+  return (
+    <LayoutDoc>
+      <h1>Getting Started</h1>
+      <h2>Introduction</h2>
+      <p>
+        Like React, NextJS, Preact, Vite. Ryunix allows you to build static
+        websites from JavaScript in a similar way to the aforementioned
+        frameworks. However, Ryunix is planned to be completely standalone, i.e.
+        without including React internally. This way allowing it to be more
+        manageable and moldable for each developer.
+      </p>
+      <p>
+        The reactivity of Ryunix is similar to Preact, however, it does not
+        pretend to follow any standard of React or any similar Framework, but to
+        allow to generate an SPA in its own way.
+      </p>
+      <h2>Why Ryunix?</h2>
+      <p>
+        Since the birth of React, several alternatives have emerged that, over
+        time, have evolved to adapt to specific environments. RyunixJS is not
+        tied to any particular infrastructure: you can deploy it wherever and
+        however you want. Also, Ryunix does not depend on React or its API.
+      </p>
+      <p>
+        Nowadays, there are several frameworks based on React. However, these
+        shouldn't be considered frameworks, but rather modifications or{" "}
+        {"<mods>"} of React. Many of these modifications introduce interesting
+        features, but they can also break compatibility with existing projects.
+      </p>
+      <p>
+        This turns the task of maintaining and adapting code into a real
+        battlefield, especially when it comes to making the project compatible
+        with each update. Ryunix aims to create a safe environment where changes
+        are compatible with existing projects, optimized, and lightweight.
+      </p>
+      <h2>Getting Started</h2>
+      <h3>Requirements</h3>
+      <ul>
+        <li>
+          <a href="https://nodejs.org/en/download" target="_blank">
+            Node.JS{" "}
+          </a>
+          ({"^18 || ^20 || ^22"})
+        </li>
+      </ul>
+      <p>
+        To begin, use the CLI to create a JavaScript template and start working.
+      </p>
+      <Code title="Bash|Shell|Powershell|CMD">npx @unsetsoft/cra my-page</Code>
+      <p>
+        <b>Important:</b> The first time you run <strong>npm run dev</strong> it
+        will take a while to run, don't worry... the next time you use the
+        command it will run fast.
+      </p>
+      <h3>Supported templates</h3>
+      <ul>
+        <li>WebPack</li>
+        <li>Vite (Beta)</li>
+        <li>Rspack (Beta)</li>
+      </ul>
+    </LayoutDoc>
+  );
+};
+
+export default Introduction;

@@ -1,0 +1,80 @@
+import { NavLink } from "@unsetsoft/ryunixjs";
+import Features from "../components/features.ryx";
+import config from "../config";
+
+const Home = () => {
+  return (
+    <>
+      <section ryunix-class="hero-section">
+        <div ryunix-class="container hero-content">
+          <h1 ryunix-class="hero-title">
+            Welcome to{" "}
+            <span ryunix-class="text-primary">{config.siteName}</span>
+          </h1>
+          <p ryunix-class="hero-subtitle">
+            The next-generation JavaScript framework for building modern, fast,
+            and scalable web applications.
+          </p>
+          <div ryunix-class="hero-cta-buttons">
+            <NavLink
+              to="/doc/introduction"
+              ryunix-class="button button-primary"
+            >
+              Get Started
+            </NavLink>
+            <a
+              href={config.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              ryunix-class="button button-secondary"
+            >
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section ryunix-class="features-section">
+        <div ryunix-class="container">
+          <h2 ryunix-class="section-title">Why {config.siteName}?</h2>
+          <div ryunix-class="features-grid">
+            <Features icon="🚀" title="High Optimization">
+              Optimized for great performance.
+            </Features>
+
+            <Features icon="⚙️" title="Scalable and Robust">
+              Built to handle applications of any size.
+            </Features>
+          </div>
+        </div>
+      </section>
+
+      <section ryunix-class="cta-section">
+        <div ryunix-class="container">
+          <h2 ryunix-class="section-title">
+            Ready to build something amazing?
+          </h2>
+
+          <div ryunix-class="cta-buttons">
+            <NavLink
+              to="/doc/introduction"
+              ryunix-class="button button-primary-outline"
+            >
+              Read the Documentation
+            </NavLink>
+          </div>
+        </div>
+      </section>
+      <footer ryunix-class="site-footer">
+        <div ryunix-class="container">
+          <p>
+            &copy; <span id="current-year"></span> UnSetSoft. All rights
+            reserved.
+          </p>
+        </div>
+      </footer>
+    </>
+  );
+};
+
+export default Home;

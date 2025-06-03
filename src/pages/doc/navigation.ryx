@@ -1,0 +1,78 @@
+import Code from "../../components/code.ryx";
+import LayoutDoc from "./_parts/LayoutDoc.ryx";
+
+const Navigation = () => {
+  return (
+    <LayoutDoc>
+      <h1>Navigation (Beta)</h1>
+      <p>
+        Try navigation{" "}
+        <a href="https://demo-navigation-ryunixjs.vercel.app" target="_blank">
+          here
+        </a>
+      </p>
+      <Code>
+        {`import { RouterProvider, Children, NavLink } from "@unsetsoft/ryunixjs";
+
+function Home() {
+  return (
+    <>
+    <h1>Home</h1>
+    </>
+  )
+}
+
+function Test() {
+  return (
+    <>
+    <h1>Test</h1>
+    </>
+  )
+}
+
+const NotFound = () => {
+  return (
+    <div>
+      <h1>404 - Page Not Found</h1>
+    </div>
+  );
+};
+
+const TestParams = ({params, query}) => {
+  return (
+    <div>
+      <h1>ID: {params.id} | {query.test}</h1>
+    </div>
+  );
+};
+
+const App = () => {
+  const routes = [
+    { path: '/', component: Home },
+    { path: '/test', component: Test},
+    { path: '/test/:id', component: TestParams},
+    { path: '*', NotFound: NotFound },  
+  ];
+  
+  return (
+    <RouterProvider routes={routes}>
+      <nav>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/test">Test</NavLink>
+        <NavLink to="/this-not-exist">404</NavLink>
+        <NavLink to="/test/abc?test=hello-world">404</NavLink>
+      </nav>
+      <div>
+        <Children />
+      </div>
+    </RouterProvider>
+  );
+};
+
+export default App`}
+      </Code>
+    </LayoutDoc>
+  );
+};
+
+export default Navigation;

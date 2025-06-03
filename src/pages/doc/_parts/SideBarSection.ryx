@@ -1,0 +1,18 @@
+import { NavLink } from "@unsetsoft/ryunixjs";
+import { useSideBarContext } from "../../context.ryx";
+
+const SideBarSection = ({ title, links = [] }) => {
+  const cxt = useSideBarContext("sidebar");
+  return (
+    <div ryunix-class="sidebar-section">
+      <h4 ryunix-class="sidebar-section-title">{title}</h4>
+      {links?.map((link, _) => (
+        <NavLink to={link.to} ryunix-class="sidebar-link" ActiveClass="active">
+          <span onClick={() => cxt.hideSidebar()}>{link.label}</span>
+        </NavLink>
+      ))}
+    </div>
+  );
+};
+
+export default SideBarSection;

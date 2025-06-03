@@ -1,0 +1,10 @@
+const Features = ({ icon, title, children }) => {
+  return (
+    <div ryunix-class="feature-card">
+      <div ryunix-class="feature-icon">{icon}</div>
+      <h3 ryunix-class="feature-title">{title}</h3>
+      <p ryunix-class="feature-description">{children}</p>
+    </div>
+  );
+};
+export default Features;
