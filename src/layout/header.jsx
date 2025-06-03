@@ -12,7 +12,7 @@ const Header = () => {
         <NavLink to="/" ryunix-class="logo">
           <Image src={Logo} width={40} fill="#fff" />
         </NavLink>
-        <nav ryunix-class="main-nav mobile-active ">
+        <nav ryunix-class="main-nav">
           <ul ryunix-class="ul-nav">
             <li>
               <a
