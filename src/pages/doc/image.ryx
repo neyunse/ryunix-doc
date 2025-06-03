@@ -86,19 +86,6 @@ export default App;
         quality. You can see the difference by setting a value from 1 to 100. If
         you set it to "0", the quality will be set to the highest (100).
       </p>
-
-      <Image
-        width="200"
-        optimization="true"
-        quality={1}
-        src="https://cdn.coollabs.io/images/image1.jpg"
-      />
-      <Image
-        width="200"
-        optimization="true"
-        quality={100}
-        src="https://cdn.coollabs.io/images/image1.jpg"
-      />
     </LayoutDoc>
   );
 };
