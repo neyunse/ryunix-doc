@@ -1,3 +1,4 @@
+import { useEffect } from "@unsetsoft/ryunixjs";
 import Code from "../../components/code.ryx";
 import LayoutDoc from "./_parts/LayoutDoc.ryx";
 import { useStore, useQuery } from "@unsetsoft/ryunixjs";
@@ -7,6 +8,14 @@ const Hooks = () => {
   const handleButtonClick = () => {
     setCount(count + 1);
   };
+
+  useEffect(() => {
+    console.log("montado");
+
+    return () => {
+      console.log("desmontado");
+    };
+  }, []);
 
   return (
     <LayoutDoc>
