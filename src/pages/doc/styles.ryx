@@ -26,6 +26,10 @@ function App(){
 }
 `}
       </Code>
+      <p>
+        <b>Important:</b> the atribute <strong>className</strong> are supported
+        for compatibility with React or others frameworks.{" "}
+      </p>
       <h2>Importing CSS</h2>
       <Code>
         {`import "./styles/container.css"

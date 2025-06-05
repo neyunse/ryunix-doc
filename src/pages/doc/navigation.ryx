@@ -59,8 +59,8 @@ const App = () => {
       <nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/test">Test</NavLink>
+        <NavLink to="/test/abc?test=hello-world">Params Test</NavLink>
         <NavLink to="/this-not-exist">404</NavLink>
-        <NavLink to="/test/abc?test=hello-world">404</NavLink>
       </nav>
       <div>
         <Children />

@@ -1,7 +1,20 @@
-import LayoutDoc from "./doc/_parts/LayoutDoc";
+import { NavLink } from "@unsetsoft/ryunixjs";
 
 const NotFound = () => {
-  return <>pp</>;
+  return (
+    <div className="nf">
+      <section className="nf-container">
+        <article className="nf-content">
+          <span>404</span>
+          <h1>NOT FOUND</h1>
+          <blockquote>Oops! The content don't exist or was changed.</blockquote>
+          <NavLink className="go-back-button" to="/">
+            Go to home
+          </NavLink>
+        </article>
+      </section>
+    </div>
+  );
 };
 
 export default NotFound;
