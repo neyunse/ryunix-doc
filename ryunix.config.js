@@ -8,5 +8,8 @@ module.exports = {
         "keywords": "ReactJS, react, Next.js, nextjs, next, RyunixJS, ryunix, ryunix.js, Ryunix.JS"
       }
     },
-  }
+  },
+  webpack: {
+    production: true, // use 'false' for dev mode
+  },
 }
