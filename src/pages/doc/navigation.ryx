@@ -51,7 +51,7 @@ const App = () => {
     { path: '/', component: Home },
     { path: '/test', component: Test},
     { path: '/test/:id', component: TestParams},
-    { path: '*', NotFound: NotFound },  
+    { path: '*', NotFound: NotFound }, // always process NotFound to the last one.
   ];
   
   return (
@@ -71,6 +71,21 @@ const App = () => {
 
 export default App`}
       </Code>
+      <h2>Activate link</h2>
+      Ryunix supports and supports the possibility of adding a class{" "}
+      {"'active'"}.
+      <Code>
+        {`<NavLink
+  to={link.to}
+  ryunix-class={({ isActive }) =>
+    isActive ? "active" : ""
+  }>
+  <span onClick={() => cxt.hideSidebar()}>{link.label}</span>
+</NavLink>`}
+      </Code>
+      <p>
+        <b>Important:</b> className also supports {"'({ isActive })'"}
+      </p>
     </LayoutDoc>
   );
 };
