@@ -10,7 +10,15 @@ const Header = () => {
     <header ryunix-class="site-header">
       <div ryunix-class="container header-container">
         <NavLink to="/" ryunix-class="logo">
-          <Image src={Logo} width={40} height={40} fill="#fff" alt="" />
+          <Image
+            src={Logo}
+            width={40}
+            height={40}
+            fill="#fff"
+            optimization={true}
+            quality={100}
+            alt=""
+          />
         </NavLink>
         <nav ryunix-class="main-nav">
           <ul ryunix-class="ul-nav">
