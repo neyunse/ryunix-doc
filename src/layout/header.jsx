@@ -1,7 +1,7 @@
 import config from "../config";
 import { NavLink, useRouter, Image } from "@unsetsoft/ryunixjs";
 import { useSideBarContext } from "../pages/context.ryx";
-import Logo from "../resources/logo.svg";
+import Logo from "../resources/logo-min.svg";
 const Header = () => {
   const router = useRouter();
   const cxt = useSideBarContext("sidebar");
