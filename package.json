@@ -11,9 +11,11 @@
     "node": ">=18.16.0"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@unsetsoft/ryunixjs": "1.1.38",
     "highlight.js": "11.11.1",
-    "prismjs": "1.30.0"
+    "prismjs": "1.30.0",
+    "svgo-loader": "^4.0.0"
   },
   "devDependencies": {
     "@unsetsoft/ryunix-webpack": "1.1.38"
