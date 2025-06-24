@@ -15,8 +15,8 @@ const Header = () => {
             width={40}
             height={40}
             fill="#fff"
-            optimization={true}
-            quality={100}
+            optimization="true"
+            quality="100"
             alt=""
           />
         </NavLink>
