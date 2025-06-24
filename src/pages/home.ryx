@@ -1,8 +1,11 @@
 import { NavLink } from "@unsetsoft/ryunixjs";
 import Features from "../components/features.ryx";
 import config from "../config";
+import { useMetadata } from "@unsetsoft/ryunixjs";
+import { template } from "../components/metatag.ryx";
 
 const Home = () => {
+  const metadata = useMetadata({}, template);
   return (
     <>
       <section ryunix-class="hero-section">

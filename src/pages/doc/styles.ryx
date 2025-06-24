@@ -1,7 +1,15 @@
 import Code from "../../components/code.ryx";
 import LayoutDoc from "./_parts/LayoutDoc.ryx";
+import { useMetadata } from "@unsetsoft/ryunixjs";
+import { template } from "../../components/metatag.ryx";
 
 const Styles = () => {
+  const metadata = useMetadata(
+    {
+      title: "Style & CSS",
+    },
+    template
+  );
   return (
     <LayoutDoc>
       <h1>Style & CSS</h1>

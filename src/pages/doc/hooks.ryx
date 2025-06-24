@@ -2,6 +2,8 @@ import { useEffect } from "@unsetsoft/ryunixjs";
 import Code from "../../components/code.ryx";
 import LayoutDoc from "./_parts/LayoutDoc.ryx";
 import { useStore, useQuery } from "@unsetsoft/ryunixjs";
+import { template } from "../../components/metatag.ryx";
+import { useMetadata } from "@unsetsoft/ryunixjs";
 const Hooks = () => {
   const [count, setCount] = useStore(0);
   const { id } = useQuery();
@@ -16,6 +18,13 @@ const Hooks = () => {
       console.log("desmontado");
     };
   }, []);
+
+  const metadata = useMetadata(
+    {
+      title: "Hooks",
+    },
+    template
+  );
 
   return (
     <LayoutDoc>
@@ -101,6 +110,26 @@ function App() {
   return (
     <div>
       <p>location hash is: {hash}</p>
+    </div>
+  );
+}
+
+export default App;
+`}
+        </Code>
+      </section>
+      <section id="useMetadata">
+        <h2>useMetadata</h2>
+        <Code>
+          {`import { useMetadata } from "@unsetsoft/ryunixjs";
+function App() {
+  const metadata = useMetadata({
+    pageTitle: "My App page",
+  });
+
+  return (
+    <div>
+      <p>Hello world!</p>
     </div>
   );
 }

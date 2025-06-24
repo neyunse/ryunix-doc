@@ -1,8 +1,16 @@
 import Code from "../../components/code.ryx";
-import SideBar from "./_parts/aside.ryx";
 import LayoutDoc from "./_parts/LayoutDoc.ryx";
+import { useMetadata } from "@unsetsoft/ryunixjs";
+import { template } from "../../components/metatag.ryx";
 
 const Introduction = () => {
+  const metadata = useMetadata(
+    {
+      pageTitle: "Introduction",
+    },
+    template
+  );
+
   return (
     <LayoutDoc>
       <h1>Getting Started</h1>

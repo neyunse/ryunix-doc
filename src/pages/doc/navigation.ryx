@@ -1,7 +1,16 @@
 import Code from "../../components/code.ryx";
 import LayoutDoc from "./_parts/LayoutDoc.ryx";
+import { useMetadata } from "@unsetsoft/ryunixjs";
+import { template } from "../../components/metatag.ryx";
 
 const Navigation = () => {
+  const metadata = useMetadata(
+    {
+      title: "Navigation",
+    },
+    template
+  );
+
   return (
     <LayoutDoc>
       <h1>Navigation (Beta)</h1>

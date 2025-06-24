@@ -1,0 +1,8 @@
+const template = {
+  title: {
+    template: "%s | Ryunix Doc",
+    prefix: "Ryunix Doc",
+  },
+};
+
+export { template };

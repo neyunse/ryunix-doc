@@ -1,8 +1,17 @@
 import { Image } from "@unsetsoft/ryunixjs";
 import Code from "../../components/code.ryx";
 import LayoutDoc from "./_parts/LayoutDoc.ryx";
+import { useMetadata } from "@unsetsoft/ryunixjs";
+import { template } from "../../components/metatag.ryx";
 
 const ImageComponent = () => {
+  const metadata = useMetadata(
+    {
+      title: "Image Component",
+    },
+    template
+  );
+
   return (
     <LayoutDoc>
       <h1>Image Component</h1>
