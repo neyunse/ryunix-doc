@@ -1,5 +1,5 @@
-import Home from "./home";
-import Introduction from "./doc/introduction";
+import Home from "./home.ryx";
+import Introduction from "./doc/introduction.ryx";
 import NotFound from "./404.ryx";
 import Components from "./doc/components.ryx";
 import Styles from "./doc/styles.ryx";
