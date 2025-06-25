@@ -137,6 +137,11 @@ function App() {
 export default App;
 `}
         </Code>
+        <p>
+          useMetadata allows to insert at document level meta-tags or some tags.
+          These tags are not reached by google SEO, so it is recommended to
+          configure SEO in ryunix.config.js.
+        </p>
       </section>
     </LayoutDoc>
   );
