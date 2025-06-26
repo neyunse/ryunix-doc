@@ -108,6 +108,8 @@ const RyunixSettings = {
   },
   static: {
     favicon: true, // if is false the favicon is not mandatory
+
+    // global SEO
     seo: {
       title: "Ryunix Doc", // include a default title
       meta: {

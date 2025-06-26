@@ -1,2 +1,5 @@
 user-agent: *
 Disallow: /cdn-cgi/
+Allow: /
+
+Sitemap: https://ryunixjs.unsetsoft.com/sitemap.xml
