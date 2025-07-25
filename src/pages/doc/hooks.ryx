@@ -5,43 +5,43 @@ import { useStore, useQuery } from "@unsetsoft/ryunixjs";
 import { template } from "../../components/metatag.ryx";
 import { useMetadata } from "@unsetsoft/ryunixjs";
 const Hooks = () => {
-  const [count, setCount] = useStore(0);
-  const { id } = useQuery();
-  const handleButtonClick = () => {
-    setCount(count + 1);
-  };
-
-  useEffect(() => {
-    console.log("montado");
-
-    return () => {
-      console.log("desmontado");
+    const [count, setCount] = useStore(0);
+    const { id } = useQuery();
+    const handleButtonClick = () => {
+        setCount(count + 1);
     };
-  }, []);
 
-  const metadata = useMetadata(
-    {
-      title: "Hooks",
-    },
-    template
-  );
+    useEffect(() => {
+        console.log("montado");
 
-  return (
-    <LayoutDoc>
-      <h1>Hooks</h1>
-      <p>
+        return () => {
+            console.log("desmontado");
+        };
+    }, []);
+
+    const metadata = useMetadata(
+        {
+            title: "Hooks",
+        },
+        template
+    );
+
+    return (
+        <LayoutDoc>
+            <h1>Hooks</h1>
+            <p>
         RyunixJS brings with it an API similar to ReactJS and others, hooks can
         be used in any component and allow to create more robust applications.
-      </p>
-      <section id="useStore">
-        <h2>useStore</h2>
-        <div>
-          <button ryunix-class="test-button" onClick={handleButtonClick}>
+            </p>
+            <section id="useStore">
+                <h2>useStore</h2>
+                <div>
+                    <button ryunix-class="test-button" onClick={handleButtonClick}>
             Click to increment: {count}
-          </button>
-        </div>
-        <Code>
-          {`import { useStore } from "@unsetsoft/ryunixjs";
+                    </button>
+                </div>
+                <Code>
+                    {`import { useStore } from "@unsetsoft/ryunixjs";
 
 function App() {
   const [count, setCount] = useStore(0);
@@ -59,12 +59,12 @@ function App() {
 
 export default App;
 `}
-        </Code>
-      </section>
-      <section id="useEffect">
-        <h2>useEffect</h2>
-        <Code>
-          {`import { useEffect } from "@unsetsoft/ryunixjs";
+                </Code>
+            </section>
+            <section id="useEffect">
+                <h2>useEffect</h2>
+                <Code>
+                    {`import { useEffect } from "@unsetsoft/ryunixjs";
 function App() {
   useEffect(() => {
     //... Effect
@@ -78,12 +78,12 @@ function App() {
 
 export default App;
 `}
-        </Code>
-      </section>
-      <section id="useQuery">
-        <h2>useQuery</h2>
-        <Code>
-          {`import { useQuery } from "@unsetsoft/ryunixjs";
+                </Code>
+            </section>
+            <section id="useQuery">
+                <h2>useQuery</h2>
+                <Code>
+                    {`import { useQuery } from "@unsetsoft/ryunixjs";
 function App() {
   // /post?id=1
   const {id} = useQuery()
@@ -97,12 +97,12 @@ function App() {
 
 export default App;
 `}
-        </Code>
-      </section>
-      <section id="useHash">
-        <h2>useHash</h2>
-        <Code>
-          {`import { useQuery } from "@unsetsoft/ryunixjs";
+                </Code>
+            </section>
+            <section id="useHash">
+                <h2>useHash</h2>
+                <Code>
+                    {`import { useQuery } from "@unsetsoft/ryunixjs";
 function App() {
   // /hello#world
   const hash = useHash()
@@ -116,12 +116,12 @@ function App() {
 
 export default App;
 `}
-        </Code>
-      </section>
-      <section id="useMetadata">
-        <h2>useMetadata</h2>
-        <Code>
-          {`import { useMetadata } from "@unsetsoft/ryunixjs";
+                </Code>
+            </section>
+            <section id="useMetadata">
+                <h2>useMetadata</h2>
+                <Code>
+                    {`import { useMetadata } from "@unsetsoft/ryunixjs";
 function App() {
   const metadata = useMetadata({
     pageTitle: "My App page",
@@ -136,15 +136,15 @@ function App() {
 
 export default App;
 `}
-        </Code>
-        <p>
+                </Code>
+                <p>
           useMetadata allows to insert at document level meta-tags or some tags.
           These tags are not reached by google SEO, so it is recommended to
           configure SEO in ryunix.config.js.
-        </p>
-      </section>
-    </LayoutDoc>
-  );
+                </p>
+            </section>
+        </LayoutDoc>
+    );
 };
 
 export default Hooks;

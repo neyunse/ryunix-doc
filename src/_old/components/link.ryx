@@ -1,15 +1,5 @@
 const Link = ({ to, label, navigate, ...props }) => {
-
-  const handleClick = (e) => {
-
-    navigate(to);
-  };
-
-  return (
-    <a href={to}>
-        {label}
-    </a>
-  );
+    return <a href={to}>{label}</a>;
 };
 
 export default Link;

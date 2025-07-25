@@ -5,22 +5,22 @@ import { useMetadata } from "@unsetsoft/ryunixjs";
 import { template } from "../../components/metatag.ryx";
 
 const ImageComponent = () => {
-  const metadata = useMetadata(
-    {
-      title: "Image Component",
-    },
-    template
-  );
+    const metadata = useMetadata(
+        {
+            title: "Image Component",
+        },
+        template
+    );
 
-  return (
-    <LayoutDoc>
-      <h1>Image Component</h1>
-      <p>
+    return (
+        <LayoutDoc>
+            <h1>Image Component</h1>
+            <p>
         Ryunix provides an Image component to render images from the Virtual
         DOM. This ensures stability in the framework when processing images.
-      </p>
-      <Code>
-        {`import {Image} from "@unsetsoft/ryunixjs"
+            </p>
+            <Code>
+                {`import {Image} from "@unsetsoft/ryunixjs"
 
 const App = () => {
   return (
@@ -38,20 +38,20 @@ const Component = () => {
   );
 };
 `}
-      </Code>
-      <Image
-        ryunix-class="image"
-        width="800"
-        src="https://assets.tiltify.com/uploads/media_type/image/203025/blob-09636982-a21a-494b-bbe4-3692c2720ae3.jpeg"
-      />
-      <p>
+            </Code>
+            <Image
+                ryunix-class="image"
+                width="800"
+                src="https://assets.tiltify.com/uploads/media_type/image/203025/blob-09636982-a21a-494b-bbe4-3692c2720ae3.jpeg"
+            />
+            <p>
         When using "/cat.jpg", the image is expected to be located inside the
         "public" folder. However, the most common and recommended way is to
         import it.
-      </p>
+            </p>
 
-      <Code>
-        {`import {Image} from "@unsetsoft/ryunixjs"
+            <Code>
+                {`import {Image} from "@unsetsoft/ryunixjs"
 import Logo from "./resources/logo.png"
 
 const App = () => {
@@ -64,39 +64,39 @@ const App = () => {
 
 export default App;
 `}
-      </Code>
-      <h2>Common Atributes</h2>
-      <ul>
-        <li>width</li>
-        <li>height</li>
-      </ul>
-      <p>
+            </Code>
+            <h2>Common Atributes</h2>
+            <ul>
+                <li>width</li>
+                <li>height</li>
+            </ul>
+            <p>
         You can se more atributes{" "}
-        <a href="https://www.w3schools.com/tags/tag_img.asp" target="_blank">
+                <a href="https://www.w3schools.com/tags/tag_img.asp" target="_blank">
           here
-        </a>
-      </p>
-      <h2>Built-in Atributes (beta)</h2>
-      <ul>
-        <li>optimization: boolean</li>
-        <li>quality: number</li>
-      </ul>
-      <h3>Optimization Atribute</h3>
-      <p>
+                </a>
+            </p>
+            <h2>Built-in Atributes (beta)</h2>
+            <ul>
+                <li>optimization: boolean</li>
+                <li>quality: number</li>
+            </ul>
+            <h3>Optimization Atribute</h3>
+            <p>
         Enables image enhancement settings, allowing the use of{" "}
-        <strong>quality</strong> and also image transformation using{" "}
-        <strong>width</strong> and croping with <strong>height</strong>. Changes
+                <strong>quality</strong> and also image transformation using{" "}
+                <strong>width</strong> and croping with <strong>height</strong>. Changes
         are performed in the UnSetSoft cloud, so this feature is only available
         in production when using imported images or URLs.
-      </p>
-      <h3>Quality Atribute</h3>
-      <p>
+            </p>
+            <h3>Quality Atribute</h3>
+            <p>
         The <strong>quality</strong> attribute modifies the image to change its
         quality. You can see the difference by setting a value from 1 to 100. If
         you set it to "0", the quality will be set to the highest (100).
-      </p>
-    </LayoutDoc>
-  );
+            </p>
+        </LayoutDoc>
+    );
 };
 
 export default ImageComponent;

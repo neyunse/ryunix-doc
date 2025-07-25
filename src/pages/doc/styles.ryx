@@ -4,22 +4,22 @@ import { useMetadata } from "@unsetsoft/ryunixjs";
 import { template } from "../../components/metatag.ryx";
 
 const Styles = () => {
-  const metadata = useMetadata(
-    {
-      title: "Style & CSS",
-    },
-    template
-  );
-  return (
-    <LayoutDoc>
-      <h1>Style & CSS</h1>
-      <h2>Atributes</h2>
-      <p>
+    const metadata = useMetadata(
+        {
+            title: "Style & CSS",
+        },
+        template
+    );
+    return (
+        <LayoutDoc>
+            <h1>Style & CSS</h1>
+            <h2>Atributes</h2>
+            <p>
         To add styles in Ryunix, use the <strong>ryunix-class</strong> and
-        <strong>ryunix-style</strong> attributes.
-      </p>
-      <Code>
-        {`function App(){
+                <strong>ryunix-style</strong> attributes.
+            </p>
+            <Code>
+                {`function App(){
   return (
     <div ryunix-class="red"></div>
   )
@@ -33,14 +33,14 @@ function App(){
   )
 }
 `}
-      </Code>
-      <p>
-        <b>Important:</b> the atribute <strong>className</strong> are supported
+            </Code>
+            <p>
+                <b>Important:</b> the atribute <strong>className</strong> are supported
         for compatibility with React or others frameworks.{" "}
-      </p>
-      <h2>Importing CSS</h2>
-      <Code>
-        {`import "./styles/container.css"
+            </p>
+            <h2>Importing CSS</h2>
+            <Code>
+                {`import "./styles/container.css"
         
 export default function Container(){
   return (
@@ -48,9 +48,9 @@ export default function Container(){
   )
 }
 `}
-      </Code>
-    </LayoutDoc>
-  );
+            </Code>
+        </LayoutDoc>
+    );
 };
 
 export default Styles;

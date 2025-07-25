@@ -4,28 +4,28 @@ import { createContext } from "@unsetsoft/ryunixjs";
 const SideBarContext = createContext("sidebar");
 
 const SideBarProvider = ({ children }) => {
-  const [toggle, setToggle] = useStore(false);
+    const [toggle, setToggle] = useStore(false);
 
-  const toggleSidebar = () => {
-    if (toggle) setToggle(false);
-    if (!toggle) setToggle(true);
-  };
+    const toggleSidebar = () => {
+        if (toggle) setToggle(false);
+        if (!toggle) setToggle(true);
+    };
 
-  const hideSidebar = () => setToggle(false);
+    const hideSidebar = () => setToggle(false);
 
-  return (
-    <SideBarContext.Provider
-      value={{
-        active: toggle,
-        toggleSidebar,
-        hideSidebar,
-      }}
-    >
-      {children}
-    </SideBarContext.Provider>
-  );
+    return (
+        <SideBarContext.Provider
+            value={{
+                active: toggle,
+                toggleSidebar,
+                hideSidebar,
+            }}
+        >
+            {children}
+        </SideBarContext.Provider>
+    );
 };
 
-export const useSideBarContext = (id) => SideBarContext.useContext("sidebar");
+export const useSideBarContext = () => SideBarContext.useContext("sidebar");
 
 export default SideBarProvider;

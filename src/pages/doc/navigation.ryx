@@ -4,24 +4,24 @@ import { useMetadata } from "@unsetsoft/ryunixjs";
 import { template } from "../../components/metatag.ryx";
 
 const Navigation = () => {
-  const metadata = useMetadata(
-    {
-      title: "Navigation",
-    },
-    template
-  );
+    const metadata = useMetadata(
+        {
+            title: "Navigation",
+        },
+        template
+    );
 
-  return (
-    <LayoutDoc>
-      <h1>Navigation (Beta)</h1>
-      <p>
+    return (
+        <LayoutDoc>
+            <h1>Navigation (Beta)</h1>
+            <p>
         Try navigation{" "}
-        <a href="https://demo-navigation-ryunixjs.vercel.app" target="_blank">
+                <a href="https://demo-navigation-ryunixjs.vercel.app" target="_blank">
           here
-        </a>
-      </p>
-      <Code>
-        {`import { RouterProvider, Children, NavLink } from "@unsetsoft/ryunixjs";
+                </a>
+            </p>
+            <Code>
+                {`import { RouterProvider, Children, NavLink } from "@unsetsoft/ryunixjs";
 
 function Home() {
   return (
@@ -79,24 +79,24 @@ const App = () => {
 };
 
 export default App`}
-      </Code>
-      <h2>Activate link</h2>
+            </Code>
+            <h2>Activate link</h2>
       Ryunix supports and supports the possibility of adding a class{" "}
-      {"'active'"}.
-      <Code>
-        {`<NavLink
+            {"'active'"}.
+            <Code>
+                {`<NavLink
   to={link.to}
   ryunix-class={({ isActive }) =>
     isActive ? "active" : ""
   }>
   <span onClick={() => cxt.hideSidebar()}>{link.label}</span>
 </NavLink>`}
-      </Code>
-      <p>
-        <b>Important:</b> className also supports {"'({ isActive })'"}
-      </p>
-    </LayoutDoc>
-  );
+            </Code>
+            <p>
+                <b>Important:</b> className also supports {"'({ isActive })'"}
+            </p>
+        </LayoutDoc>
+    );
 };
 
 export default Navigation;

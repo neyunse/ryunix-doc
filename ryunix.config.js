@@ -1,13 +1,15 @@
 /** @type {import('@unsetsoft/ryunix-webpack/config').Setting} */
 
 const RyunixSettings = {
-  experimental: {
+  experimental:{ 
     ssg: {
-      baseURL: "https://ryunixjs.unsetsoft.com",
-      sitemap: true,
-      sitemap_settings:{
-        priority: 0.9,
-        changefreq: "always"
+      sitemap: {
+        enable: true, // active sitemap
+        baseURL: "https://ryunixjs.unsetsoft.com",
+        settings: {
+          changefreq: "always",
+          priority: 0.9,
+        },
       },
       prerender: [
         {
@@ -105,6 +107,9 @@ const RyunixSettings = {
         },
       ],
     },
+    env:{
+      ABC: "HELLO WORLD"
+    }
   },
   static: {
     favicon: true, // if is false the favicon is not mandatory

@@ -6,16 +6,16 @@ import Cf from "./cf";
 import CSS from "./css";
 import ENVS from "./env";
 import Contribute from "./contribute";
-import NotFound from "./notFound"
+import NotFound from "./notFound";
 
 export {
-  Main,
-  Components,
-  Hooks,
-  Navigation,
-  Cf,
-  CSS,
-  ENVS,
-  Contribute,
-  NotFound
-}
+    Main,
+    Components,
+    Hooks,
+    Navigation,
+    Cf,
+    CSS,
+    ENVS,
+    Contribute,
+    NotFound
+};

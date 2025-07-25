@@ -5,14 +5,14 @@ import Header from "./layout/header";
 import SideBarProvider from "./pages/context.ryx";
 
 function App() {
-  return (
-    <RouterProvider routes={routesRyx}>
-      <SideBarProvider>
-        <Header />
-        <Children />
-      </SideBarProvider>
-    </RouterProvider>
-  );
+    return (
+        <RouterProvider routes={routesRyx}>
+            <SideBarProvider>
+                <Header />
+                <Children />
+            </SideBarProvider>
+        </RouterProvider>
+    );
 }
 
 export default App;
