@@ -125,6 +125,11 @@ const RyunixSettings = {
       },
     },
   },
+  eslint:{
+    rules: {
+      "no-unused-vars": "off"
+    }
+  },
   webpack: {
     production: true, // use 'false' for dev mode
   },

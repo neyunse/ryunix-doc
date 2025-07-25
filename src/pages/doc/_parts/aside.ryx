@@ -26,6 +26,10 @@ const SideBar = () => {
                             to: "/doc/api/hooks",
                             label: "Hooks",
                         },
+                        {
+                            to: "/doc/config",
+                            label: "Configuration",
+                        },
                     ]}
                 />
 

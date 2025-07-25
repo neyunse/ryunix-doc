@@ -1,0 +1,223 @@
+import Code from "../../components/code.ryx";
+import LayoutDoc from "./_parts/LayoutDoc.ryx";
+import { useMetadata } from "@unsetsoft/ryunixjs";
+import { template } from "../../components/metatag.ryx";
+
+const Config = () => {
+    const metadata = useMetadata(
+        {
+            title: "Ryunix Configuration Options",
+        },
+        template
+    );
+
+    return (
+        <LayoutDoc>
+            <h1>Ryunix Configuration</h1>
+            <p>
+        The <code>ryunix.config.js</code> file defines the behavior of a
+        RyunixJS project. It supports experimental features, static/SEO
+        settings, ESLint rules, and Webpack customization.
+            </p>
+
+            <h2>Experimental Options</h2>
+            <p>
+        The <code>experimental</code> section includes features such as Static
+        Site Generation (SSG) and custom environment variables.
+            </p>
+            <ul>
+                <li>
+                    <b>ssg.sitemap.enable</b>: Enable or disable sitemap generation.
+                </li>
+                <li>
+                    <b>ssg.sitemap.baseURL</b>: The base URL used for sitemap entries.
+                </li>
+                <li>
+                    <b>ssg.sitemap.settings</b>: Settings like <code>changefreq</code> and{" "}
+                    <code>priority</code> for sitemap entries.
+                </li>
+                <li>
+                    <b>ssg.prerender</b>: List of pages to prerender during build. Each
+          entry can include custom <code>meta</code> tags.
+                </li>
+                <li>
+                    <b>env</b>: Custom environment variables injected at build/runtime.
+                </li>
+            </ul>
+
+            <Code title="Example: Experimental Options">
+                {`export default {
+  experimental: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://example.com",
+        settings: {
+          changefreq: "always",
+          priority: 1.0
+        }
+      },
+      prerender: [
+        { path: "/", meta: { title: "Home" } },
+        { path: "/about", meta: { title: "About" } }
+      ]
+    },
+    env: {
+      API_KEY: "123456"
+    }
+  }
+};`}
+            </Code>
+
+            <h2>Static Options</h2>
+            <p>
+        The <code>static</code> section configures assets and global SEO
+        defaults. Both <b>favicon</b> and <b>customTemplate</b> are booleans:
+                <br />
+                <b>favicon:</b> If <code>true</code>, expects a{" "}
+                <code>public/favicon.png</code> file.
+                <br />
+                <b>customTemplate:</b> If <code>true</code>, uses{" "}
+                <code>public/index.html</code> instead of the default template.
+            </p>
+            <ul>
+                <li>
+                    <b>favicon</b>: Enable/disable favicon usage.
+                </li>
+                <li>
+                    <b>customTemplate</b>: Enable/disable use of custom HTML template.
+                </li>
+                <li>
+                    <b>seo.pageLang</b>: Default language (affects <code>lang</code>{" "}
+          attribute in HTML).
+                </li>
+                <li>
+                    <b>seo.title</b>: Default global page title.
+                </li>
+                <li>
+                    <b>seo.meta</b>: Default meta tags for SEO.
+                </li>
+            </ul>
+
+            <Code title="Example: Static Options">
+                {`export default {
+  static: {
+    favicon: true,
+    customTemplate: true,
+    seo: {
+      pageLang: "es",
+      title: "My Ryunix App",
+      meta: {
+        description: "A RyunixJS project",
+        keywords: "ryunix, framework, js"
+      }
+    }
+  }
+};`}
+            </Code>
+
+            <h2>ESLint Options</h2>
+            <p>
+        Configure how ESLint works with <code>.ryx</code> files. The{" "}
+                <code>react</code> plugin is included by default and can be extended
+        with more plugins.
+            </p>
+            <ul>
+                <li>
+                    <b>files</b>: Glob patterns for files to lint.
+                </li>
+                <li>
+                    <b>plugins</b>: Additional ESLint plugins.
+                </li>
+                <li>
+                    <b>rules</b>: ESLint rules override.
+                </li>
+            </ul>
+
+            <Code title="Example: ESLint Options">
+                {`export default {
+  eslint: {
+    files: ["**/*.ryx"],
+    plugins: {
+      // react is included by default
+      "eslint-plugin-import": require("eslint-plugin-import")
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      "react/jsx-uses-vars": "warn"
+    }
+  }
+};`}
+            </Code>
+
+            <h2>Webpack Options</h2>
+            <p>
+        Customize Webpack builds for RyunixJS projects, including output
+        directories, aliases, and dev server options.
+            </p>
+            <ul>
+                <li>
+                    <b>production</b>: Enable production optimizations.
+                </li>
+                <li>
+                    <b>root</b>: Source folder.
+                </li>
+                <li>
+                    <b>output.buildDirectory</b>: Build output folder (final files go to{" "}
+                    <code>buildDirectory/static</code>).
+                </li>
+                <li>
+                    <b>target</b>: Build target (e.g. <code>web</code>).
+                </li>
+                <li>
+                    <b>resolve.alias</b>: Path aliases for imports.
+                </li>
+                <li>
+                    <b>devServer.port</b>: Dev server port.
+                </li>
+                <li>
+                    <b>devServer.proxy</b>: Proxy configuration.
+                </li>
+                <li>
+                    <b>devServer.allowedHosts</b>: Allowed hosts for dev server.
+                </li>
+                <li>
+                    <b>experiments.lazyCompilation</b>: Enable lazy compilation.
+                </li>
+            </ul>
+
+            <Code title="Example: Webpack Options">
+                {`export default {
+  webpack: {
+    production: true,
+    root: "app",
+    output: {
+      buildDirectory: "dist"
+    },
+    resolve: {
+      alias: {
+        "@components": "./src/components"
+      },
+      extensions: [".js", ".ryx"]
+    },
+    devServer: {
+      port: 4000,
+      proxy: [{ "/api": "http://localhost:5000" }]
+    },
+    experiments: {
+      lazyCompilation: true
+    }
+  }
+};`}
+            </Code>
+
+            <h2>Usage</h2>
+            <p>
+        Place this file at the root of your project as{" "}
+                <code>ryunix.config.js</code> to customize your setup.
+            </p>
+        </LayoutDoc>
+    );
+};
+
+export default Config;

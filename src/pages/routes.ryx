@@ -6,6 +6,7 @@ import Styles from "./doc/styles.ryx";
 import ImageComponent from "./doc/image.ryx";
 import Navigation from "./doc/navigation.ryx";
 import Hooks from "./doc/hooks.ryx";
+import Config from "./doc/config.ryx";
 
 export default [
     {
@@ -35,6 +36,10 @@ export default [
     {
         path: "/doc/api/hooks",
         component: Hooks,
+    },
+    {
+        path: "/doc/config",
+        component: Config,
     },
     { path: "*", NotFound: NotFound, noRenderLink: true },
 ];
