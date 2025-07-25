@@ -1,4 +1,3 @@
 node_modules
 .ryunix
-package-lock.json
 yarn.lock
