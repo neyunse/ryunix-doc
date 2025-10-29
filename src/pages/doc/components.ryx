@@ -11,16 +11,16 @@ const Components = () => {
         template
     );
     return (
-        <LayoutDoc>
-            <h1>Components</h1>
-            <h2>Constant & Function Components</h2>
-            <p>
+      <LayoutDoc>
+        <h1>Components</h1>
+        <h2>Constant & Function Components</h2>
+        <p>
           Are flat functions that have as a parameter (props) as the only
           argument. They must always begin with a capital letter to be used in
           JSX or RYX.
-            </p>
-            <Code title="Constant Component">
-                {`const Component = (props) => {
+        </p>
+        <Code title="Constant Component">
+          {`const Component = (props) => {
   return (
     <>
       <h1>{props.message}</h1>
@@ -30,10 +30,10 @@ const Components = () => {
 
 export default Component;
 `}
-            </Code>
+        </Code>
 
-            <Code title="Function Component">
-                {`export default function Component(props) {
+        <Code title="Function Component">
+          {`export default function Component(props) {
   return (
     <>
       <h1>{props.message}</h1>
@@ -41,17 +41,17 @@ export default Component;
   );
 };
 `}
-            </Code>
-            <h2>Fragments</h2>
-            <p>
+        </Code>
+        <h2>Fragments</h2>
+        <p>
           A Fragment component allows placing multiple items inside. Using
-                <strong>Ryunix.Fragment</strong> can be useful if you're working in a
+          <strong>Ryunix.Fragment</strong> can be useful if you're working in a
           non-JSX environment. By default,
-                <strong>@unsetsoft/ryunix-webpack</strong> adds "Ryunix.Fragment" to
+          <strong>@unsetsoft/ryunix-presets</strong> adds "Ryunix.Fragment" to
           simplify working with JSX and RYX.
-            </p>
-            <Code title="Fragment Component">
-                {`import Ryunix from "@unsetsoft/ryunixjs"
+        </p>
+        <Code title="Fragment Component">
+          {`import Ryunix from "@unsetsoft/ryunixjs"
 
 const Component = (props) => {
   return (
@@ -61,10 +61,10 @@ const Component = (props) => {
   );
 };
 `}
-            </Code>
-            <p>Therefore, it is common to use the following method {"<></>"}</p>
-            <Code>
-                {`const Component = (props) => {
+        </Code>
+        <p>Therefore, it is common to use the following method {"<></>"}</p>
+        <Code>
+          {`const Component = (props) => {
   return (
     <>
       <h1>{props.message}</h1>
@@ -72,13 +72,13 @@ const Component = (props) => {
   );
 };
 `}
-            </Code>
-            <p>
-                <b>Note:</b> RyunixJS does not use keys like React or other
+        </Code>
+        <p>
+          <b>Note:</b> RyunixJS does not use keys like React or other
           frameworks. Instead, the position is determined based on where the
           content is rendered in the array.
-            </p>
-        </LayoutDoc>
+        </p>
+      </LayoutDoc>
     );
 };
 

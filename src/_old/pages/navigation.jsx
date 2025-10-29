@@ -77,7 +77,7 @@ const Navigation = () => {
 
       <Alert type="warning">
         Navigation only works in environments such as Vercel & needs
-        @unsetsoft/ryunix-webpack or Rspack template.
+        @unsetsoft/ryunix-presets or Rspack template.
       </Alert>
     </>
   );

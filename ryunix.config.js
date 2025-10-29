@@ -1,4 +1,4 @@
-/** @type {import('@unsetsoft/ryunix-webpack/config').Setting} */
+/** @type {import('@unsetsoft/ryunix-presets/config').Setting} */
 
 const RyunixSettings = {
   experimental:{ 
