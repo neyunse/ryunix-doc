@@ -20,6 +20,6 @@
     "svgo-loader": "^4.0.0"
   },
   "devDependencies": {
-    "@unsetsoft/ryunix-presets": "^1.0.17"
+    "@unsetsoft/ryunix-presets": "^1.0.18"
   }
 }
