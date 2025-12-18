@@ -2,7 +2,7 @@
   "outputDirectory": ".ryunix/static",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "startCommand": "npm run start",
+ 
   "installCommand": "npm install",
   "framework": null,
   "rewrites": [
