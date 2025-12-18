@@ -15,10 +15,10 @@
     "node": "^18 || ^20 || ^22"
   },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "1.2.3-canary.14",
+    "@unsetsoft/ryunixjs": "1.2.4",
     "serve": "^14.2.5"
   },
   "devDependencies": {
-    "@unsetsoft/ryunix-presets": "^1.0.23-canary.72"
+    "@unsetsoft/ryunix-presets": "^1.0.24"
   }
 }
