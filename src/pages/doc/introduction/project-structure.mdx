@@ -1,0 +1,187 @@
+---
+title: Project Structure
+description: How to organize your RyunixJS project
+section: Introduction
+slug: project-structure
+---
+
+# Project Structure
+
+## Basic Structure
+
+```
+my-app/
+├── src/
+│   ├── main.ryx           # Entry point
+│   ├── App.ryx            # Root component
+│   └── styles/            # CSS files
+│       └── index.css
+├── public/                # Static assets
+│   ├── favicon.png
+│   └── images/
+├── ryunix.config.js       # Configuration
+└── package.json
+```
+
+## Entry Point (main.ryx)
+
+```jsx
+import Ryunix from "@unsetsoft/ryunixjs";
+import App from "./App";
+import "./styles/index.css";
+
+Ryunix.init(<App />);
+```
+
+## Root Component (App.ryx)
+
+```jsx
+function App() {
+  return (
+    <>
+      <h1>Hello World</h1>
+    </>
+  );
+}
+
+export default App;
+```
+
+## File Extensions
+
+RyunixJS uses `.ryx` extension by default:
+
+- **`.ryx`** - JSX components (recommended)
+- **`.jsx`** - Also supported
+- **`.js`** - Also supported
+- **`.mdx`** - Markdonw files
+- **`.css`** - CSS
+
+## Recommended Folder Organization
+
+### Small Projects
+
+```
+src/
+├── main.ryx
+├── App.ryx
+└── components/
+```
+
+### Medium Projects
+
+```
+src/
+├── main.ryx
+├── App.ryx
+├── pages/          # Routing pages
+├── components/
+├── hooks/          # Custom hooks
+├── utils/          # Utilities
+└── styles/         # CSS
+```
+
+## Public Directory
+
+Static files go in `public/`:
+
+```
+public/
+├── favicon.png
+├── images/
+│   └── logo.png
+├── fonts/
+└── data/
+    └── config.json
+```
+
+Access in code:
+
+```jsx
+<img src="/images/logo.png" />
+```
+
+## Configuration File
+
+```javascript
+// ryunix.config.js
+module.exports = {
+  webpack: {
+    production: false,
+    root: "src",
+    output: {
+      buildDirectory: ".ryunix",
+    },
+  },
+  static: {
+    seo: {
+      title: "My App",
+      pageLang: "en",
+    },
+  },
+};
+```
+
+## Import Aliases
+
+Configure in `ryunix.config.js`:
+
+```javascript
+module.exports = {
+  webpack: {
+    resolve: {
+      alias: {
+        "@": "src",
+        "@components": "src/components",
+        "@pages": "src/pages",
+      },
+    },
+  },
+};
+```
+
+Use in code:
+
+```jsx
+import Header from "@components/Header";
+import Home from "@pages/Home";
+```
+
+## Environment Variables
+
+Create `.env` file:
+
+```env
+API_URL=https://api.example.com
+KEY=abc123
+```
+
+Access in code:
+
+```jsx
+const apiUrl = ryunix.env.RYUNIX_APP_API_URL;
+const key = ryunix.env.RYUNIX_APP_KEY;
+```
+
+from `ryunix.config.js`:
+
+```javascript
+module.exports = {
+  env: {
+    KEY: "XXXXXXXXXX",
+  },
+};
+```
+
+```jsx
+const key = ryunix.config.RYUNIX_APP_KEY;
+```
+
+Variables must start with `RYUNIX_APP_`.
+
+## Best Practices
+
+1. **Keep components small** - Single responsibility
+2. **Use feature folders** - Group related files
+3. **Consistent naming** - PascalCase for components
+4. **Organize by feature** - Not by file type

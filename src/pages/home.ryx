@@ -1,83 +1,128 @@
-import { NavLink } from "@unsetsoft/ryunixjs";
-import Features from "../components/features.ryx";
-import config from "../config";
-import { useMetadata } from "@unsetsoft/ryunixjs";
-import { template } from "../components/metatag.ryx";
+import { NavLink, useEffect, useMetadata, useStore } from "@unsetsoft/ryunixjs";
+import routesRyx from "./routes.ryx";
 
-const Home = () => {
-    const metadata = useMetadata({}, template);
-    return (
-        <>
-            <section ryunix-class="hero-section">
-                <div ryunix-class="container hero-content">
-                    <h1 ryunix-class="hero-title">
-            Welcome to{" "}
-                        <span ryunix-class="text-primary">{config.siteName}</span>
-                    </h1>
-                    <p ryunix-class="hero-subtitle">
-            The next-generation JavaScript framework for building modern, fast,
-            and scalable web applications.
-                    </p>
-                    <div ryunix-class="hero-cta-buttons">
-                        <NavLink
-                            to="/doc/introduction"
-                            ryunix-class="button button-primary"
-                        >
-              Get Started
-                        </NavLink>
-                        <a
-                            href={config.repo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            ryunix-class="button button-secondary"
-                        >
-              View on GitHub
-                        </a>
-                    </div>
-                </div>
-            </section>
+const Home = (props) => {
+  const [copied, setCopied] = useStore(false);
+  //filter path by props.key === "/"
 
-            <section ryunix-class="features-section">
-                <div ryunix-class="container">
-                    <h2 ryunix-class="section-title">Why {config.siteName}?</h2>
-                    <div ryunix-class="features-grid">
-                        <Features icon="🚀" title="High Optimization">
-              Optimized for great performance.
-                        </Features>
+  const filteredRoutes = routesRyx.filter(
+    (route) => route.path === window.location.pathname && props.key === "/"
+  );
 
-                        <Features icon="⚙️" title="Scalable and Robust">
-              Built to handle applications of any size.
-                        </Features>
-                    </div>
-                </div>
-            </section>
+  useMetadata({
+    ...filteredRoutes[0].meta,
+  });
 
-            <section ryunix-class="cta-section">
-                <div ryunix-class="container">
-                    <h2 ryunix-class="section-title">
-            Ready to build something amazing?
-                    </h2>
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText("npx @unsetsoft/cra my-page");
+    setCopied(true);
+  };
 
-                    <div ryunix-class="cta-buttons">
-                        <NavLink
-                            to="/doc/introduction"
-                            ryunix-class="button button-primary-outline"
-                        >
-              Read the Documentation
-                        </NavLink>
-                    </div>
-                </div>
-            </section>
-            <footer ryunix-class="site-footer">
-                <div ryunix-class="container">
-                    <p>
-            &copy; <span id="current-year"></span> UnSetSoft. All rights
-            reserved.
-                    </p>
-                </div>
-            </footer>
-        </>
-    );
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => {
+        setCopied(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
+
+  return (
+    <>
+      {/* HERO */}
+      <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:grid gap-16 sm:gap-y-24 lg:grid-cols-2 lg:items-center pb-20 py-24 sm:py-32 lg:py-40">
+        <div className="flex justify-center lg:justify-start">
+          <div className="lg:min-h-[540px]">
+            <h1 className="tracking-tight font-bold text-5xl sm:text-6xl text-white">
+              The new generation JavaScript Framework
+            </h1>
+
+            <p className="text-lg sm:text-xl leading-8 text-gray-400 mt-6">
+              RyunixJS is a powerful and flexible JavaScript framework for
+              building modern web applications with ease and efficiency.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <NavLink
+                to="/docs/getting-started"
+                className="inline-block bg-transparent border border-[#8b5cf6] text-[#8b5cf6] font-semibold rounded-lg px-6 py-3 hover:bg-[#8b5cf6] hover:text-white transition"
+              >
+                Get Started
+              </NavLink>
+
+              <a
+                href="https://github.com/UnSetSoft/Ryunixjs"
+                className="inline-block bg-[#222225] border border-[#2e2e30] text-gray-300 font-semibold rounded-lg px-6 py-3 hover:bg-gray-700 hover:text-white transition"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on GitHub
+              </a>
+            </div>
+
+            {/* CODE BLOCK */}
+            <div className="mt-8 bg-[#1e1e1e] rounded-lg p-4 overflow-x-auto max-w-max shadow-lg flex items-center gap-2 flex-wrap">
+              <span className="text-sm text-gray-400">$</span>
+
+              <pre>
+                <code className="text-sm text-purple-400">
+                  npx @unsetsoft/cra my-page
+                </code>
+              </pre>
+
+              <button
+                className="ml-2 bg-purple-600 hover:bg-purple-700 text-white text-sm px-2.5 py-1.5 rounded-lg transition"
+                onClick={copyToClipboard}
+              >
+                {copied ? "Copied!" : "Copy"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FEATURES */}
+      <section className="relative isolate bg-gradient-to-b from-[#161618] to-[#111112] border-t border-[#8b5cf6]">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:grid gap-16 lg:grid-cols-2 lg:items-center">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight font-bold text-white">
+            Why RyunixJS?
+          </h2>
+
+          <div className="flex flex-col gap-6 text-gray-400">
+            <div className="bg-[#1e1e1e] p-6 rounded-lg shadow-lg">
+              <h3 className="text-2xl font-semibold mb-2 text-white">
+                Performance
+              </h3>
+              <p>
+                RyunixJS is optimized for speed and efficiency, ensuring fast
+                load times and smooth user experiences.
+              </p>
+            </div>
+
+            <div className="bg-[#1e1e1e] p-6 rounded-lg shadow-lg">
+              <h3 className="text-2xl font-semibold mb-2 text-white">
+                Flexibility
+              </h3>
+              <p>
+                RyunixJS offers a modular architecture that allows developers to
+                customize and extend their applications easily.
+              </p>
+            </div>
+
+            <div className="bg-[#1e1e1e] p-6 rounded-lg shadow-lg">
+              <h3 className="text-2xl font-semibold mb-2 text-white">
+                Developer Experience
+              </h3>
+              <p>
+                With a focus on simplicity and ease of use, RyunixJS provides a
+                seamless development experience for building web applications.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Home;

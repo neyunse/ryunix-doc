@@ -1,0 +1,63 @@
+---
+title: Getting Started
+description: Quick start guide for RyunixJS
+slug: getting-started
+section: Introduction
+---
+
+# Getting Started
+
+RyunixJS is a lightweight JavaScript framework (8KB) for building user interfaces. Like React, but smaller and with integrated routing.
+
+## Quick Start
+
+```bash
+npx @unsetsoft/cra@latest my-app
+cd my-app
+npm run dev
+```
+
+Your app is now running at `http://localhost:3000`
+
+## Your First Component
+
+```jsx
+// src/App.ryx
+function App() {
+  const [count, setCount] = useStore(0);
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+## Key Concepts
+
+- **Components** - Functions that return JSX
+- **Hooks** - `useStore`, `useEffect`, `useMemo`, etc.
+- **Routing** - Built-in, no external packages needed
+- **JSX** - Same syntax as React
+
+## Project Structure
+
+```
+my-app/
+├── src/
+│   ├── main.ryx       # Entry point
+│   ├── App.ryx        # Root component
+│   └── pages/         # Your pages
+├── public/            # Static assets
+└── ryunix.config.js   # Configuration
+```
+
+## Next Steps
+
+- [Installation](/docs/installation) - Detailed setup guide
+- [Differences with React](/docs/differences-with-react) - Coming from React?
+- [Navigation](/docs/navigation) - Routing and navigation

@@ -4,23 +4,21 @@
   "main": "index.js",
   "homepage": "./",
   "scripts": {
-    "dev": "ryunix server",
-    "build": "ryu-pack build",
+    "dev": "ryunix dev",
+    "start": "ryunix start",
+    "build": "ryunix build",
     "lint": "ryunix lint",
-    "lint-fix": "ryunix lint --fix"
+    "lint-fix": "ryunix lint --fix",
+    "html": "ryunix customHtml"
   },
   "engines": {
     "node": "^18 || ^20 || ^22"
   },
   "dependencies": {
-    "@svgr/webpack": "^8.1.0",
-    "@unsetsoft/ryunixjs": "1.2.2",
- 
-    "highlight.js": "11.11.1",
-    "prismjs": "1.30.0",
-    "svgo-loader": "^4.0.0"
+    "@unsetsoft/ryunixjs": "1.2.3-canary.14",
+    "serve": "^14.2.5"
   },
   "devDependencies": {
-    "@unsetsoft/ryunix-presets": "^1.0.20"
+    "@unsetsoft/ryunix-presets": "^1.0.23-canary.72"
   }
 }

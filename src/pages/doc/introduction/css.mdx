@@ -1,0 +1,123 @@
+---
+title: CSS
+description: Styling your RyunixJS application
+section: Introduction
+slug: css
+---
+
+# CSS
+
+RyunixJS supports multiple CSS approaches.
+
+## Importing CSS
+
+```jsx
+// main.ryx
+import "./styles/index.css";
+import App from "./App";
+
+Ryunix.init(<App />);
+```
+
+## Inline Styles
+
+### Object Syntax
+
+```jsx
+function Button() {
+  return (
+    <button
+      style={{
+        backgroundColor: "#007bff",
+        color: "white",
+        padding: "10px 20px",
+        border: "none",
+        borderRadius: "4px",
+      }}
+    >
+      Click me
+    </button>
+  );
+}
+```
+
+### Dynamic Styles
+
+```jsx
+function Alert({ type }) {
+  const styles = {
+    padding: "16px",
+    borderRadius: "8px",
+    backgroundColor: type === "error" ? "#f44336" : "#4caf50",
+    color: "white",
+  };
+
+  return <div style={styles}>Alert message</div>;
+}
+```
+
+## CSS Classes
+
+### Using className
+
+```jsx
+<div className="container">
+  <h1 className="title">Hello</h1>
+</div>
+```
+
+### ryunix-class Attribute
+
+Alternative custom attribute:
+
+```jsx
+<div ryunix-class="container">Content</div>
+```
+
+## SASS/SCSS
+
+The supports are not implemented yet.
+
+## Conditional Classes
+
+```jsx
+function Button({ primary, disabled }) {
+  const classes = [
+    "button",
+    primary && "button-primary",
+    disabled && "button-disabled",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return <button className={classes}>Click</button>;
+}
+```
+
+## Tailwind CSS
+
+Supported only with CDN using custom html template.
+
+```json
+{
+  "scripts": {
+    "customHtml": "ryunix customHtml"
+  }
+}
+```
+
+```
+npm run customHtml
+```
+
+Add customTemplate in `ryunix.config.js`:
+
+```javascript
+module.exports = {
+  static: {
+    customTemplate: true,
+  },
+};
+```
+
+finaly add the CDN link to the html.

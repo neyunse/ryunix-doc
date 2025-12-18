@@ -1,18 +1,72 @@
-import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
-
-import routesRyx from "./pages/routes.ryx";
-import Header from "./layout/header";
-import SideBarProvider from "./pages/context.ryx";
+import { Children, Image, NavLink, RouterProvider } from "@unsetsoft/ryunixjs";
+import Logo from "./resources/logo-min.svg";
+import Routes from "./pages/routes.ryx";
+import DocLayout from "./pages/doc/layout.ryx";
 
 function App() {
-    return (
-        <RouterProvider routes={routesRyx}>
-            <SideBarProvider>
-                <Header />
-                <Children />
-            </SideBarProvider>
-        </RouterProvider>
-    );
+  const filteredRoutes = Routes.filter(
+    (route) => route.path && route.path.startsWith("/docs")
+  );
+
+  return (
+    <RouterProvider routes={Routes}>
+      {/* HEADER */}
+      <header className="backdrop-blur border-b   flex flex-col bg-[#111112] text-white border-[#8b5cf6] h-[var(--ui-header-height)]">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 h-full">
+          <div className="lg:flex-1 flex gap-1.5 min-w-0 items-end">
+            <NavLink to="/" className="text-lg font-bold px-3 py-2.5 block">
+              <Image src={Logo} width={40} height={40} fill="#fff" alt="" />
+            </NavLink>
+          </div>
+
+          <div className="flex items-center justify-end lg:flex-1 gap-1.5">
+            <nav className="relative flex gap-1.5 items-center justify-between">
+              <ul className="isolate min-w-0 flex items-center">
+                <li className="min-w-0 py-2">
+                  <NavLink
+                    to="/docs/getting-started"
+                    className="px-3 py-2.5 block hover:text-[#8b5cf6]"
+                  >
+                    Docs
+                  </NavLink>
+                </li>
+                <li className="min-w-0 py-2">
+                  <a
+                    href="https://github.com/UnSetSoft/Ryunixjs"
+                    className="px-3 py-2.5 block hover:text-[#8b5cf6]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* MAIN */}
+      <main className="text-white bg-[#111112] min-h-[calc(100vh-var(--ui-header-height))]">
+        {window.location.pathname.startsWith("/docs/") ? (
+          <DocLayout routes={filteredRoutes}>
+            <Children />
+          </DocLayout>
+        ) : (
+          <Children />
+        )}
+      </main>
+
+      {/* FOOTER */}
+      <footer className="backdrop-blur bg-[#111112] border-t h-20 flex items-center justify-center text-white border-[#8b5cf6]">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <p className="text-sm text-gray-400">
+            &copy; {new Date().getFullYear()} UnSetSoft. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </RouterProvider>
+  );
 }
 
 export default App;

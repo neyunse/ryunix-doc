@@ -1,22 +1,14 @@
 import { NavLink } from "@unsetsoft/ryunixjs";
 
 const NotFound = () => {
-    return (
-        <div className="nf">
-            <section className="nf-container">
-                <article className="nf-content">
-                    <span>404</span>
-                    <h1>NOT FOUND</h1>
-                    <blockquote>
-              Oops! The content don't exist or was changed.
-                    </blockquote>
-                    <NavLink className="go-back-button" to="/">
-              Go to home
-                    </NavLink>
-                </article>
-            </section>
-        </div>
-    );
+  return (
+    <div className="flex flex-col items-center justify-center min-h-(--ui-main-min-height) text-white px-4">
+      <h1 className="text-6xl font-bold mb-4">404</h1>
+      <p className="text-xl mb-8">
+        Oops! The page you're looking for doesn't exist.
+      </p>
+    </div>
+  );
 };
 
 export default NotFound;

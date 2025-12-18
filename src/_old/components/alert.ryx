@@ -1,9 +1,0 @@
-const Alert = (props) => {
-    return (
-        <div ryunix-class={props.type ? `Alert ${props.type}` : "Alert"}>
-            <p>{props.children}</p>
-        </div>
-    );
-};
-
-export default Alert;

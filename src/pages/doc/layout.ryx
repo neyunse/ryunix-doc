@@ -1,0 +1,86 @@
+import { NavLink, useMetadata } from "@unsetsoft/ryunixjs";
+
+const DocLayout = ({ children, routes }) => {
+  const activeRoute = routes.find(
+    (route) => route.path === window.location.pathname
+  );
+
+  useMetadata({
+    ...activeRoute.meta,
+  });
+
+  // Filtramos solo las rutas de /docs
+  const docRoutes = routes.filter(
+    (route) =>
+      route.path && route.path.startsWith("/docs") && !route.noRenderLink
+  );
+
+  // Agrupamos rutas por sección
+  const sections = docRoutes.reduce((acc, route) => {
+    const section = route.section || "Docs";
+    if (!acc[section]) acc[section] = [];
+    acc[section].push(route);
+    return acc;
+  }, {});
+
+  return (
+    <div className="max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="lg:grid lg:grid-cols-12 gap-2">
+        {/* ========== SIDEBAR IZQUIERDO (STICKY) ========== */}
+        <aside
+          className="
+            hidden lg:block
+            lg:col-span-2
+            sticky top-10 z-50
+            h-[calc(100vh-var(--ui-header-height))]
+            overflow-y-auto
+            pr-4
+             
+          "
+        >
+          <nav className="space-y-6 text-sm">
+            {Object.entries(sections).map(([sectionName, routes]) => (
+              <div key={sectionName}>
+                <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">
+                  {sectionName}
+                </p>
+                {routes.map((route) => (
+                  <NavLink
+                    key={route.path}
+                    to={route.path}
+                    className="block px-3 py-2 rounded-md text-gray-300 hover:bg-[#020617] hover:text-white"
+                  >
+                    {route.label || route.path.replace("/docs/", "")}
+                  </NavLink>
+                ))}
+              </div>
+            ))}
+          </nav>
+        </aside>
+
+        {/* ========== CONTENIDO CENTRAL ========== */}
+        <main className="lg:col-span-7 min-w-0 border-l border-[#1f2937] pl-4 pr-4">
+          <article className="docs-content scroll-smooth">{children}</article>
+        </main>
+
+        {/* ========== TOC DERECHO (STICKY) ========== */}
+        <aside
+          className="
+            hidden xl:block
+            xl:col-span-2
+            sticky
+            top-[var(--ui-header-height)]
+            h-[calc(100vh-var(--ui-header-height))]
+            overflow-y-auto
+            pl-4
+            border-l border-[#1f2937]
+          "
+        >
+          {/* TOC derecho vacío por ahora */}
+        </aside>
+      </div>
+    </div>
+  );
+};
+
+export default DocLayout;

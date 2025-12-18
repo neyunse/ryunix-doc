@@ -1,5 +1,0 @@
-const Link = ({ to, label, navigate, ...props }) => {
-    return <a href={to}>{label}</a>;
-};
-
-export default Link;

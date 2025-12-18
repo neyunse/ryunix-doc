@@ -1,0 +1,298 @@
+---
+title: Configuration
+description: Configure your RyunixJS project with ryunix.config.js
+slug: configuration
+section: Api
+---
+
+# Configuration
+
+Configure your RyunixJS project with `ryunix.config.js`.
+
+## Basic Configuration
+
+```javascript
+// ryunix.config.js
+{
+  webpack: {
+    production: false,
+  },
+  static: {
+    favicon: true, // if is false the favicon is not mandatory
+
+    seo: {
+      title: "Ryunix Doc", // include a default title
+    },
+  },
+};
+```
+
+## Webpack Settings
+
+### Production Mode
+
+```javascript
+{
+  webpack: {
+    production: true, // Enable production optimizations
+  },
+};
+```
+
+Production mode enables:
+
+- Minification (Terser + CSS)
+- Code splitting
+- Tree shaking
+- Source maps
+
+### Root Directory
+
+```javascript
+{
+  webpack: {
+    root: "src", // Source code directory
+  },
+};
+```
+
+### Output Directory
+
+```javascript
+{
+  webpack: {
+    output: {
+      buildDirectory: ".ryunix", // Build output folder
+    },
+  },
+};
+```
+
+Build will be in `.ryunix/static/`.
+
+### Dev Server
+
+```javascript
+{
+  webpack: {
+    devServer: {
+      port: 3000,
+      allowedHosts: "auto", // or 'all' or ['host1.com', 'host2.com']
+      proxy: {
+        "/api": {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+        },
+      },
+    },
+  },
+};
+```
+
+### Path Aliases
+
+```javascript
+{
+  webpack: {
+    resolve: {
+      alias: {
+        "@/": "src",
+        "@/components": "src/components",
+        "@/utils": "src/utils",
+        "@/pages": "src/pages",
+      },
+    },
+  },
+};
+```
+
+Use in code:
+
+```jsx
+import Button from "@components/Button";
+import { formatDate } from "@utils/date";
+```
+
+### Extensions
+
+```javascript
+{
+  webpack: {
+    resolve: {
+      extensions: [".js", ".jsx", ".ryx", ".ts", ".tsx"],
+    },
+  },
+};
+```
+
+### Custom Webpack Rules
+
+```javascript
+{
+  webpack: {
+    module: {
+      rules: [
+        {
+          test: /\.svg$/,
+          use: ["@svgr/webpack"],
+        },
+        {
+          test: /\.yaml$/,
+          use: ["yaml-loader"],
+        },
+      ],
+    },
+  },
+};
+```
+
+### Plugins
+
+```javascript
+const CopyPlugin = require("copy-webpack-plugin");
+
+{
+  webpack: {
+    plugins: [
+      new CopyPlugin({
+        patterns: [{ from: "static", to: "static" }],
+      }),
+    ],
+  },
+};
+```
+
+## Static Assets
+
+### Favicon
+
+```javascript
+{
+  static: {
+    favicon: true, // Looks for public/favicon.png
+  },
+};
+```
+
+### Custom Template
+
+```javascript
+{
+  static: {
+    favicon: true,
+    customTemplate: true,
+  },
+};
+```
+
+Your template:
+
+```html
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="<%= htmlWebpackPlugin.options.pageLang %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="framework"
+      content="<%= htmlWebpackPlugin.options.info.framework %>"
+      version="<%= htmlWebpackPlugin.options.info.version %>"
+    />
+    <meta name="mode" content="<%= htmlWebpackPlugin.options.info.mode %>" />
+    <link rel="icon" href="/favicon.png" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="__ryunix"></div>
+  </body>
+</html>
+```
+
+### SEO Configuration
+
+```javascript
+
+{
+  static: {
+    seo: {
+      pageLang: "en",
+      title: "My App",
+      meta: {
+        description: "My app description",
+        keywords: "react, framework",
+        author: "Your Name",
+
+        // Open Graph
+        "og:title": "My App",
+        "og:description": "Description",
+        "og:image": "/og-image.jpg",
+        "og:url": "https://example.com",
+        "og:type": "website",
+
+        // Twitter
+        "twitter:card": "summary_large_image",
+        "twitter:title": "My App",
+        "twitter:description": "Description",
+        "twitter:image": "/twitter-image.jpg",
+      },
+    },
+  },
+
+  webpack: {
+    production: false,
+  },
+};
+
+
+```
+
+**Note:** You can't use route meta tags with this configuration.
+
+## Experimental Features
+
+### MDX Support
+
+```javascript
+{
+  experimental: {
+    mdx: true, // Enable MDX files
+  },
+};
+```
+
+### Static Site Generation
+
+```javascript
+{
+  experimental: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://example.com",
+        settings: {
+          changefreq: "weekly", // always, hourly, daily, weekly, monthly, yearly, never
+          priority: "0.7", // 0.0 to 1.0
+        },
+      },
+    },
+  },
+};
+```
+
+## Environment Variables
+
+If you use ryunix.config env you need use:
+
+```javascript
+const myEnv = ryunix.config.env.RYUNIX_APP_TEST;
+```
+
+or for .env file
+
+```javascript
+TEST = test;
+
+const myEnv = ryunix.env.RYUNIX_APP_TEST;
+```

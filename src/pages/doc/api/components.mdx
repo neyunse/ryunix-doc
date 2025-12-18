@@ -1,0 +1,350 @@
+---
+title: Components
+description: Built-in components in RyunixJS
+slug: components
+section: Api
+---
+
+# Components
+
+Built-in components provided by RyunixJS.
+
+## Image
+
+Optimized image component.
+
+```jsx
+import { Image } from "@unsetsoft/ryunixjs";
+
+function Profile() {
+  return (
+    <Image src="/profile.jpg" alt="Profile picture" width="200" height="200" />
+  );
+}
+```
+
+### Props
+
+| Prop        | Type           | Required | Description             |
+| ----------- | -------------- | -------- | ----------------------- |
+| `src`       | string         | Yes      | Image source URL        |
+| `alt`       | string         | Yes      | Alternative text        |
+| `width`     | string/number  | No       | Image width             |
+| `height`    | string/number  | No       | Image height            |
+| `className` | string         | No       | CSS class               |
+| `class`     | string         | No       | CSS class (alternative) |
+| `style`     | object         | No       | Inline styles           |
+| `loading`   | "lazy"/"eager" | No       | Loading strategy        |
+
+### Examples
+
+#### Basic Usage
+
+```jsx
+<Image src="/logo.png" alt="Logo" />
+```
+
+#### With Dimensions
+
+```jsx
+<Image src="/banner.jpg" alt="Banner" width="1200" height="400" />
+```
+
+#### Lazy Loading
+
+```jsx
+<Image src="/large-image.jpg" alt="Large image" loading="lazy" />
+```
+
+#### With Styling
+
+```jsx
+<Image
+  src="/avatar.jpg"
+  alt="Avatar"
+  class="rounded-full"
+  style={{ border: "2px solid #ccc" }}
+/>
+```
+
+#### Responsive
+
+```jsx
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  style={{
+    width: "100%",
+    height: "auto",
+  }}
+/>
+```
+
+## Fragment
+
+Group elements without adding extra DOM nodes.
+
+```jsx
+import { Fragment } from "@unsetsoft/ryunixjs";
+
+function List() {
+  return (
+    <Fragment>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </Fragment>
+  );
+}
+```
+
+### Short Syntax
+
+```jsx
+function List() {
+  return (
+    <>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </>
+  );
+}
+```
+
+Both are identical.
+
+## RouterProvider
+
+Routing provider component.
+
+```jsx
+import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
+
+function App() {
+  return (
+    <RouterProvider routes={routes}>
+      <Children />
+    </RouterProvider>
+  );
+}
+```
+
+See [Navigation](/docs/navigation) for full routing documentation.
+
+### Props
+
+| Prop       | Type  | Required | Description          |
+| ---------- | ----- | -------- | -------------------- |
+| `routes`   | array | Yes      | Routes configuration |
+| `children` | node  | Yes      | Child components     |
+
+## Children
+
+Renders the matched route component.
+
+```jsx
+import { Children } from "@unsetsoft/ryunixjs";
+
+function Layout() {
+  return (
+    <div>
+      <Header />
+      <main>
+        <Children /> {/* Matched route renders here */}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+## NavLink
+
+Navigation link with active state.
+
+```jsx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+function Nav() {
+  return (
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/about">About</NavLink>
+    </nav>
+  );
+}
+```
+
+### Props
+
+| Prop           | Type            | Required | Description                  |
+| -------------- | --------------- | -------- | ---------------------------- |
+| `to`           | string          | Yes      | Target path                  |
+| `exact`        | boolean         | No       | Exact match (default: false) |
+| `className`    | string/function | No       | CSS class or function        |
+| `class`        | string          | No       | CSS class (alternative)      |
+| `ryunix-class` | string          | No       | Custom class attribute       |
+
+### Active State
+
+With function:
+
+```jsx
+<NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
+  About
+</NavLink>
+```
+
+With CSS:
+
+```css
+nav a[href="/about"] {
+  color: blue;
+}
+```
+
+## MDXProvider
+
+Provider for MDX components.
+
+```jsx
+import { MDXProvider } from "@unsetsoft/ryunixjs";
+
+const components = {
+  h1: (props) => <h1 style={{ color: "blue" }} {...props} />,
+  p: (props) => <p style={{ lineHeight: 1.6 }} {...props} />,
+};
+
+function App() {
+  return (
+    <MDXProvider value={components}>
+      <Content />
+    </MDXProvider>
+  );
+}
+```
+
+### Props
+
+| Prop       | Type   | Required | Description         |
+| ---------- | ------ | -------- | ------------------- |
+| `value`    | object | Yes      | Component overrides |
+| `children` | node   | Yes      | Child components    |
+
+### Default Components
+
+```jsx
+import { defaultComponents } from "@unsetsoft/ryunixjs";
+
+// Includes: h1-h6, p, a, ul, ol, li, code, pre, img, etc.
+```
+
+## Suspense
+
+Lazy loading fallback.
+
+```jsx
+import { Suspense, lazy } from "@unsetsoft/ryunixjs";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Dashboard />
+    </Suspense>
+  );
+}
+```
+
+### Props
+
+| Prop       | Type | Required | Description       |
+| ---------- | ---- | -------- | ----------------- |
+| `fallback` | node | Yes      | Loading component |
+| `children` | node | Yes      | Lazy components   |
+
+### Multiple Lazy Components
+
+```jsx
+<Suspense fallback={<Spinner />}>
+  <Dashboard />
+  <Profile />
+  <Settings />
+</Suspense>
+```
+
+## Creating Custom Components
+
+### Wrapper Component
+
+```jsx
+function Card({ title, children }) {
+  return (
+    <div class="card">
+      <h2>{title}</h2>
+      <div class="card-content">{children}</div>
+    </div>
+  );
+}
+```
+
+### Compound Components
+
+```jsx
+function Tabs({ children }) {
+  const [active, setActive] = useStore(0);
+
+  return <div class="tabs">{children(active, setActive)}</div>;
+}
+
+function Tab({ index, active, onClick, children }) {
+  return (
+    <button class={active === index ? "active" : ""} onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+// Usage
+<Tabs>
+  {(active, setActive) => (
+    <>
+      <Tab index={0} active={active} onClick={() => setActive(0)}>
+        Tab 1
+      </Tab>
+      <Tab index={1} active={active} onClick={() => setActive(1)}>
+        Tab 2
+      </Tab>
+    </>
+  )}
+</Tabs>;
+```
+
+## Higher-Order Components
+
+```jsx
+function withLoading(Component) {
+  return function WithLoadingComponent({ isLoading, ...props }) {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+    return <Component {...props} />;
+  };
+}
+
+// Usage
+const UserProfileWithLoading = withLoading(UserProfile);
+
+<UserProfileWithLoading isLoading={loading} user={user} />;
+```
+
+## Best Practices
+
+1. **Use Image component** - Better performance than `<img>`
+2. **Use Fragments** - Avoid unnecessary wrapper divs
+3. **Use NavLink** - Automatic active states
+4. **Lazy load heavy components** - Better initial load
+5. **Custom components** - Reusable and maintainable
+6. **Props validation** - Use TypeScript for type safety

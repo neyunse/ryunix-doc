@@ -1,0 +1,29 @@
+---
+title: Deploying
+description: Deploy your RyunixJS application to production
+section: Introduction
+slug: deploying
+---
+
+# Deploying
+
+## Building for Production
+
+### 1. Update Configuration
+
+```javascript
+// ryunix.config.js
+module.exports = {
+  webpack: {
+    production: true, // Enable production mode
+  },
+};
+```
+
+### 2. Build
+
+```bash
+npm run build
+```
+
+Your production build will be in `.ryunix/static/`.

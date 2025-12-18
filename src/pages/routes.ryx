@@ -1,45 +1,213 @@
 import Home from "./home.ryx";
-import Introduction from "./doc/introduction.ryx";
 import NotFound from "./404.ryx";
-import Components from "./doc/components.ryx";
-import Styles from "./doc/styles.ryx";
-import ImageComponent from "./doc/image.ryx";
-import Navigation from "./doc/navigation.ryx";
-import Hooks from "./doc/hooks.ryx";
-import Config from "./doc/config.ryx";
+
+/* Import MDX from ./doc/introduction/* */
+import About, {
+  frontmatter as aboutFrontmatter,
+} from "./doc/introduction/about.mdx";
+import Differences, {
+  frontmatter as diff,
+} from "./doc/introduction/differences-with-react.mdx";
+import GettingStarted, {
+  frontmatter as gettingStarted,
+} from "./doc/introduction/getting-started.mdx";
+import Installation, {
+  frontmatter as installation,
+} from "./doc/introduction/installation.mdx";
+import ProjectStructure, {
+  frontmatter as projectStructure,
+} from "./doc/introduction/project-structure.mdx";
+import Navigation, {
+  frontmatter as navigation,
+} from "./doc/introduction/navigation.mdx";
+import CSS, { frontmatter as css } from "./doc/introduction/css.mdx";
+import Deploying, {
+  frontmatter as deploying,
+} from "./doc/introduction/deploying.mdx";
+/* Import MDX from ./doc/api/* */
+
+import Configuration, {
+  frontmatter as configuration,
+} from "./doc/api/configuration.mdx";
+import Components, {
+  frontmatter as components,
+} from "./doc/api/components.mdx";
+import Functions, { frontmatter as functions } from "./doc/api/functions.mdx";
 
 export default [
-    {
-        path: "/",
-        component: Home,
+  {
+    path: "/",
+    component: Home,
+    meta: {
+      title: "RyunixJS: The new generation JavaScript Framework",
+      description:
+        "RyunixJS is a powerful and flexible JavaScript framework for building modern web applications with ease and efficiency.",
+      keywords: [
+        "Ryunix",
+        "Documentation",
+        "Home",
+        "JS Framework",
+        "Static Site Generator",
+        "MDX Support",
+        "ESLint Integration",
+        "Webpack Configuration",
+      ],
     },
-    {
-        path: "/doc/introduction",
-        component: Introduction,
+  },
+  {
+    path: `/docs/${gettingStarted.slug}` || "/",
+    component: GettingStarted,
+    section: gettingStarted?.section || "Uncategorized",
+    label: gettingStarted?.title || "No Title",
+    noRenderLink: gettingStarted?.hide || false,
+    meta: {
+      title: gettingStarted?.title || "No Title",
+      description: gettingStarted?.description || "",
+      keywords: gettingStarted?.keywords || [],
+      image: gettingStarted?.image || "",
+      author: gettingStarted?.author || "",
     },
-    {
-        path: "/doc/components",
-        component: Components,
+  },
+  {
+    path: `/docs/${installation.slug}` || "/",
+    component: Installation,
+    section: installation?.section || "Uncategorized",
+    label: installation?.title || "No Title",
+    noRenderLink: installation?.hide || false,
+    meta: {
+      title: installation?.title || "No Title",
+      description: installation?.description || "",
+      keywords: installation?.keywords || [],
+      image: installation?.image || "",
+      author: installation?.author || "",
     },
-    {
-        path: "/doc/styles",
-        component: Styles,
+  },
+  {
+    path: `/docs/${diff?.slug}` || "/",
+    component: Differences,
+    section: diff?.section || "Uncategorized",
+    label: diff?.title || "No Title",
+    noRenderLink: diff?.hide || false,
+    meta: {
+      title: diff?.title || "No Title",
+      description: diff?.description || "",
+      keywords: diff?.keywords || [],
+      image: diff?.image || "",
+      author: diff?.author || "",
     },
-    {
-        path: "/doc/components/built-in/image",
-        component: ImageComponent,
+  },
+  {
+    path: `/docs/${aboutFrontmatter.slug}` || "/",
+    component: About,
+    section: aboutFrontmatter?.section || "Uncategorized",
+    label: aboutFrontmatter?.title || "No Title",
+    noRenderLink: aboutFrontmatter?.hide || false,
+    meta: {
+      title: aboutFrontmatter?.title || "No Title",
+      description: aboutFrontmatter?.description || "",
+      keywords: aboutFrontmatter?.keywords || [],
+      image: aboutFrontmatter?.image || "",
+      author: aboutFrontmatter?.author || "",
     },
-    {
-        path: "/doc/components/built-in/navigation",
-        component: Navigation,
+  },
+  {
+    path: `/docs/${projectStructure.slug}` || "/",
+    component: ProjectStructure,
+    section: projectStructure?.section || "Uncategorized",
+    label: projectStructure?.title || "No Title",
+    noRenderLink: projectStructure?.hide || false,
+    meta: {
+      title: projectStructure?.title || "No Title",
+      description: projectStructure?.description || "",
+      keywords: projectStructure?.keywords || [],
+      image: projectStructure?.image || "",
+      author: projectStructure?.author || "",
     },
-    {
-        path: "/doc/api/hooks",
-        component: Hooks,
+  },
+  {
+    path: `/docs/${navigation.slug}` || "/",
+    component: Navigation,
+    section: navigation?.section || "Uncategorized",
+    label: navigation?.title || "No Title",
+    noRenderLink: navigation?.hide || false,
+    meta: {
+      title: navigation?.title || "No Title",
+      description: navigation?.description || "",
+      keywords: navigation?.keywords || [],
+      image: navigation?.image || "",
+      author: navigation?.author || "",
     },
-    {
-        path: "/doc/config",
-        component: Config,
+  },
+  {
+    path: `/docs/${css.slug}` || "/",
+    component: CSS,
+    section: css?.section || "Uncategorized",
+    label: css?.title || "No Title",
+    noRenderLink: css?.hide || false,
+    meta: {
+      title: css?.title || "No Title",
+      description: css?.description || "",
+      keywords: css?.keywords || [],
+      image: css?.image || "",
+      author: css?.author || "",
     },
-    { path: "*", NotFound: NotFound, noRenderLink: true },
+  },
+  {
+    path: `/docs/${deploying.slug}` || "/",
+    component: Deploying,
+    section: deploying?.section || "Uncategorized",
+    label: deploying?.title || "No Title",
+    noRenderLink: deploying?.hide || false,
+    meta: {
+      title: deploying?.title || "No Title",
+      description: deploying?.description || "",
+      keywords: deploying?.keywords || [],
+      image: deploying?.image || "",
+      author: deploying?.author || "",
+    },
+  },
+
+  {
+    path: `/docs/api/${configuration.slug}` || "/",
+    component: Configuration,
+    section: configuration?.section || "Uncategorized",
+    label: configuration?.title || "No Title",
+    noRenderLink: configuration?.hide || false,
+    meta: {
+      title: configuration?.title || "No Title",
+      description: configuration?.description || "",
+      keywords: configuration?.keywords || [],
+      image: configuration?.image || "",
+      author: configuration?.author || "",
+    },
+  },
+  {
+    path: `/docs/api/${components.slug}` || "/",
+    component: Components,
+    section: components?.section || "Uncategorized",
+    label: components?.title || "No Title",
+    noRenderLink: components?.hide || false,
+    meta: {
+      title: components?.title || "No Title",
+      description: components?.description || "",
+      keywords: components?.keywords || [],
+      image: components?.image || "",
+      author: components?.author || "",
+    },
+  },
+  {
+    path: `/docs/api/${functions.slug}` || "/",
+    component: Functions,
+    section: functions?.section || "Uncategorized",
+    label: functions?.title || "No Title",
+    noRenderLink: functions?.hide || false,
+    meta: {
+      title: functions?.title || "No Title",
+      description: functions?.description || "",
+      keywords: functions?.keywords || [],
+      image: functions?.image || "",
+      author: functions?.author || "",
+    },
+  },
+  { path: "*", NotFound: NotFound, noRenderLink: true },
 ];

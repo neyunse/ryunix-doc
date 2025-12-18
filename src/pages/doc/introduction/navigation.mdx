@@ -1,0 +1,347 @@
+---
+title: Navigation
+description: Complete navigation and routing system in RyunixJS
+slug: navigation
+section: Introduction
+---
+
+# Navigation
+
+RyunixJS has built-in routing. No external packages needed.
+
+## Basic Setup
+
+```jsx
+import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
+
+const routes = [
+  { path: "/", component: Home },
+  { path: "/about", component: About },
+];
+
+function App() {
+  return (
+    <RouterProvider routes={routes}>
+      <Children />
+    </RouterProvider>
+  );
+}
+```
+
+## Routes Configuration
+
+### Simple Routes
+
+```jsx
+const routes = [
+  {
+    path: "/",
+    component: Home,
+    label: "Home",
+  },
+  {
+    path: "/about",
+    component: About,
+    label: "About",
+  },
+];
+```
+
+### Dynamic Routes
+
+```jsx
+const routes = [
+  {
+    path: "/users/:id",
+    component: UserProfile,
+  },
+  {
+    path: "/posts/:slug",
+    component: Post,
+  },
+];
+```
+
+Access params:
+
+```jsx
+function UserProfile() {
+  const { params } = useRouter();
+  const userId = params.id;
+
+  return <div>User ID: {userId}</div>;
+}
+```
+
+### Nested Routes
+
+```jsx
+const routes = [
+  {
+    path: "/dashboard",
+    component: Dashboard,
+    subRoutes: [
+      { path: "/settings", component: Settings },
+      { path: "/profile", component: Profile },
+    ],
+  },
+];
+```
+
+### 404 Not Found
+
+```jsx
+import NotFound from "./pages/NotFound";
+
+const routes = [
+  { path: "/", component: Home },
+  { path: "/about", component: About },
+  { path: "*", NotFound: NotFound }, // Catches all unmatched routes
+];
+```
+
+## Navigation Components
+
+### NavLink
+
+```jsx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+function Nav() {
+  return (
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/about">About</NavLink>
+      <NavLink to="/contact">Contact</NavLink>
+    </nav>
+  );
+}
+```
+
+**Props:**
+
+- `to` - Target path
+- `exact` - Exact match (default: false)
+- `className` - CSS class
+- `ryunix-class` - Alternative to className
+
+### Active State
+
+```jsx
+<NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
+  About
+</NavLink>
+```
+
+Or use CSS:
+
+```css
+nav a[href="/about"] {
+  color: blue;
+}
+```
+
+## Programmatic Navigation
+
+### useRouter Hook
+
+```jsx
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+function Component() {
+  const { navigate, location, params, query } = useRouter();
+
+  const goToAbout = () => {
+    navigate("/about");
+  };
+
+  return (
+    <div>
+      <p>Current: {location}</p>
+      <button onClick={goToAbout}>Go to About</button>
+    </div>
+  );
+}
+```
+
+**useRouter returns:**
+
+- `navigate(path)` - Navigate to path
+- `location` - Current pathname
+- `params` - Route parameters
+- `query` - Query string object
+- `route` - Current route config
+
+## Query Parameters
+
+### useQuery Hook
+
+```jsx
+import { useQuery } from "@unsetsoft/ryunixjs";
+
+function SearchPage() {
+  const query = useQuery();
+  const searchTerm = query.q;
+  const page = query.page || 1;
+
+  return <div>Search: {searchTerm}</div>;
+}
+```
+
+For URL: `/search?q=react&page=2`
+
+- `query.q` = "react"
+- `query.page` = "2"
+
+## Hash Navigation
+
+### useHash Hook
+
+```jsx
+import { useHash } from "@unsetsoft/ryunixjs";
+
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.slice(1));
+      element?.scrollIntoView();
+    }
+  }, [hash]);
+
+  return <div>Current hash: {hash}</div>;
+}
+```
+
+For URL: `/page#section-2`
+
+- `hash` = "#section-2"
+
+## Scroll Behavior
+
+### Scroll to Hash
+
+Automatic with `useHash`:
+
+```jsx
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [hash]);
+}
+```
+
+## Route Metadata
+
+Add metadata to routes:
+
+```jsx
+const routes = [
+  {
+    path: "/",
+    component: Home,
+    meta: {
+      title: "Home Page",
+      description: "Welcome to our site",
+    },
+  },
+  {
+    path: "/dashboard",
+    component: Dashboard,
+    meta: {
+      title: "Dashboard",
+    },
+  },
+];
+```
+
+**Note:** meta.title will be used to create the title tag when you deploy.
+
+Access in component:
+
+```jsx
+function Page() {
+  const { route } = useRouter();
+  const title = route.meta?.title;
+
+  useMetadata({ title });
+
+  // or recomended:
+  // useMetadata({ ...route.meta });
+}
+```
+
+## Complete Example
+
+```jsx
+// routes.ryx
+import Home from "./pages/Home";
+import About from "./pages/About";
+import UserProfile from "./pages/UserProfile";
+import Dashboard from "./pages/Dashboard";
+import Settings from "./pages/Settings";
+import NotFound from "./pages/NotFound";
+
+const routes = [
+  {
+    path: "/",
+    component: Home,
+    label: "Home",
+    meta: {
+      title: "Home Page",
+    },
+  },
+  {
+    path: "/about",
+    component: About,
+    label: "About",
+  },
+  {
+    path: "/users/:id",
+    component: UserProfile,
+  },
+  { path: "*", NotFound: NotFound },
+];
+
+export default routes;
+```
+
+```jsx
+// App.ryx
+import { RouterProvider, Children, NavLink } from "@unsetsoft/ryunixjs";
+import routes from "./pages/routes";
+
+function App() {
+  return (
+    <RouterProvider routes={routes}>
+      <nav>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/about">About</NavLink>
+        <NavLink to="/dashboard">Dashboard</NavLink>
+      </nav>
+
+      <main>
+        <Children />
+      </main>
+    </RouterProvider>
+  );
+}
+
+export default App;
+```
+
+## Browser History
+
+RyunixJS uses the HTML5 History API:
+
+- ✅ Clean URLs (no `#`)
+- ✅ Back/forward buttons work
+- ✅ `window.history.pushState`
+- ✅ `popstate` events

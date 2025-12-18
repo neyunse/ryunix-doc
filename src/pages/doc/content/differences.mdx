@@ -1,0 +1,353 @@
+---
+title: Differences with React
+description: A complete guide to the differences between RyunixJS and React to help you evaluate and migrate with confidence.
+slug: differences-with-react
+section: Introduction
+---
+
+# Differences with React
+
+**RyunixJS** is an independent JavaScript framework inspired by React’s component-based approach, while following its own architecture and design principles.  
+If you are familiar with React, this document will help you understand **what remains familiar, what changes, and how to adapt**.
+
+The intention of this guide is clarity—not comparison for competition, but for **informed decision-making**.
+
+---
+
+## 🎯 Philosophy and Goals
+
+### React
+
+- General-purpose UI library
+- Very large ecosystem
+- Focused primarily on rendering
+- Requires additional tools for routing and global state
+- Fast-paced evolution
+
+### RyunixJS
+
+- Complete framework with core features included
+- Built-in routing, state management, and hooks
+- No dependency on React or its runtime
+- Designed for stability and predictability
+- Optimized for SPAs and static websites
+
+**Summary:**  
+React provides flexibility through composition.  
+RyunixJS provides structure through integration.
+
+---
+
+## 📦 Installation and Setup
+
+### React
+
+```bash
+npx create-react-app my-app
+cd my-app
+npm install react-router-dom
+npm start
+```
+
+Additional tools are usually required as the project grows.
+
+---
+
+### RyunixJS
+
+```bash
+npx @unsetsoft/cra my-app
+cd my-app
+npm run dev
+```
+
+All core features are available immediately.
+
+---
+
+## 🔧 Application Entry Point
+
+### React
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+```
+
+### RyunixJS
+
+```jsx
+import Ryunix from "@unsetsoft/ryunixjs";
+
+Ryunix.init(<App />);
+```
+
+RyunixJS reduces setup complexity by providing a single initialization API.
+
+---
+
+## 🧩 JSX and Rendering
+
+### JSX Usage
+
+**React**
+
+```jsx
+function App() {
+  return <div>Hello</div>;
+}
+```
+
+**RyunixJS**
+
+```jsx
+function App() {
+  return <div>Hello</div>;
+}
+```
+
+---
+
+## 🎣 Hooks Overview
+
+RyunixJS offers a hook-based API with familiar behavior.
+
+### State Management
+
+**React**
+
+```jsx
+const [count, setCount] = useState(0);
+```
+
+**RyunixJS**
+
+```jsx
+const [count, setCount] = Ryunix.useStore(0);
+```
+
+- Same mental model
+- Supports functional updates
+
+---
+
+### Effects
+
+**React**
+
+```jsx
+useEffect(() => {
+  document.title = `Count: ${count}`;
+}, [count]);
+```
+
+**RyunixJS**
+
+```jsx
+Ryunix.useEffect(() => {
+  document.title = `Count: ${count}`;
+}, [count]);
+```
+
+---
+
+### Supported Hooks
+
+| React Hook    | RyunixJS      |
+| ------------- | ------------- |
+| `useState`    | `useStore`    |
+| `useEffect`   | `useEffect`   |
+| `useRef`      | `useRef`      |
+| `useMemo`     | `useMemo`     |
+| `useCallback` | `useCallback` |
+| `useReducer`  | `useReducer`  |
+
+---
+
+## 🧱 Components
+
+### Functional Components
+
+```jsx
+function Welcome({ name }) {
+  return <h1>Hello, {name}</h1>;
+}
+```
+
+Identical in both frameworks.
+
+---
+
+### Class Components
+
+- **React:** Supported
+- **RyunixJS:** Not supported
+
+RyunixJS focuses exclusively on functional components.
+
+---
+
+### Fragments
+
+**React**
+
+```jsx
+<>
+  <div>One</div>
+  <div>Two</div>
+</>
+```
+
+**RyunixJS**
+
+```jsx
+<>
+  <div>One</div>
+  <div>Two</div>
+</>
+```
+
+---
+
+### Memoization
+
+**React**
+
+```jsx
+const MemoComp = memo(Component);
+```
+
+**RyunixJS**
+
+```jsx
+const MemoComp = Ryunix.memo(Component);
+```
+
+Custom comparison functions are not supported.
+
+---
+
+## 🧪 Context API
+
+### React
+
+```jsx
+const ThemeContext = createContext("light");
+const theme = useContext(ThemeContext);
+```
+
+### RyunixJS
+
+```jsx
+const { Provider, useContext } = Ryunix.createContext("theme.context", "light");
+
+const theme = useContext();
+```
+
+RyunixJS requires a unique context identifier and simplifies consumption.
+
+---
+
+## 🛣️ Routing
+
+### React (External)
+
+Routing requires an external library and JSX-based configuration.
+
+---
+
+### RyunixJS (Built-in)
+
+```jsx
+const routes = [
+  { path: '/', component: Home },
+  { path: '/about', component: About }
+]
+
+<RouterProvider routes={routes}>
+  <Children />
+</RouterProvider>
+```
+
+**Key differences**
+
+- Router is included
+- Object-based route configuration
+- Unified router API
+
+---
+
+## 🔄 Lazy Loading and Suspense
+
+```jsx
+const LazyPage = Ryunix.lazy(() => import('./Page'))
+
+<Ryunix.Suspense fallback={<div>Loading...</div>}>
+  <LazyPage />
+</Ryunix.Suspense>
+```
+
+Behavior is intentionally similar.
+
+---
+
+## 🎨 Styling and Events
+
+- `className` and inline styles work the same
+- Events are native browser events
+- No synthetic event layer
+
+This results in simpler debugging and lower overhead.
+
+---
+
+## ⚡ Performance and Size
+
+| Category         | React   | RyunixJS   |
+| ---------------- | ------- | ---------- |
+| Bundle Size      | Larger  | Smaller    |
+| Runtime Overhead | Higher  | Lower      |
+| Configuration    | Modular | Integrated |
+| Target Use       | Broad   | Focused    |
+
+RyunixJS is optimized for clarity and efficiency.
+
+---
+
+## 🔄 Migration Summary
+
+1. Replace React imports with RyunixJS
+2. Change `useState` to `useStore`
+3. Update the application entry point
+4. Replace external routing with the built-in router
+
+---
+
+## 🎯 Choosing the Right Tool
+
+### Choose RyunixJS if you:
+
+- Want a lightweight and standalone framework
+- Prefer integrated features over external libraries
+- Build SPAs or static websites
+- Value stability and simplicity
+
+### Choose React if you:
+
+- Depend on a large React ecosystem
+- Need advanced SSR solutions
+- Maintain very large applications
+
+---
+
+## ✅ Final Thoughts
+
+RyunixJS offers a **familiar development experience** for React developers while reducing complexity and dependency overhead.
+It is best suited for projects where **performance, simplicity, and long-term maintainability** are key priorities.
+
+```
+
+```
