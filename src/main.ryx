@@ -3,5 +3,10 @@
 import Ryunix from "@unsetsoft/ryunixjs";
 import App from "/App";
 import "@/styles/global.css";
+import { inject } from "@vercel/analytics";
 
 Ryunix.init(<App />);
+
+// Vercel Analytics
+inject();
+
