@@ -6,7 +6,9 @@ const DocLayout = ({ children, routes }) => {
   );
 
   useMetadata({
-    ...activeRoute.meta,
+    ...(activeRoute?.meta || {
+      title: "404",
+    }),
   });
 
   // Filtramos solo las rutas de /docs
