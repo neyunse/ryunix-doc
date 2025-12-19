@@ -19,6 +19,6 @@
     "serve": "^14.2.5"
   },
   "devDependencies": {
-    "@unsetsoft/ryunix-presets": "^1.0.24"
+    "@unsetsoft/ryunix-presets": "^1.0.25"
   }
 }
