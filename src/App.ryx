@@ -1,4 +1,11 @@
-import { Children, Image, NavLink, RouterProvider } from "@unsetsoft/ryunixjs";
+import {
+  Children,
+  Image,
+  NavLink,
+  RouterProvider,
+  useEffect,
+} from "@unsetsoft/ryunixjs";
+import { inject } from "@vercel/analytics";
 import Logo from "./resources/logo-min.svg";
 import Routes from "./pages/routes.ryx";
 import DocLayout from "./pages/doc/layout.ryx";
@@ -7,6 +14,10 @@ function App() {
   const filteredRoutes = Routes.filter(
     (route) => route.path && route.path.startsWith("/docs")
   );
+
+  useEffect(() => {
+    inject();
+  }, []);
 
   return (
     <RouterProvider routes={Routes}>

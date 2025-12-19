@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@unsetsoft/ryunixjs": "1.2.4",
+    "@vercel/analytics": "^1.6.1",
     "serve": "^14.2.5"
   },
   "devDependencies": {
