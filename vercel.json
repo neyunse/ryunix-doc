@@ -1,9 +1,9 @@
 {
   "outputDirectory": ".ryunix/static",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
+  "buildCommand": "pnpm run build",
+  "devCommand": "pnpm run dev",
  
-  "installCommand": "npm install",
+  "installCommand": "pnpm install",
   "framework": null,
   "rewrites": [
     {
