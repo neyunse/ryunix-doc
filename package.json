@@ -11,14 +11,15 @@
     "lint-fix": "ryunix lint --fix",
     "html": "ryunix customHtml"
   },
-  "engines": {
-    "node": "^18 || ^20 || ^22"
-  },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "1.2.4",
-    "serve": "^14.2.5"
+    "@unsetsoft/ryunixjs": "1.2.4-canary.16",
+    "lucide": "^0.575.0"
   },
   "devDependencies": {
-    "@unsetsoft/ryunix-presets": "^1.0.25"
+    "@tailwindcss/postcss": "^4.2.1",
+    "@unsetsoft/ryunix-presets": "^1.0.26-canary.25",
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.2.1"
   }
 }

@@ -1,0 +1,108 @@
+---
+title: Special Files
+description: Special files for SEO, sitemaps, and PWA manifest in RyunixJS
+slug: special-files
+section: Api
+---
+
+# Special Files
+
+RyunixJS supports several special files in the `app/` directory to handle SEO and web standards automatically.
+
+## Sitemap (sitemap.js)
+
+The `sitemap.js` file allows you to programmatically generate a sitemap for your application. This is essential for SEO, as it tells search engines which pages are available for crawling.
+
+```javascript
+// app/sitemap.js
+
+export default async function sitemap() {
+  // Fetch your dynamic data (e.g., from a CMS or API)
+  const posts = await fetch('https://api.example.com/posts').then(res => res.json());
+
+  const postUrls = posts.map((post) => ({
+    url: `https://example.com/blog/${post.slug}`,
+    lastModified: post.updatedAt,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [
+    {
+      url: "https://example.com",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    {
+      url: "https://example.com/about",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    ...postUrls,
+  ];
+}
+```
+
+## Robots (robots.js)
+
+The `robots.js` file manages your `robots.txt` dynamically. You can use this to allow or disallow specific paths based on the environment or other logic.
+
+```javascript
+// app/robots.js
+
+export default function robots() {
+  const isProd = process.env.NODE_ENV === 'production';
+
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: isProd ? "/admin" : "/", // Disallow all in dev/staging
+      },
+    ],
+    sitemap: "https://example.com/sitemap.xml",
+  };
+}
+```
+
+## Manifest (manifest.js)
+
+The `manifest.js` file generates a Web App Manifest, which is required for Progressive Web App (PWA) support. It defines how your app appears on the user's home screen.
+
+```javascript
+// app/manifest.js
+
+export default function manifest() {
+  return {
+    name: "RyunixJS Documentation",
+    short_name: "RyunixDoc",
+    description: "The official documentation for the RyunixJS framework",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#111112",
+    theme_color: "#8b5cf6", // Purple theme
+    icons: [
+      {
+        src: "/favicon.png",
+        sizes: "any",
+        type: "image/png",
+      },
+      {
+        src: "/icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+      }
+    ],
+  };
+}
+```
+
+These files are evaluated during the build process and served at the root of your production directory.

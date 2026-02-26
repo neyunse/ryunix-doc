@@ -1,0 +1,279 @@
+---
+title: Configuration
+description: Configure your RyunixJS project with ryunix.config.js
+slug: configuration
+section: Api
+---
+
+# Configuration
+
+Configure your RyunixJS project with `ryunix.config.js`.
+
+## Basic Configuration
+
+```javascript
+// ryunix.config.js
+const RyunixSettings = {
+  webpack: {
+    production: false,
+  },
+  static: {
+    favicon: true,
+  },
+};
+
+export default RyunixSettings;
+```
+
+## Webpack Settings
+
+### Production Mode
+
+```javascript
+{
+  webpack: {
+    production: true, // Enable production optimizations
+  },
+};
+```
+
+Production mode enables:
+
+- Minification (Terser + CSS)
+- Code splitting
+- Tree shaking
+- Source maps
+
+### Root Directory (Obsolete)
+
+> [!NOTE]
+> In the **App Router**, the `app/` directory is the default and fixed source of the application. The `root` configuration is no longer needed for standard projects.
+
+### Output Directory
+
+```javascript
+{
+  webpack: {
+    output: {
+      buildDirectory: ".ryunix", // Build output folder
+    },
+  },
+};
+```
+
+Build will be in `.ryunix/static/`.
+
+### Dev Server
+
+```javascript
+{
+  webpack: {
+    devServer: {
+      port: 3000,
+      allowedHosts: "auto", // or 'all' or ['host1.com', 'host2.com']
+      proxy: {
+        "/api": {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+        },
+      },
+    },
+  },
+};
+```
+
+### Path Aliases
+
+```javascript
+{
+  webpack: {
+    resolve: {
+      alias: {
+        "@/": "./app",
+        "@/components": "./app/components",
+        "@/utils": "./app/utils",
+      },
+    },
+  },
+};
+```
+
+Use in code:
+
+```jsx
+import Button from "@/components/Button";
+import { formatDate } from "@/utils/date";
+```
+
+### Extensions
+
+```javascript
+{
+  webpack: {
+    resolve: {
+      extensions: [".js", ".jsx", ".ryx", ".ts", ".tsx"],
+    },
+  },
+};
+```
+
+### Custom Webpack Rules
+
+```javascript
+{
+  webpack: {
+    module: {
+      rules: [
+        {
+          test: /\.svg$/,
+          use: ["@svgr/webpack"],
+        },
+        {
+          test: /\.yaml$/,
+          use: ["yaml-loader"],
+        },
+      ],
+    },
+  },
+};
+```
+
+### Plugins
+
+```javascript
+const CopyPlugin = require("copy-webpack-plugin");
+
+{
+  webpack: {
+    plugins: [
+      new CopyPlugin({
+        patterns: [{ from: "static", to: "static" }],
+      }),
+    ],
+  },
+};
+```
+
+## Static Assets
+
+### Favicon
+
+```javascript
+{
+  static: {
+    favicon: true, // Looks for public/favicon.png
+  },
+};
+```
+
+### Custom Template (Deprecated)
+
+> ⚠️ **Deprecated Feature:** Modifying root attributes via `customTemplate` is obsolete in the App Router.
+> **Replacement:** Use a base `app/layout.ryx` (root layout) to define the main skeleton connecting to the DOM.
+
+```javascript
+{
+  static: {
+    favicon: true,
+    customTemplate: true, // Deprecated
+  },
+};
+```
+
+### SEO Configuration (Deprecated)
+
+> ⚠️ **Deprecated Feature:** Global SEO configuration in `ryunix.config.js` via `static.seo` is obsolete.
+> **Replacement:** Export a local `Metatags` object in your base components, `layout.ryx`, or use YAML Frontmatter in `.mdx` files.
+
+```javascript
+{
+  static: {
+    seo: { // Deprecated
+      pageLang: "en",
+      title: "My App",
+    },
+  },
+};
+```
+
+## Experimental Features
+
+### MDX Support & Frontmatter Extraction
+
+Ryunix natively integrates markdown and JSX using the `.mdx` extension.
+
+```javascript
+{
+  experimental: {
+    mdx: true, // Enable MDX files
+  },
+};
+```
+
+YAML headers (like `title`, `description`) placed at the start of `.mdx` files between `---` are parsed and invisibly transpiled. Ryunix assimilates them directly as the `Metatags` constant, injecting them into the HTML and optimizing SEO without requiring additional wrappers.
+
+### Dynamic Static Site Generation (SSG)
+
+The Ryunix SSG plugin reads and assimilates the App Router tree automatically from scratch.
+
+- **Dynamic SSG**: With the App Router, the registry of SSG routes is auto-generated based on your folder taxonomy. There is no need for cumbersome static configurations.
+- **Descending Metadata Inheritance**: Nested routes now dynamically inherit and apply the `titleTemplate` declared in a higher-order `layout.ryx` down the entire directory tree. This ensures all generated pages (including MDX routes) have HTML titles formatted identically to the client environment.
+
+> ⚠️ **Deprecated Feature:** Manually defining routes to pre-render using `experimental.ssg.prerender` is now obsolete.
+
+```javascript
+{
+  experimental: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://example.com",
+        settings: {
+          changefreq: "weekly",
+          priority: "0.7",
+        },
+      },
+    },
+  },
+};
+```
+
+## Deprecations & Bugfixes
+
+- **Centralized Routing (`routes.ryx`)**: Webpack previously threw a critical `[SSG] ❌ The route file was not found` error if `routes.ryx` was missing. Now, if the `app/` directory is detected, this legacy check is silenced and skipped globally.
+- **API Nested File Watcher (Hot Reload Bugfix)**: Fixed an issue where compiling API endpoints inside subfolders failed due to an overly aggressive system clock (mtime) check. Now, modifying endpoints like `app/api/users/[id]/route.js` updates correctly on disk instead of returning `NotFound`.
+- **MDX HTML Injection Bugfix**: Corrected an async issue in the SSG compiler where markdown `.mdx` components rendered a sterile default `<title>Ryunix App</title>` tag, skipping the merge step with the layout's route formats.
+
+## Environment Variables
+
+Variables must reflect the `RYUNIX_APP_` prefix to be available in the client.
+
+### From `ryunix.config.js`
+
+```javascript
+const RyunixSettings = {
+  env: {
+     RYUNIX_APP_TEST: "example",
+  },
+};
+
+export default RyunixSettings;
+```
+
+Access in code:
+
+```javascript
+const key = ryunix.config.RYUNIX_APP_KEY;
+```
+
+### From `.env` File
+
+```env
+RYUNIX_APP_TEST=test
+```
+
+Access in code:
+
+```javascript
+const myEnv = ryunix.env.RYUNIX_APP_TEST;
+```
