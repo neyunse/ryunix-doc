@@ -1,6 +1,6 @@
 import { useEffect, useRouter } from "@unsetsoft/ryunixjs";
 
-const DocsLegacyRedirect = () => {
+const LegacyDocsRedirect = () => {
   const { location, navigate } = useRouter();
 
   useEffect(() => {
@@ -13,4 +13,4 @@ const DocsLegacyRedirect = () => {
   return null;
 };
 
-export default DocsLegacyRedirect;
+export default LegacyDocsRedirect;

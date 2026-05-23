@@ -1,0 +1,22 @@
+import SiteLayout from "@/features/marketing/SiteLayout.ryx";
+import { siteCopy } from "@/features/marketing/siteCopy.js";
+
+export const Metatags = {
+  description:
+    "Documentación oficial de RyunixJS — guías, referencia de API y ejemplos para crear aplicaciones web modernas.",
+  "og:type": "website",
+  "og:site_name": "RyunixJS",
+  "og:image": "/screenshot.png",
+  "og:image:alt": "Página de inicio de la documentación de RyunixJS",
+  "og:locale": "es_ES",
+  "twitter:card": "summary_large_image",
+  "twitter:image": "/screenshot.png",
+};
+
+const EsLayout = ({ children }) => (
+  <SiteLayout locale="es" docsPath="/es/docs/introduction/getting-started" copy={siteCopy.es}>
+    {children}
+  </SiteLayout>
+);
+
+export default EsLayout;

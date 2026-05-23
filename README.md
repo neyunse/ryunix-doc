@@ -46,17 +46,16 @@ Scripts defined in `package.json` (Ryunix CLI via `ryunix`):
 ## Project structure
 
 ```txt
-app/
-├── en/                 # English locale (/en/...)
-│   ├── docs/           # Documentation (MDX)
-│   └── index.ryx       # English home
-├── es/                 # Spanish locale (/es/...)
-│   ├── docs/
-│   └── index.ryx
-├── index.ryx           # Locale hub (redirects via cookie)
-├── components/
+src/
+├── app/                # File-based routes only (thin wrappers)
+│   ├── en/docs/        # English MDX pages
+│   ├── es/docs/        # Spanish MDX pages
+│   └── index.ryx       # Locale hub (redirects via cookie)
+├── components/         # Shared UI (Icon, CodeTabs, LocaleSwitcher)
+├── features/           # Domain modules (docs shell, home, marketing layout)
+├── i18n/               # Locale config and cookie helpers
 ├── styles/
-└── i18n/               # Locale config and cookie helpers
+└── resources/
 public/
 ├── index.html          # HTML template with locale redirect script
 middleware.js           # Vercel Edge redirect for /
@@ -68,7 +67,7 @@ middleware.js           # Vercel Edge redirect for /
 
 > **Warning — `webpack.production`:** This repo keeps `webpack.production: false` in `ryunix.config.js` for faster local development. Set it to `true` before running `pnpm build` or deploying to production (e.g. Vercel); otherwise the production bundle is not fully optimized.
 
-Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `app/layout.ryx` (RyunixJS App Router metadata).
+Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `src/app/layout.ryx` (RyunixJS App Router metadata).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS
 - **`vercel.json`** — Vercel deployment (build output: `.ryunix/static`)
 

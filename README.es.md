@@ -45,18 +45,17 @@ Scripts definidos en `package.json` (CLI Ryunix vía `ryunix`):
 
 ## Estructura del proyecto
 
-``` txt
-app/
-├── en/                 # Locale inglés (/en/...)
-│   ├── docs/           # Documentación (MDX)
-│   └── index.ryx       # Home en inglés
-├── es/                 # Locale español (/es/...)
-│   ├── docs/
-│   └── index.ryx
-├── index.ryx           # Hub de idioma (redirect por cookie)
-├── components/
+```txt
+src/
+├── app/                # Rutas file-based (wrappers finos)
+│   ├── en/docs/        # Páginas MDX en inglés
+│   ├── es/docs/        # Páginas MDX en español
+│   └── index.ryx       # Hub de idioma (redirect por cookie)
+├── components/         # UI compartida (Icon, CodeTabs, LocaleSwitcher)
+├── features/           # Módulos por dominio (docs, home, marketing)
+├── i18n/               # Config de locales y cookie
 ├── styles/
-└── i18n/               # Config de locales y cookie
+└── resources/
 public/
 ├── index.html          # Plantilla HTML con script de redirect
 middleware.js           # Redirect Edge en Vercel para /
@@ -68,7 +67,7 @@ middleware.js           # Redirect Edge en Vercel para /
 
 > **Aviso — `webpack.production`:** En este repositorio, `webpack.production` está en `false` en `ryunix.config.js` para desarrollo local más rápido. Ponlo en `true` antes de `pnpm build` o de desplegar a producción (p. ej. Vercel); si no, el bundle de producción no queda totalmente optimizado.
 
-La imagen Open Graph / Twitter del sitio es `public/screenshot.png`, declarada con `export const Metatags` en `app/layout.ryx` (metadatos del App Router de RyunixJS).
+La imagen Open Graph / Twitter del sitio es `public/screenshot.png`, declarada con `export const Metatags` en `src/app/layout.ryx` (metadatos del App Router de RyunixJS).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS
 - **`vercel.json`** — Despliegue en Vercel (salida del build: `.ryunix/static`)
 
