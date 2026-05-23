@@ -1,0 +1,75 @@
+---
+title: API Routes (Deep Dive)
+description: Build REST APIs under app/api with the Ryunix API router
+slug: api-routes
+section: Guides
+---
+
+# API Routes (Deep Dive)
+
+Ryunix compiles `app/api/**` separately from the UI bundle using SWC, then serves handlers from the production Node server. This page expands on the basics in [Navigation](/docs/introduction/navigation).
+
+## File conventions
+
+Place handlers under `app/api/`. Supported filenames:
+
+- `route.js`, `route.ts`, `route.ryx`
+- `router.js`, `router.ts`, `router.ryx`
+
+Export HTTP methods as named exports:
+
+```javascript
+// app/api/hello/router.js
+export const GET = async (req) => {
+  return new Response(JSON.stringify({ message: "Hello World!" }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+};
+
+export const POST = async (req) => {
+  const body = await req.json();
+  return new Response(JSON.stringify({ received: body }), { status: 201 });
+};
+```
+
+## Dynamic segments
+
+Same bracket syntax as pages:
+
+| File | Matches |
+| :--- | :--- |
+| `app/api/users/[id]/route.js` | `/api/users/123` → `req.params.id` |
+| `app/api/docs/[...path]/route.js` | `/api/docs/a/b/c` → catch-all `path` |
+
+## Request object
+
+Handlers receive a standard `Request`-like object with:
+
+- `req.method` — `GET`, `POST`, etc.
+- `req.params` — dynamic route parameters
+- `req.json()`, `req.text()` — body parsing where applicable
+
+Return a Web `Response` (status, headers, body).
+
+## Build output
+
+Compiled modules are written to `.ryunix/server/api/`, independent of the heavy client Webpack graph. At runtime, `prod.server.mjs` matches the URL, imports the module, and dispatches to the correct export.
+
+## Hot reload in development
+
+During `ryunix dev`, API files reload with a cache-busting query on import so you can edit endpoints without restarting the server.
+
+## API routes vs Server Actions
+
+| Feature | API routes (`app/api/`) | Server Actions (`"use server"`) |
+| :--- | :--- | :--- |
+| Protocol | REST / any HTTP client | Ryunix `/_ryunix/action` POST |
+| Best for | Public APIs, webhooks, third parties | Forms and mutations from your UI |
+| Auth | Your middleware / checks | Built-in action headers |
+
+## Related
+
+- [Navigation](/docs/introduction/navigation) — quick API example
+- [Server actions](/docs/core/server-actions) — `"use server"` functions
+- [CLI commands](/docs/guides/cli) — `start` serves `/api/*`

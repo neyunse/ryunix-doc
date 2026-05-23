@@ -1,0 +1,81 @@
+---
+title: MDX & Frontmatter
+description: Write documentation and content pages with MDX in RyunixJS
+slug: mdx
+section: Guides
+---
+
+# MDX & Frontmatter
+
+Enable MDX in `ryunix.config.js` to author content pages alongside `.ryx` components.
+
+```javascript
+{
+  experimental: {
+    mdx: true,
+  },
+}
+```
+
+## File placement
+
+MDX files live in the App Router tree like any route:
+
+```txt
+app/
+└── docs/
+    └── introduction/
+        └── getting-started/
+            └── index.mdx
+```
+
+The URL follows the folder path: `/docs/introduction/getting-started`.
+
+## YAML frontmatter
+
+Start the file with `---` metadata. Ryunix parses it into the same `Metatags` object used for SEO:
+
+```mdx
+---
+title: Getting Started
+description: Quick start guide for RyunixJS
+slug: getting-started
+section: Introduction
+---
+
+# Getting Started
+
+Your content here…
+```
+
+At build time, frontmatter is merged with parent `layout.ryx` `Metatags` (title templates, `og:image`, etc.).
+
+## Importing components in MDX
+
+Use the same imports as `.ryx` files:
+
+```mdx
+import { CodeTabs } from "../../../components/CodeTabs";
+
+<CodeTabs tabs={[
+  { name: "pnpm", code: "pnpm dev" },
+  { name: "npm", code: "npm run dev" },
+]} />
+```
+
+Shared UI belongs in `app/components/` (this docs site uses `CodeTabs`, `Icon`, etc.).
+
+## MDXProvider
+
+Wrap MDX content with `MDXProvider` when you need custom shortcodes or element mappings — see [Components](/docs/api/components).
+
+## SSG and MDX
+
+During `ryunix build`, each MDX route is prerendered to static HTML with the correct `<title>` and meta tags inherited from layouts. Avoid mixing deprecated global `static.seo` config with per-route `Metatags`.
+
+## Related
+
+- [Navigation](/docs/introduction/navigation) — routing overview
+- [SSG & prerendering](/docs/guides/ssg) — prerender pipeline
+- [Functions](/docs/api/functions) — `useMetadata` for client-only updates
+- [Configuration](/docs/api/configuration) — `experimental.mdx`
