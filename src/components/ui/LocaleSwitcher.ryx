@@ -20,10 +20,10 @@ const LocaleSwitcher = ({ className = "" }) => {
           key={locale}
           type="button"
           onClick={() => onSelect(locale)}
-          className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
+          className={`cursor-pointer px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
             current === locale
-              ? "bg-purple-600 text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
+              ? "bg-blue-600 text-white"
+              : "text-gray-400 hover:text-white hover:bg-blue-500/30 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]"
           }`}
           aria-current={current === locale ? "true" : undefined}
         >

@@ -180,7 +180,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ### Custom Template (Deprecated)
 
-> ⚠️ **Deprecated Feature:** Modifying root attributes via `customTemplate` is obsolete in the App Router.
+> **Deprecated Feature:** Modifying root attributes via `customTemplate` is obsolete in the App Router.
+>
 > **Replacement:** Use a base `app/layout.ryx` (root layout) to define the main skeleton connecting to the DOM.
 
 ```javascript
@@ -194,7 +195,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ### SEO Configuration (Deprecated)
 
-> ⚠️ **Deprecated Feature:** Global SEO configuration in `ryunix.config.js` via `static.seo` is obsolete.
+> **Deprecated Feature:** Global SEO configuration in `ryunix.config.js` via `static.seo` is obsolete.
+>
 > **Replacement:** Export a local `Metatags` object in your base components, `layout.ryx`, or use YAML Frontmatter in `.mdx` files.
 
 ```javascript

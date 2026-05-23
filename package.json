@@ -12,7 +12,7 @@
     "lint:fix": "ryunix lint --fix"
   },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "1.2.4-canary.16",
+    "@unsetsoft/ryunixjs": "1.2.5-canary.4",
     "lucide": "^0.575.0"
   },
   "devDependencies": {

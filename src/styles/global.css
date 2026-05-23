@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colors - Dark mode by default based on the design */
-  --color-primary-500: #8b5cf6;
-  --color-primary-600: #7c3aed;
-  --color-primary-700: #6d28d9;
-  --color-primary-800: #5b21b6;
+  /* Colors - blue primary, purple used as secondary accent in components */
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
+
+  --color-selection-bg: #2563eb;
+  --color-selection-text: #ffffff;
 
   --color-text-primary: #ffffff;
   --color-text-secondary: #9ca3af;
@@ -74,6 +83,15 @@
   --ui-header-height: 4rem;
   --ui-container: 1280px;
   --ui-main-min-height: calc(100vh - var(--ui-header-height));
+
+  /* Focus ring (keyboard navigation) */
+  --focus-ring-width: 2px;
+  --focus-ring-color: #60a5fa;
+  --focus-ring-offset: 2px;
+  --focus-ring-offset-color: var(--color-surface-base);
+
+  /* Skip link sits below sticky header + gap */
+  --skip-link-top: calc(var(--ui-header-height) + var(--space-3));
 }
 
 @layer base {
@@ -87,6 +105,16 @@
   body {
     background-color: var(--color-surface-base);
     color: var(--color-text-primary);
+  }
+
+  ::selection {
+    background-color: var(--color-selection-bg);
+    color: var(--color-selection-text);
+  }
+
+  ::-moz-selection {
+    background-color: var(--color-selection-bg);
+    color: var(--color-selection-text);
   }
 
   #__ryunix {
@@ -229,6 +257,10 @@
         color: var(--color-primary-300);
         background-size: 100% 1px;
       }
+
+      &:focus-visible {
+        border-radius: var(--radius-sm);
+      }
     }
 
     & strong,
@@ -246,15 +278,19 @@
     & blockquote {
       padding: var(--space-5) var(--space-6);
       margin-block: var(--space-6);
-      border-inline-start: 4px solid var(--color-primary-500);
-      background: linear-gradient(to right, oklch(from var(--color-primary-500) l c h / 0.1), transparent);
+      border-inline-start: 4px solid var(--color-accent-500);
+      background: linear-gradient(to right, oklch(from var(--color-accent-500) l c h / 0.1), transparent);
       border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-      box-shadow: inset 1px 0 0 0 oklch(from var(--color-primary-500) l c h / 0.2);
+      box-shadow: inset 1px 0 0 0 oklch(from var(--color-accent-500) l c h / 0.2);
 
       & p {
         color: var(--color-text-primary);
         font-style: italic;
         margin-block: 0;
+
+        & + p {
+          margin-block-start: var(--space-3);
+        }
       }
     }
 
@@ -794,6 +830,12 @@
 
 @media print {
   @layer base {
+    ::selection,
+    ::-moz-selection {
+      background: highlight;
+      color: highlighttext;
+    }
+
     body {
       color: black;
       background: white;
@@ -834,19 +876,78 @@
 
 @layer base {
 
-  /* Skip to content link */
-  .skip-to-content {
-    position: absolute;
-    inset-block-start: -999px;
-    inset-inline-start: 0;
-    padding: var(--space-4);
-    background-color: var(--color-primary-500);
-    color: white;
-    z-index: var(--z-index-tooltip);
+  /* Global keyboard focus — ring via box-shadow (respects border-radius) */
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex="-1"])
+  ):not(.skip-to-content):focus {
+    outline: none;
+  }
 
-    &:focus {
-      inset-block-start: 0;
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex="-1"])
+  ):not(.skip-to-content):focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--focus-ring-offset-color),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  @media (prefers-contrast: more) {
+    :where(
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [tabindex]:not([tabindex="-1"])
+    ):not(.skip-to-content):focus-visible {
+      --focus-ring-width: 3px;
     }
+  }
+
+  /* Skip link: fixed below header + gap (header z-[100], docs mobile bar z-50) */
+  .skip-to-content {
+    position: fixed;
+    top: var(--skip-link-top);
+    left: var(--space-4);
+    z-index: 110;
+    padding: var(--space-3) var(--space-5);
+    background-color: var(--color-primary-600);
+    color: #fff;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(calc(-100% - var(--skip-link-top) - var(--space-4)));
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    clip: auto;
+    clip-path: none;
+    overflow: visible;
+    white-space: nowrap;
+    isolation: isolate;
+  }
+
+  .skip-to-content:focus,
+  .skip-to-content:focus-visible {
+    transform: translateY(0);
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-surface-base),
+      0 0 0 4px #fff;
   }
 
   /* Screen reader only content */
