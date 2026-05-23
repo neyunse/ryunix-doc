@@ -11,15 +11,20 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 RyunixJS admite varios enfoques de CSS.
 
-## Importar CSS
+## Importar CSS (App Router)
+
+Importa estilos globales desde el layout raíz:
 
 ```jsx
-// main.ryx
-import "./styles/index.css";
-import App from "./App";
+// app/layout.ryx (o src/app/layout.ryx)
+import "@/styles/global.css";
 
-Ryunix.init(<App />);
+export default function RootLayout({ children }) {
+  return children;
+}
 ```
+
+> **SPA legacy:** `Ryunix.init(<App />)` en `main.ryx` solo aplica a entradas personalizadas fuera del App Router.
 
 ## Estilos en línea
 

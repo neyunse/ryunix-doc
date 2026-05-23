@@ -7,7 +7,7 @@ section: Guides
 
 # SSG & Prerendering
 
-Ryunix generates static HTML for every App Router page during `ryunix build`. No manual route list is required when you use the `app/` directory.
+Ryunix prerenders static HTML for App Router pages during `ryunix build`. The route list is written to `.ryunix/cache/ssg/routes.json` automatically from your `app/` tree.
 
 ## How it works
 
@@ -41,7 +41,7 @@ Enable automatic sitemaps in `ryunix.config.js`:
 
 ```javascript
 {
-  experimental: {
+  legacy: {
     ssg: {
       sitemap: {
         enable: true,
@@ -56,19 +56,25 @@ Enable automatic sitemaps in `ryunix.config.js`:
 }
 ```
 
-You can also export `app/sitemap.js` for full control — see [Special files](/en/docs/api/special-files).
+Prefer `app/sitemap.js` when you need full control — see [Special files](/en/docs/api/special-files).
 
 ## SSR vs static export
 
 | Mode | Config | Result |
 | :--- | :--- | :--- |
 | SSG (default for static deploy) | `ryunix build` | HTML files in `.ryunix/static` |
-| SSR dev | `experimental.ssr: true` | Server render in dev; hydrate on client |
+| SSR dev | `ssr: true` (default) | Server render in dev; hydrate on client |
 | Client-only | Deploy JS bundle without prerender | Possible but loses SEO benefits |
 
 ## Dynamic routes
 
-Folders like `app/blog/[slug]/index.ryx` are included when the build can resolve paths. For CMS-driven slugs, generate pages at build time or use a server runtime with `ryunix start`.
+Routes with dynamic segments (`[slug]`, `[...path]`) are **not** added to the SSG manifest automatically — paths containing `:` are skipped at prerender time. They still work at runtime when `ssr: true` (default) via `ryunix dev` or `ryunix start`.
+
+Options for dynamic content:
+
+1. **Server runtime** — deploy with `ryunix build` + `ryunix start` and render on request.
+2. **Known slugs at build time** — add paths to `legacy.ssg.sitemap.prerender` only as a fallback when the file-based manifest is empty (legacy; prefer generating static routes or using `app/sitemap.js`).
+3. **Static params** — use fixed folders for each locale or doc section (as this docs site does with `/en/docs/...` and `/es/docs/...`).
 
 ## Related
 

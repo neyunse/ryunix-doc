@@ -1,14 +1,15 @@
-/** @type {import('@unsetsoft/ryunix-presets/config').Setting} */
+/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
 
 const RyunixSettings = {
   rootDir: "src",
+  ssr: true,
+  mdx: true,
+  favicon: true,
+  buildDir: ".ryunix",
   static: {
-    favicon: true, // if is false the favicon is not mandatory
     customTemplate: "./public/index.html",
   },
-  experimental: {
-    mdx: true,
-    ssr: true,
+  legacy: {
     ssg: {
       sitemap: {
         enable: true,

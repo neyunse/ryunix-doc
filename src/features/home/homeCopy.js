@@ -1,7 +1,7 @@
 export const homeCopy = {
   en: {
-    heroLead: "The new generation",
-    heroHighlight: "JavaScript Framework",
+    heroLead: "Build modern apps with",
+    heroHighlight: "RyunixJS",
     heroBody:
       "RyunixJS is a powerful, flexible, and extremely lightweight JavaScript framework for building modern web applications with unparalleled efficiency.",
     cta: "Get Started",
@@ -27,8 +27,8 @@ export const homeCopy = {
     ],
   },
   es: {
-    heroLead: "El framework JavaScript de",
-    heroHighlight: "nueva generación",
+    heroLead: "Crea aplicaciones web con",
+    heroHighlight: "RyunixJS",
     heroBody:
       "RyunixJS es un framework potente y flexible para crear aplicaciones web modernas con facilidad y eficiencia.",
     cta: "Comenzar",
