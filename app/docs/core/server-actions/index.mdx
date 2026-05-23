@@ -1,0 +1,73 @@
+---
+title: Server Actions
+description: Run server code from the client with Server Actions and ServerBoundary in RyunixJS
+slug: server-actions
+section: Core
+---
+
+# Server Actions
+
+Server Actions let you call server-only logic from the browser without hand-writing `fetch` wrappers. Ryunix compiles `"use server"` functions into client proxies and a secure HTTP endpoint.
+
+## Defining an action
+
+Mark async functions with `"use server"` in a file that runs on the server (or in a dedicated server module):
+
+```jsx
+// app/actions/user.js
+"use server";
+
+export async function updateProfile(formData) {
+  const name = formData.get("name");
+  // Database or API call on the server only
+  return { ok: true, name };
+}
+```
+
+## Calling from the client
+
+After build, the client bundle receives a proxy created with `createActionProxy(actionId)`:
+
+```jsx
+import { updateProfile } from "../actions/user";
+
+async function onSubmit(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const result = await updateProfile(formData);
+  console.log(result);
+}
+```
+
+When the proxy runs in the browser:
+
+1. Arguments are serialized with `JSON.stringify`.
+2. Ryunix sends `POST` to `/_ryunix/action`.
+3. The request includes `X-Ryunix-Action` for CSRF protection.
+4. The JSON response is returned to your component logic.
+
+## ServerBoundary
+
+Server-rendered HTML may include regions the client bundle does not know how to reconcile. `<ServerBoundary>` marks those regions so hydration **skips** inner content and preserves server markup.
+
+```jsx
+import { ServerBoundary } from "@unsetsoft/ryunixjs";
+
+<ServerBoundary id="sidebar-stats">
+  {/* Server-only subtree */}
+</ServerBoundary>
+```
+
+On the client, this renders a lightweight wrapper (`data-ryunix-server`) so the reconciler does not destroy pre-rendered HTML.
+
+## Requirements
+
+- Enable SSR in `ryunix.config.js` when using server features: `experimental.ssr: true`.
+- Server Actions depend on the Ryunix compiler loaders (`ryunix-server-action-loader`); use the official CLI (`ryunix dev` / `ryunix build`).
+- Do not expose secrets in action arguments; treat payloads like any public API input.
+
+## Related
+
+- [Rendering & SSR](/docs/core/rendering) — `renderToString`, hydration
+- [API routes](/docs/guides/api-routes) — REST endpoints under `app/api/`
+- [Configuration](/docs/api/configuration) — `experimental.ssr`

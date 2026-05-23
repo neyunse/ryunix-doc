@@ -1,0 +1,72 @@
+---
+title: Create Ryunix App
+description: Scaffold new projects with @unsetsoft/cra templates
+slug: create-app
+section: Guides
+---
+
+# Create Ryunix App
+
+Use **Create Ryunix App** (`@unsetsoft/cra`) to generate a new project from official templates.
+
+## Quick start
+
+```bash
+npx @unsetsoft/cra@canary my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+Equivalent with other package managers:
+
+```bash
+pnpm create @unsetsoft/cra my-app
+yarn create @unsetsoft/cra my-app
+bun create @unsetsoft/cra my-app
+```
+
+## Official templates
+
+| Template | Includes |
+| :--- | :--- |
+| `ryunix-base` | Minimal App Router app |
+| `ryunix-tailwind` | PostCSS + Tailwind (`@tailwindcss/postcss`) |
+| `ryunix-eslint` | ESLint aligned with Ryunix conventions |
+| `ryunix-all` | Tailwind + ESLint combined |
+
+The CLI copies the chosen template folder verbatim into your target directory (including `app/`, `ryunix.config.js`, and `public/`).
+
+## Generated structure
+
+Typical output:
+
+```txt
+my-app/
+├── app/
+│   ├── index.ryx
+│   ├── layout.ryx
+│   ├── errors.ryx
+│   └── api/hello/router.js
+├── public/
+├── styles/
+├── ryunix.config.js
+└── package.json
+```
+
+## After scaffolding
+
+1. Run `pnpm dev` and open `http://localhost:3000`.
+2. Adjust aliases in `ryunix.config.js` (`@/styles`, `@/components`, …).
+3. Add routes under `app/` — folders map to URLs automatically.
+
+## Canary vs stable
+
+Documentation and examples often use `@unsetsoft/cra@canary` for the latest framework features. Pin a stable version for production apps when releases are tagged.
+
+## Related
+
+- [Getting started](/docs/introduction/getting-started) — first component
+- [Installation](/docs/introduction/installation) — requirements and package managers
+- [Project structure](/docs/introduction/project-structure) — folder layout
+- [CLI commands](/docs/guides/cli) — `ryunix` scripts in generated apps

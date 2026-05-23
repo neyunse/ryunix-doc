@@ -1,0 +1,63 @@
+---
+title: CLI Commands
+description: ryunix dev, build, start, and lint commands
+slug: cli
+section: Guides
+---
+
+# CLI Commands
+
+The `ryunix` command comes from `@unsetsoft/ryunix-presets` and is wired in your app's `package.json` scripts.
+
+## Commands
+
+| Command | Script | Description |
+| :--- | :--- | :--- |
+| `dev` | `pnpm dev` | Development server with HMR (client + server compilers) |
+| `build` | `pnpm build` | Clean build, Webpack compile, SSG prerender |
+| `start` | `pnpm start` | Production Node server (requires build first) |
+| `lint` | `pnpm lint` | ESLint with Ryunix defaults |
+| `lint:fix` | `pnpm lint:fix` | ESLint with auto-fix |
+
+## dev
+
+- Sets `RYUNIX_MODE=development`
+- Runs Webpack Dev Server on the **client** config (dual-compiler setup)
+- Probes for a free port if `3000` is busy
+- Clears stale Webpack cache partitions on start
+
+## build
+
+- Removes previous `.ryunix/static` and `.ryunix/server` artifacts
+- Compiles client and server bundles
+- Runs the SSG prerender step and writes static HTML to `.ryunix/static`
+- Generates route metadata for SEO (from `Metatags` and MDX frontmatter)
+
+> **Production webpack:** Set `webpack.production: true` in `ryunix.config.js` before shipping to production.
+
+## start
+
+- Sets `RYUNIX_MODE=production`
+- Serves `.ryunix/static` with the built-in Node server
+- Supports range requests, LRU file cache, and gzip/brotli for text assets
+- Delegates `/api/*` to compiled API routes
+
+Fails fast if you have not run `build` first.
+
+## lint
+
+Uses the opinionated ESLint config bundled with Ryunix. Override rules in `ryunix.config.js` under `eslint.rules`.
+
+## Output directories
+
+| Path | Contents |
+| :--- | :--- |
+| `.ryunix/static` | Prerendered HTML, JS, CSS (deploy this for static hosting) |
+| `.ryunix/server` | Server bundles, API router, app router |
+| `.ryunix/cache/ssg` | `routes.json` and SSG cache |
+
+## Related
+
+- [Deploying](/docs/introduction/deploying) — Vercel and static hosting
+- [SSG & prerendering](/docs/guides/ssg) — what `build` generates
+- [Configuration](/docs/api/configuration) — `ryunix.config.js`

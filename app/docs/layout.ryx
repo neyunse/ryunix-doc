@@ -59,6 +59,21 @@ const sections = {
     { path: "/docs/api/components", label: "Components" },
     { path: "/docs/api/functions", label: "Functions" },
     { path: "/docs/api/special-files", label: "Special Files" }
+  ],
+  Core: [
+    { path: "/docs/core/rendering", label: "Rendering & SSR" },
+    { path: "/docs/core/error-handling", label: "Error Handling" },
+    { path: "/docs/core/server-actions", label: "Server Actions" },
+    { path: "/docs/core/advanced-components", label: "Advanced Components" },
+    { path: "/docs/core/performance", label: "Performance" }
+  ],
+  Guides: [
+    { path: "/docs/guides/cli", label: "CLI Commands" },
+    { path: "/docs/guides/ssg", label: "SSG & Prerendering" },
+    { path: "/docs/guides/api-routes", label: "API Routes" },
+    { path: "/docs/guides/mdx", label: "MDX & Frontmatter" },
+    { path: "/docs/guides/create-app", label: "Create Ryunix App" },
+    { path: "/docs/guides/devtools", label: "DevTools" }
   ]
 };
 
