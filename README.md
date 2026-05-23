@@ -60,6 +60,10 @@ app/
 ## Configuration
 
 - **`ryunix.config.js`** — RyunixJS settings (MDX, SSR, webpack aliases, ESLint)
+
+> **Warning — `webpack.production`:** This repo keeps `webpack.production: false` in `ryunix.config.js` for faster local development. Set it to `true` before running `pnpm build` or deploying to production (e.g. Vercel); otherwise the production bundle is not fully optimized.
+
+Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `app/layout.ryx` (RyunixJS App Router metadata).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS
 - **`vercel.json`** — Vercel deployment (build output: `.ryunix/static`)
 

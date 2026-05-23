@@ -9,10 +9,13 @@ import { Icon } from "./components/Icon";
 export const Metatags = {
   title: "RyunixJS: The new generation JavaScript Framework",
   description: "RyunixJS is a powerful and flexible JavaScript framework for building modern web applications with ease and efficiency.",
+  "og:title": "RyunixJS: The new generation JavaScript Framework",
+  "og:description":
+    "RyunixJS is a powerful and flexible JavaScript framework for building modern web applications with ease and efficiency.",
   keywords: [
     "Ryunix", "Documentation", "Home", "JS Framework", "Static Site Generator",
     "MDX Support", "ESLint Integration", "Webpack Configuration",
-  ]
+  ],
 };
 
 const Home = (props) => {
