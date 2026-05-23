@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@source "../";
 
 @theme {
   /* Colors - Dark mode by default based on the design */

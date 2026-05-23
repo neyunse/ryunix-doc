@@ -1,6 +1,6 @@
 import { NavLink, useStore, useEffect, useRouter } from "@unsetsoft/ryunixjs";
 import { ChevronRight, ChevronLeft, Menu, X } from "lucide";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 
 const SidebarContent = ({ sections, currentPath }) => (
   <nav className="space-y-8 text-sm">
