@@ -28,7 +28,7 @@ const RyunixSettings = {
     },
   },
   webpack: {
-    production: false, // false = dev; set true before pnpm build / deploy (see README)
+    production: true, // false = dev; set true before pnpm build / deploy (see README)
     resolve: {
       alias: {
         "@": "./src",
