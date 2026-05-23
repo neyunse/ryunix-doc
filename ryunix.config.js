@@ -1,29 +1,44 @@
-/** @type {import('@unsetsoft/ryunix-presets/config').Setting} */
+/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
 
 const RyunixSettings = {
-  experimental:{
-    mdx: true,
-    ssr: true,
-  },
+  rootDir: "src",
+  ssr: true,
+  mdx: true,
+  favicon: true,
+  buildDir: ".ryunix",
   static: {
-    favicon: true, // if is false the favicon is not mandatory
+    customTemplate: "./public/index.html",
   },
-  eslint:{
+  legacy: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://ryunixjs.vercel.app",
+        settings: {
+          changefreq: "weekly",
+          priority: "0.7",
+        },
+      },
+    },
+  },
+  eslint: {
     rules: {
       "no-unused-vars": "off",
-      "indent": "off"
-    }
+      indent: "off",
+    },
   },
   webpack: {
-    production: true, // use 'false' for dev mode
+    production: true, // false = dev; set true before pnpm build / deploy (see README)
     resolve: {
       alias: {
-        "@/styles": "./app/styles",
-        "@/components": "./app/components",
-        "@/resources": "./app/resources"
-      }
+        "@": "./src",
+        "@/styles": "./src/styles",
+        "@/components": "./src/components",
+        "@/features": "./src/features",
+        "@/i18n": "./src/i18n",
+        "@/resources": "./src/resources",
+      },
     },
-    
   },
 };
 

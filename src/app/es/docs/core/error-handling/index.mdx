@@ -1,0 +1,76 @@
+---
+title: Manejo de errores
+description: Límites de error, error.ryx y la superposición de desarrollo en RyunixJS
+slug: error-handling
+section: Core
+---
+
+# Manejo de errores
+
+Ryunix aísla los fallos para que un componente roto no derribe toda la interfaz. Obtienes límites declarativos en producción y una superposición de diagnóstico en desarrollo.
+
+## Componente ErrorBoundary
+
+Envuelve subárboles que puedan lanzar errores. Ante un fallo, Ryunix renderiza tu `fallback` en lugar del árbol afectado.
+
+```jsx
+import { ErrorBoundary } from "@unsetsoft/ryunixjs";
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<p>Algo salió mal. Inténtalo más tarde.</p>}>
+      <Dashboard />
+    </ErrorBoundary>
+  );
+}
+```
+
+## 404 global (`app/error.ryx`)
+
+En la **raíz** de `app/` (o `{rootDir}/app/`), crea `error.ryx` para rutas no encontradas. Exporta `NotFound` o un componente por defecto:
+
+```jsx
+// app/error.ryx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+export const NotFound = () => (
+  <div>
+    <h1>404</h1>
+    <p>Página no encontrada</p>
+    <NavLink to="/">Volver al inicio</NavLink>
+  </div>
+);
+```
+
+El App Router registra esto como ruta catch-all `*`. El archivo **no** se llama `errors.ryx` — el escáner solo reconoce `error.ryx`.
+
+## Errores por segmento (`error.ryx`)
+
+Añade `error.ryx` junto a `layout.ryx` en un segmento para capturar fallos en ese subárbol:
+
+```jsx
+// app/dashboard/error.ryx
+export default function DashboardError() {
+  return <p>No se pudo cargar esta sección.</p>;
+}
+```
+
+## Carga (`loading.ryx`)
+
+Opcional `loading.ryx` en un segmento muestra UI mientras el contenido async se resuelve. Ver [Navegación](/es/docs/introduction/navigation).
+
+## Superposición de desarrollo
+
+Con `NODE_ENV` distinto de `production`, Ryunix puede mostrar **RyunixDevOverlay** con stacks filtrados y referencias a archivos fuente.
+
+## Buenas prácticas
+
+1. Usa `error.ryx` de segmento donde la recuperación tenga sentido.
+2. Mantén fallbacks claros (reintentar, volver al inicio).
+3. Usa `error.ryx` raíz con `NotFound` para 404 coherentes.
+
+## Relacionado
+
+- [Navegación](/es/docs/introduction/navigation)
+- [Estructura del proyecto](/es/docs/introduction/project-structure)
+- [DevTools](/es/docs/guides/devtools)

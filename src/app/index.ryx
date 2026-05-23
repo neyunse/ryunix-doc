@@ -1,0 +1,9 @@
+import LocaleHubPage from "@/features/locale-hub/LocaleHubPage.ryx";
+
+export const Metatags = {
+  title: "RyunixJS — Choose your language",
+  description: "Official RyunixJS documentation. Select English or Spanish.",
+  "og:image": "/screenshot.png",
+};
+
+export default LocaleHubPage;

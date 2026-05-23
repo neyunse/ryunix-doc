@@ -1,0 +1,169 @@
+---
+title: Project Structure
+description: How to organize your RyunixJS project
+section: Introduction
+slug: project-structure
+---
+
+# Project Structure
+
+## Basic Structure
+
+```
+my-app/
+├── app/                   # or src/app/ when rootDir is "src"
+│   ├── layout.ryx         # Root layout
+│   ├── index.ryx          # Home (/)
+│   ├── error.ryx          # Global 404 (NotFound)
+│   ├── sitemap.js         # Optional programmatic sitemap
+│   ├── robots.js
+│   ├── manifest.js
+│   └── api/
+│       └── hello/
+│           └── router.js  # API handler (GET, POST, …)
+├── assets/                # Static files (CRA templates)
+├── styles/
+│   └── global.css
+├── public/                # Optional (e.g. favicon.png)
+├── ryunix.config.js
+└── package.json
+```
+
+## Root Layout (layout.ryx)
+
+The `layout.ryx` file in the root of your `app` directory wraps all your pages, providing a persistent UI across route changes.
+
+```jsx
+import "@/styles/index.css";
+
+function Layout({ children }) {
+  return (
+    <>
+      <header>My Website</header>
+      <main>{children}</main>
+      <footer>© 2026</footer>
+    </>
+  );
+}
+
+export default Layout;
+```
+
+## Root Component (index.ryx)
+
+```jsx
+function Home() {
+  return (
+    <>
+      <h1>Hello World</h1>
+    </>
+  );
+}
+
+export default Home;
+```
+
+## Recommended Folder Organization
+
+### App Router Architecture
+
+```
+src/                      # when rootDir is "src" (default)
+├── app/
+│   ├── layout.ryx
+│   ├── index.ryx
+│   ├── error.ryx
+│   └── about/
+│       └── index.ryx
+├── components/           # shared UI (recommended)
+├── features/             # optional feature modules
+└── styles/
+    └── global.css
+```
+
+Keep route files in `app/`; colocate or share UI from `src/components/` via webpack aliases.
+
+
+
+## Static assets
+
+CRA templates use **`assets/`** for images and files copied into the build. You can also use **`public/`** (e.g. `public/favicon.png` when `favicon: true`).
+
+```jsx
+<img src="/images/logo.png" />
+```
+
+Import SVGs or other modules from `assets/` when using webpack loaders.
+
+## Configuration file
+
+```javascript
+// ryunix.config.js
+const RyunixSettings = {
+  rootDir: "src",
+  ssr: true,
+  mdx: false,
+  buildDir: ".ryunix",
+  favicon: true,
+  webpack: {
+    production: false,
+    resolve: {
+      alias: {
+        "@": "./src",
+        "@/components": "./src/components",
+      },
+    },
+  },
+};
+
+export default RyunixSettings;
+```
+
+## Import Aliases
+
+Configure in `ryunix.config.js` inside `webpack.resolve.alias`.
+
+Use in code:
+
+```jsx
+import Header from "@/components/Header";
+```
+
+## Environment Variables
+
+Create `.env` file:
+
+```env
+RYUNIX_APP_API_URL=https://api.example.com
+RYUNIX_APP_KEY=abc123
+```
+
+Access in code:
+
+```jsx
+const apiUrl = ryunix.env.RYUNIX_APP_API_URL;
+const key = ryunix.env.RYUNIX_APP_KEY;
+```
+
+From `ryunix.config.js`:
+
+```javascript
+const RyunixSettings = {
+  env: {
+    RYUNIX_APP_KEY: "XXXXXXXXXX",
+  },
+};
+```
+
+```jsx
+const key = ryunix.config.env.RYUNIX_APP_KEY;
+```
+
+All environment variables **must** start with `RYUNIX_APP_` to be exposed to the client.
+
+## Best Practices
+
+1. **Keep components small** - Single responsibility
+2. **Use feature folders** - Group related files
+3. **Consistent naming** - PascalCase for components
+4. **Organize by feature** - Not by file type

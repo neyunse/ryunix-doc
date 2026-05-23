@@ -1,14 +1,19 @@
 {
   "outputDirectory": ".ryunix/static",
-  "buildCommand": "pnpm run build",
-  "devCommand": "pnpm run dev",
- 
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
   "framework": null,
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/docs",
+      "destination": "/en/docs/introduction/getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "/en/docs/:path*",
+      "permanent": true
     }
   ]
 }

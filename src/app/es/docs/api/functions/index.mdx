@@ -1,0 +1,529 @@
+---
+title: Funciones (Hooks)
+description: Todos los hooks disponibles en RyunixJS
+slug: functions
+section: Api
+---
+
+import { useStore } from "@unsetsoft/ryunixjs";
+
+# Funciones (Hooks)
+
+Todos los hooks disponibles en RyunixJS.
+
+## useStore
+
+Gestiona el estado del componente.
+
+```jsx
+import { useStore } from "@unsetsoft/ryunixjs";
+
+function Counter() {
+  const [count, setCount] = useStore(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+**Equivalente a `useState` de React.**
+
+### Actualizaciones funcionales
+
+```jsx
+const [count, setCount] = useStore(0);
+
+// Function receives previous state
+setCount((prev) => prev + 1);
+```
+
+### Varios estados
+
+```jsx
+const [name, setName] = useStore("");
+const [age, setAge] = useStore(0);
+const [active, setActive] = useStore(false);
+```
+
+## useEffect
+
+Efectos secundarios y ciclo de vida.
+
+```jsx
+import { useEffect } from "@unsetsoft/ryunixjs";
+
+function Component() {
+  useEffect(() => {
+    document.title = "My App";
+
+    // Cleanup
+    return () => {
+      document.title = "Default";
+    };
+  }, []); // Empty array = run once
+}
+```
+
+### Con dependencias
+
+```jsx
+useEffect(() => {
+  fetchData(id);
+}, [id]); // Re-run when id changes
+```
+
+### Sin dependencias
+
+```jsx
+useEffect(() => {
+  console.log("Runs after every render");
+});
+```
+
+## useMemo
+
+Memoriza cálculos costosos.
+
+```jsx
+import { useMemo } from '@unsetsoft/ryunixjs';
+
+function Search({ items, query }) {
+  const filtered = useMemo(() => {
+    return items.filter(item =>
+      item.name.includes(query)
+    );
+  }, [items, query]);
+
+  return <ul>{filtered.map(...)}</ul>;
+}
+```
+
+## useCallback
+
+Memoriza funciones.
+
+```jsx
+import { useCallback } from "@unsetsoft/ryunixjs";
+
+function Parent() {
+  const [count, setCount] = useStore(0);
+
+  const increment = useCallback(() => {
+    setCount((c) => c + 1);
+  }, []); // Function never changes
+
+  return <Child onIncrement={increment} />;
+}
+```
+
+## useRef
+
+Referencia persistente.
+
+```jsx
+import { useRef, useEffect } from "@unsetsoft/ryunixjs";
+
+function Input() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return <input ref={inputRef} />;
+}
+```
+
+### Almacenar valores
+
+```jsx
+function Timer() {
+  const intervalRef = useRef(null);
+
+  const start = () => {
+    intervalRef.current = setInterval(() => {
+      console.log("tick");
+    }, 1000);
+  };
+
+  const stop = () => {
+    clearInterval(intervalRef.current);
+  };
+
+  return (
+    <>
+      <button onClick={start}>Start</button>
+      <button onClick={stop}>Stop</button>
+    </>
+  );
+}
+```
+
+## useReducer
+
+Lógica de estado compleja.
+
+```jsx
+import { useReducer } from "@unsetsoft/ryunixjs";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <div>
+      <p>{state.count}</p>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+    </div>
+  );
+}
+```
+
+## createContext
+
+Crea contexto para compartir estado.
+
+```jsx
+import { createContext } from "@unsetsoft/ryunixjs";
+
+const { Provider, useContext } = createContext("theme", "light");
+
+function App() {
+  const [theme, setTheme] = useStore("dark");
+
+  return (
+    <Provider value={theme}>
+      <Button />
+    </Provider>
+  );
+}
+
+function Button() {
+  const theme = useContext();
+  return <button class={theme}>Click</button>;
+}
+```
+
+**Diferente de React: devuelve `{ Provider, useContext }`.**
+
+## useRouter
+
+Accede a información de enrutamiento.
+
+```jsx
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+function Component() {
+  const { navigate, location, params, query } = useRouter();
+
+  return (
+    <div>
+      <p>Current: {location}</p>
+      <button onClick={() => navigate("/about")}>Go to About</button>
+    </div>
+  );
+}
+```
+
+### Retorno
+
+- `navigate(path)` — Navegar a la ruta
+- `location` — Pathname actual
+- `params` — Parámetros de ruta
+- `query` — Objeto de query string
+- `route` — Configuración de ruta actual
+
+## useQuery
+
+Accede a parámetros de consulta.
+
+```jsx
+import { useQuery } from "@unsetsoft/ryunixjs";
+
+function SearchPage() {
+  const query = useQuery();
+  const searchTerm = query.q;
+  const page = query.page || 1;
+
+  return <div>Search: {searchTerm}</div>;
+}
+```
+
+Para la URL: `/search?q=react&page=2`
+
+## useHash
+
+Accede al hash de la URL.
+
+```jsx
+import { useHash } from "@unsetsoft/ryunixjs";
+
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView();
+    }
+  }, [hash]);
+
+  return <div>Current hash: {hash}</div>;
+}
+```
+
+Para la URL: `/page#section-2` → hash = "#section-2"
+
+## useMetadata
+
+Establece metadatos de página.
+
+```jsx
+import { useMetadata } from "@unsetsoft/ryunixjs";
+
+function Page() {
+  useMetadata(
+    {
+      title: "My Page",
+      description: "Page description",
+      "og:title": "My Page",
+      "og:image": "/og-image.jpg",
+      canonical: "https://example.com/page",
+    },
+    {
+      title: {
+        template: "%s | My Site",
+      },
+    }
+  );
+
+  return <div>Content</div>;
+}
+```
+
+### Opciones
+
+```jsx
+useMetadata(tags, {
+  title: {
+    template: "%s | Site", // %s replaced with page title
+    prefix: "Default Title", // Used when no title
+  },
+});
+```
+
+## useTransition
+
+Marca actualizaciones como no urgentes.
+
+```jsx
+import { useTransition } from "@unsetsoft/ryunixjs";
+
+function Search() {
+  const [query, setQuery] = useStore("");
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+
+    startTransition(() => {
+      // Non-urgent update
+      fetchResults(e.target.value);
+    });
+  };
+
+  return (
+    <div>
+      <input value={query} onChange={handleChange} />
+      {isPending && <Spinner />}
+    </div>
+  );
+}
+```
+
+## useDeferredValue
+
+Diferir actualizaciones de valor.
+
+```jsx
+import { useDeferredValue } from "@unsetsoft/ryunixjs";
+
+function Search({ query }) {
+  const deferredQuery = useDeferredValue(query);
+
+  const results = useMemo(() => {
+    return search(deferredQuery);
+  }, [deferredQuery]);
+
+  return <Results items={results} />;
+}
+```
+
+## batchUpdates
+
+Agrupa varias actualizaciones de estado.
+
+```jsx
+import { batchUpdates } from "@unsetsoft/ryunixjs";
+
+function Form() {
+  const [name, setName] = useStore("");
+  const [email, setEmail] = useStore("");
+  const [age, setAge] = useStore(0);
+
+  const handleSubmit = () => {
+    batchUpdates(() => {
+      setName("John");
+      setEmail("john@example.com");
+      setAge(30);
+    }); // Single re-render
+  };
+}
+```
+
+## memo
+
+Memoriza un componente.
+
+```jsx
+import { memo } from "@unsetsoft/ryunixjs";
+
+const ExpensiveComponent = memo(({ value }) => {
+  return <div>{value}</div>;
+});
+
+// Only re-renders if value changes
+```
+
+## lazy
+
+Carga diferida de componentes.
+
+```jsx
+import { lazy, Suspense } from "@unsetsoft/ryunixjs";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Dashboard />
+    </Suspense>
+  );
+}
+```
+
+## Hooks personalizados
+
+Crea lógica reutilizable.
+
+```jsx
+function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useStore(() => {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : initialValue;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue];
+}
+
+// Usage
+function Component() {
+  const [name, setName] = useLocalStorage("name", "");
+  return <input value={name} onChange={(e) => setName(e.target.value)} />;
+}
+```
+
+### useDebounce
+
+```jsx
+function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useStore(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebounced(value);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  return debounced;
+}
+```
+
+### useFetch
+
+```jsx
+function useFetch(url) {
+  const [data, setData] = useStore(null);
+  const [loading, setLoading] = useStore(true);
+  const [error, setError] = useStore(null);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading, error };
+}
+```
+
+## Reglas de los hooks
+
+1. **Solo llamar en el nivel superior** — No dentro de bucles, condiciones ni funciones anidadas
+2. **Solo llamar desde componentes función** — O hooks personalizados
+3. **Siempre en el mismo orden** — No llames hooks de forma condicional
+
+```jsx
+// ❌ Wrong
+function Component({ condition }) {
+  if (condition) {
+    const [state, setState] = useStore(0); // Conditional hook
+  }
+}
+
+// ✅ Correct
+function Component({ condition }) {
+  const [state, setState] = useStore(0);
+
+  if (condition) {
+    // Use state here
+  }
+}
+```
+
+## Buenas prácticas
+
+1. **Nombra los hooks personalizados con prefijo `use`**
+2. **Extrae lógica compleja a hooks personalizados**
+3. **Usa useMemo para cálculos costosos**
+4. **Usa useCallback para manejadores de eventos**
+5. **Minimiza dependencias en useEffect**
+6. **Limpia los efectos correctamente**

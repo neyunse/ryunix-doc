@@ -1,0 +1,292 @@
+---
+title: Configuración
+description: Configura tu proyecto RyunixJS con ryunix.config.js
+slug: configuration
+section: Api
+---
+
+# Configuración
+
+Configura tu proyecto RyunixJS con `ryunix.config.js`.
+
+## Configuración básica
+
+```javascript
+// ryunix.config.js
+/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
+const RyunixSettings = {
+  rootDir: "src",
+  ssr: true,
+  mdx: true,
+  port: 3000,
+  buildDir: ".ryunix",
+  favicon: true,
+  webpack: {
+    production: false,
+    resolve: {
+      alias: {
+        "@": "./src",
+        "@/components": "./src/components",
+      },
+    },
+  },
+};
+
+export default RyunixSettings;
+```
+
+> **Claves legacy:** `experimental.ssr`, `experimental.mdx`, `static.favicon` y `webpack.output.buildDirectory` siguen funcionando con avisos de deprecación. Prefiere las opciones de raíz (`ssr`, `mdx`, `favicon`, `buildDir`, `port`, `proxy`).
+
+## Ajustes de Webpack
+
+### Modo producción
+
+```javascript
+{
+  webpack: {
+    production: true, // Enable production optimizations
+  },
+};
+```
+
+El modo producción habilita:
+
+- Minificación (Terser + CSS)
+- Code splitting
+- Tree shaking
+- Source maps
+
+### Raíz de código (`rootDir`)
+
+Ryunix busca `app/` en la raíz del proyecto **o** en `{rootDir}/app`. El valor por defecto es `"src"`.
+
+```javascript
+{
+  rootDir: "src",
+}
+```
+
+Si existen `./app` y `./src/app`, **gana `./app`**.
+
+### Salida de build (`buildDir`)
+
+```javascript
+{
+  buildDir: ".ryunix",
+}
+```
+
+Los estáticos de producción quedan en `.ryunix/static/`.
+
+### Servidor de desarrollo (`port`, `proxy`)
+
+```javascript
+{
+  port: 3000,
+  proxy: {
+    "/api": {
+      target: "http://localhost:8080",
+      changeOrigin: true,
+    },
+  },
+  webpack: {
+    devServer: {
+      allowedHosts: "auto",
+    },
+  },
+};
+```
+
+### Alias de rutas
+
+```javascript
+{
+  webpack: {
+    resolve: {
+      alias: {
+        "@": "./src",
+        "@/components": "./src/components",
+      },
+    },
+  },
+};
+```
+
+Uso en código:
+
+```jsx
+import Button from "@/components/Button";
+import { formatDate } from "@/utils/date";
+```
+
+### Extensiones
+
+```javascript
+{
+  webpack: {
+    resolve: {
+      extensions: [".js", ".jsx", ".ryx", ".ts", ".tsx"],
+    },
+  },
+};
+```
+
+### Reglas personalizadas de Webpack
+
+```javascript
+{
+  webpack: {
+    module: {
+      rules: [
+        {
+          test: /\.svg$/,
+          use: ["@svgr/webpack"],
+        },
+        {
+          test: /\.yaml$/,
+          use: ["yaml-loader"],
+        },
+      ],
+    },
+  },
+};
+```
+
+### Plugins
+
+```javascript
+const CopyPlugin = require("copy-webpack-plugin");
+
+{
+  webpack: {
+    plugins: [
+      new CopyPlugin({
+        patterns: [{ from: "static", to: "static" }],
+      }),
+    ],
+  },
+};
+```
+
+## Recursos estáticos
+
+### Favicon
+
+```javascript
+{
+  static: {
+    favicon: true, // Looks for public/favicon.png
+  },
+};
+```
+
+### Plantilla personalizada (obsoleta)
+
+> **Función obsoleta:** Modificar atributos raíz mediante `customTemplate` está obsoleto en el App Router.
+>
+> **Alternativa:** Usa un `app/layout.ryx` base (layout raíz) para definir el esqueleto principal que se conecta al DOM.
+
+```javascript
+{
+  static: {
+    favicon: true,
+    customTemplate: true, // Deprecated
+  },
+};
+```
+
+### Configuración SEO (obsoleta)
+
+> **Función obsoleta:** La configuración SEO global en `ryunix.config.js` mediante `static.seo` está obsoleta.
+>
+> **Alternativa:** Exporta un objeto `Metatags` local en tus componentes base, `layout.ryx`, o usa frontmatter YAML en archivos `.mdx`.
+
+```javascript
+{
+  static: {
+    seo: { // Deprecated
+      pageLang: "en",
+      title: "My App",
+    },
+  },
+};
+```
+
+## MDX y SSG
+
+### Soporte MDX
+
+Habilita páginas `.mdx` bajo `app/`:
+
+```javascript
+{
+  mdx: true,
+}
+```
+
+El frontmatter YAML entre `---` se fusiona con `Metatags` del layout.
+
+### Generación estática (SSG)
+
+`ryunix build` escribe el manifiesto en `.ryunix/cache/ssg/routes.json` y prerenderiza rutas **sin** segmentos dinámicos (`[param]` queda para SSR en runtime).
+
+Sitemap opcional si no existe `app/sitemap.js`:
+
+```javascript
+{
+  legacy: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://example.com",
+        settings: {
+          changefreq: "weekly",
+          priority: "0.7",
+        },
+      },
+    },
+  },
+}
+```
+
+Prefiere `app/sitemap.js`, `app/robots.js` y `app/manifest.js` (ver [Archivos especiales](/es/docs/api/special-files)).
+
+## Deprecaciones y correcciones
+
+- **Enrutamiento centralizado (`routes.ryx`)**: Webpack lanzaba antes un error crítico `[SSG] ❌ The route file was not found` si faltaba `routes.ryx`. Ahora, si se detecta el directorio `app/`, esta comprobación heredada se omite globalmente.
+- **Watcher de API anidada (corrección de hot reload)**: Se corrigió un problema donde compilar endpoints API en subcarpetas fallaba por una comprobación de reloj del sistema (mtime) demasiado agresiva. Ahora, modificar endpoints como `app/api/users/[id]/route.js` se actualiza correctamente en disco en lugar de devolver `NotFound`.
+- **Corrección de inyección HTML en MDX**: Se corrigió un problema asíncrono en el compilador SSG donde componentes `.mdx` renderizaban una etiqueta `<title>Ryunix App</title>` por defecto, omitiendo la fusión con los formatos de ruta del layout.
+
+## Variables de entorno
+
+Las variables deben usar el prefijo `RYUNIX_APP_` para estar disponibles en el cliente.
+
+### Desde `ryunix.config.js`
+
+```javascript
+const RyunixSettings = {
+  env: {
+     RYUNIX_APP_TEST: "example",
+  },
+};
+
+export default RyunixSettings;
+```
+
+Acceso en código:
+
+```javascript
+const key = ryunix.config.env.RYUNIX_APP_KEY;
+```
+
+### Desde archivo `.env`
+
+```env
+RYUNIX_APP_TEST=test
+```
+
+Acceso en código:
+
+```javascript
+const myEnv = ryunix.env.RYUNIX_APP_TEST;
+```

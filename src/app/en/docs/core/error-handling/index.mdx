@@ -1,0 +1,87 @@
+---
+title: Error Handling
+description: Error boundaries, error.ryx, and the development overlay in RyunixJS
+slug: error-handling
+section: Core
+---
+
+# Error Handling
+
+Ryunix isolates failures so one broken component does not tear down the whole UI. You get declarative boundaries in production and a built-in diagnostic overlay in development.
+
+## ErrorBoundary component
+
+Wrap subtrees that may throw. On error, Ryunix renders your `fallback` instead of the failing tree.
+
+```jsx
+import { ErrorBoundary } from "@unsetsoft/ryunixjs";
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<p>Something went wrong. Try again later.</p>}>
+      <Dashboard />
+    </ErrorBoundary>
+  );
+}
+```
+
+The reconciler walks up the fiber tree to find the nearest error boundary, clears the failed branch, and renders the fallback.
+
+## Global 404 (`app/error.ryx`)
+
+At the **root** of `app/` (or `{rootDir}/app/`), create `error.ryx` for unmatched routes. Export `NotFound` or a default component:
+
+```jsx
+// app/error.ryx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+export const NotFound = () => (
+  <div>
+    <h1>404</h1>
+    <p>Page not found</p>
+    <NavLink to="/">Back home</NavLink>
+  </div>
+);
+```
+
+The App Router registers this as the catch-all `*` route. This file is **not** named `errors.ryx` — the scanner only picks up `error.ryx`.
+
+## Segment errors (`error.ryx` per folder)
+
+Add `error.ryx` next to `layout.ryx` in a route segment to catch failures in that subtree:
+
+```jsx
+// app/dashboard/error.ryx
+export default function DashboardError() {
+  return <p>Could not load this section.</p>;
+}
+```
+
+The build wraps the segment with `ErrorBoundary`. A crash in `app/dashboard/profile/index.ryx` can use `app/dashboard/error.ryx` without unmounting a parent layout.
+
+## Loading UI (`loading.ryx`)
+
+Optional `loading.ryx` in a segment shows a fallback while async route content resolves (wrapped in `Suspense`). See [Navigation](/en/docs/introduction/navigation).
+
+## Development overlay
+
+When `NODE_ENV` is not `production` and no boundary handles the crash, Ryunix can show **RyunixDevOverlay**:
+
+- Filters framework noise from stack traces
+- Uses compile-time source hints (e.g. `index.ryx:42`) when available
+- Helps fix issues without opening DevTools first
+
+In production, prefer user-facing fallbacks via `ErrorBoundary` or segment `error.ryx` instead of exposing stack traces.
+
+## Best practices
+
+1. Place segment `error.ryx` where recovery still makes sense (docs area, dashboard).
+2. Keep fallbacks accessible and actionable (retry, go home).
+3. Use root `error.ryx` with `NotFound` for consistent 404 UX.
+4. Test error paths in development with intentional throws in child components.
+
+## Related
+
+- [Navigation](/en/docs/introduction/navigation) — `error.ryx`, `loading.ryx`, and dynamic routes
+- [Project structure](/en/docs/introduction/project-structure) — where special files live
+- [DevTools](/en/docs/guides/devtools) — debugging and profiling

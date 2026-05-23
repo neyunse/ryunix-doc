@@ -1,0 +1,158 @@
+---
+title: Estructura del proyecto
+description: Cómo organizar tu proyecto RyunixJS
+section: Introducción
+slug: project-structure
+---
+
+# Estructura del proyecto
+
+## Estructura básica
+
+```
+my-app/
+├── app/                   # o src/app/ con rootDir: "src"
+│   ├── layout.ryx
+│   ├── index.ryx
+│   ├── error.ryx          # 404 global (NotFound)
+│   ├── sitemap.js
+│   ├── robots.js
+│   ├── manifest.js
+│   └── api/
+│       └── hello/
+│           └── router.js
+├── assets/                # Estáticos (plantillas CRA)
+├── styles/
+│   └── global.css
+├── public/                # Opcional (p. ej. favicon.png)
+├── ryunix.config.js
+└── package.json
+```
+
+## Layout raíz (layout.ryx)
+
+El archivo `layout.ryx` en la raíz de `app` envuelve todas tus páginas y ofrece una UI persistente al cambiar de ruta.
+
+```jsx
+import "@/styles/index.css";
+
+function Layout({ children }) {
+  return (
+    <>
+      <header>My Website</header>
+      <main>{children}</main>
+      <footer>© 2026</footer>
+    </>
+  );
+}
+
+export default Layout;
+```
+
+## Componente raíz (index.ryx)
+
+```jsx
+function Home() {
+  return (
+    <>
+      <h1>Hello World</h1>
+    </>
+  );
+}
+
+export default Home;
+```
+
+## Organización recomendada de carpetas
+
+### Arquitectura App Router
+
+```
+src/
+├── app/
+│   ├── layout.ryx
+│   ├── index.ryx
+│   ├── error.ryx
+│   └── about/
+│       └── index.ryx
+├── components/
+├── features/
+└── styles/
+    └── global.css
+```
+
+## Archivos estáticos
+
+Plantillas CRA: **`assets/`**. Opcional **`public/`** para `favicon.png`.
+
+## Archivo de configuración
+
+```javascript
+const RyunixSettings = {
+  rootDir: "src",
+  ssr: true,
+  mdx: false,
+  buildDir: ".ryunix",
+  favicon: true,
+  webpack: {
+    production: false,
+    resolve: {
+      alias: {
+        "@": "./src",
+        "@/components": "./src/components",
+      },
+    },
+  },
+};
+
+export default RyunixSettings;
+```
+
+## Alias de importación
+
+Configúralos en `ryunix.config.js` dentro de `webpack.resolve.alias`.
+
+Uso en código:
+
+```jsx
+import Header from "@/components/Header";
+```
+
+## Variables de entorno
+
+Crea un archivo `.env`:
+
+```env
+RYUNIX_APP_API_URL=https://api.example.com
+RYUNIX_APP_KEY=abc123
+```
+
+Acceso en código:
+
+```jsx
+const apiUrl = ryunix.env.RYUNIX_APP_API_URL;
+const key = ryunix.env.RYUNIX_APP_KEY;
+```
+
+Desde `ryunix.config.js`:
+
+```javascript
+const RyunixSettings = {
+  env: {
+    RYUNIX_APP_KEY: "XXXXXXXXXX",
+  },
+};
+```
+
+```jsx
+const key = ryunix.config.env.RYUNIX_APP_KEY;
+```
+
+Todas las variables de entorno **deben** empezar por `RYUNIX_APP_` para exponerse al cliente.
+
+## Buenas prácticas
+
+1. **Mantén los componentes pequeños** - Responsabilidad única
+2. **Usa carpetas por funcionalidad** - Agrupa archivos relacionados
+3. **Nombres consistentes** - PascalCase para componentes
+4. **Organiza por feature** - No por tipo de archivo

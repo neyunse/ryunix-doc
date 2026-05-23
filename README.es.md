@@ -1,0 +1,95 @@
+# Documentación de RyunixJS
+
+[English](./README.md)
+
+Sitio oficial de documentación de **RyunixJS**, un framework JavaScript moderno para crear sitios estáticos y SPAs rápidos y ligeros.
+
+![Página de inicio del sitio de documentación de RyunixJS](./public/screenshot.png)
+
+## Sobre este proyecto
+
+Este repositorio contiene el código fuente de la documentación de RyunixJS: guías, referencia de la API y ejemplos. Está construido con el propio RyunixJS, usando MDX para el contenido y Tailwind CSS para los estilos.
+
+## Requisitos
+
+- [Node.js](https://nodejs.org/) 18+
+- [pnpm](https://pnpm.io/)
+
+## Instalación
+
+```bash
+git clone <repository-url>
+cd ryunix-doc
+pnpm install
+```
+
+## Desarrollo
+
+```bash
+pnpm dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000) en el navegador. La documentación está en `/en/docs/...` (inglés) y `/es/docs/...` (español). Al visitar `/` redirige a `/en` o al idioma guardado en la cookie.
+
+## Scripts disponibles
+
+Scripts definidos en `package.json` (CLI Ryunix vía `ryunix`):
+
+| Script     | Comando         | Descripción                                            |
+| ---------- | --------------- | ------------------------------------------------------ |
+| `dev`      | `pnpm dev`      | Servidor de desarrollo (`ryunix dev`)                  |
+| `build`    | `pnpm build`    | Build de producción (`ryunix build`)                   |
+| `start`    | `pnpm start`    | Servidor de producción (`ryunix start`; tras el build) |
+| `lint`     | `pnpm lint`     | Linter del proyecto (`ryunix lint`)                    |
+| `lint:fix` | `pnpm lint:fix` | Corrige el lint automáticamente (`ryunix lint --fix`)  |
+
+## Estructura del proyecto
+
+```txt
+src/
+├── app/                # Rutas file-based (wrappers finos)
+│   ├── en/docs/        # Páginas MDX en inglés
+│   ├── es/docs/        # Páginas MDX en español
+│   └── index.ryx       # Hub de idioma (redirect por cookie)
+├── components/         # UI compartida (Icon, CodeTabs, layout header/footer)
+├── features/           # Módulos por dominio (docs, home, marketing)
+├── i18n/               # Config de locales y cookie
+├── styles/
+└── resources/
+public/
+├── index.html          # Plantilla HTML con script de redirect
+middleware.js           # Redirect Edge en Vercel para /
+```
+
+## Configuración
+
+- **`ryunix.config.js`** — Ajustes de RyunixJS (MDX, SSR, alias de webpack, ESLint)
+
+### Solución de problemas
+
+Si en dev aparece `Can't resolve '.ryunix/server/app/main.ryx'` (común tras cambiar `rootDir` o mover `app/`), la caché del router generado está desactualizada:
+
+```bash
+pnpm clean && pnpm dev
+```
+
+> **Aviso — `webpack.production`:** En este repositorio, `webpack.production` está en `false` en `ryunix.config.js` para desarrollo local más rápido. Ponlo en `true` antes de `pnpm build` o de desplegar a producción (p. ej. Vercel); si no, el bundle de producción no queda totalmente optimizado.
+
+La imagen Open Graph / Twitter del sitio es `public/screenshot.png`, declarada con `export const Metatags` en `src/app/layout.ryx` (metadatos del App Router de RyunixJS).
+- **`postcss.config.js`** — PostCSS / Tailwind CSS
+- **`vercel.json`** — Despliegue en Vercel (salida del build: `.ryunix/static`)
+
+## Despliegue
+
+El proyecto está configurado para [Vercel](https://vercel.com/):
+
+- **Comando de build:** `pnpm build`
+- **Directorio de salida:** `.ryunix/static`
+
+## Contribuidores
+
+[![Contributors](https://contrib.rocks/image?repo=neyunse/ryunix-doc)](https://github.com/neyunse/ryunix-doc/graphs/contributors)
+
+## Licencia
+
+[MIT](./LICENSE) © [UnSetSoft](https://github.com/UnSetSoft)

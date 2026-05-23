@@ -1,0 +1,233 @@
+---
+title: Diferencias con React
+description: Diferencias técnicas entre RyunixJS y React
+slug: differences-with-react
+section: Introducción
+---
+
+# Diferencias con React
+
+RyunixJS no pretende ser una reimplementación de React. Hay diferencias. Muchas son triviales o existen para mantener RyunixJS pequeño y enfocado.
+
+> **Routing integrado** (la forma heredada de definir rutas manualmente) ya no está soportado y se eliminará en versiones futuras. Usa el **App Router** en su lugar.
+
+## Diferencias principales
+
+La diferencia principal es que **RyunixJS usa eventos nativos del DOM** en lugar de un sistema de eventos sintéticos. RyunixJS utiliza el `addEventListener` estándar del navegador, lo que significa que el nombre y el comportamiento de los eventos funcionan igual que en JavaScript puro.
+
+```jsx
+// React (synthetic events)
+<button onClick={(e) => console.log(e.nativeEvent)}>
+
+// RyunixJS (native events)
+<button onClick={(e) => console.log(e)}>  // Already native
+```
+
+**En RyunixJS:**
+
+- Los eventos son nativos (mejor rendimiento, sin sobrecarga)
+- Sin pooling de eventos
+- Sin normalización automática entre navegadores
+- El comportamiento sigue la especificación del DOM
+
+## Nomenclatura de hooks
+
+### useState → useStore
+
+```jsx
+// React
+import { useState } from "react";
+const [count, setCount] = useState(0);
+```
+
+```jsx
+// RyunixJS
+import { useStore } from "@unsetsoft/ryunixjs";
+const [count, setCount] = useStore(0);
+```
+
+**Motivo:** Deja más claro que se almacena el estado del componente.
+
+### Hooks idénticos
+
+Estos funcionan exactamente igual que en React:
+
+- `useEffect` - Efectos secundarios
+- `useMemo` - Memorizar valores
+- `useCallback` - Memorizar funciones
+- `useRef` - Referencias
+- `useReducer` - Patrón reducer
+- `useTransition` - Transiciones
+- `useDeferredValue` - Diferir actualizaciones
+
+## API de Context
+
+Sintaxis distinta, mismo propósito:
+
+```jsx
+// React
+const ThemeContext = createContext("light");
+const theme = useContext(ThemeContext);
+```
+
+```jsx
+// RyunixJS
+const { Provider, useContext } = createContext("theme", "light");
+const theme = useContext(); // No argument
+```
+
+**Diferencias clave:**
+
+1. `createContext` requiere un ID único
+2. Devuelve `{ Provider, useContext }`
+3. `useContext()` sin argumentos
+
+## Inicialización
+
+```jsx
+// React
+import ReactDOM from "react-dom/client";
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+```
+
+```jsx
+// RyunixJS
+import Ryunix from "@unsetsoft/ryunixjs";
+Ryunix.init(<App />);
+```
+
+Un solo import, un solo método.
+
+## Funciones exclusivas de RyunixJS
+
+### 1. Routing integrado
+
+No hace falta react-router:
+
+```jsx
+import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
+
+const routes = [
+  { path: "/", component: Home },
+  { path: "/about", component: About },
+];
+
+function App() {
+  return (
+    <RouterProvider routes={routes}>
+      <Children />
+    </RouterProvider>
+  );
+}
+```
+
+### 2. Hook useMetadata
+
+```jsx
+import { useMetadata } from "@unsetsoft/ryunixjs";
+
+function Page() {
+  useMetadata({
+    title: "My Page",
+    description: "Page description",
+  });
+
+  return <div>Content</div>;
+}
+```
+
+### 3. Soporte nativo de MDX
+
+Funciona sin configuración adicional:
+
+```jsx
+import Article from "./article.mdx";
+
+function App() {
+  return <Article />;
+}
+```
+
+## No disponible
+
+Estas funciones de React **no están implementadas**:
+
+- ❌ **Componentes de clase** - Usa componentes funcionales
+- ❌ **PropTypes**
+- ❌ **Modo concurrente**
+- ❌ **Server Components**
+- ❌ **SSR**
+
+## Tabla comparativa (paquete NPM)
+
+| Función              | React             | RyunixJS                                                       |
+| -------------------- | ----------------- | -------------------------------------------------------------- |
+| **Hooks**            | `useState`        | `useStore`                                                     |
+| **Eventos**          | Sintéticos        | Nativos                                                        |
+| **Routing**          | Externo           | Integrado                                                      |
+| **Metadata**         | Externo           | `useMetadata` (nivel documento; ampliable con MDX)             |
+| **Context**          | `useContext(Ctx)` | `createContext().useContext()`                                 |
+| **Fragmentos**       | ✅                | ✅                                                             |
+| **Refs**             | ✅                | ✅                                                             |
+| **Lazy**             | ✅                | ✅                                                             |
+| **Componentes clase**| ✅                | ❌                                                             |
+| **PropTypes**        | ✅                | ❌                                                             |
+
+## Compatibilidad de versiones
+
+RyunixJS implementa funciones de React 16.x a 18.x:
+
+**React 16.x:**
+
+- ✅ Hooks
+- ✅ Fragmentos
+- ✅ Context
+
+**React 17.x:**
+
+- ✅ Transform JSX
+- ✅ Delegación de eventos
+
+**React 18.x:**
+
+- ✅ useTransition
+- ✅ useDeferredValue
+- ⚠️ Suspense (básico)
+- ❌ Modo concurrente
+
+## Consejos rápidos de migración
+
+1. Cambia los imports:
+
+```jsx
+// Before
+import { useState } from "react";
+
+// After
+import { useStore } from "@unsetsoft/ryunixjs";
+```
+
+2. Actualiza la inicialización:
+
+```jsx
+// Before
+ReactDOM.createRoot(...).render(<App />);
+
+// After
+Ryunix.init(<App />);
+```
+
+3. Actualiza Context:
+
+```jsx
+// Before
+const value = useContext(MyContext);
+
+// After
+const { useContext } = createContext('id', default);
+const value = useContext();
+```
+
+4. Convierte componentes de clase a funcionales
+
+Consulta [Configuración](/es/docs/api/configuration) para el setup de build.

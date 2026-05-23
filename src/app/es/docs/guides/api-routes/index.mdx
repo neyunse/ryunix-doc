@@ -1,0 +1,77 @@
+---
+title: Rutas API (guía detallada)
+description: Construye APIs REST bajo app/api con el router API de Ryunix
+slug: api-routes
+section: Guías
+---
+
+# Rutas API (guía detallada)
+
+Ryunix compila `app/api/**` por separado del bundle de UI usando SWC, y luego sirve los handlers desde el servidor Node de producción. Esta página amplía lo básico en [Navegación](/es/docs/introduction/navigation).
+
+## Convenciones de archivos
+
+Coloca los handlers bajo `app/api/`. Nombres reconocidos en **runtime**:
+
+- `route.js`, `route.ts`, `route.ryx`
+- `router.js`, `router.ts`, `router.ryx`
+
+> `endpoint.js` / `endpoint.ts` puede compilarse a `.ryunix/server/api/`, pero **no** lo enruta el handler de producción. Usa `route.*` o `router.*`.
+
+Exporta métodos HTTP como exportaciones nombradas:
+
+```javascript
+// app/api/hello/router.js
+export const GET = async (req) => {
+  return new Response(JSON.stringify({ message: "Hello World!" }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+};
+
+export const POST = async (req) => {
+  const body = await req.json();
+  return new Response(JSON.stringify({ received: body }), { status: 201 });
+};
+```
+
+## Segmentos dinámicos
+
+La misma sintaxis de corchetes que en las páginas:
+
+| Archivo | Coincide con |
+| :--- | :--- |
+| `app/api/users/[id]/route.js` | `/api/users/123` → `req.params.id` |
+| `app/api/docs/[...path]/route.js` | `/api/docs/a/b/c` → catch-all `path` |
+
+## Objeto Request
+
+Los handlers reciben un objeto similar a `Request` con:
+
+- `req.method` — `GET`, `POST`, etc.
+- `req.params` — parámetros de ruta dinámica
+- `req.json()`, `req.text()` — parseo del body cuando aplique
+
+Devuelve un `Response` web (status, headers, body).
+
+## Salida del build
+
+Los módulos compilados se escriben en `.ryunix/server/api/`, independientes del grafo pesado de Webpack del cliente. En runtime, `prod.server.mjs` coincide con la URL, importa el módulo y despacha al export correcto.
+
+## Hot reload en desarrollo
+
+Durante `ryunix dev`, los archivos API se recargan con un query de cache-busting en la importación para que puedas editar endpoints sin reiniciar el servidor.
+
+## Rutas API vs Server Actions
+
+| Característica | Rutas API (`app/api/`) | Server Actions (`"use server"`) |
+| :--- | :--- | :--- |
+| Protocolo | REST / cualquier cliente HTTP | POST Ryunix `/_ryunix/action` |
+| Ideal para | APIs públicas, webhooks, terceros | Formularios y mutaciones desde tu UI |
+| Auth | Tu middleware / comprobaciones | Headers de acción integrados |
+
+## Relacionado
+
+- [Navegación](/es/docs/introduction/navigation) — ejemplo rápido de API
+- [Server actions](/es/docs/core/server-actions) — funciones `"use server"`
+- [Comandos CLI](/es/docs/guides/cli) — `start` sirve `/api/*`

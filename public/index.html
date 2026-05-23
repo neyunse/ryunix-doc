@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="<%= htmlWebpackPlugin.options.pageLang %>">
+  <head>
+    <script>
+      (function () {
+        var p = location.pathname;
+        if (p !== "/" && p !== "") return;
+        var m = document.cookie.match(/(?:^|;\s*)ryunix_locale=(en|es)(?:;|$)/);
+        location.replace(m ? "/" + m[1] : "/en");
+      })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="framework"
+      content="<%= htmlWebpackPlugin.options.info.framework %>"
+      version="<%= htmlWebpackPlugin.options.info.version %>"
+    />
+    <meta name="mode" content="<%= htmlWebpackPlugin.options.info.mode %>" />
+    <link rel="icon" href="/favicon.png" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <%= htmlWebpackPlugin.options.ssrScript %>
+
+    <div id="__ryunix"></div>
+  </body>
+</html>

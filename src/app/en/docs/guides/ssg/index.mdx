@@ -1,0 +1,84 @@
+---
+title: SSG & Prerendering
+description: Static site generation, routes manifest, and SEO injection in RyunixJS
+slug: ssg
+section: Guides
+---
+
+# SSG & Prerendering
+
+Ryunix prerenders static HTML for App Router pages during `ryunix build`. The route list is written to `.ryunix/cache/ssg/routes.json` automatically from your `app/` tree.
+
+## How it works
+
+1. **App Router scan** — Webpack discovers `index.ryx`, `layout.ryx`, dynamic `[param]` folders, and `.mdx` docs.
+2. **Route manifest** — A `routes.json` file is written under `.ryunix/cache/ssg/` with paths and merged metadata.
+3. **Prerender** — The server bundle renders each route with `renderToString` (or streaming APIs where enabled).
+4. **HTML injection** — `<title>`, `<meta>`, canonical links, and Open Graph tags are injected from `Metatags` / frontmatter.
+
+Output lands in `.ryunix/static` mirroring URL paths (e.g. `/docs/introduction/about/index.html`).
+
+## Metadata on static pages
+
+Export `Metatags` in `layout.ryx` or page files:
+
+```jsx
+// app/layout.ryx
+export const Metatags = {
+  title: { default: "My App", template: "%s | My App" },
+  description: "Site description",
+  "og:image": "/og.png",
+};
+```
+
+MDX files can use YAML frontmatter instead; Ryunix maps it to the same `Metatags` shape.
+
+Nested layouts **merge** metadata: root layout → segment layout → page / MDX frontmatter.
+
+## Sitemap configuration
+
+Enable automatic sitemaps in `ryunix.config.js`:
+
+```javascript
+{
+  legacy: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://example.com",
+        settings: {
+          changefreq: "weekly",
+          priority: "0.7",
+        },
+      },
+    },
+  },
+}
+```
+
+Prefer `app/sitemap.js` when you need full control — see [Special files](/en/docs/api/special-files).
+
+## SSR vs static export
+
+| Mode | Config | Result |
+| :--- | :--- | :--- |
+| SSG (default for static deploy) | `ryunix build` | HTML files in `.ryunix/static` |
+| SSR dev | `ssr: true` (default) | Server render in dev; hydrate on client |
+| Client-only | Deploy JS bundle without prerender | Possible but loses SEO benefits |
+
+## Dynamic routes
+
+Routes with dynamic segments (`[slug]`, `[...path]`) are **not** added to the SSG manifest automatically — paths containing `:` are skipped at prerender time. They still work at runtime when `ssr: true` (default) via `ryunix dev` or `ryunix start`.
+
+Options for dynamic content:
+
+1. **Server runtime** — deploy with `ryunix build` + `ryunix start` and render on request.
+2. **Known slugs at build time** — add paths to `legacy.ssg.sitemap.prerender` only as a fallback when the file-based manifest is empty (legacy; prefer generating static routes or using `app/sitemap.js`).
+3. **Static params** — use fixed folders for each locale or doc section (as this docs site does with `/en/docs/...` and `/es/docs/...`).
+
+## Related
+
+- [Navigation](/en/docs/introduction/navigation) — file-system routing
+- [Special files](/en/docs/api/special-files) — `sitemap.js`, `robots.js`, `manifest.js`
+- [Rendering & SSR](/en/docs/core/rendering) — `renderToString`, hydration
+- [CLI commands](/en/docs/guides/cli) — `build` and output folders

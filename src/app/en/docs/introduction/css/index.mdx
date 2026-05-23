@@ -1,0 +1,142 @@
+---
+title: CSS
+description: Styling your RyunixJS application
+section: Introduction
+slug: css
+---
+
+import { CodeTabs } from "@/components/ui/CodeTabs";
+
+# CSS
+
+RyunixJS supports multiple CSS approaches.
+
+## Importing CSS (App Router)
+
+Import global styles from the root layout:
+
+```jsx
+// app/layout.ryx (or src/app/layout.ryx)
+import "@/styles/global.css";
+
+export default function RootLayout({ children }) {
+  return children;
+}
+```
+
+The CLI may also auto-import `styles/global.css` or `src/styles/global.css` in the generated `main.ryx` entry when present.
+
+> Manual `Ryunix.init(<App />)` in `main.ryx` is only for custom entries outside the App Router (legacy SPA).
+
+## Inline Styles
+
+### Object Syntax
+
+```jsx
+function Button() {
+  return (
+    <button
+      style={{
+        backgroundColor: "#007bff",
+        color: "white",
+        padding: "10px 20px",
+        border: "none",
+        borderRadius: "4px",
+      }}
+    >
+      Click me
+    </button>
+  );
+}
+```
+
+### Dynamic Styles
+
+```jsx
+function Alert({ type }) {
+  const styles = {
+    padding: "16px",
+    borderRadius: "8px",
+    backgroundColor: type === "error" ? "#f44336" : "#4caf50",
+    color: "white",
+  };
+
+  return <div style={styles}>Alert message</div>;
+}
+```
+
+## CSS Classes
+
+### Using className
+
+```jsx
+<div className="container">
+  <h1 className="title">Hello</h1>
+</div>
+```
+
+### ryunix-class Attribute
+
+Alternative custom attribute:
+
+```jsx
+<div ryunix-class="container">Content</div>
+```
+
+## SASS/SCSS
+
+The supports are not implemented yet.
+
+## Conditional Classes
+
+```jsx
+function Button({ primary, disabled }) {
+  const classes = [
+    "button",
+    primary && "button-primary",
+    disabled && "button-disabled",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return <button className={classes}>Click</button>;
+}
+```
+
+## Tailwind CSS
+
+Ryunix natively supports Tailwind CSS v4 via PostCSS. You can install it following the official guide:
+
+### 1. Install Tailwind CSS
+
+Install `tailwindcss`, `@tailwindcss/postcss`, and `postcss` via npm or your preferred package manager:
+
+<CodeTabs tabs={[
+  { name: "npm", code: "npm install tailwindcss @tailwindcss/postcss postcss" },
+  { name: "yarn", code: "yarn add tailwindcss @tailwindcss/postcss postcss" },
+  { name: "bun", code: "bun add tailwindcss @tailwindcss/postcss postcss" },
+  { name: "pnpm", code: "pnpm add tailwindcss @tailwindcss/postcss postcss" }
+]} />
+
+### 2. Add Tailwind to your PostCSS configuration
+
+Add `@tailwindcss/postcss` to your `postcss.config.js` (or `.cjs` / `.mjs`) file at the root of your project:
+
+```javascript
+// postcss.config.js
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  }
+}
+```
+
+### 3. Import Tailwind CSS
+
+Add an `@import` to your main CSS file (e.g., `styles/global.css` or `styles/index.css`) that imports Tailwind CSS:
+
+```css
+@import "tailwindcss";
+```
+
+*Note: With Tailwind v4, you no longer need a `tailwind.config.js` file. The framework automatically detects your template files. You can configure your theme directly in your CSS using the `@theme` directive if needed.*

@@ -4,16 +4,22 @@
   "main": "index.js",
   "homepage": "./",
   "scripts": {
+    "clean": "rm -rf .ryunix",
     "dev": "ryunix dev",
     "start": "ryunix start",
     "build": "ryunix build",
     "lint": "ryunix lint",
-    "lint-fix": "ryunix lint --fix",
-    "html": "ryunix customHtml"
+    "lint:fix": "ryunix lint --fix"
   },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "1.2.4-canary.16",
+    "@unsetsoft/ryunixjs": "1.2.5-canary.4",
     "lucide": "^0.575.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core"
+    ]
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",

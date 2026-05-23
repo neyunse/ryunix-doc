@@ -1,0 +1,72 @@
+---
+title: Create Ryunix App
+description: Genera nuevos proyectos con las plantillas de @unsetsoft/cra
+slug: create-app
+section: Guías
+---
+
+# Create Ryunix App
+
+Usa **Create Ryunix App** (`@unsetsoft/cra`) para generar un nuevo proyecto a partir de plantillas oficiales.
+
+## Inicio rápido
+
+```bash
+npx @unsetsoft/cra@canary my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+Equivalente con otros gestores de paquetes:
+
+```bash
+pnpm create @unsetsoft/cra my-app
+yarn create @unsetsoft/cra my-app
+bun create @unsetsoft/cra my-app
+```
+
+## Plantillas oficiales
+
+| Plantilla | Incluye |
+| :--- | :--- |
+| `ryunix-base` | App mínima con App Router |
+| `ryunix-tailwind` | PostCSS + Tailwind (`@tailwindcss/postcss`) |
+| `ryunix-eslint` | ESLint alineado con convenciones Ryunix |
+| `ryunix-all` | Tailwind + ESLint combinados |
+
+El CLI copia la carpeta de plantilla elegida tal cual en tu directorio destino (incluyendo `app/`, `ryunix.config.js` y `public/`).
+
+## Estructura generada
+
+Salida típica:
+
+```txt
+my-app/
+├── app/
+│   ├── index.ryx
+│   ├── layout.ryx
+│   ├── error.ryx      # 404 global (export NotFound)
+│   └── api/hello/router.js
+├── public/
+├── styles/
+├── ryunix.config.js
+└── package.json
+```
+
+## Después del scaffolding
+
+1. Ejecuta `pnpm dev` y abre `http://localhost:3000`.
+2. Ajusta alias en `ryunix.config.js` (`@/styles`, `@/components`, …).
+3. Añade rutas bajo `app/` — las carpetas se mapean a URLs automáticamente.
+
+## Canary vs estable
+
+La documentación y ejemplos suelen usar `@unsetsoft/cra@canary` para las últimas funciones del framework. Fija una versión estable para apps de producción cuando haya releases etiquetados.
+
+## Relacionado
+
+- [Primeros pasos](/es/docs/introduction/getting-started) — primer componente
+- [Instalación](/es/docs/introduction/installation) — requisitos y gestores de paquetes
+- [Estructura del proyecto](/es/docs/introduction/project-structure) — organización de carpetas
+- [Comandos CLI](/es/docs/guides/cli) — scripts `ryunix` en apps generadas

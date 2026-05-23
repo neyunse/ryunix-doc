@@ -1,0 +1,371 @@
+---
+title: Componentes
+description: Componentes integrados en RyunixJS
+slug: components
+section: Api
+---
+
+# Componentes
+
+Componentes integrados proporcionados por RyunixJS.
+
+## Image
+
+Wrapper de `<img>` con props compatibles con Ryunix (`class` / `className`, `loading`, dimensiones). No realiza optimización de imágenes en build como otros meta-frameworks.
+
+```jsx
+import { Image } from "@unsetsoft/ryunixjs";
+
+function Profile() {
+  return (
+    <Image src="/profile.jpg" alt="Profile picture" width="200" height="200" />
+  );
+}
+```
+
+### Props
+
+| Prop        | Tipo           | Requerido | Descripción                    |
+| ----------- | -------------- | --------- | ------------------------------ |
+| `src`       | string         | Sí        | URL de la imagen               |
+| `alt`       | string         | Sí        | Texto alternativo              |
+| `width`     | string/number  | No        | Ancho de la imagen             |
+| `height`    | string/number  | No        | Alto de la imagen              |
+| `className` | string         | No        | Clase CSS                      |
+| `class`     | string         | No        | Clase CSS (alternativa)        |
+| `style`     | object         | No        | Estilos en línea               |
+| `loading`   | "lazy"/"eager" | No        | Estrategia de carga            |
+
+### Ejemplos
+
+#### Uso básico
+
+```jsx
+<Image src="/logo.png" alt="Logo" />
+```
+
+#### Con dimensiones
+
+```jsx
+<Image src="/banner.jpg" alt="Banner" width="1200" height="400" />
+```
+
+#### Carga diferida
+
+```jsx
+<Image src="/large-image.jpg" alt="Large image" loading="lazy" />
+```
+
+#### Con estilos
+
+```jsx
+<Image
+  src="/avatar.jpg"
+  alt="Avatar"
+  class="rounded-full"
+  style={{ border: "2px solid #ccc" }}
+/>
+```
+
+#### Responsive
+
+```jsx
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  style={{
+    width: "100%",
+    height: "auto",
+  }}
+/>
+```
+
+## Fragment
+
+Agrupa elementos sin añadir nodos DOM extra.
+
+```jsx
+import { Fragment } from "@unsetsoft/ryunixjs";
+
+function List() {
+  return (
+    <Fragment>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </Fragment>
+  );
+}
+```
+
+### Sintaxis corta
+
+```jsx
+function List() {
+  return (
+    <>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </>
+  );
+}
+```
+
+Ambas son idénticas.
+
+## RouterProvider
+
+Componente proveedor de enrutamiento.
+
+> **RouterProvider** y el enrutamiento manual están obsoletos. El estándar actual es el **App Router** (enrutamiento basado en el sistema de archivos).
+
+```jsx
+import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
+
+function App() {
+  return (
+    <RouterProvider routes={routes}>
+      <Children />
+    </RouterProvider>
+  );
+}
+```
+
+Consulta [Navegación](/es/docs/introduction/navigation) para la documentación completa de enrutamiento.
+
+### Props
+
+| Prop       | Tipo  | Requerido | Descripción              |
+| ---------- | ----- | --------- | ------------------------ |
+| `routes`   | array | Sí        | Configuración de rutas   |
+| `children` | node  | Sí        | Componentes hijos        |
+
+## Children
+
+Renderiza el componente de la ruta coincidente.
+
+```jsx
+import { Children } from "@unsetsoft/ryunixjs";
+
+function Layout() {
+  return (
+    <div>
+      <Header />
+      <main>
+        <Children /> {/* Matched route renders here */}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+## NavLink
+
+Enlace de navegación con estado activo.
+
+```jsx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+function Nav() {
+  return (
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/about">About</NavLink>
+    </nav>
+  );
+}
+```
+
+### Props
+
+| Prop           | Tipo            | Requerido | Descripción                         |
+| -------------- | --------------- | --------- | ----------------------------------- |
+| `to`           | string          | Sí        | Ruta de destino                     |
+| `exact`        | boolean         | No        | Coincidencia exacta (por defecto: false) |
+| `className`    | string/function | No        | Clase CSS o función                 |
+| `class`        | string          | No        | Clase CSS (alternativa)             |
+| `ryunix-class` | string          | No        | Atributo de clase personalizado     |
+
+### Estado activo
+
+Con función:
+
+```jsx
+<NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
+  About
+</NavLink>
+```
+
+Con CSS:
+
+```css
+nav a[href="/about"] {
+  color: blue;
+}
+```
+
+## MDXProvider
+
+Proveedor para componentes MDX.
+
+```jsx
+import { MDXProvider } from "@unsetsoft/ryunixjs";
+
+const components = {
+  h1: (props) => <h1 style={{ color: "blue" }} {...props} />,
+  p: (props) => <p style={{ lineHeight: 1.6 }} {...props} />,
+};
+
+function App() {
+  return (
+    <MDXProvider value={components}>
+      <Content />
+    </MDXProvider>
+  );
+}
+```
+
+### Props
+
+| Prop       | Tipo   | Requerido | Descripción              |
+| ---------- | ------ | --------- | ------------------------ |
+| `value`    | object | Sí        | Sustituciones de componentes |
+| `children` | node   | Sí        | Componentes hijos        |
+
+### Componentes por defecto
+
+```jsx
+import { defaultComponents } from "@unsetsoft/ryunixjs";
+
+// Includes: h1-h6, p, a, ul, ol, li, code, pre, img, etc.
+```
+
+## Suspense
+
+Respaldo para carga diferida.
+
+```jsx
+import { Suspense, lazy } from "@unsetsoft/ryunixjs";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Dashboard />
+    </Suspense>
+  );
+}
+```
+
+### Props
+
+| Prop       | Tipo | Requerido | Descripción           |
+| ---------- | ---- | --------- | --------------------- |
+| `fallback` | node | Sí        | Componente de carga   |
+| `children` | node | Sí        | Componentes lazy      |
+
+### Varios componentes lazy
+
+```jsx
+<Suspense fallback={<Spinner />}>
+  <Dashboard />
+  <Profile />
+  <Settings />
+</Suspense>
+```
+
+## Crear componentes personalizados
+
+### Componente contenedor
+
+```jsx
+function Card({ title, children }) {
+  return (
+    <div class="card">
+      <h2>{title}</h2>
+      <div class="card-content">{children}</div>
+    </div>
+  );
+}
+```
+
+### Componentes compuestos
+
+```jsx
+function Tabs({ children }) {
+  const [active, setActive] = useStore(0);
+
+  return <div class="tabs">{children(active, setActive)}</div>;
+}
+
+function Tab({ index, active, onClick, children }) {
+  return (
+    <button class={active === index ? "active" : ""} onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+// Usage
+<Tabs>
+  {(active, setActive) => (
+    <>
+      <Tab index={0} active={active} onClick={() => setActive(0)}>
+        Tab 1
+      </Tab>
+      <Tab index={1} active={active} onClick={() => setActive(1)}>
+        Tab 2
+      </Tab>
+    </>
+  )}
+</Tabs>;
+```
+
+## Componentes de orden superior
+
+```jsx
+function withLoading(Component) {
+  return function WithLoadingComponent({ isLoading, ...props }) {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+    return <Component {...props} />;
+  };
+}
+
+// Usage
+const UserProfileWithLoading = withLoading(UserProfile);
+
+<UserProfileWithLoading isLoading={loading} user={user} />;
+```
+
+## Componentes asíncronos
+
+RyunixJS admite de forma nativa componentes `async`, permitiendo hacer `await` de datos directamente en el cuerpo del componente.
+
+> Los componentes asíncronos son especialmente útiles para renderizado en servidor (SSR) y pre-renderizado (SSG), ya que Ryunix esperará los datos antes de generar el HTML.
+
+```jsx
+export default async function Page({ params }) {
+  const data = await fetchData(params.id);
+
+  return (
+    <div>
+      <h1>{data.title}</h1>
+      <p>{data.content}</p>
+    </div>
+  );
+}
+```
+
+## Buenas prácticas
+
+1. **Usa el componente Image** — Mejor rendimiento que `<img>`
+2. **Usa Fragment** — Evita divs contenedores innecesarios
+3. **Usa NavLink** — Estados activos automáticos
+4. **Carga diferida de componentes pesados** — Mejor carga inicial
+5. **Componentes personalizados** — Reutilizables y mantenibles
+6. **Validación de props** — Usa TypeScript para seguridad de tipos

@@ -1,0 +1,34 @@
+---
+title: Despliegue
+description: Despliega tu aplicación RyunixJS en producción
+section: Introducción
+slug: deploying
+---
+
+import { CodeTabs } from "@/components/ui/CodeTabs";
+
+# Despliegue
+
+## Compilar para producción
+
+### 1. Actualizar la configuración
+
+```javascript
+// ryunix.config.js
+module.exports = {
+  webpack: {
+    production: true, // Enable production mode
+  },
+};
+```
+
+### 2. Build
+
+<CodeTabs tabs={[
+  { name: "npm", code: "npm run build" },
+  { name: "yarn", code: "yarn build" },
+  { name: "bun", code: "bun run build" },
+  { name: "pnpm", code: "pnpm build" }
+]} />
+
+El build de producción quedará en `.ryunix/static/`.

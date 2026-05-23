@@ -1,0 +1,17 @@
+import SiteHeader from "@/components/layout/SiteHeader.ryx";
+import SiteFooter from "@/components/layout/SiteFooter.ryx";
+
+const SiteLayout = ({ children, locale, docsPath, copy }) => (
+  <>
+    <a href="#main-content" className="skip-to-content">
+      {copy.skipToContent}
+    </a>
+    <SiteHeader locale={locale} docsPath={docsPath} docsNavLabel={copy.docsNav} />
+    <main id="main-content" className="text-white bg-[#111112] min-h-[var(--ui-main-min-height)]">
+      {children}
+    </main>
+    <SiteFooter locale={locale} copy={copy} />
+  </>
+);
+
+export default SiteLayout;

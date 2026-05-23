@@ -1,0 +1,3 @@
+import LegacyDocsRedirect from "@/features/docs/LegacyDocsRedirect.ryx";
+
+export default LegacyDocsRedirect;

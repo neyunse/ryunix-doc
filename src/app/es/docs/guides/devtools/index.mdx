@@ -1,0 +1,54 @@
+---
+title: DevTools
+description: Extensión de navegador y diagnósticos de desarrollo integrados para RyunixJS
+slug: devtools
+section: Guías
+---
+
+# DevTools
+
+Ryunix ofrece diagnósticos en tiempo de desarrollo en dos capas: advertencias en runtime en el bundle del core y una extensión de navegador opcional.
+
+## Comprobaciones integradas de desarrollo
+
+Cuando `NODE_ENV` no es `production`, el core incluye helpers que:
+
+- Advierten sobre uso inválido de hooks (hooks fuera del render)
+- Muestran avisos de deprecación
+- Se eliminan del bundle de producción (tree-shake)
+
+Se ejecutan automáticamente — no requieren configuración.
+
+## Extensión Ryunix DevTools
+
+El paquete **`@unsetsoft/ryunix-devtools`** es una extensión de navegador que inspecciona aplicaciones Ryunix:
+
+- Árbol de fibers y props de componentes
+- Estado de hooks adjunto a fibers
+- Integración con la app en ejecución mediante un content script
+
+Instálala desde el repositorio del paquete o el canal de distribución de tu equipo, y abre el panel Ryunix mientras tu app corre en `localhost` (o cualquier URL de desarrollo).
+
+## Overlay de desarrollo
+
+Ante errores de render no capturados en desarrollo, Ryunix puede mostrar **RyunixDevOverlay** con:
+
+- Stack traces filtrados (código de aplicación primero)
+- Ubicación del código fuente cuando existe metadata `__source` en tiempo de compilación
+- Descartar y recargar para recuperarse tras una corrección
+
+Personaliza la UX con `app/error.ryx` (404) o `error.ryx` por segmento — consulta [Manejo de errores](/es/docs/core/error-handling).
+
+## Profiler de rendimiento
+
+Usa `withProfiler`, `useProfiler` y `profiler.logStats()` en desarrollo para encontrar componentes lentos. Detalles: [Rendimiento](/es/docs/core/performance).
+
+## Errores del doble compilador
+
+Ryunix ejecuta builds Webpack de **cliente** y **servidor** en paralelo. Los overlays de build deduplican errores idénticos de ambos compiladores para que veas un mensaje claro en el navegador.
+
+## Relacionado
+
+- [Manejo de errores](/es/docs/core/error-handling) — boundaries y `error.ryx`
+- [Rendimiento](/es/docs/core/performance) — APIs del profiler
+- [Comandos CLI](/es/docs/guides/cli) — comportamiento del modo `dev`

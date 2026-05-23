@@ -1,0 +1,93 @@
+---
+title: MDX y frontmatter
+description: Escribe documentación y páginas de contenido con MDX en RyunixJS
+slug: mdx
+section: Guías
+---
+
+# MDX y frontmatter
+
+Habilita MDX en `ryunix.config.js` para escribir páginas de contenido junto a componentes `.ryx`.
+
+```javascript
+{
+  experimental: {
+    mdx: true,
+  },
+}
+```
+
+## Ubicación de archivos
+
+Los archivos MDX viven en el árbol del App Router como cualquier ruta:
+
+```txt
+app/
+└── docs/
+    └── introduction/
+        └── getting-started/
+            └── index.mdx
+```
+
+La URL sigue la ruta de carpetas: `/docs/introduction/getting-started`.
+
+## Frontmatter YAML
+
+Comienza el archivo con metadatos `---`. Ryunix los parsea al mismo objeto `Metatags` usado para SEO:
+
+```mdx
+---
+title: Getting Started
+description: Quick start guide for RyunixJS
+slug: getting-started
+section: Introduction
+---
+
+# Getting Started
+
+Your content here…
+```
+
+En tiempo de build, el frontmatter se fusiona con `Metatags` del `layout.ryx` padre (plantillas de título, `og:image`, etc.).
+
+## Importar componentes en MDX
+
+Usa las mismas importaciones que en archivos `.ryx`:
+
+```mdx
+import { CodeTabs } from "@/components/ui/CodeTabs";
+
+<CodeTabs tabs={[
+  { name: "pnpm", code: "pnpm dev" },
+  { name: "npm", code: "npm run dev" },
+]} />
+```
+
+La UI compartida suele vivir en `src/components/` (con `rootDir: "src"`) o en `app/components/` si `app/` está en la raíz.
+
+## MDXProvider
+
+Envuelve el contenido MDX con `MDXProvider` cuando necesites shortcodes personalizados o mapeos de elementos — consulta [Componentes](/es/docs/api/components).
+
+## Citas y notas (`>`)
+
+Usa blockquotes de Markdown para resaltar avisos, notas o consejos. En `.docs-content` se muestran con borde morado y fondo en degradado:
+
+```mdx
+> **Routing integrado** ya no está soportado. Usa el **App Router** en su lugar.
+
+> Información útil que el lector debería ver al repasar la página.
+```
+
+Puedes combinar **negrita**, enlaces y texto en cursiva dentro del blockquote.
+
+## SSG y MDX
+
+Durante `ryunix build`, cada ruta MDX se prerenderiza a HTML estático con el `<title>` y meta tags correctos heredados de los layouts. Evita mezclar la configuración global obsoleta `static.seo` con `Metatags` por ruta.
+
+## Relacionado
+
+- [Navegación](/es/docs/introduction/navigation) — visión general del enrutamiento
+- [SSG y prerenderizado](/es/docs/guides/ssg) — pipeline de prerender
+- [Funciones](/es/docs/api/functions) — `useMetadata` para actualizaciones solo en cliente
+- [Configuración](/es/docs/api/configuration) — `mdx: true`
