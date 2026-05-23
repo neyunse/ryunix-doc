@@ -4,8 +4,17 @@ export const config = {
   matcher: ["/"],
 };
 
+function getLocaleFromCookie(request) {
+  const header = request.headers.get("cookie");
+  if (!header) return "en";
+  const match = header.match(
+    new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=(en|es)(?:;|$)`)
+  );
+  return match?.[1] === "es" ? "es" : "en";
+}
+
 export default function middleware(request) {
-  const cookie = request.cookies.get(LOCALE_COOKIE)?.value;
-  const locale = cookie === "es" || cookie === "en" ? cookie : "en";
-  return Response.redirect(new URL(`/${locale}`, request.url), 302);
+  const locale = getLocaleFromCookie(request);
+  const destination = new URL(`/${locale}`, request.url);
+  return Response.redirect(destination, 302);
 }
