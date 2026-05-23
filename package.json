@@ -4,6 +4,7 @@
   "main": "index.js",
   "homepage": "./",
   "scripts": {
+    "clean": "rm -rf .ryunix",
     "dev": "ryunix dev",
     "start": "ryunix start",
     "build": "ryunix build",

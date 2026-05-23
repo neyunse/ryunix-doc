@@ -51,7 +51,7 @@ src/
 │   ├── en/docs/        # Páginas MDX en inglés
 │   ├── es/docs/        # Páginas MDX en español
 │   └── index.ryx       # Hub de idioma (redirect por cookie)
-├── components/         # UI compartida (Icon, CodeTabs, LocaleSwitcher)
+├── components/         # UI compartida (Icon, CodeTabs, layout header/footer)
 ├── features/           # Módulos por dominio (docs, home, marketing)
 ├── i18n/               # Config de locales y cookie
 ├── styles/
@@ -64,6 +64,14 @@ middleware.js           # Redirect Edge en Vercel para /
 ## Configuración
 
 - **`ryunix.config.js`** — Ajustes de RyunixJS (MDX, SSR, alias de webpack, ESLint)
+
+### Solución de problemas
+
+Si en dev aparece `Can't resolve '.ryunix/server/app/main.ryx'` (común tras cambiar `rootDir` o mover `app/`), la caché del router generado está desactualizada:
+
+```bash
+pnpm clean && pnpm dev
+```
 
 > **Aviso — `webpack.production`:** En este repositorio, `webpack.production` está en `false` en `ryunix.config.js` para desarrollo local más rápido. Ponlo en `true` antes de `pnpm build` o de desplegar a producción (p. ej. Vercel); si no, el bundle de producción no queda totalmente optimizado.
 

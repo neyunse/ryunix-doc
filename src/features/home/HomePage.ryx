@@ -1,6 +1,6 @@
 import { NavLink, useEffect, useStore } from "@unsetsoft/ryunixjs";
 import { ArrowRight, Github, Zap, Database, Code } from "lucide";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/ui/Icon";
 
 const HomePage = ({ docsPath, copy }) => {
   const [copied, setCopied] = useStore(false);

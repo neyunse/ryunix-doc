@@ -51,7 +51,7 @@ src/
 │   ├── en/docs/        # English MDX pages
 │   ├── es/docs/        # Spanish MDX pages
 │   └── index.ryx       # Locale hub (redirects via cookie)
-├── components/         # Shared UI (Icon, CodeTabs, LocaleSwitcher)
+├── components/         # Shared UI (Icon, CodeTabs, layout header/footer)
 ├── features/           # Domain modules (docs shell, home, marketing layout)
 ├── i18n/               # Locale config and cookie helpers
 ├── styles/
@@ -64,6 +64,14 @@ middleware.js           # Vercel Edge redirect for /
 ## Configuration
 
 - **`ryunix.config.js`** — RyunixJS settings (MDX, SSR, webpack aliases, ESLint)
+
+### Troubleshooting
+
+If dev shows `Can't resolve '.ryunix/server/app/main.ryx'` (often after changing `rootDir` or moving `app/`), the generated router cache is stale. Regenerate it:
+
+```bash
+pnpm clean && pnpm dev
+```
 
 > **Warning — `webpack.production`:** This repo keeps `webpack.production: false` in `ryunix.config.js` for faster local development. Set it to `true` before running `pnpm build` or deploying to production (e.g. Vercel); otherwise the production bundle is not fully optimized.
 
