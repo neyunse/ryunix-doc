@@ -8,8 +8,7 @@
     "start": "ryunix start",
     "build": "ryunix build",
     "lint": "ryunix lint",
-    "lint-fix": "ryunix lint --fix",
-    "html": "ryunix customHtml"
+    "lint:fix": "ryunix lint --fix"
   },
   "dependencies": {
     "@unsetsoft/ryunixjs": "1.2.4-canary.16",

@@ -1,7 +1,7 @@
 {
   "outputDirectory": ".ryunix/static",
-  "buildCommand": "pnpm run build",
-  "devCommand": "pnpm run dev",
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev",
  
   "installCommand": "pnpm install",
   "framework": null,
