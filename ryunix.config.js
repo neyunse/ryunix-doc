@@ -15,7 +15,7 @@ const RyunixSettings = {
     }
   },
   webpack: {
-    production: false, // use 'false' for dev mode
+    production: false, // false = dev; true = prod
     resolve: {
       alias: {
         "@/styles": "./app/styles",
