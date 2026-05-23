@@ -1,5 +1,5 @@
-import DocLayoutShell from "../../components/DocLayoutShell.ryx";
-import { docSections } from "../../i18n/config.js";
+import DocLayoutShell from "@/features/docs/DocLayoutShell.ryx";
+import { docSections } from "@/i18n/config.js";
 
 export const Metatags = {
   title: {
@@ -7,8 +7,13 @@ export const Metatags = {
     template: "%s | RyunixJS",
   },
   keywords: [
-    "Ryunix", "Documentación", "Framework JS", "Generador de sitios estáticos",
-    "MDX", "ESLint", "Webpack",
+    "Ryunix",
+    "Documentación",
+    "Framework JS",
+    "Generador de sitios estáticos",
+    "MDX",
+    "ESLint",
+    "Webpack",
   ],
   "og:locale": "es_ES",
   "og:locale:alternate": "en_US",

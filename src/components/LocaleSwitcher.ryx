@@ -1,6 +1,6 @@
 import { useRouter } from "@unsetsoft/ryunixjs";
-import { localeLabels, locales, swapLocalePath, getLocaleFromPath } from "../i18n/config.js";
-import { setLocaleCookie } from "../i18n/localeCookie.js";
+import { localeLabels, locales, swapLocalePath, getLocaleFromPath } from "@/i18n/config.js";
+import { setLocaleCookie } from "@/i18n/localeCookie.js";
 
 const LocaleSwitcher = ({ className = "" }) => {
   const { location, navigate } = useRouter();

@@ -1,24 +1,8 @@
-import {
-  NavLink,
-  useEffect,
-  useStore,
-} from "@unsetsoft/ryunixjs";
+import { NavLink, useEffect, useStore } from "@unsetsoft/ryunixjs";
 import { ArrowRight, Github, Zap, Database, Code } from "lucide";
-import { Icon } from "../components/Icon";
+import { Icon } from "@/components/Icon";
 
-export const Metatags = {
-  title: "RyunixJS: El framework JavaScript de nueva generación",
-  description: "RyunixJS es un framework JavaScript potente y flexible para crear aplicaciones web modernas con facilidad y eficiencia.",
-  "og:title": "RyunixJS: El framework JavaScript de nueva generación",
-  "og:description":
-    "RyunixJS es un framework JavaScript potente y flexible para crear aplicaciones web modernas con facilidad y eficiencia.",
-  keywords: [
-    "Ryunix", "Documentación", "Framework JS", "Generador de sitios estáticos",
-    "MDX", "ESLint", "Webpack",
-  ],
-};
-
-const Home = () => {
+const HomePage = ({ docsPath, copy }) => {
   const [copied, setCopied] = useStore(false);
 
   const copyToClipboard = () => {
@@ -33,6 +17,8 @@ const Home = () => {
     }
   }, [copied]);
 
+  const [card1, card2, card3] = copy.cards;
+
   return (
     <>
       <div className="relative overflow-hidden selection:bg-purple-500/30 selection:text-purple-200">
@@ -42,25 +28,20 @@ const Home = () => {
         <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 lg:py-40 flex flex-col lg:grid lg:grid-cols-2 gap-16 items-center">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
             <h1 className="tracking-tight font-extrabold text-5xl sm:text-6xl md:text-7xl text-white">
-              La nueva generación del{" "}
+              {copy.heroLead}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-400 to-indigo-500 animate-pulse">
-                framework JavaScript
+                {copy.heroHighlight}
               </span>
             </h1>
-
-            <p className="max-w-xl text-lg sm:text-xl leading-8 text-gray-400 mt-6 font-medium">
-              RyunixJS es un framework JavaScript potente, flexible y muy ligero para crear aplicaciones web modernas con una eficiencia excepcional.
-            </p>
-
+            <p className="max-w-xl text-lg sm:text-xl leading-8 text-gray-400 mt-6 font-medium">{copy.heroBody}</p>
             <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
               <NavLink
-                to="/es/docs/introduction/getting-started"
+                to={docsPath}
                 className="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-purple-600 rounded-xl hover:bg-purple-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all duration-300"
               >
-                Comenzar
+                {copy.cta}
                 <Icon icon={ArrowRight} className="w-4 h-4 ml-2" />
               </NavLink>
-
               <a
                 href="https://github.com/UnSetSoft/Ryunixjs"
                 className="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:-translate-y-1 transition-all duration-300"
@@ -74,33 +55,33 @@ const Home = () => {
           </div>
 
           <div className="relative z-10 w-full max-w-lg mx-auto lg:mx-0 group perspective-1000">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
             <div className="relative bg-[#0d0d0f] border border-[#2e2e30] rounded-2xl shadow-2xl overflow-hidden">
               <div className="flex items-center px-4 py-3 bg-[#111112] border-b border-[#2e2e30]">
                 <div className="flex space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
                 </div>
-                <div className="flex-1 text-center text-xs text-gray-500 font-mono select-none">~ / inicio-rapido</div>
+                <div className="flex-1 text-center text-xs text-gray-500 font-mono select-none">{copy.terminalTitle}</div>
               </div>
               <div className="p-6 font-mono text-sm sm:text-base leading-relaxed bg-[#0d0d0f]">
                 <div className="flex items-center gap-3 text-gray-300">
                   <span className="text-purple-400 font-bold">$</span>
                   <span className="flex-1 overflow-x-auto whitespace-nowrap">npx @unsetsoft/cra@canary my-page</span>
                   <button
+                    type="button"
                     className="flex-shrink-0 text-xs px-3 py-1.5 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300"
                     onClick={copyToClipboard}
-                    type="button"
                   >
-                    {copied ? "✓" : "Copiar"}
+                    {copied ? "✓" : copy.copyLabel}
                   </button>
                 </div>
                 <div className="mt-4 text-gray-500">
-                  <span className="text-green-400">✔</span> ¡Listo! Proyecto creado en ~/my-page
+                  <span className="text-green-400">✔</span> {copy.successLine}
                 </div>
                 <div className="mt-2 text-gray-500">
-                  <span className="text-blue-400">i</span> Dentro del directorio puedes ejecutar:
+                  <span className="text-blue-400">i</span> {copy.infoLine}
                 </div>
                 <div className="mt-2 text-gray-300">
                   &nbsp;&nbsp;<span className="text-purple-400">npm</span> run dev
@@ -114,40 +95,32 @@ const Home = () => {
       <section className="relative bg-[#0d0d0f] border-t border-[#1e1e1e] py-24 sm:py-32">
         <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-sm font-semibold text-purple-400 tracking-wide uppercase">Características</h2>
-            <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-white">
-              ¿Por qué RyunixJS?
-            </p>
+            <h2 className="text-sm font-semibold text-purple-400 tracking-wide uppercase">{copy.featuresEyebrow}</h2>
+            <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-white">{copy.featuresTitle}</p>
           </div>
-
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="group relative bg-[#111112] border border-[#2e2e30] rounded-2xl p-8 hover:bg-[#161618] transition-colors text-center">
-              <div className="w-14 h-14 mx-auto mb-6 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400">
-                <Icon icon={Zap} className="w-7 h-7" />
+            {[card1, card2, card3].map((card, index) => (
+              <div
+                key={card.title}
+                className={`group relative bg-[#111112] border border-[#2e2e30] rounded-2xl p-8 hover:bg-[#161618] transition-colors text-center ${
+                  index === 2 ? "sm:col-span-2 lg:col-span-1" : ""
+                }`}
+              >
+                <div
+                  className={`w-14 h-14 mx-auto mb-6 rounded-2xl flex items-center justify-center ${
+                    index === 0
+                      ? "bg-purple-500/10 text-purple-400"
+                      : index === 1
+                        ? "bg-blue-500/10 text-blue-400"
+                        : "bg-fuchsia-500/10 text-fuchsia-400"
+                  }`}
+                >
+                  <Icon icon={index === 0 ? Zap : index === 1 ? Database : Code} className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">{card.title}</h3>
+                <p className="text-gray-400 leading-relaxed text-sm">{card.body}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Rendimiento</h3>
-              <p className="text-gray-400 leading-relaxed text-sm">
-                Optimizado para velocidad. Huella mínima y experiencias fluidas en el navegador.
-              </p>
-            </div>
-            <div className="group relative bg-[#111112] border border-[#2e2e30] rounded-2xl p-8 hover:bg-[#161618] transition-colors text-center">
-              <div className="w-14 h-14 mx-auto mb-6 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-400">
-                <Icon icon={Database} className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">App Router</h3>
-              <p className="text-gray-400 leading-relaxed text-sm">
-                Enrutamiento por archivos, layouts, estados de carga, errores y API sin librerías extra.
-              </p>
-            </div>
-            <div className="group relative bg-[#111112] border border-[#2e2e30] rounded-2xl p-8 hover:bg-[#161618] transition-colors text-center sm:col-span-2 lg:col-span-1">
-              <div className="w-14 h-14 mx-auto mb-6 bg-fuchsia-500/10 rounded-2xl flex items-center justify-center text-fuchsia-400">
-                <Icon icon={Code} className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Experiencia de desarrollo</h3>
-              <p className="text-gray-400 leading-relaxed text-sm">
-                JSX familiar, sin configurar Webpack. MDX, SSG dinámico y PostCSS integrados.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -155,4 +128,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

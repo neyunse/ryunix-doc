@@ -1,16 +1,10 @@
 import { useEffect, useRouter } from "@unsetsoft/ryunixjs";
 import { Image } from "@unsetsoft/ryunixjs";
 import Logo from "@/resources/logo-min.svg";
-import { localeLabels, locales } from "./i18n/config.js";
-import { resolveLocaleFromCookie, setLocaleCookie } from "./i18n/localeCookie.js";
+import { localeLabels, locales } from "@/i18n/config.js";
+import { resolveLocaleFromCookie, setLocaleCookie } from "@/i18n/localeCookie.js";
 
-export const Metatags = {
-  title: "RyunixJS — Choose your language",
-  description: "Official RyunixJS documentation. Select English or Spanish.",
-  "og:image": "/screenshot.png",
-};
-
-const LocaleHub = () => {
+const LocaleHubPage = () => {
   const { navigate } = useRouter();
 
   useEffect(() => {
@@ -47,4 +41,4 @@ const LocaleHub = () => {
   );
 };
 
-export default LocaleHub;
+export default LocaleHubPage;
