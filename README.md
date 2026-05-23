@@ -86,6 +86,10 @@ The project is configured for [Vercel](https://vercel.com/):
 - **Build command:** `pnpm build`
 - **Output directory:** `.ryunix/static`
 
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=neyunse/ryunix-doc)](https://github.com/neyunse/ryunix-doc/graphs/contributors)
+
 ## License
 
 [MIT](./LICENSE) © [UnSetSoft](https://github.com/UnSetSoft)
