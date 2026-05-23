@@ -1,0 +1,104 @@
+---
+title: Advanced Components
+description: lazy, Suspense, memo, portals, and forwardRef in RyunixJS
+slug: advanced-components
+section: Core
+---
+
+# Advanced Components
+
+Beyond basic elements and stateful components, Ryunix provides utilities for code splitting, memoization, and rendering outside the normal DOM hierarchy.
+
+## lazy and Suspense
+
+### `lazy(importFn)`
+
+Turns a dynamic `import()` into a component. The first render is pending until the chunk loads.
+
+```jsx
+import { lazy, Suspense } from "@unsetsoft/ryunixjs";
+
+const HeavyChart = lazy(() => import("./HeavyChart"));
+
+function Dashboard() {
+  return (
+    <Suspense fallback={<p>Loading chart…</p>}>
+      <HeavyChart />
+    </Suspense>
+  );
+}
+```
+
+`<Suspense>` shows `fallback` while any lazy child is still loading.
+
+### `preload(importFn)`
+
+Start downloading a chunk before the component mounts:
+
+```jsx
+import { preload } from "@unsetsoft/ryunixjs";
+
+preload(() => import("./HeavyChart"));
+```
+
+## memo
+
+Prevent re-renders when props are unchanged (shallow compare by default):
+
+```jsx
+import { memo } from "@unsetsoft/ryunixjs";
+
+const ExpensiveList = memo(function ExpensiveList({ items }) {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>{item.label}</li>
+      ))}
+    </ul>
+  );
+});
+```
+
+Pass a custom equality function as the second argument, or use `deepEqual` from the package for nested props.
+
+## createPortal
+
+Render children into another DOM node (modals, tooltips) while keeping the same React-like tree and context:
+
+```jsx
+import { createPortal } from "@unsetsoft/ryunixjs";
+
+function Modal({ open, children }) {
+  if (!open) return null;
+  return createPortal(
+    <div className="modal">{children}</div>,
+    document.getElementById("modal-root")
+  );
+}
+```
+
+## forwardRef
+
+Forward `ref` to a child DOM node or component when the compiler intercepts refs:
+
+```jsx
+import { forwardRef } from "@unsetsoft/ryunixjs";
+
+const Input = forwardRef(function Input(props, ref) {
+  return <input ref={ref} {...props} />;
+});
+```
+
+## Fragment and cloneElement
+
+| API | Purpose |
+| :--- | :--- |
+| `Fragment` | Group children without an extra DOM node |
+| `cloneElement(element, props)` | Clone an element with merged props |
+| `isValidElement(value)` | Check if a value is a Ryunix element |
+
+## Related
+
+- [Components](/en/docs/api/components) — `Image`, `NavLink`, `MDXProvider`, etc.
+- [Functions](/en/docs/api/functions) — `lazy`, `memo` usage in hooks doc
+- [Rendering & SSR](/en/docs/core/rendering) — lazy behavior during SSR

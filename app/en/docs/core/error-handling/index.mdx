@@ -1,0 +1,74 @@
+---
+title: Error Handling
+description: Error boundaries, errors.ryx, and the development overlay in RyunixJS
+slug: error-handling
+section: Core
+---
+
+# Error Handling
+
+Ryunix isolates failures so one broken component does not tear down the whole UI. You get declarative boundaries in production and a built-in diagnostic overlay in development.
+
+## ErrorBoundary component
+
+Wrap subtrees that may throw. On error, Ryunix renders your `fallback` instead of the failing tree.
+
+```jsx
+import { ErrorBoundary } from "@unsetsoft/ryunixjs";
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<p>Something went wrong. Try again later.</p>}>
+      <Dashboard />
+    </ErrorBoundary>
+  );
+}
+```
+
+The reconciler walks up the fiber tree to find the nearest error boundary, clears the failed branch, and renders the fallback.
+
+## File-based boundaries (`errors.ryx`)
+
+In the App Router, add `app/errors.ryx` (or `app/<segment>/errors.ryx`) next to the routes you want to protect.
+
+```jsx
+// app/errors.ryx
+export default function Errors({ error, reset }) {
+  return (
+    <div>
+      <h1>Something went wrong</h1>
+      <p>{error?.message}</p>
+      <button type="button" onClick={reset}>Try again</button>
+    </div>
+  );
+}
+```
+
+The build pipeline wraps matching route segments with `<ErrorBoundary>`. A crash in `app/dashboard/profile/index.ryx` can fall back to `app/dashboard/errors.ryx` without unmounting a sibling layout or sidebar.
+
+## Development overlay
+
+When `NODE_ENV` is not `production` and no custom `errors.ryx` handles the crash, Ryunix can show **RyunixDevOverlay**:
+
+- Filters framework noise from stack traces
+- Uses compile-time source hints (e.g. `index.ryx:42`) when available
+- Helps fix issues without opening DevTools first
+
+In production, prefer user-facing fallbacks via `ErrorBoundary` or `errors.ryx` instead of exposing stack traces.
+
+## Route-level `error` and `loading`
+
+The App Router also supports optional `error.ryx` and `loading.ryx` per segment (see [Navigation](/en/docs/introduction/navigation)). Use them for segment-specific UI while data loads or when a route fails.
+
+## Best practices
+
+1. Place `errors.ryx` at the layout level where recovery still makes sense (e.g. docs section, dashboard).
+2. Keep fallbacks accessible and actionable (retry, go home, contact support).
+3. Log errors to your monitoring service inside `errors.ryx` or boundary handlers in production.
+4. Test error paths in development with intentional throws in child components.
+
+## Related
+
+- [Navigation](/en/docs/introduction/navigation) — `error.ryx` and `loading.ryx` conventions
+- [Project structure](/en/docs/introduction/project-structure) — where `errors.ryx` lives
+- [DevTools](/en/docs/guides/devtools) — debugging and profiling

@@ -1,0 +1,74 @@
+---
+title: Manejo de errores
+description: Límites de error, errors.ryx y la superposición de desarrollo en RyunixJS
+slug: error-handling
+section: Core
+---
+
+# Manejo de errores
+
+Ryunix aísla los fallos para que un componente roto no derribe toda la UI. Obtienes límites declarativos en producción y una superposición de diagnóstico integrada en desarrollo.
+
+## Componente ErrorBoundary
+
+Envuelve subárboles que puedan lanzar errores. Ante un error, Ryunix renderiza tu `fallback` en lugar del árbol fallido.
+
+```jsx
+import { ErrorBoundary } from "@unsetsoft/ryunixjs";
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<p>Something went wrong. Try again later.</p>}>
+      <Dashboard />
+    </ErrorBoundary>
+  );
+}
+```
+
+El reconciler recorre el árbol fiber hacia arriba para encontrar el límite de error más cercano, limpia la rama fallida y renderiza el fallback.
+
+## Límites basados en archivos (`errors.ryx`)
+
+En el App Router, añade `app/errors.ryx` (o `app/<segmento>/errors.ryx`) junto a las rutas que quieras proteger.
+
+```jsx
+// app/errors.ryx
+export default function Errors({ error, reset }) {
+  return (
+    <div>
+      <h1>Something went wrong</h1>
+      <p>{error?.message}</p>
+      <button type="button" onClick={reset}>Try again</button>
+    </div>
+  );
+}
+```
+
+El pipeline de compilación envuelve los segmentos de ruta coincidentes con `<ErrorBoundary>`. Un fallo en `app/dashboard/profile/index.ryx` puede recurrir a `app/dashboard/errors.ryx` sin desmontar un layout hermano o la barra lateral.
+
+## Superposición de desarrollo
+
+Cuando `NODE_ENV` no es `production` y ningún `errors.ryx` personalizado gestiona el fallo, Ryunix puede mostrar **RyunixDevOverlay**:
+
+- Filtra ruido del framework en los stack traces
+- Usa pistas de fuente en tiempo de compilación (p. ej. `index.ryx:42`) cuando están disponibles
+- Ayuda a corregir problemas sin abrir DevTools primero
+
+En producción, prefiere fallbacks orientados al usuario mediante `ErrorBoundary` o `errors.ryx` en lugar de exponer stack traces.
+
+## `error` y `loading` por ruta
+
+El App Router también admite `error.ryx` y `loading.ryx` opcionales por segmento (consulta [Navegación](/es/docs/introduction/navigation)). Úsalos para UI específica del segmento mientras cargan datos o cuando falla una ruta.
+
+## Buenas prácticas
+
+1. Coloca `errors.ryx` en el nivel de layout donde la recuperación siga teniendo sentido (p. ej. sección de docs, dashboard).
+2. Mantén los fallbacks accesibles y accionables (reintentar, ir al inicio, contactar soporte).
+3. Registra errores en tu servicio de monitorización dentro de `errors.ryx` o manejadores de límites en producción.
+4. Prueba rutas de error en desarrollo con lanzamientos intencionados en componentes hijos.
+
+## Relacionado
+
+- [Navegación](/es/docs/introduction/navigation) — convenciones de `error.ryx` y `loading.ryx`
+- [Estructura del proyecto](/es/docs/introduction/project-structure) — dónde vive `errors.ryx`
+- [DevTools](/es/docs/guides/devtools) — depuración y perfilado

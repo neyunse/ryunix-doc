@@ -1,0 +1,280 @@
+---
+title: Navegación
+description: Sistema completo de navegación y routing en RyunixJS
+slug: navigation
+section: Introducción
+---
+
+# Navegación
+
+RyunixJS incluye routing integrado. No hacen falta paquetes externos.
+
+## Routing por sistema de archivos (App Router)
+
+RyunixJS ofrece un router moderno basado en el sistema de archivos usando el directorio `app/`. No requiere configuración global.
+
+Cualquier archivo compatible (`index.ryx`, `.ts`, `.tsx`, `.mdx`) dentro de una carpeta en `app/` se convierte automáticamente en una ruta.
+
+```
+app/
+├── index.ryx          // maps to /
+├── about/
+│   └── index.ryx      // maps to /about
+└── contact/
+    └── index.ryx      // maps to /contact
+```
+
+## Layouts anidados (layout.ryx)
+
+Los layouts (`layout.ryx`) permiten envolver rutas hijas. Conservan su estado, no se vuelven a renderizar innecesariamente y mantienen una UI persistente (cabeceras, barras laterales, etc.) al navegar entre vistas anidadas.
+
+```jsx
+// app/dashboard/layout.ryx
+export default function DashboardLayout({ children }) {
+  return (
+    <div className="flex">
+      <nav>Sidebar</nav>
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+## Errores
+
+Ryunix ofrece soporte nativo para estados de carga y error personalizados en cualquier nivel del directorio `app/`.
+
+- **`errors.ryx`**: Actúa como Error Boundary automático para capturar excepciones en componentes descendientes.
+
+```
+export const NotFound = () => {
+  return <div>404 Not Found</div>;
+}
+
+```
+
+## Rutas dinámicas
+
+Los parámetros de ruta dinámica se crean encerrando el nombre de la carpeta entre corchetes `[slug]`.
+
+```
+app/
+└── users/
+    └── [id]/
+        └── index.ryx   // matches /users/1, /users/abc, etc.
+```
+
+Accede a los parámetros en tu componente con el hook `useRouter`:
+
+```jsx
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+export default function UserProfile() {
+  const { params } = useRouter();
+  const userId = params.id;
+
+  return <div>User ID: {userId}</div>;
+}
+```
+
+## Rutas API integradas (backend)
+
+Puedes crear endpoints de servidor fácilmente con la carpeta `app/api/`. Los nombres de archivo de controlador API soportados son `route.js`, `route.ts`, `route.ryx`, `router.js`, `router.ts` y `router.ryx`.
+
+```javascript
+// app/api/hello/route.js
+export const GET = async (req) => {
+  return new Response(JSON.stringify({ message: "Hello World!" }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  })
+}
+```
+
+### Routing API dinámico y catch-all
+
+El directorio `/api` admite la misma sintaxis de corchetes que el frontend:
+- **`app/api/users/[id]/route.js`**: Responde a parámetros dinámicos (p. ej. `/api/users/123`). Los parámetros están disponibles en `req.params`.
+- **`app/api/docs/[...path]/route.js`**: La sintaxis catch-all `[...path]` intercepta varios subsegmentos de ruta (p. ej. `/api/docs/es/getting-started/install`).
+
+## Componentes de navegación
+
+### NavLink
+
+```jsx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+function Nav() {
+  return (
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/about">About</NavLink>
+      <NavLink to="/contact">Contact</NavLink>
+    </nav>
+  );
+}
+```
+
+**Props:**
+
+- `to` - Ruta de destino
+- `exact` - Coincidencia exacta (por defecto: false)
+- `className` - Clase CSS
+- `ryunix-class` - Alternativa a className
+
+### Estado activo
+
+```jsx
+<NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
+  About
+</NavLink>
+```
+
+O usa CSS:
+
+```css
+nav a[href="/about"] {
+  color: blue;
+}
+```
+
+## Navegación programática
+
+### Hook useRouter
+
+```jsx
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+function Component() {
+  const { navigate, location, params, query } = useRouter();
+
+  const goToAbout = () => {
+    navigate("/about");
+  };
+
+  return (
+    <div>
+      <p>Current: {location}</p>
+      <button onClick={goToAbout}>Go to About</button>
+    </div>
+  );
+}
+```
+
+**useRouter devuelve:**
+
+- `navigate(path)` - Navegar a una ruta
+- `location` - Pathname actual
+- `params` - Parámetros de ruta
+- `query` - Objeto del query string
+- `route` - Configuración de la ruta actual
+
+## Parámetros de consulta
+
+### Hook useQuery
+
+```jsx
+import { useQuery } from "@unsetsoft/ryunixjs";
+
+function SearchPage() {
+  const query = useQuery();
+  const searchTerm = query.q;
+  const page = query.page || 1;
+
+  return <div>Search: {searchTerm}</div>;
+}
+```
+
+Para la URL: `/search?q=react&page=2`
+
+- `query.q` = "react"
+- `query.page` = "2"
+
+## Navegación por hash
+
+### Hook useHash
+
+```jsx
+import { useHash } from "@unsetsoft/ryunixjs";
+
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.slice(1));
+      element?.scrollIntoView();
+    }
+  }, [hash]);
+
+  return <div>Current hash: {hash}</div>;
+}
+```
+
+Para la URL: `/page#section-2`
+
+- `hash` = "#section-2"
+
+## Comportamiento del scroll
+
+### Scroll al hash
+
+Automático con `useHash`:
+
+```jsx
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [hash]);
+}
+```
+
+## Metadatos de ruta
+
+### Metatags estáticos
+
+Añade metadatos a tus páginas del App Router exportando un objeto estático `Metatags`:
+
+```jsx
+// app/about/index.ryx
+
+export const Metatags = {
+  title: "About Us",
+  description: "Learn more about our company",
+};
+```
+
+### Metatags dinámicos (DynamicMetadata)
+
+En rutas dinámicas, puedes exportar `Metatags` como función `async` que recibe `params`.
+
+```jsx
+// app/users/[id]/index.ryx
+
+export const Metatags = async ({ params }) => {
+  const user = await fetchUser(params.id);
+  return {
+    title: `Profile: ${user.name}`,
+    description: `View ${user.name}'s profile and posts`,
+  };
+};
+```
+
+Así los metadatos se inyectan en el manifiesto `routes.json` del sitio y se pre-renderizan de forma eficaz.
+
+
+
+## Historial del navegador
+
+RyunixJS usa la API History de HTML5:
+
+- ✅ URLs limpias (sin `#`)
+- ✅ Los botones atrás/adelante funcionan
+- ✅ `window.history.pushState`
+- ✅ Eventos `popstate`

@@ -1,0 +1,37 @@
+---
+title: Installation
+description: How to install and set up RyunixJS
+section: Introduction
+slug: installation
+---
+
+import { CodeTabs } from "@/components/CodeTabs";
+
+# Installation
+
+## Using Create Ryunix App
+
+The fastest way to get started is by scaffolding a new project automatically. Works with npm, yarn, bun, and pnpm:
+
+<CodeTabs tabs={[
+  { name: "npm", code: "npx @unsetsoft/cra@canary my-app\ncd my-app\nnpm run dev" },
+  { name: "yarn", code: "yarn create @unsetsoft/cra my-app\ncd my-app\nyarn dev" },
+  { name: "bun", code: "bun create @unsetsoft/cra my-app\ncd my-app\nbun run dev" },
+  { name: "pnpm", code: "pnpm create @unsetsoft/cra my-app\ncd my-app\npnpm run dev" }
+]} />
+
+
+## Package Managers
+
+You can also install RyunixJS manually into an existing project. It works perfectly with all major package managers:
+
+<CodeTabs tabs={[
+  { name: "npm", code: "npm install @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
+  { name: "yarn", code: "yarn add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
+  { name: "bun", code: "bun add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
+  { name: "pnpm", code: "pnpm add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" }
+]} />
+
+## Requirements
+
+- Node.js from 20+ to 22+

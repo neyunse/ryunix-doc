@@ -1,0 +1,54 @@
+---
+title: DevTools
+description: Browser extension and built-in development diagnostics for RyunixJS
+slug: devtools
+section: Guides
+---
+
+# DevTools
+
+Ryunix provides development-time diagnostics in two layers: runtime warnings in the core bundle and an optional browser extension.
+
+## Built-in development checks
+
+When `NODE_ENV` is not `production`, the core includes helpers that:
+
+- Warn on invalid hook usage (hooks outside render)
+- Surface deprecation notices
+- Tree-shake out of production bundles
+
+These run automatically — no setup required.
+
+## Ryunix DevTools extension
+
+The **`@unsetsoft/ryunix-devtools`** package is a browser extension that inspects Ryunix applications:
+
+- Fiber tree and component props
+- Hook state attached to fibers
+- Integration with the running app via a content script
+
+Install from the package repository or your team's distribution channel, then open the Ryunix panel while your app runs on `localhost` (or any dev URL).
+
+## Development overlay
+
+On uncaught render errors in development, Ryunix may show **RyunixDevOverlay** with:
+
+- Filtered stack traces (application code first)
+- Source location when compile-time `__source` metadata exists
+- Dismiss and reload to recover after a fix
+
+Customize UX with `app/errors.ryx` or segment error files — see [Error handling](/en/docs/core/error-handling).
+
+## Performance profiler
+
+Use `withProfiler`, `useProfiler`, and `profiler.logStats()` in development to find slow components. Details: [Performance](/en/docs/core/performance).
+
+## Dual-compiler errors
+
+Ryunix runs **client** and **server** Webpack builds in parallel. Build overlays deduplicate identical errors from both compilers so you see one clear message in the browser.
+
+## Related
+
+- [Error handling](/en/docs/core/error-handling) — boundaries and `errors.ryx`
+- [Performance](/en/docs/core/performance) — profiler APIs
+- [CLI commands](/en/docs/guides/cli) — `dev` mode behavior

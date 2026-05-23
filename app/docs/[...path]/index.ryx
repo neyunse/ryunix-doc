@@ -1,0 +1,16 @@
+import { useEffect, useRouter } from "@unsetsoft/ryunixjs";
+
+const DocsLegacyRedirect = () => {
+  const { location, navigate } = useRouter();
+
+  useEffect(() => {
+    const target = location.startsWith("/docs")
+      ? `/en${location}`
+      : "/en/docs/introduction/getting-started";
+    navigate(target);
+  }, [location]);
+
+  return null;
+};
+
+export default DocsLegacyRedirect;
