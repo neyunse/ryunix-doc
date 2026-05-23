@@ -29,7 +29,7 @@ pnpm install
 pnpm dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en el navegador.
+Abre [http://localhost:3000](http://localhost:3000) en el navegador. La documentación está en `/en/docs/...` (inglés) y `/es/docs/...` (español). Al visitar `/` redirige a `/en` o al idioma guardado en la cookie.
 
 ## Scripts disponibles
 
@@ -47,14 +47,19 @@ Scripts definidos en `package.json` (CLI Ryunix vía `ryunix`):
 
 ``` txt
 app/
-├── components/     # Componentes reutilizables
-├── docs/           # Documentación (MDX)
-│   ├── introduction/
-│   └── api/
-├── resources/      # Recursos estáticos (logos, etc.)
-├── styles/         # CSS global
-├── index.ryx       # Página de inicio
-└── layout.ryx      # Layout raíz
+├── en/                 # Locale inglés (/en/...)
+│   ├── docs/           # Documentación (MDX)
+│   └── index.ryx       # Home en inglés
+├── es/                 # Locale español (/es/...)
+│   ├── docs/
+│   └── index.ryx
+├── index.ryx           # Hub de idioma (redirect por cookie)
+├── components/
+├── styles/
+└── i18n/               # Config de locales y cookie
+public/
+├── index.html          # Plantilla HTML con script de redirect
+middleware.js           # Redirect Edge en Vercel para /
 ```
 
 ## Configuración

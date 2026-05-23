@@ -1,0 +1,104 @@
+---
+title: Componentes avanzados
+description: lazy, Suspense, memo, portales y forwardRef en RyunixJS
+slug: advanced-components
+section: Core
+---
+
+# Componentes avanzados
+
+Más allá de elementos básicos y componentes con estado, Ryunix proporciona utilidades para división de código, memoización y renderizado fuera de la jerarquía DOM habitual.
+
+## lazy y Suspense
+
+### `lazy(importFn)`
+
+Convierte un `import()` dinámico en un componente. El primer render queda pendiente hasta que cargue el chunk.
+
+```jsx
+import { lazy, Suspense } from "@unsetsoft/ryunixjs";
+
+const HeavyChart = lazy(() => import("./HeavyChart"));
+
+function Dashboard() {
+  return (
+    <Suspense fallback={<p>Loading chart…</p>}>
+      <HeavyChart />
+    </Suspense>
+  );
+}
+```
+
+`<Suspense>` muestra `fallback` mientras algún hijo lazy sigue cargando.
+
+### `preload(importFn)`
+
+Inicia la descarga de un chunk antes de que el componente se monte:
+
+```jsx
+import { preload } from "@unsetsoft/ryunixjs";
+
+preload(() => import("./HeavyChart"));
+```
+
+## memo
+
+Evita re-renderizados cuando las props no cambian (comparación superficial por defecto):
+
+```jsx
+import { memo } from "@unsetsoft/ryunixjs";
+
+const ExpensiveList = memo(function ExpensiveList({ items }) {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>{item.label}</li>
+      ))}
+    </ul>
+  );
+});
+```
+
+Pasa una función de igualdad personalizada como segundo argumento, o usa `deepEqual` del paquete para props anidadas.
+
+## createPortal
+
+Renderiza hijos en otro nodo DOM (modales, tooltips) manteniendo el mismo árbol y contexto al estilo React:
+
+```jsx
+import { createPortal } from "@unsetsoft/ryunixjs";
+
+function Modal({ open, children }) {
+  if (!open) return null;
+  return createPortal(
+    <div className="modal">{children}</div>,
+    document.getElementById("modal-root")
+  );
+}
+```
+
+## forwardRef
+
+Reenvía `ref` a un nodo DOM hijo o componente cuando el compilador intercepta refs:
+
+```jsx
+import { forwardRef } from "@unsetsoft/ryunixjs";
+
+const Input = forwardRef(function Input(props, ref) {
+  return <input ref={ref} {...props} />;
+});
+```
+
+## Fragment y cloneElement
+
+| API | Propósito |
+| :--- | :--- |
+| `Fragment` | Agrupar hijos sin un nodo DOM extra |
+| `cloneElement(element, props)` | Clonar un elemento con props fusionadas |
+| `isValidElement(value)` | Comprobar si un valor es un elemento Ryunix |
+
+## Relacionado
+
+- [Componentes](/es/docs/api/components) — `Image`, `NavLink`, `MDXProvider`, etc.
+- [Funciones](/es/docs/api/functions) — uso de `lazy`, `memo` en la doc de hooks
+- [Renderizado y SSR](/es/docs/core/rendering) — comportamiento de lazy durante SSR

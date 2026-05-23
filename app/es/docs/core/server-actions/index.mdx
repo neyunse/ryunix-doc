@@ -1,0 +1,73 @@
+---
+title: Server Actions
+description: Ejecuta código de servidor desde el cliente con Server Actions y ServerBoundary en RyunixJS
+slug: server-actions
+section: Core
+---
+
+# Server Actions
+
+Las Server Actions permiten llamar lógica solo de servidor desde el navegador sin escribir envoltorios `fetch` a mano. Ryunix compila funciones `"use server"` en proxies de cliente y un endpoint HTTP seguro.
+
+## Definir una acción
+
+Marca funciones `async` con `"use server"` en un archivo que se ejecute en el servidor (o en un módulo de servidor dedicado):
+
+```jsx
+// app/actions/user.js
+"use server";
+
+export async function updateProfile(formData) {
+  const name = formData.get("name");
+  // Database or API call on the server only
+  return { ok: true, name };
+}
+```
+
+## Llamar desde el cliente
+
+Tras la compilación, el bundle de cliente recibe un proxy creado con `createActionProxy(actionId)`:
+
+```jsx
+import { updateProfile } from "../actions/user";
+
+async function onSubmit(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const result = await updateProfile(formData);
+  console.log(result);
+}
+```
+
+Cuando el proxy se ejecuta en el navegador:
+
+1. Los argumentos se serializan con `JSON.stringify`.
+2. Ryunix envía `POST` a `/_ryunix/action`.
+3. La petición incluye `X-Ryunix-Action` para protección CSRF.
+4. La respuesta JSON se devuelve a la lógica de tu componente.
+
+## ServerBoundary
+
+El HTML renderizado en servidor puede incluir regiones que el bundle de cliente no sabe reconciliar. `<ServerBoundary>` marca esas regiones para que la hidratación **omita** el contenido interno y preserve el markup del servidor.
+
+```jsx
+import { ServerBoundary } from "@unsetsoft/ryunixjs";
+
+<ServerBoundary id="sidebar-stats">
+  {/* Server-only subtree */}
+</ServerBoundary>
+```
+
+En el cliente, esto renderiza un envoltorio ligero (`data-ryunix-server`) para que el reconciler no destruya el HTML pre-renderizado.
+
+## Requisitos
+
+- Habilita SSR en `ryunix.config.js` al usar funciones de servidor: `experimental.ssr: true`.
+- Las Server Actions dependen de los loaders del compilador Ryunix (`ryunix-server-action-loader`); usa el CLI oficial (`ryunix dev` / `ryunix build`).
+- No expongas secretos en los argumentos de las acciones; trata los payloads como cualquier entrada de API pública.
+
+## Relacionado
+
+- [Renderizado y SSR](/es/docs/core/rendering) — `renderToString`, hidratación
+- [Rutas API](/es/docs/guides/api-routes) — endpoints REST bajo `app/api/`
+- [Configuración](/es/docs/api/configuration) — `experimental.ssr`

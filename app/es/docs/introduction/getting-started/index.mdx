@@ -1,0 +1,68 @@
+---
+title: Primeros pasos
+description: Guía rápida para empezar con RyunixJS
+slug: getting-started
+section: Introducción
+---
+
+import { CodeTabs } from "@/components/CodeTabs";
+
+# Primeros pasos
+
+RyunixJS es un framework JavaScript ligero para construir interfaces de usuario. Como React, pero más pequeño y con routing integrado.
+
+> [!WARNING]
+> **Routing integrado** (la forma heredada de definir rutas manualmente) ya no está soportado. Usa el **App Router** en su lugar.
+
+## Inicio rápido
+
+<CodeTabs tabs={[
+  { name: "npm", code: "npx @unsetsoft/cra@canary my-app\ncd my-app\nnpm run dev" },
+  { name: "yarn", code: "yarn create @unsetsoft/cra my-app\ncd my-app\nyarn dev" },
+  { name: "bun", code: "bun create @unsetsoft/cra my-app\ncd my-app\nbun run dev" },
+  { name: "pnpm", code: "pnpm create @unsetsoft/cra my-app\ncd my-app\npnpm run dev" }
+]} />
+
+Tu aplicación ya está en ejecución en `http://localhost:3000`
+
+## Tu primer componente
+
+```jsx
+// app/index.ryx
+function App() {
+  const [count, setCount] = useStore(0);
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+## Conceptos clave
+
+- **Componentes** - Funciones que devuelven JSX
+- **Hooks** - `useStore`, `useEffect`, `useMemo`, etc.
+- **Routing** - App Router integrado, sin paquetes externos
+- **JSX** - Misma sintaxis que React
+
+## Estructura del proyecto
+
+```
+my-app/
+├── app/
+│   ├── layout.ryx     # Root layout
+│   └── index.ryx      # Root component (/)
+├── public/            # Static assets
+└── ryunix.config.js   # Configuration
+```
+
+## Siguientes pasos
+
+- [Instalación](/es/docs/introduction/installation) - Guía detallada de configuración
+- [Diferencias con React](/es/docs/introduction/differences-with-react) - ¿Vienes de React?
+- [Navegación](/es/docs/introduction/navigation) - Routing y navegación

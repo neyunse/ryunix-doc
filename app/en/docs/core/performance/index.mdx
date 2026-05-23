@@ -1,0 +1,95 @@
+---
+title: Performance
+description: Profiler, batching, and update priority in RyunixJS
+slug: performance
+section: Core
+---
+
+# Performance
+
+Ryunix batches updates and exposes optional profiling tools to find slow components during development.
+
+## batchUpdates
+
+Group multiple state updates into a single reconciler pass:
+
+```jsx
+import { batchUpdates } from "@unsetsoft/ryunixjs";
+
+batchUpdates(() => {
+  setCount((c) => c + 1);
+  setFlag(true);
+});
+```
+
+Use this when several `useStore` updates should not each trigger a separate paint.
+
+## Priority
+
+Ryunix supports update priority levels via the `Priority` export (used internally by transitions). Pair with [`useTransition`](/en/docs/api/functions) and [`useDeferredValue`](/en/docs/api/functions) for non-urgent UI updates.
+
+```jsx
+import { useTransition, useDeferredValue } from "@unsetsoft/ryunixjs";
+
+function SearchResults({ query }) {
+  const [isPending, startTransition] = useTransition();
+  const deferredQuery = useDeferredValue(query);
+
+  return (
+    <div>
+      {isPending ? <span>Updating…</span> : null}
+      <Results query={deferredQuery} />
+    </div>
+  );
+}
+```
+
+## Built-in profiler
+
+Available when not in production:
+
+### `withProfiler(Component, name)`
+
+Higher-order component that measures render time:
+
+```jsx
+import { withProfiler } from "@unsetsoft/ryunixjs";
+
+export default withProfiler(SlowTree, "SlowTree");
+```
+
+### `useProfiler(componentName)`
+
+Hook that returns a function to mark the end of a render slice:
+
+```jsx
+import { useProfiler } from "@unsetsoft/ryunixjs";
+
+function Measured() {
+  const end = useProfiler("Measured");
+  // ... render logic
+  end();
+  return <div />;
+}
+```
+
+### `profiler.logStats()`
+
+Log average/min/max render times and the slowest components to the console (development only).
+
+## Browser extension
+
+The **Ryunix DevTools** browser extension complements the in-app overlay. See [DevTools](/en/docs/guides/devtools).
+
+## Tips
+
+1. Memoize expensive lists with `memo` and stable callbacks with `useCallback`.
+2. Split routes with `lazy` + `Suspense` instead of one large bundle.
+3. Prefer `useDeferredValue` for search or filter UIs that lag on fast typing.
+4. Set `webpack.production: true` in `ryunix.config.js` before production builds (see README).
+
+## Related
+
+- [Functions](/en/docs/api/functions) — `useTransition`, `useDeferredValue`, `batchUpdates`
+- [Advanced components](/en/docs/core/advanced-components) — `memo`, `lazy`
+- [DevTools](/en/docs/guides/devtools)

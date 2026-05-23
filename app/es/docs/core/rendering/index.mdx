@@ -1,0 +1,81 @@
+---
+title: Renderizado y SSR
+description: Renderizado en cliente, hidratación y salida en servidor en RyunixJS
+slug: rendering
+section: Core
+---
+
+# Renderizado y SSR
+
+RyunixJS puede renderizar en el navegador, hidratar HTML del servidor y generar salida estática o en streaming en el servidor. Esta página cubre las APIs públicas que usas en apps y cómo se relacionan con el App Router.
+
+## Puntos de entrada del cliente
+
+### `init(MainElement, rootId)`
+
+Helper de arranque. Comprueba si el nodo DOM raíz ya contiene markup renderizado en servidor:
+
+- **Markup SSR presente** → llama a `hydrate()` y adjunta listeners sin borrar el HTML.
+- **Raíz vacía** → llama a `render()` para un renderizado completo en cliente.
+
+Puedes forzar un renderizado completo en cliente (omitir hidratación) con `process.env.RYUNIX_SSR = 'false'`.
+
+```jsx
+import { init } from "@unsetsoft/ryunixjs";
+import App from "./app/index.ryx";
+
+init(<App />, "__ryunix");
+```
+
+### `render(element, container)`
+
+Renderizado destructivo en cliente: limpia el contenedor, monta una nueva raíz fiber y ejecuta el reconciler.
+
+```jsx
+import { render } from "@unsetsoft/ryunixjs";
+
+render(<App />, document.getElementById("root"));
+```
+
+### `hydrate(element, container)`
+
+Conecta Ryunix al HTML existente del servidor. Si la hidratación detecta un desajuste, Ryunix puede recurrir a un renderizado completo en cliente para mantener la UI usable.
+
+## APIs de servidor
+
+Durante SSG o SSR, los hooks se ejecutan en modo seguro para servidor (`state.isServerRendering`). Los hooks con estado no se filtran entre peticiones.
+
+| API | Caso de uso |
+| :--- | :--- |
+| `renderToString(element)` | Cadenas HTML estáticas para pre-render SSG |
+| `renderToReadableStream(element)` | HTML en streaming para SSR |
+| `renderToStringAsync(element)` | Árboles asíncronos en servidor |
+| `escapeHtml(unsafe)` | Escapar texto para salida HTML segura |
+
+```jsx
+import { renderToString } from "@unsetsoft/ryunixjs";
+
+const html = renderToString(<Page />);
+```
+
+## Integración con App Router
+
+Con el directorio `app/`, normalmente **no** llamas a `render` manualmente. El CLI de Ryunix compila bundles de cliente y servidor; `ryunix build` pre-renderiza rutas en `.ryunix/static`.
+
+- **Desarrollo:** `pnpm dev` — compiladores Webpack duales (cliente + servidor) con HMR.
+- **Producción:** `pnpm build` y luego `pnpm start` — archivos estáticos más el servidor Node integrado.
+
+## Cuándo usar cada modo
+
+| Objetivo | Enfoque |
+| :--- | :--- |
+| Sitio estático de docs o marketing | App Router + `ryunix build` (SSG) |
+| Solo SPA | App Router; despliega `.ryunix/static` |
+| Conectar a HTML SSR existente | `init()` / `hydrate()` en el cliente |
+| Integración Node personalizada | `renderToString` / `renderToReadableStream` |
+
+## Relacionado
+
+- [SSG y pre-renderizado](/es/docs/guides/ssg) — salida de compilación y manifiestos de rutas
+- [Server Actions](/es/docs/core/server-actions) — funciones de servidor desde el cliente
+- [Configuración](/es/docs/api/configuration) — `experimental.ssr`, `experimental.mdx`

@@ -1,0 +1,78 @@
+---
+title: SSG & Prerendering
+description: Static site generation, routes manifest, and SEO injection in RyunixJS
+slug: ssg
+section: Guides
+---
+
+# SSG & Prerendering
+
+Ryunix generates static HTML for every App Router page during `ryunix build`. No manual route list is required when you use the `app/` directory.
+
+## How it works
+
+1. **App Router scan** — Webpack discovers `index.ryx`, `layout.ryx`, dynamic `[param]` folders, and `.mdx` docs.
+2. **Route manifest** — A `routes.json` file is written under `.ryunix/cache/ssg/` with paths and merged metadata.
+3. **Prerender** — The server bundle renders each route with `renderToString` (or streaming APIs where enabled).
+4. **HTML injection** — `<title>`, `<meta>`, canonical links, and Open Graph tags are injected from `Metatags` / frontmatter.
+
+Output lands in `.ryunix/static` mirroring URL paths (e.g. `/docs/introduction/about/index.html`).
+
+## Metadata on static pages
+
+Export `Metatags` in `layout.ryx` or page files:
+
+```jsx
+// app/layout.ryx
+export const Metatags = {
+  title: { default: "My App", template: "%s | My App" },
+  description: "Site description",
+  "og:image": "/og.png",
+};
+```
+
+MDX files can use YAML frontmatter instead; Ryunix maps it to the same `Metatags` shape.
+
+Nested layouts **merge** metadata: root layout → segment layout → page / MDX frontmatter.
+
+## Sitemap configuration
+
+Enable automatic sitemaps in `ryunix.config.js`:
+
+```javascript
+{
+  experimental: {
+    ssg: {
+      sitemap: {
+        enable: true,
+        baseURL: "https://example.com",
+        settings: {
+          changefreq: "weekly",
+          priority: "0.7",
+        },
+      },
+    },
+  },
+}
+```
+
+You can also export `app/sitemap.js` for full control — see [Special files](/en/docs/api/special-files).
+
+## SSR vs static export
+
+| Mode | Config | Result |
+| :--- | :--- | :--- |
+| SSG (default for static deploy) | `ryunix build` | HTML files in `.ryunix/static` |
+| SSR dev | `experimental.ssr: true` | Server render in dev; hydrate on client |
+| Client-only | Deploy JS bundle without prerender | Possible but loses SEO benefits |
+
+## Dynamic routes
+
+Folders like `app/blog/[slug]/index.ryx` are included when the build can resolve paths. For CMS-driven slugs, generate pages at build time or use a server runtime with `ryunix start`.
+
+## Related
+
+- [Navigation](/en/docs/introduction/navigation) — file-system routing
+- [Special files](/en/docs/api/special-files) — `sitemap.js`, `robots.js`, `manifest.js`
+- [Rendering & SSR](/en/docs/core/rendering) — `renderToString`, hydration
+- [CLI commands](/en/docs/guides/cli) — `build` and output folders

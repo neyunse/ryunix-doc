@@ -1,0 +1,37 @@
+import { useRouter } from "@unsetsoft/ryunixjs";
+import { localeLabels, locales, swapLocalePath, getLocaleFromPath } from "../i18n/config.js";
+import { setLocaleCookie } from "../i18n/localeCookie.js";
+
+const LocaleSwitcher = ({ className = "" }) => {
+  const { location, navigate } = useRouter();
+  const current = getLocaleFromPath(location) || "en";
+
+  const onSelect = (locale) => {
+    if (locale === current) return;
+    setLocaleCookie(locale);
+    const next = swapLocalePath(location, locale);
+    navigate(next.startsWith(`/${locale}`) ? next : `/${locale}`);
+  };
+
+  return (
+    <div className={`flex items-center gap-1 rounded-full bg-white/5 border border-white/10 p-0.5 ${className}`}>
+      {locales.map((locale) => (
+        <button
+          key={locale}
+          type="button"
+          onClick={() => onSelect(locale)}
+          className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
+            current === locale
+              ? "bg-purple-600 text-white"
+              : "text-gray-400 hover:text-white hover:bg-white/5"
+          }`}
+          aria-current={current === locale ? "true" : undefined}
+        >
+          {localeLabels[locale]}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default LocaleSwitcher;

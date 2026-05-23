@@ -1,0 +1,95 @@
+---
+title: Rendimiento
+description: Profiler, batching y prioridad de actualizaciones en RyunixJS
+slug: performance
+section: Core
+---
+
+# Rendimiento
+
+Ryunix agrupa actualizaciones y expone herramientas de perfilado opcionales para encontrar componentes lentos durante el desarrollo.
+
+## batchUpdates
+
+Agrupa varias actualizaciones de estado en un solo paso del reconciler:
+
+```jsx
+import { batchUpdates } from "@unsetsoft/ryunixjs";
+
+batchUpdates(() => {
+  setCount((c) => c + 1);
+  setFlag(true);
+});
+```
+
+Úsalo cuando varias actualizaciones de `useStore` no deban provocar cada una un repintado separado.
+
+## Prioridad
+
+Ryunix admite niveles de prioridad de actualización mediante la exportación `Priority` (usada internamente por transiciones). Combínala con [`useTransition`](/es/docs/api/functions) y [`useDeferredValue`](/es/docs/api/functions) para actualizaciones de UI no urgentes.
+
+```jsx
+import { useTransition, useDeferredValue } from "@unsetsoft/ryunixjs";
+
+function SearchResults({ query }) {
+  const [isPending, startTransition] = useTransition();
+  const deferredQuery = useDeferredValue(query);
+
+  return (
+    <div>
+      {isPending ? <span>Updating…</span> : null}
+      <Results query={deferredQuery} />
+    </div>
+  );
+}
+```
+
+## Profiler integrado
+
+Disponible fuera de producción:
+
+### `withProfiler(Component, name)`
+
+Componente de orden superior que mide el tiempo de render:
+
+```jsx
+import { withProfiler } from "@unsetsoft/ryunixjs";
+
+export default withProfiler(SlowTree, "SlowTree");
+```
+
+### `useProfiler(componentName)`
+
+Hook que devuelve una función para marcar el final de un tramo de render:
+
+```jsx
+import { useProfiler } from "@unsetsoft/ryunixjs";
+
+function Measured() {
+  const end = useProfiler("Measured");
+  // ... render logic
+  end();
+  return <div />;
+}
+```
+
+### `profiler.logStats()`
+
+Registra en consola tiempos medios/mín/máx de render y los componentes más lentos (solo desarrollo).
+
+## Extensión del navegador
+
+La extensión **Ryunix DevTools** complementa la superposición en la app. Consulta [DevTools](/es/docs/guides/devtools).
+
+## Consejos
+
+1. Memoriza listas costosas con `memo` y callbacks estables con `useCallback`.
+2. Divide rutas con `lazy` + `Suspense` en lugar de un solo bundle grande.
+3. Prefiere `useDeferredValue` en UIs de búsqueda o filtro que van lentas al escribir rápido.
+4. Establece `webpack.production: true` en `ryunix.config.js` antes de compilaciones de producción (consulta el README).
+
+## Relacionado
+
+- [Funciones](/es/docs/api/functions) — `useTransition`, `useDeferredValue`, `batchUpdates`
+- [Componentes avanzados](/es/docs/core/advanced-components) — `memo`, `lazy`
+- [DevTools](/es/docs/guides/devtools)

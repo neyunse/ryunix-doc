@@ -1,0 +1,23 @@
+import DocLayoutShell from "../../components/DocLayoutShell.ryx";
+import { docSections } from "../../i18n/config.js";
+
+export const Metatags = {
+  title: {
+    default: "RyunixJS: El framework JavaScript de nueva generación",
+    template: "%s | RyunixJS",
+  },
+  keywords: [
+    "Ryunix", "Documentación", "Framework JS", "Generador de sitios estáticos",
+    "MDX", "ESLint", "Webpack",
+  ],
+  "og:locale": "es_ES",
+  "og:locale:alternate": "en_US",
+};
+
+const DocLayout = ({ children }) => (
+  <DocLayoutShell sections={docSections.es} prevLabel="Anterior" nextLabel="Siguiente">
+    {children}
+  </DocLayoutShell>
+);
+
+export default DocLayout;

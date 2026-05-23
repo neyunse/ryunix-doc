@@ -1,0 +1,63 @@
+---
+title: Comandos CLI
+description: Comandos ryunix dev, build, start y lint
+slug: cli
+section: Guías
+---
+
+# Comandos CLI
+
+El comando `ryunix` proviene de `@unsetsoft/ryunix-presets` y se configura en los scripts de `package.json` de tu aplicación.
+
+## Comandos
+
+| Comando | Script | Descripción |
+| :--- | :--- | :--- |
+| `dev` | `pnpm dev` | Servidor de desarrollo con HMR (compiladores cliente + servidor) |
+| `build` | `pnpm build` | Build limpio, compilación Webpack, prerender SSG |
+| `start` | `pnpm start` | Servidor Node de producción (requiere build previo) |
+| `lint` | `pnpm lint` | ESLint con valores predeterminados de Ryunix |
+| `lint:fix` | `pnpm lint:fix` | ESLint con corrección automática |
+
+## dev
+
+- Establece `RYUNIX_MODE=development`
+- Ejecuta Webpack Dev Server en la configuración del **cliente** (setup de doble compilador)
+- Busca un puerto libre si el `3000` está ocupado
+- Limpia particiones obsoletas de caché de Webpack al iniciar
+
+## build
+
+- Elimina artefactos previos de `.ryunix/static` y `.ryunix/server`
+- Compila los bundles cliente y servidor
+- Ejecuta el paso de prerender SSG y escribe HTML estático en `.ryunix/static`
+- Genera metadatos de rutas para SEO (desde `Metatags` y frontmatter MDX)
+
+> **Webpack en producción:** establece `webpack.production: true` en `ryunix.config.js` antes de desplegar a producción.
+
+## start
+
+- Establece `RYUNIX_MODE=production`
+- Sirve `.ryunix/static` con el servidor Node integrado
+- Soporta range requests, caché LRU de archivos y gzip/brotli para assets de texto
+- Delega `/api/*` a las rutas API compiladas
+
+Falla de inmediato si no has ejecutado `build` antes.
+
+## lint
+
+Usa la configuración opinada de ESLint incluida con Ryunix. Sobrescribe reglas en `ryunix.config.js` bajo `eslint.rules`.
+
+## Directorios de salida
+
+| Ruta | Contenido |
+| :--- | :--- |
+| `.ryunix/static` | HTML, JS, CSS prerenderizados (despliega esto para hosting estático) |
+| `.ryunix/server` | Bundles del servidor, router API, router de la app |
+| `.ryunix/cache/ssg` | `routes.json` y caché SSG |
+
+## Relacionado
+
+- [Despliegue](/es/docs/introduction/deploying) — Vercel y hosting estático
+- [SSG y prerenderizado](/es/docs/guides/ssg) — qué genera `build`
+- [Configuración](/es/docs/api/configuration) — `ryunix.config.js`
