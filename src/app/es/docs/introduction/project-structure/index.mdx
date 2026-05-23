@@ -11,21 +11,21 @@ slug: project-structure
 
 ```
 my-app/
-├── app/
-│   ├── layout.ryx         # Root layout (replaces main.ryx and App.ryx)
-│   ├── index.ryx          # Root component (/)
-│   ├── errors.ryx         # Error boundary
-│   ├── sitemap.js         # Programmatic sitemap
-│   ├── robots.js          # Programmatic robots.txt
-│   ├── manifest.js        # Programmatic manifest
-│   ├── api/               # API routes folder
-│   │   └── route.js       # Back-end API endpoint
-│   └── styles/            # CSS files
-│       └── index.css
-├── public/                # Static assets
-│   ├── favicon.png
-│   └── images/
-├── ryunix.config.js       # Configuration
+├── app/                   # o src/app/ con rootDir: "src"
+│   ├── layout.ryx
+│   ├── index.ryx
+│   ├── error.ryx          # 404 global (NotFound)
+│   ├── sitemap.js
+│   ├── robots.js
+│   ├── manifest.js
+│   └── api/
+│       └── hello/
+│           └── router.js
+├── assets/                # Estáticos (plantillas CRA)
+├── styles/
+│   └── global.css
+├── public/                # Opcional (p. ej. favicon.png)
+├── ryunix.config.js
 └── package.json
 ```
 
@@ -68,67 +68,40 @@ export default Home;
 ### Arquitectura App Router
 
 ```
-app/
-├── layout.ryx
-├── index.ryx
-├── errors.ryx
-├── sitemap.js
-├── robots.js
-├── manifest.js
-├── about/
+src/
+├── app/
 │   ├── layout.ryx
-│   └── index.ryx
-├── api/
-│   └── users/
-│       └── [id]/
-│           └── route.js
-├── components/       # Shared UI components
-├── hooks/            # Custom hooks
-├── utils/            # Utilities
-└── styles/           # CSS
+│   ├── index.ryx
+│   ├── error.ryx
+│   └── about/
+│       └── index.ryx
+├── components/
+├── features/
+└── styles/
+    └── global.css
 ```
 
+## Archivos estáticos
 
-
-## Directorio public
-
-Los archivos estáticos van en `public/`:
-
-```
-public/
-├── favicon.png
-├── images/
-│   └── logo.png
-├── fonts/
-└── data/
-    └── config.json
-```
-
-Acceso en código:
-
-```jsx
-<img src="/images/logo.png" />
-```
+Plantillas CRA: **`assets/`**. Opcional **`public/`** para `favicon.png`.
 
 ## Archivo de configuración
 
 ```javascript
-// ryunix.config.js
 const RyunixSettings = {
+  rootDir: "src",
+  ssr: true,
+  mdx: false,
+  buildDir: ".ryunix",
+  favicon: true,
   webpack: {
     production: false,
-    output: {
-      buildDirectory: ".ryunix",
-    },
     resolve: {
       alias: {
-        "@/": "./app",
-        "@/components": "./app/components",
+        "@": "./src",
+        "@/components": "./src/components",
       },
     },
-  },
-  static: {
-    favicon: true,
   },
 };
 
@@ -172,7 +145,7 @@ const RyunixSettings = {
 ```
 
 ```jsx
-const key = ryunix.config.RYUNIX_APP_KEY;
+const key = ryunix.config.env.RYUNIX_APP_KEY;
 ```
 
 Todas las variables de entorno **deben** empezar por `RYUNIX_APP_` para exponerse al cliente.

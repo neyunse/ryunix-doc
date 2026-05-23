@@ -41,7 +41,7 @@ Habilita sitemaps automáticos en `ryunix.config.js`:
 
 ```javascript
 {
-  experimental: {
+  legacy: {
     ssg: {
       sitemap: {
         enable: true,
@@ -63,12 +63,18 @@ También puedes exportar `app/sitemap.js` para control total — consulta [Archi
 | Modo | Configuración | Resultado |
 | :--- | :--- | :--- |
 | SSG (predeterminado para despliegue estático) | `ryunix build` | Archivos HTML en `.ryunix/static` |
-| SSR en dev | `experimental.ssr: true` | Renderizado en servidor en dev; hidratación en cliente |
+| SSR en dev | `ssr: true` (por defecto) | Renderizado en servidor en dev; hidratación en cliente |
 | Solo cliente | Despliega bundle JS sin prerender | Posible, pero pierde beneficios SEO |
 
 ## Rutas dinámicas
 
-Carpetas como `app/blog/[slug]/index.ryx` se incluyen cuando el build puede resolver las rutas. Para slugs impulsados por CMS, genera páginas en tiempo de build o usa un runtime de servidor con `ryunix start`.
+Las rutas con segmentos dinámicos (`[slug]`, `[...path]`) **no** entran en el manifiesto SSG de forma automática — los paths con `:` se omiten en el prerender. Siguen funcionando en runtime con `ssr: true` (por defecto) vía `ryunix dev` o `ryunix start`.
+
+Opciones:
+
+1. **Runtime servidor** — `ryunix build` + `ryunix start` y render bajo demanda.
+2. **Rutas fijas por idioma o sección** — como este sitio con `/en/docs/...` y `/es/docs/...`.
+3. **Fallback legacy** — `legacy.ssg.sitemap.prerender` solo si el manifiesto file-based está vacío.
 
 ## Relacionado
 

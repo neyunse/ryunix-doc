@@ -29,6 +29,8 @@ Tu aplicación ya está en ejecución en `http://localhost:3000`
 
 ```jsx
 // app/index.ryx
+import { useStore } from "@unsetsoft/ryunixjs";
+
 function App() {
   const [count, setCount] = useStore(0);
 
@@ -54,12 +56,16 @@ export default App;
 
 ```
 my-app/
-├── app/
-│   ├── layout.ryx     # Root layout
-│   └── index.ryx      # Root component (/)
-├── public/            # Static assets
-└── ryunix.config.js   # Configuration
+├── app/               # App Router (o src/app/ con rootDir: "src")
+│   ├── layout.ryx
+│   ├── index.ryx
+│   └── error.ryx      # 404 global (export NotFound)
+├── assets/            # Estáticos (plantilla CRA)
+├── styles/
+└── ryunix.config.js
 ```
+
+> **Nota:** Si `app/` no está en la raíz del proyecto, usa `rootDir: "src"` y coloca las rutas en `src/app/`.
 
 ## Siguientes pasos
 

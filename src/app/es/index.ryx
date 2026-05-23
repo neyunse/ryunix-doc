@@ -2,10 +2,10 @@ import HomePage from "@/features/home/HomePage.ryx";
 import { homeCopy } from "@/features/home/homeCopy.js";
 
 export const Metatags = {
-  title: "RyunixJS: El framework JavaScript de nueva generación",
+  title: "RyunixJS — Crea aplicaciones web modernas",
   description:
     "RyunixJS es un framework JavaScript potente y flexible para crear aplicaciones web modernas con facilidad y eficiencia.",
-  "og:title": "RyunixJS: El framework JavaScript de nueva generación",
+  "og:title": "RyunixJS — Crea aplicaciones web modernas",
   "og:description":
     "RyunixJS es un framework JavaScript potente y flexible para crear aplicaciones web modernas con facilidad y eficiencia.",
   keywords: [

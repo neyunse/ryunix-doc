@@ -11,10 +11,12 @@ Ryunix compila `app/api/**` por separado del bundle de UI usando SWC, y luego si
 
 ## Convenciones de archivos
 
-Coloca los handlers bajo `app/api/`. Nombres de archivo soportados:
+Coloca los handlers bajo `app/api/`. Nombres reconocidos en **runtime**:
 
 - `route.js`, `route.ts`, `route.ryx`
 - `router.js`, `router.ts`, `router.ryx`
+
+> **Nota:** `endpoint.js` / `endpoint.ts` puede compilarse a `.ryunix/server/api/`, pero **no** lo enruta el handler de producción. Usa `route.*` o `router.*`.
 
 Exporta métodos HTTP como exportaciones nombradas:
 

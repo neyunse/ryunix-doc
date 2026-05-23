@@ -63,7 +63,7 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 ]} />
 ```
 
-Shared UI belongs in `app/components/` (this docs site uses `CodeTabs`, `Icon`, etc.).
+Shared UI typically lives in `src/components/` (with `rootDir: "src"`) or `app/components/` when `app/` is at the project root.
 
 ## MDXProvider
 
@@ -78,4 +78,4 @@ During `ryunix build`, each MDX route is prerendered to static HTML with the cor
 - [Navigation](/en/docs/introduction/navigation) — routing overview
 - [SSG & prerendering](/en/docs/guides/ssg) — prerender pipeline
 - [Functions](/en/docs/api/functions) — `useMetadata` for client-only updates
-- [Configuration](/en/docs/api/configuration) — `experimental.mdx`
+- [Configuration](/en/docs/api/configuration) — `mdx: true`

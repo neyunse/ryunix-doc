@@ -13,17 +13,29 @@ Configure your RyunixJS project with `ryunix.config.js`.
 
 ```javascript
 // ryunix.config.js
+/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
 const RyunixSettings = {
+  rootDir: "src", // omit if app/ is at project root; default is "src"
+  ssr: true,
+  mdx: true,
+  port: 3000,
+  buildDir: ".ryunix",
+  favicon: true,
   webpack: {
     production: false,
-  },
-  static: {
-    favicon: true,
+    resolve: {
+      alias: {
+        "@": "./src",
+        "@/components": "./src/components",
+      },
+    },
   },
 };
 
 export default RyunixSettings;
 ```
+
+> **Legacy keys:** `experimental.ssr`, `experimental.mdx`, `static.favicon`, and `webpack.output.buildDirectory` still work but log deprecation warnings. Prefer the root-level options above (`ssr`, `mdx`, `favicon`, `buildDir`, `port`, `proxy`).
 
 ## Webpack Settings
 
@@ -44,39 +56,42 @@ Production mode enables:
 - Tree shaking
 - Source maps
 
-### Root Directory (Obsolete)
+### Source root (`rootDir`)
 
-> [!NOTE]
-> In the **App Router**, the `app/` directory is the default and fixed source of the application. The `root` configuration is no longer needed for standard projects.
-
-### Output Directory
+Ryunix looks for `app/` at the project root **or** at `{rootDir}/app`. Default `rootDir` is `"src"`.
 
 ```javascript
 {
-  webpack: {
-    output: {
-      buildDirectory: ".ryunix", // Build output folder
-    },
-  },
-};
+  rootDir: "src", // routes live in src/app/
+}
 ```
 
-Build will be in `.ryunix/static/`.
+If both `./app` and `./src/app` exist, **`./app` wins**.
 
-### Dev Server
+### Build output (`buildDir`)
 
 ```javascript
 {
+  buildDir: ".ryunix",
+}
+```
+
+Production static files are written to `.ryunix/static/`.
+
+### Dev server (`port`, `proxy`)
+
+```javascript
+{
+  port: 3000,
+  proxy: {
+    "/api": {
+      target: "http://localhost:8080",
+      changeOrigin: true,
+    },
+  },
   webpack: {
     devServer: {
-      port: 3000,
-      allowedHosts: "auto", // or 'all' or ['host1.com', 'host2.com']
-      proxy: {
-        "/api": {
-          target: "http://localhost:8080",
-          changeOrigin: true,
-        },
-      },
+      allowedHosts: "auto",
     },
   },
 };
@@ -89,9 +104,8 @@ Build will be in `.ryunix/static/`.
   webpack: {
     resolve: {
       alias: {
-        "@/": "./app",
-        "@/components": "./app/components",
-        "@/utils": "./app/utils",
+        "@": "./src",
+        "@/components": "./src/components",
       },
     },
   },
@@ -160,10 +174,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ```javascript
 {
-  static: {
-    favicon: true, // Looks for public/favicon.png
-  },
-};
+  favicon: true, // uses public/favicon.png when present
+}
 ```
 
 ### Custom Template (Deprecated)
@@ -196,34 +208,29 @@ const CopyPlugin = require("copy-webpack-plugin");
 };
 ```
 
-## Experimental Features
+## MDX & SSG
 
-### MDX Support & Frontmatter Extraction
+### MDX support
 
-Ryunix natively integrates markdown and JSX using the `.mdx` extension.
+Enable `.mdx` pages under `app/`:
 
 ```javascript
 {
-  experimental: {
-    mdx: true, // Enable MDX files
-  },
-};
+  mdx: true,
+}
 ```
 
 YAML headers (like `title`, `description`) placed at the start of `.mdx` files between `---` are parsed and invisibly transpiled. Ryunix assimilates them directly as the `Metatags` constant, injecting them into the HTML and optimizing SEO without requiring additional wrappers.
 
-### Dynamic Static Site Generation (SSG)
+### Static site generation (SSG)
 
-The Ryunix SSG plugin reads and assimilates the App Router tree automatically from scratch.
+With the App Router, `ryunix build` writes a route manifest to `.ryunix/cache/ssg/routes.json` and prerenders static HTML for routes **without** dynamic segments (`[param]` paths are SSR-only unless listed manually).
 
-- **Dynamic SSG**: With the App Router, the registry of SSG routes is auto-generated based on your folder taxonomy. There is no need for cumbersome static configurations.
-- **Descending Metadata Inheritance**: Nested routes now dynamically inherit and apply the `titleTemplate` declared in a higher-order `layout.ryx` down the entire directory tree. This ensures all generated pages (including MDX routes) have HTML titles formatted identically to the client environment.
-
-> ⚠️ **Deprecated Feature:** Manually defining routes to pre-render using `experimental.ssg.prerender` is now obsolete.
+Optional sitemap when no `app/sitemap.js` exists:
 
 ```javascript
 {
-  experimental: {
+  legacy: {
     ssg: {
       sitemap: {
         enable: true,
@@ -235,8 +242,10 @@ The Ryunix SSG plugin reads and assimilates the App Router tree automatically fr
       },
     },
   },
-};
+}
 ```
+
+Prefer `app/sitemap.js`, `app/robots.js`, and `app/manifest.js` when using file-based metadata (see [Special files](/en/docs/api/special-files)).
 
 ## Deprecations & Bugfixes
 
@@ -263,7 +272,7 @@ export default RyunixSettings;
 Access in code:
 
 ```javascript
-const key = ryunix.config.RYUNIX_APP_KEY;
+const key = ryunix.config.env.RYUNIX_APP_KEY;
 ```
 
 ### From `.env` File

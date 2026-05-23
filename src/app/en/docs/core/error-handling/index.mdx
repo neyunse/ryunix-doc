@@ -1,6 +1,6 @@
 ---
 title: Error Handling
-description: Error boundaries, errors.ryx, and the development overlay in RyunixJS
+description: Error boundaries, error.ryx, and the development overlay in RyunixJS
 slug: error-handling
 section: Core
 ---
@@ -27,48 +27,61 @@ function App() {
 
 The reconciler walks up the fiber tree to find the nearest error boundary, clears the failed branch, and renders the fallback.
 
-## File-based boundaries (`errors.ryx`)
+## Global 404 (`app/error.ryx`)
 
-In the App Router, add `app/errors.ryx` (or `app/<segment>/errors.ryx`) next to the routes you want to protect.
+At the **root** of `app/` (or `{rootDir}/app/`), create `error.ryx` for unmatched routes. Export `NotFound` or a default component:
 
 ```jsx
-// app/errors.ryx
-export default function Errors({ error, reset }) {
-  return (
-    <div>
-      <h1>Something went wrong</h1>
-      <p>{error?.message}</p>
-      <button type="button" onClick={reset}>Try again</button>
-    </div>
-  );
+// app/error.ryx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+export const NotFound = () => (
+  <div>
+    <h1>404</h1>
+    <p>Page not found</p>
+    <NavLink to="/">Back home</NavLink>
+  </div>
+);
+```
+
+The App Router registers this as the catch-all `*` route. This file is **not** named `errors.ryx` — the scanner only picks up `error.ryx`.
+
+## Segment errors (`error.ryx` per folder)
+
+Add `error.ryx` next to `layout.ryx` in a route segment to catch failures in that subtree:
+
+```jsx
+// app/dashboard/error.ryx
+export default function DashboardError() {
+  return <p>Could not load this section.</p>;
 }
 ```
 
-The build pipeline wraps matching route segments with `<ErrorBoundary>`. A crash in `app/dashboard/profile/index.ryx` can fall back to `app/dashboard/errors.ryx` without unmounting a sibling layout or sidebar.
+The build wraps the segment with `ErrorBoundary`. A crash in `app/dashboard/profile/index.ryx` can use `app/dashboard/error.ryx` without unmounting a parent layout.
+
+## Loading UI (`loading.ryx`)
+
+Optional `loading.ryx` in a segment shows a fallback while async route content resolves (wrapped in `Suspense`). See [Navigation](/en/docs/introduction/navigation).
 
 ## Development overlay
 
-When `NODE_ENV` is not `production` and no custom `errors.ryx` handles the crash, Ryunix can show **RyunixDevOverlay**:
+When `NODE_ENV` is not `production` and no boundary handles the crash, Ryunix can show **RyunixDevOverlay**:
 
 - Filters framework noise from stack traces
 - Uses compile-time source hints (e.g. `index.ryx:42`) when available
 - Helps fix issues without opening DevTools first
 
-In production, prefer user-facing fallbacks via `ErrorBoundary` or `errors.ryx` instead of exposing stack traces.
-
-## Route-level `error` and `loading`
-
-The App Router also supports optional `error.ryx` and `loading.ryx` per segment (see [Navigation](/en/docs/introduction/navigation)). Use them for segment-specific UI while data loads or when a route fails.
+In production, prefer user-facing fallbacks via `ErrorBoundary` or segment `error.ryx` instead of exposing stack traces.
 
 ## Best practices
 
-1. Place `errors.ryx` at the layout level where recovery still makes sense (e.g. docs section, dashboard).
-2. Keep fallbacks accessible and actionable (retry, go home, contact support).
-3. Log errors to your monitoring service inside `errors.ryx` or boundary handlers in production.
+1. Place segment `error.ryx` where recovery still makes sense (docs area, dashboard).
+2. Keep fallbacks accessible and actionable (retry, go home).
+3. Use root `error.ryx` with `NotFound` for consistent 404 UX.
 4. Test error paths in development with intentional throws in child components.
 
 ## Related
 
-- [Navigation](/en/docs/introduction/navigation) — `error.ryx` and `loading.ryx` conventions
-- [Project structure](/en/docs/introduction/project-structure) — where `errors.ryx` lives
+- [Navigation](/en/docs/introduction/navigation) — `error.ryx`, `loading.ryx`, and dynamic routes
+- [Project structure](/en/docs/introduction/project-structure) — where special files live
 - [DevTools](/en/docs/guides/devtools) — debugging and profiling

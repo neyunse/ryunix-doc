@@ -62,7 +62,7 @@ On the client, this renders a lightweight wrapper (`data-ryunix-server`) so the 
 
 ## Requirements
 
-- Enable SSR in `ryunix.config.js` when using server features: `experimental.ssr: true`.
+- SSR is enabled by default (`ssr: true` in `ryunix.config.js`). Set `ssr: false` only for client-only builds.
 - Server Actions depend on the Ryunix compiler loaders (`ryunix-server-action-loader`); use the official CLI (`ryunix dev` / `ryunix build`).
 - Do not expose secrets in action arguments; treat payloads like any public API input.
 
@@ -70,4 +70,4 @@ On the client, this renders a lightweight wrapper (`data-ryunix-server`) so the 
 
 - [Rendering & SSR](/en/docs/core/rendering) — `renderToString`, hydration
 - [API routes](/en/docs/guides/api-routes) — REST endpoints under `app/api/`
-- [Configuration](/en/docs/api/configuration) — `experimental.ssr`
+- [Configuration](/en/docs/api/configuration) — `ssr`

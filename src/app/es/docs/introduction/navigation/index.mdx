@@ -44,13 +44,15 @@ export default function DashboardLayout({ children }) {
 
 Ryunix ofrece soporte nativo para estados de carga y error personalizados en cualquier nivel del directorio `app/`.
 
-- **`errors.ryx`**: Actúa como Error Boundary automático para capturar excepciones en componentes descendientes.
+| Archivo | Ámbito | Uso |
+| :--- | :--- | :--- |
+| `app/error.ryx` | Raíz | **404 global** — exporta `NotFound` o `default` |
+| `app/<segmento>/error.ryx` | Segmento | Límite de error del subárbol |
+| `app/<segmento>/loading.ryx` | Segmento | UI de carga |
 
-```
-export const NotFound = () => {
-  return <div>404 Not Found</div>;
-}
-
+```jsx
+// app/error.ryx
+export const NotFound = () => <div>404 No encontrado</div>;
 ```
 
 ## Rutas dinámicas
@@ -250,23 +252,23 @@ export const Metatags = {
 };
 ```
 
-### Metatags dinámicos (DynamicMetadata)
+### Metadatos dinámicos (`generateMetadata`)
 
-En rutas dinámicas, puedes exportar `Metatags` como función `async` que recibe `params`.
+En rutas dinámicas, exporta **`generateMetadata`** async con `{ params, searchParams }`:
 
 ```jsx
 // app/users/[id]/index.ryx
 
-export const Metatags = async ({ params }) => {
+export async function generateMetadata({ params }) {
   const user = await fetchUser(params.id);
   return {
-    title: `Profile: ${user.name}`,
-    description: `View ${user.name}'s profile and posts`,
+    title: `Perfil: ${user.name}`,
+    description: `Ver el perfil de ${user.name}`,
   };
-};
+}
 ```
 
-Así los metadatos se inyectan en el manifiesto `routes.json` del sitio y se pre-renderizan de forma eficaz.
+`Metatags` debe ser un objeto estático; no una función async.
 
 
 

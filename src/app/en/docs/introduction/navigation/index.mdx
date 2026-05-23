@@ -40,17 +40,17 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-## Error
+## Error and loading files
 
-Ryunix provides native support for tailored loading and error states within any level of the `app/` directory.
+| File | Scope | Purpose |
+| :--- | :--- | :--- |
+| `app/error.ryx` | App root | Global **404** — export `NotFound` or `default` |
+| `app/<segment>/error.ryx` | Route segment | Error boundary for that subtree |
+| `app/<segment>/loading.ryx` | Route segment | Loading UI while async content resolves |
 
-- **`errors.ryx`**: Acts as an automatic Error Boundary to catch exceptions in descendant components.
-
-```
-export const NotFound = () => {
-  return <div>404 Not Found</div>;
-}
-
+```jsx
+// app/error.ryx — global not found
+export const NotFound = () => <div>404 Not Found</div>;
 ```
 
 ## Dynamic Routes
@@ -250,23 +250,25 @@ export const Metatags = {
 };
 ```
 
-### Dynamic Metatags (DynamicMetadata)
+### Dynamic metadata (`generateMetadata`)
 
-For dynamic routes, you can export `Metatags` as an `async` function that receives `params`.
+For dynamic routes, export an async **`generateMetadata`** function. It receives `{ params, searchParams }` (same shape as in the App Router pipeline):
 
 ```jsx
 // app/users/[id]/index.ryx
 
-export const Metatags = async ({ params }) => {
+export async function generateMetadata({ params }) {
   const user = await fetchUser(params.id);
   return {
     title: `Profile: ${user.name}`,
     description: `View ${user.name}'s profile and posts`,
   };
-};
+}
 ```
 
-This ensures the metadata is naturally injected into the site's `routes.json` manifest and pre-rendered effectively.
+Static `Metatags` objects are merged with layout metadata; `generateMetadata` runs for dynamic values at render/SSG time.
+
+> **Note:** `Metatags` must be a plain object, not an async function. Use `generateMetadata` for async metadata.
 
 
 
