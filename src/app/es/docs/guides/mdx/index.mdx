@@ -69,6 +69,18 @@ La UI compartida suele vivir en `src/components/` (con `rootDir: "src"`) o en `a
 
 Envuelve el contenido MDX con `MDXProvider` cuando necesites shortcodes personalizados o mapeos de elementos — consulta [Componentes](/es/docs/api/components).
 
+## Citas y notas (`>`)
+
+Usa blockquotes de Markdown para resaltar avisos, notas o consejos. En `.docs-content` se muestran con borde morado y fondo en degradado:
+
+```mdx
+> **Routing integrado** ya no está soportado. Usa el **App Router** en su lugar.
+
+> Información útil que el lector debería ver al repasar la página.
+```
+
+Puedes combinar **negrita**, enlaces y texto en cursiva dentro del blockquote.
+
 ## SSG y MDX
 
 Durante `ryunix build`, cada ruta MDX se prerenderiza a HTML estático con el `<title>` y meta tags correctos heredados de los layouts. Evita mezclar la configuración global obsoleta `static.seo` con `Metatags` por ruta.

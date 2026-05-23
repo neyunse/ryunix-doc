@@ -17,7 +17,7 @@ const SidebarContent = ({ sections, currentPath }) => (
                 <NavLink
                   to={route.path}
                   className={`block px-3 py-2 rounded-xl transition-all duration-300 ${isActive
-                    ? "bg-gradient-to-r from-purple-500/20 to-indigo-500/10 text-purple-300 font-medium shadow-[inset_2px_0_0_#8b5cf6]"
+                    ? "bg-gradient-to-r from-blue-500/20 to-purple-500/10 text-blue-300 font-medium shadow-[inset_2px_0_0_#3b82f6]"
                     : "text-gray-400 hover:bg-white/5 hover:text-white"
                     }`}
                 >
@@ -56,8 +56,8 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
 
   return (
     <div className="max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 relative">
-      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/5 blur-[120px] rounded-full mix-blend-screen pointer-events-none z-0" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full mix-blend-screen pointer-events-none z-0" />
+      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full mix-blend-screen pointer-events-none z-0" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/5 blur-[120px] rounded-full mix-blend-screen pointer-events-none z-0" />
 
       <div className="lg:hidden sticky top-[var(--ui-header-height)] z-50 bg-[#111112]/80 backdrop-blur-md border-b border-[#2e2e30] -mx-4 px-4 py-3 flex items-center justify-between">
         <button
@@ -68,7 +68,7 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
           <span>Menu</span>
         </button>
         {currentRouteLabel ? (
-          <span className="text-sm font-medium text-purple-400 truncate ml-4">
+          <span className="text-sm font-medium text-blue-400 truncate ml-4">
             {currentRouteLabel}
           </span>
         ) : null}
@@ -105,7 +105,7 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
             <div className="flex items-center space-x-2 text-sm text-gray-400 mb-8">
               <span className="font-medium">{currentSectionName}</span>
               <Icon icon={ChevronRight} className="h-4 w-4 text-gray-600" />
-              <span className="text-purple-400 font-medium">{currentRouteLabel}</span>
+              <span className="text-blue-400 font-medium">{currentRouteLabel}</span>
             </div>
           ) : null}
 
@@ -115,9 +115,9 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
             {prevRoute ? (
               <NavLink
                 to={prevRoute.path}
-                className="group flex flex-col items-start w-full sm:w-1/2 p-4 rounded-2xl border border-[#2e2e30] bg-[#111112] hover:bg-[#161618] hover:border-purple-500/50 transition-all duration-300"
+                className="group flex flex-col items-start w-full sm:w-1/2 p-4 rounded-2xl border border-[#2e2e30] bg-[#111112] hover:bg-[#161618] hover:border-blue-500/50 transition-all duration-300"
               >
-                <div className="flex items-center text-gray-500 text-sm mb-1 group-hover:text-purple-400 transition-colors">
+                <div className="flex items-center text-gray-500 text-sm mb-1 group-hover:text-blue-400 transition-colors">
                   <Icon icon={ChevronLeft} className="h-4 w-4 mr-1 transform group-hover:-translate-x-1 transition-transform" />
                   {prevLabel}
                 </div>
@@ -130,9 +130,9 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
             {nextRoute ? (
               <NavLink
                 to={nextRoute.path}
-                className="group flex flex-col items-end w-full sm:w-1/2 p-4 rounded-2xl border border-[#2e2e30] bg-[#111112] hover:bg-[#161618] hover:border-purple-500/50 transition-all duration-300 text-right"
+                className="group flex flex-col items-end w-full sm:w-1/2 p-4 rounded-2xl border border-[#2e2e30] bg-[#111112] hover:bg-[#161618] hover:border-blue-500/50 transition-all duration-300 text-right"
               >
-                <div className="flex items-center text-gray-500 text-sm mb-1 group-hover:text-purple-400 transition-colors">
+                <div className="flex items-center text-gray-500 text-sm mb-1 group-hover:text-blue-400 transition-colors">
                   {nextLabel}
                   <Icon icon={ChevronRight} className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
                 </div>
