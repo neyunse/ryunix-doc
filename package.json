@@ -22,10 +22,10 @@
     ]
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.1",
-    "@unsetsoft/ryunix-presets": "^1.0.26-canary.25",
-    "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.2.1"
+    "@tailwindcss/postcss": "^4.3.0",
+    "@unsetsoft/ryunix-presets": "1.0.26-canary.37",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0"
   }
 }
