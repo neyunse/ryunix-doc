@@ -12,20 +12,14 @@
     "lint:fix": "ryunix lint --fix"
   },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "1.2.5-canary.5",
+    "@unsetsoft/ryunixjs": "1.2.5-canary.7",
     "lucide": "^0.575.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core"
-    ]
-  },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.1",
-    "@unsetsoft/ryunix-presets": "^1.0.26-canary.25",
-    "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.2.1"
+    "@tailwindcss/postcss": "^4.3.0",
+    "@unsetsoft/ryunix-presets": "1.0.26-canary.37",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0"
   }
 }

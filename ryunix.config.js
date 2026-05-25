@@ -6,9 +6,6 @@ const RyunixSettings = {
   mdx: true,
   favicon: true,
   buildDir: ".ryunix",
-  static: {
-    customTemplate: "./public/index.html",
-  },
   legacy: {
     ssg: {
       sitemap: {

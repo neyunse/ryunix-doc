@@ -1,0 +1,22 @@
+{
+  "files.associations": {
+    "*.ryx": "ryunix"
+  },
+  "emmet.includeLanguages": {
+    "ryunix": "html"
+  },
+  "ryunix.languageServer.enable": true,
+  "javascript.validate.enable": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.includeLanguages": {
+    "ryunix": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]", "([^\\s]+)"]
+  ],
+  "explorer.fileNesting.patterns": {
+    "index.ryx": "layout.ryx, loading.ryx, error.ryx, errors.ryx"
+  }
+}
