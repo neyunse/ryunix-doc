@@ -1,7 +1,7 @@
-import { Image, NavLink } from "@unsetsoft/ryunixjs";
+import Image, { NavLink } from "@unsetsoft/ryunixjs";
 
 import LocaleSwitcher from "@/components/ui/LocaleSwitcher.ryx";
-import { Icon } from "@/components/ui/Icon";
+import { Icon } from "@/components/ui/Icon.ryx";
 import Logo from "@/resources/logo-min.svg";
 
 import { Github } from "lucide";

@@ -1,0 +1,77 @@
+---
+title: VS Code
+description: Extensión unsetsoft.ryunixjs, LSP y configuración del editor para archivos .ryx
+slug: vscode
+section: Guías
+---
+
+# VS Code
+
+La extensión oficial **RyunixJS** para Visual Studio Code mejora la edición de archivos `.ryx` con resaltado de sintaxis, snippets, autocompletado y un servidor de lenguaje (LSP) basado en TypeScript.
+
+Instálala desde [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=unsetsoft.ryunixjs) (`unsetsoft.ryunixjs`).
+
+## Qué incluye
+
+| Capa | Descripción |
+| :--- | :--- |
+| **Sintaxis** | Gramática TextMate para JavaScript + JSX con convenciones Ryunix |
+| **Snippets** | Plantillas para `index.ryx`, `layout.ryx`, páginas API, etc. |
+| **Completions** | Imports de `@unsetsoft/ryunixjs`, keywords (`Metatags`, `generateMetadata`) |
+| **Language Server** | Diagnósticos, hover con tipos, ir a definición, renombrar (F2) |
+| **Tailwind** | Valores por defecto para Tailwind CSS IntelliSense en `className` |
+
+## Language Server (LSP)
+
+Con `"ryunix.languageServer.enable": true` (valor por defecto), la extensión arranca un servidor de lenguaje que usa el compilador TypeScript sobre tus `.ryx`:
+
+| Capacidad | Atajo / uso |
+| :--- | :--- |
+| Ir a definición | Ctrl+clic en símbolos e imports |
+| Buscar referencias | Panel References |
+| Hover con tipos | Pasar el mouse |
+| Diagnósticos | Subrayados de error en el editor |
+| Renombrar símbolo | F2 |
+| Autocompletado semántico | Ctrl+Espacio |
+
+**Requisitos:** `pnpm install` en tu app y un `jsconfig.json` (las plantillas CRA ya lo incluyen).
+
+Para volver al modo ligero sin LSP:
+
+```json
+{
+  "ryunix.languageServer.enable": false,
+  "ryunix.enableNavigation": true
+}
+```
+
+## Scaffolding con `--vscode`
+
+Al crear una app con Create Ryunix App, el flag `--vscode` escribe `.vscode/extensions.json` y `settings.json`:
+
+```bash
+npx @unsetsoft/cra@canary my-app --vscode --eslint
+```
+
+Eso recomienda:
+
+- **RyunixJS** (`unsetsoft.ryunixjs`) — sintaxis y LSP para `.ryx`
+- **ESLint** — lint alineado con convenciones Ryunix
+- **Prettier** (si usas `--eslint`) — formateo consistente
+- **Tailwind CSS IntelliSense** (si usas `--tailwind`)
+
+También configura Emmet, asociación de archivos `*.ryx` y el probe ESLint para el lenguaje `ryunix`.
+
+## Alcance
+
+| Soportado | No soportado (usa otra herramienta) |
+| :--- | :--- |
+| Resaltado, snippets, completions en `.ryx` | Validación **MDX** (ocurre en build) |
+| Integración ESLint vía workspace | TypeScript **dentro** de `.ryx` como sintaxis |
+| Emmet en modo `ryunix` | Formatter empaquetado — usa Prettier en el proyecto |
+
+## Relacionado
+
+- [Create Ryunix App](/es/docs/guides/create-app) — flags `--vscode`, `--eslint`, `--tailwind`
+- [TypeScript](/es/docs/guides/typescript) — tipos publicados y `jsconfig.json`
+- [DevTools](/es/docs/guides/devtools) — extensión de **navegador** (complementaria, no sustituta)

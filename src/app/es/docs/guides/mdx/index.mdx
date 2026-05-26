@@ -69,17 +69,24 @@ La UI compartida suele vivir en `src/components/` (con `rootDir: "src"`) o en `a
 
 Envuelve el contenido MDX con `MDXProvider` cuando necesites shortcodes personalizados o mapeos de elementos — consulta [Componentes](/es/docs/api/components).
 
-## Citas y notas (`>`)
+## Alertas (`> [!NOTE]`)
 
-Usa blockquotes de Markdown para resaltar avisos, notas o consejos. En `.docs-content` se muestran con borde morado y fondo en degradado:
+Ryunix admite [alertas Markdown al estilo GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) en MDX. Empieza el blockquote con el tipo de alerta en su propia línea:
 
 ```mdx
+> [!WARNING]
 > **Routing integrado** ya no está soportado. Usa el **App Router** en su lugar.
 
+> [!NOTE]
 > Información útil que el lector debería ver al repasar la página.
+
+> [!TIP]
+> Prefiere `rootDir: "src"` cuando las rutas vivan en `src/app/`.
 ```
 
-Puedes combinar **negrita**, enlaces y texto en cursiva dentro del blockquote.
+Tipos admitidos: `NOTE`, `TIP`, `IMPORTANT`, `WARNING` y `CAUTION`. Cada uno se muestra con borde y etiqueta de color en `.docs-content`.
+
+Los blockquotes sin marcador mantienen el estilo morado por defecto. Puedes combinar **negrita**, enlaces y varios párrafos dentro de una alerta.
 
 ## SSG y MDX
 
