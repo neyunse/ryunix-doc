@@ -24,6 +24,7 @@
       "@unsetsoft/ryunixjs@1.2.5-canary.10": "patches/@unsetsoft__ryunixjs@1.2.5-canary.10.patch"
     }
   },
+  "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": "^20 || ^22 || ^24"
   },
