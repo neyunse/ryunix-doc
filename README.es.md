@@ -12,7 +12,7 @@ Este repositorio contiene el código fuente de la documentación de RyunixJS: gu
 
 ## Requisitos
 
-- [Node.js](https://nodejs.org/) 18+
+- [Node.js](https://nodejs.org/) **20**, **22** o **24** (ver `engines` en `package.json`)
 - [pnpm](https://pnpm.io/)
 
 ## Instalación
@@ -37,6 +37,7 @@ Scripts definidos en `package.json` (CLI Ryunix vía `ryunix`):
 
 | Script     | Comando         | Descripción                                            |
 | ---------- | --------------- | ------------------------------------------------------ |
+| `clean`    | `pnpm clean`    | Elimina la caché de build `.ryunix`                    |
 | `dev`      | `pnpm dev`      | Servidor de desarrollo (`ryunix dev`)                  |
 | `build`    | `pnpm build`    | Build de producción (`ryunix build`)                   |
 | `start`    | `pnpm start`    | Servidor de producción (`ryunix start`; tras el build) |

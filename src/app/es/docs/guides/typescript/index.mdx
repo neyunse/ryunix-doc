@@ -1,0 +1,88 @@
+---
+title: TypeScript
+description: Tipos publicados, jsconfig y configuración tipada en apps Ryunix
+slug: typescript
+section: Guías
+---
+
+# TypeScript
+
+RyunixJS publica tipos en npm para `@unsetsoft/ryunixjs` y `@unsetsoft/ryunix-presets`. Las plantillas CRA siguen generando apps en JavaScript (`.ryx`), pero puedes añadir TypeScript o aprovechar autocompletado con JSDoc sin migrar todo el proyecto.
+
+## Tipos disponibles
+
+| Necesidad | Paquete / archivo |
+| :--- | :--- |
+| `ryunix.config.js` tipado | `@unsetsoft/ryunix-presets` → `RyunixUserConfig` |
+| Hooks, componentes, SSR | `@unsetsoft/ryunixjs` → `types/index.d.ts` |
+| JSX automático | `"jsxImportSource": "@unsetsoft/ryunixjs"` en `tsconfig.json` |
+
+## Configuración tipada con JSDoc
+
+La forma más rápida es tipar `ryunix.config.js` con un comentario JSDoc (las plantillas CRA ya lo incluyen):
+
+```javascript
+/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
+export default {
+  ssr: true,
+  port: 3000,
+};
+```
+
+El editor resuelve `RyunixUserConfig` desde los `.d.ts` publicados en `@unsetsoft/ryunix-presets`.
+
+## Proyecto TypeScript completo
+
+1. Instala TypeScript como dependencia de desarrollo:
+
+```bash
+pnpm add -D typescript
+```
+
+2. Crea `tsconfig.json` en la raíz de tu app:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@unsetsoft/ryunixjs",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["app/**/*.ryx", "src/**/*", "ryunix.config.js"]
+}
+```
+
+3. Importa tipos del core cuando escribas componentes:
+
+```typescript
+import {
+  useStore,
+  createElement,
+  type RyunixElement,
+} from "@unsetsoft/ryunixjs";
+```
+
+> [!WARNING]
+> Los archivos de ruta siguen siendo `.ryx` (JavaScript + JSX). Ryunix compila con Babel/SWC; TypeScript se usa para comprobación estática y soporte en el editor, no como compilador principal del framework.
+
+## `jsconfig.json` en plantillas CRA
+
+Las plantillas oficiales incluyen `jsconfig.json` con alias `@/` y resolución de tipos. Es suficiente para autocompletado en VS Code sin añadir TypeScript explícitamente.
+
+Combínalo con la [extensión VS Code](/es/docs/guides/vscode) para ir a definición, hover y diagnósticos en `.ryx`.
+
+## Relacionado
+
+- [Configuración](/es/docs/api/configuration) — opciones de `ryunix.config.js`
+- [Funciones](/es/docs/api/functions) — hooks y APIs tipadas
+- [Create Ryunix App](/es/docs/guides/create-app) — scaffolding con `jsconfig.json`

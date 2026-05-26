@@ -35,6 +35,7 @@ const RyunixSettings = {
 export default RyunixSettings;
 ```
 
+> [!WARNING]
 > **Claves legacy:** `experimental.ssr`, `experimental.mdx`, `static.favicon` y `webpack.output.buildDirectory` siguen funcionando con avisos de deprecación. Prefiere las opciones de raíz (`ssr`, `mdx`, `favicon`, `buildDir`, `port`, `proxy`).
 
 ## Ajustes de Webpack
@@ -182,6 +183,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ### Plantilla personalizada (obsoleta)
 
+> [!WARNING]
 > **Función obsoleta:** Modificar atributos raíz mediante `customTemplate` está obsoleto en el App Router.
 >
 > **Alternativa:** Usa un `app/layout.ryx` base (layout raíz) para definir el esqueleto principal que se conecta al DOM.
@@ -197,6 +199,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ### Configuración SEO (obsoleta)
 
+> [!WARNING]
 > **Función obsoleta:** La configuración SEO global en `ryunix.config.js` mediante `static.seo` está obsoleta.
 >
 > **Alternativa:** Exporta un objeto `Metatags` local en tus componentes base, `layout.ryx`, o usa frontmatter YAML en archivos `.mdx`.

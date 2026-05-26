@@ -37,6 +37,31 @@ bun create @unsetsoft/cra my-app
 
 The CLI copies the chosen template folder verbatim into your target directory (including `app/`, `ryunix.config.js`, and `public/`).
 
+## Command-line flags
+
+To skip interactive prompts, pass flags directly:
+
+| Flag | Description |
+| :--- | :--- |
+| `--canary` | Use the Canary channel for `@unsetsoft/ryunixjs` and `@unsetsoft/ryunix-presets` |
+| `--latest` | Use the Latest (stable) channel (default) |
+| `--tailwind` | Template with PostCSS + Tailwind (`@tailwindcss/postcss`) |
+| `--eslint` | Template with ESLint aligned to Ryunix conventions |
+| `--vscode` | Writes `.vscode/` with recommended extensions (Ryunix + ESLint) |
+| `--compiler <swc\|babel>` | Compiler in `ryunix.config.js` (default: `swc`) |
+
+Examples:
+
+```bash
+# Full stack: Tailwind + ESLint + VS Code, canary channel
+npx @unsetsoft/cra@canary my-app --canary --tailwind --eslint --vscode
+
+# Tailwind only, Babel compiler
+npx @unsetsoft/cra@canary my-app --tailwind --compiler babel
+```
+
+With `--vscode` and `--eslint`, CRA also recommends Prettier and configures Emmet, `*.ryx` file association, and the ESLint probe for the `ryunix` language. See [VS Code](/en/docs/guides/vscode) for extension details.
+
 ## Generated structure
 
 Typical output:
@@ -70,3 +95,5 @@ Documentation and examples often use `@unsetsoft/cra@canary` for the latest fram
 - [Installation](/en/docs/introduction/installation) — requirements and package managers
 - [Project structure](/en/docs/introduction/project-structure) — folder layout
 - [CLI commands](/en/docs/guides/cli) — `ryunix` scripts in generated apps
+- [VS Code](/en/docs/guides/vscode) — editor extension and `--vscode` flag
+- [TypeScript](/en/docs/guides/typescript) — published types and `jsconfig.json`

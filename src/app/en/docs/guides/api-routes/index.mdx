@@ -16,6 +16,7 @@ Place handlers under `app/api/`. Filenames recognized at **runtime**:
 - `route.js`, `route.ts`, `route.ryx`
 - `router.js`, `router.ts`, `router.ryx`
 
+> [!WARNING]
 > `endpoint.js` / `endpoint.ts` may compile to `.ryunix/server/api/` but are **not** matched by the production API handler. Use `route.*` or `router.*`.
 
 Export HTTP methods as named exports:

@@ -35,6 +35,7 @@ const RyunixSettings = {
 export default RyunixSettings;
 ```
 
+> [!WARNING]
 > **Legacy keys:** `experimental.ssr`, `experimental.mdx`, `static.favicon`, and `webpack.output.buildDirectory` still work but log deprecation warnings. Prefer the root-level options above (`ssr`, `mdx`, `favicon`, `buildDir`, `port`, `proxy`).
 
 ## Webpack Settings
@@ -180,6 +181,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ### Custom Template (Deprecated)
 
+> [!WARNING]
 > **Deprecated Feature:** Modifying root attributes via `customTemplate` is obsolete in the App Router.
 >
 > **Replacement:** Use a base `app/layout.ryx` (root layout) to define the main skeleton connecting to the DOM.
@@ -195,6 +197,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 ### SEO Configuration (Deprecated)
 
+> [!WARNING]
 > **Deprecated Feature:** Global SEO configuration in `ryunix.config.js` via `static.seo` is obsolete.
 >
 > **Replacement:** Export a local `Metatags` object in your base components, `layout.ryx`, or use YAML Frontmatter in `.mdx` files.
