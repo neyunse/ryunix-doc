@@ -19,14 +19,17 @@
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "@swc/core"
-    ]
+    ],
+    "patchedDependencies": {
+      "@unsetsoft/ryunixjs@1.2.5-canary.10": "patches/@unsetsoft__ryunixjs@1.2.5-canary.10.patch"
+    }
   },
   "engines": {
     "node": "^20 || ^22 || ^24"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
-    "@unsetsoft/ryunix-presets": "1.0.26-canary.37",
+    "@unsetsoft/ryunix-presets": "1.0.26-canary.39",
     "autoprefixer": "^10.5.0",
     "highlight.js": "11.11.1",
     "postcss": "^8.5.15",
