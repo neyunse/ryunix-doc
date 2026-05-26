@@ -1,0 +1,18 @@
+diff --git a/dist/Ryunix.esm.js b/dist/Ryunix.esm.js
+index cdeac2816192eb7da2839fc2be84d5b56f95d7a9..8399cee76cb9dfff7b09115f95557fd13173bf3e 100644
+--- a/dist/Ryunix.esm.js
++++ b/dist/Ryunix.esm.js
+@@ -2126,9 +2126,10 @@ var hooks = /*#__PURE__*/Object.freeze({
+ });
+ 
+ const getHydrationPolicy = () => {
+-    const recoverRaw = process.env.RYUNIX_HYDRATION_RECOVER || 'boundary';
+-    const boundariesRaw = process.env.RYUNIX_HYDRATION_BOUNDARIES || 'route';
+-    const strict = process.env.RYUNIX_HYDRATION_STRICT === 'true';
++    const env = typeof process !== "undefined" && process.env ? process.env : {};
++    const recoverRaw = env.RYUNIX_HYDRATION_RECOVER || 'boundary';
++    const boundariesRaw = env.RYUNIX_HYDRATION_BOUNDARIES || 'route';
++    const strict = env.RYUNIX_HYDRATION_STRICT === 'true';
+     const recover = recoverRaw === 'none' || recoverRaw === 'root' ? recoverRaw : 'boundary';
+     const boundaries = boundariesRaw === 'server-only' || boundariesRaw === 'all-layouts'
+         ? boundariesRaw
