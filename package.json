@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
-    "@unsetsoft/ryunix-presets": "1.0.26-canary.41",
+    "@unsetsoft/ryunix-presets": "1.0.26-canary.39",
     "autoprefixer": "^10.5.0",
     "highlight.js": "11.11.1",
     "postcss": "^8.5.15",
