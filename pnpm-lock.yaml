@@ -4,18 +4,13 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  '@unsetsoft/ryunixjs@1.2.5-canary.10':
-    hash: 4bp2amhevthtlqf2ezyjxxwl7e
-    path: patches/@unsetsoft__ryunixjs@1.2.5-canary.10.patch
-
 importers:
 
   .:
     dependencies:
       '@unsetsoft/ryunixjs':
-        specifier: 1.2.5-canary.10
-        version: 1.2.5-canary.10(patch_hash=4bp2amhevthtlqf2ezyjxxwl7e)
+        specifier: 1.2.5-canary.11
+        version: 1.2.5-canary.11
       lucide:
         specifier: ^0.575.0
         version: 0.575.0
@@ -24,8 +19,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
       '@unsetsoft/ryunix-presets':
-        specifier: 1.0.26-canary.39
-        version: 1.0.26-canary.39(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.10(patch_hash=4bp2amhevthtlqf2ezyjxxwl7e))(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)
+        specifier: 1.0.26-canary.41
+        version: 1.0.26-canary.41(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.11)(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)
       autoprefixer:
         specifier: ^10.5.0
         version: 10.5.0(postcss@8.5.15)
@@ -1602,15 +1597,15 @@ packages:
   '@ungap/structured-clone@1.3.1':
     resolution: {integrity: sha512-mUFwbeTqrVgDQxFveS+df2yfap6iuP20NAKAsBt5jDEoOTDew+zwLAOilHCeQJOVSvmgCX4ogqIrA0mnyr08yQ==}
 
-  '@unsetsoft/ryunix-presets@1.0.26-canary.39':
-    resolution: {integrity: sha512-N5MxOevW9v5xCQb9KTM28CE2HgiEp/4bZbmsEf6OU1rOgF9nLCG9PjFo55ur+A0tvhk49T62LEnYxeE7ACFbXQ==}
+  '@unsetsoft/ryunix-presets@1.0.26-canary.41':
+    resolution: {integrity: sha512-yueDXwRRWnXpz49kEN093wTPubcdUCShMYlBoynNNg65zvJXu2mUUzsNi1il8muSpVEPUWxmC7+59VneQEhlbA==}
     engines: {node: ^20 || ^22 || ^24}
     hasBin: true
     peerDependencies:
       '@unsetsoft/ryunixjs': ^1.2.5-canary.0 || ^1.2.4
 
-  '@unsetsoft/ryunixjs@1.2.5-canary.10':
-    resolution: {integrity: sha512-362G6rpS6e99YjqEebvkfEfn+FoqQqwgF5xcobeEZuYI78pwDPw1d+OLfxZ0J/BDQl01XEvK9L38hO6qq5Ay+Q==}
+  '@unsetsoft/ryunixjs@1.2.5-canary.11':
+    resolution: {integrity: sha512-5glToBMdufOp0y45QRQTtCwivgcmenW3tP3GKZFGccfAEFVQNmzUwaKk3L9sTA/tY1tLYgrvMZRPvSTu0PvDqA==}
     engines: {node: 20 || ^22 || ^24}
 
   '@vitejs/plugin-react-swc@4.3.0':
@@ -6698,7 +6693,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.1': {}
 
-  '@unsetsoft/ryunix-presets@1.0.26-canary.39(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.10(patch_hash=4bp2amhevthtlqf2ezyjxxwl7e))(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)':
+  '@unsetsoft/ryunix-presets@1.0.26-canary.41(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.11)(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)':
     dependencies:
       '@babel/cli': 7.28.6(@babel/core@7.28.5)
       '@babel/core': 7.28.5
@@ -6713,7 +6708,7 @@ snapshots:
       '@remark-embedder/transformer-oembed': 5.0.1(@remark-embedder/core@3.0.3)
       '@rollup/plugin-terser': 1.0.0(rollup@4.59.0)
       '@swc/core': 1.15.5
-      '@unsetsoft/ryunixjs': 1.2.5-canary.10(patch_hash=4bp2amhevthtlqf2ezyjxxwl7e)
+      '@unsetsoft/ryunixjs': 1.2.5-canary.11
       '@vitejs/plugin-react-swc': 4.3.0(vite@8.0.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(jiti@2.6.1)(sass@1.97.0)(terser@5.48.0)(yaml@2.9.0))
       babel-loader: 10.0.0(@babel/core@7.28.5)(webpack@5.105.4)
       boxen: 8.0.1
@@ -6783,7 +6778,7 @@ snapshots:
       - webpack-bundle-analyzer
       - yaml
 
-  '@unsetsoft/ryunixjs@1.2.5-canary.10(patch_hash=4bp2amhevthtlqf2ezyjxxwl7e)': {}
+  '@unsetsoft/ryunixjs@1.2.5-canary.11': {}
 
   '@vitejs/plugin-react-swc@4.3.0(vite@8.0.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(jiti@2.6.1)(sass@1.97.0)(terser@5.48.0)(yaml@2.9.0))':
     dependencies:

@@ -6,6 +6,11 @@ const RyunixSettings = {
   mdx: true,
   favicon: true,
   buildDir: ".ryunix",
+  hydration: {
+    recover: "boundary",
+    boundaries: "route",
+    strict: false,
+  },
   legacy: {
     ssg: {
       sitemap: {
@@ -25,7 +30,7 @@ const RyunixSettings = {
     },
   },
   webpack: {
-    production: false, // false = dev; set true before pnpm build / deploy (see README)
+    production: true, // dev stays fast via RYUNIX_MODE=development from the CLI (see README)
     resolve: {
       alias: {
         "@": "./src",

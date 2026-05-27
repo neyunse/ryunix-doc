@@ -1,4 +1,4 @@
-import { Image, NavLink } from "@unsetsoft/ryunixjs";
+import Image, { NavLink } from "@unsetsoft/ryunixjs";
 
 import LocaleSwitcher from "@/components/ui/LocaleSwitcher.ryx";
 import { Icon } from "@/components/ui/Icon.ryx";
