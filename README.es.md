@@ -74,7 +74,7 @@ Si en dev aparece `Can't resolve '.ryunix/server/app/main.ryx'` (común tras cam
 pnpm clean && pnpm dev
 ```
 
-> **Aviso — `webpack.production`:** En este repositorio, `webpack.production` está en `false` en `ryunix.config.js` para desarrollo local más rápido. Ponlo en `true` antes de `pnpm build` o de desplegar a producción (p. ej. Vercel); si no, el bundle de producción no queda totalmente optimizado.
+> **Aviso — `webpack.production`:** En desarrollo local (`ryunix dev`), el CLI usa `RYUNIX_MODE=development` y el build no se minifica para iterar más rápido. En deploys de producción (Vercel), mantén `webpack.production: true` en `ryunix.config.js`.
 
 La imagen Open Graph / Twitter del sitio es `public/screenshot.png`, declarada con `export const Metatags` en `src/app/layout.ryx` (metadatos del App Router de RyunixJS).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS

@@ -74,7 +74,7 @@ If dev shows `Can't resolve '.ryunix/server/app/main.ryx'` (often after changing
 pnpm clean && pnpm dev
 ```
 
-> **Warning — `webpack.production`:** This repo keeps `webpack.production: false` in `ryunix.config.js` for faster local development. Set it to `true` before running `pnpm build` or deploying to production (e.g. Vercel); otherwise the production bundle is not fully optimized.
+> **Warning — `webpack.production`:** During local development (`ryunix dev`), the CLI sets `RYUNIX_MODE=development` so builds stay unminified for faster iteration. For production deploys (Vercel), keep `webpack.production: true` in `ryunix.config.js`.
 
 Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `src/app/layout.ryx` (RyunixJS App Router metadata).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS

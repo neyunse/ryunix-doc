@@ -1,3 +1,4 @@
+import { HydrationBoundary } from "@unsetsoft/ryunixjs";
 import DocLayoutShell from "@/features/docs/DocLayoutShell.ryx";
 import { docSections } from "@/i18n/config.js";
 
@@ -21,7 +22,7 @@ export const Metatags = {
 
 const DocLayout = ({ children }) => (
   <DocLayoutShell sections={docSections.es} prevLabel="Anterior" nextLabel="Siguiente">
-    {children}
+    <HydrationBoundary id="docs-es">{children}</HydrationBoundary>
   </DocLayoutShell>
 );
 
