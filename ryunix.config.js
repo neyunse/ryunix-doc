@@ -30,7 +30,7 @@ const RyunixSettings = {
     },
   },
   webpack: {
-    production: true,
+    production: true, // dev stays fast via RYUNIX_MODE=development from the CLI (see README)
     resolve: {
       alias: {
         "@": "./src",
