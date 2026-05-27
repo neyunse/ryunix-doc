@@ -18,6 +18,7 @@ const RyunixSettings = {
   rootDir: "src", // omit if app/ is at project root; default is "src"
   ssr: true,
   mdx: true,
+  style: true,
   port: 3000,
   buildDir: ".ryunix",
   favicon: true,
@@ -226,6 +227,29 @@ Enable `.mdx` pages under `app/`:
 ```
 
 YAML headers (like `title`, `description`) placed at the start of `.mdx` files between `---` are parsed and invisibly transpiled. Ryunix assimilates them directly as the `Metatags` constant, injecting them into the HTML and optimizing SEO without requiring additional wrappers.
+
+### Global styles (`style`)
+
+Defaults to `style: true`. Ryunix injects `@unsetsoft/ryunixjs/style.css` for semantic HTML across the whole app (`.ryx`, `.mdx`, and native tags).
+
+```javascript
+{
+  style: true, // default; set false to disable
+}
+```
+
+**Light / dark theme:** toggle only via the root element class. No `dark` on `<html>` → light; `class="dark"` → dark.
+
+```javascript
+document.documentElement.classList.toggle("dark");
+```
+
+**Opt-out** without disabling global styles:
+
+- `data-ryx-unstyled` on any element or wrapper.
+- `unstyled` prop on components (maps to `data-ryx-unstyled` via core `ryxProps`).
+
+`ryunix-tailwind` and `ryunix-all` templates ship with `style: false` to avoid conflicting with Tailwind.
 
 ### Static site generation (SSG)
 

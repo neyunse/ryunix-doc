@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@unsetsoft/ryunixjs':
-        specifier: 1.2.5-canary.11
-        version: 1.2.5-canary.11
+        specifier: 1.2.5-canary.9
+        version: 1.2.5-canary.9
       lucide:
         specifier: ^0.575.0
         version: 0.575.0
@@ -20,7 +20,7 @@ importers:
         version: 4.3.0
       '@unsetsoft/ryunix-presets':
         specifier: 1.0.26-canary.39
-        version: 1.0.26-canary.39(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.11)(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)
+        version: 1.0.26-canary.39(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.9)(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)
       autoprefixer:
         specifier: ^10.5.0
         version: 10.5.0(postcss@8.5.15)
@@ -1604,8 +1604,8 @@ packages:
     peerDependencies:
       '@unsetsoft/ryunixjs': ^1.2.5-canary.0 || ^1.2.4
 
-  '@unsetsoft/ryunixjs@1.2.5-canary.11':
-    resolution: {integrity: sha512-5glToBMdufOp0y45QRQTtCwivgcmenW3tP3GKZFGccfAEFVQNmzUwaKk3L9sTA/tY1tLYgrvMZRPvSTu0PvDqA==}
+  '@unsetsoft/ryunixjs@1.2.5-canary.9':
+    resolution: {integrity: sha512-4aHON097opNBe9uyC2Ay8bwEaIjlQR2FWiDW0hYFjdx1Hq9QGNwc+EmMYXUFWhBBaY8aOWSFgP0S5op6K47yeQ==}
     engines: {node: 20 || ^22 || ^24}
 
   '@vitejs/plugin-react-swc@4.3.0':
@@ -6693,7 +6693,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.1': {}
 
-  '@unsetsoft/ryunix-presets@1.0.26-canary.39(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.11)(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)':
+  '@unsetsoft/ryunix-presets@1.0.26-canary.39(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.9)(terser@5.48.0)(tslib@2.8.1)(yaml@2.9.0)':
     dependencies:
       '@babel/cli': 7.28.6(@babel/core@7.28.5)
       '@babel/core': 7.28.5
@@ -6708,7 +6708,7 @@ snapshots:
       '@remark-embedder/transformer-oembed': 5.0.1(@remark-embedder/core@3.0.3)
       '@rollup/plugin-terser': 1.0.0(rollup@4.59.0)
       '@swc/core': 1.15.5
-      '@unsetsoft/ryunixjs': 1.2.5-canary.11
+      '@unsetsoft/ryunixjs': 1.2.5-canary.9
       '@vitejs/plugin-react-swc': 4.3.0(vite@8.0.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(jiti@2.6.1)(sass@1.97.0)(terser@5.48.0)(yaml@2.9.0))
       babel-loader: 10.0.0(@babel/core@7.28.5)(webpack@5.105.4)
       boxen: 8.0.1
@@ -6778,7 +6778,7 @@ snapshots:
       - webpack-bundle-analyzer
       - yaml
 
-  '@unsetsoft/ryunixjs@1.2.5-canary.11': {}
+  '@unsetsoft/ryunixjs@1.2.5-canary.9': {}
 
   '@vitejs/plugin-react-swc@4.3.0(vite@8.0.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(jiti@2.6.1)(sass@1.97.0)(terser@5.48.0)(yaml@2.9.0))':
     dependencies:

@@ -20,7 +20,11 @@ export const Metatags = {
 };
 
 const EsHome = () => (
-  <HomePage docsPath="/es/docs/introduction/getting-started" copy={homeCopy.es} />
+  <HomePage
+    docsPath="/es/docs/introduction/getting-started"
+    docsBase="/es/docs"
+    copy={homeCopy.es}
+  />
 );
 
 export default EsHome;

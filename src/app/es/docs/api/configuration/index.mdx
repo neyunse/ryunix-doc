@@ -18,6 +18,7 @@ const RyunixSettings = {
   rootDir: "src",
   ssr: true,
   mdx: true,
+  style: true,
   port: 3000,
   buildDir: ".ryunix",
   favicon: true,
@@ -228,6 +229,29 @@ Habilita páginas `.mdx` bajo `app/`:
 ```
 
 El frontmatter YAML entre `---` se fusiona con `Metatags` del layout.
+
+### Estilos globales (`style`)
+
+Por defecto `style: true`. Ryunix inyecta `@unsetsoft/ryunixjs/style.css` con tipografía, tablas, formularios nativos y alertas MDX en **toda la app** (`.ryx`, `.mdx` y HTML semántico).
+
+```javascript
+{
+  style: true, // default; usa style: false para desactivar
+}
+```
+
+**Tema claro / oscuro:** controlado solo con la clase del documento. Sin `dark` en `<html>` → tema claro; con `class="dark"` → tema oscuro.
+
+```javascript
+document.documentElement.classList.toggle("dark");
+```
+
+**Excepciones** sin desactivar `style` globalmente:
+
+- Atributo `data-ryx-unstyled` en un nodo o contenedor.
+- Prop `unstyled` en componentes (mapea a `data-ryx-unstyled` vía `ryxProps` del core).
+
+Las plantillas `ryunix-tailwind` y `ryunix-all` generan `style: false` para evitar choques con Tailwind.
 
 ### Generación estática (SSG)
 

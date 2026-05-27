@@ -7,7 +7,7 @@ const SiteLayout = ({ children, locale, docsPath, copy }) => (
       {copy.skipToContent}
     </a>
     <SiteHeader locale={locale} docsPath={docsPath} docsNavLabel={copy.docsNav} />
-    <main id="main-content" className="text-white bg-[#111112] min-h-[var(--ui-main-min-height)]">
+    <main id="main-content" className="text-theme bg-surface min-h-[var(--ui-main-min-height)]">
       {children}
     </main>
     <SiteFooter locale={locale} copy={copy} />

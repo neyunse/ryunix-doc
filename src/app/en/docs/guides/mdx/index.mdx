@@ -11,9 +11,8 @@ Enable MDX in `ryunix.config.js` to author content pages alongside `.ryx` compon
 
 ```javascript
 {
-  experimental: {
-    mdx: true,
-  },
+  mdx: true,
+  style: true,
 }
 ```
 
@@ -69,6 +68,25 @@ Shared UI typically lives in `src/components/` (with `rootDir: "src"`) or `app/c
 
 Wrap MDX content with `MDXProvider` when you need custom shortcodes or element mappings — see [Components](/en/docs/api/components).
 
+## Global styles and theme
+
+With `style: true` (default), MDX elements use `@unsetsoft/ryunixjs/style.css` like the rest of the app. Enable dark mode by adding `class="dark"` on `<html>`:
+
+```javascript
+document.documentElement.classList.add("dark");
+// document.documentElement.classList.remove("dark"); // light theme
+```
+
+For a block without framework styles:
+
+```mdx
+<div data-ryx-unstyled>
+  <h1>Heading without Ryunix styles</h1>
+</div>
+```
+
+Imported `.ryx` components can use the `unstyled` prop (see [Configuration](/en/docs/api/configuration)).
+
 ## Alerts (`> [!NOTE]`)
 
 Ryunix supports [GitHub-style markdown alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) in MDX. Start a blockquote with the alert type on its own line:
@@ -84,9 +102,9 @@ Ryunix supports [GitHub-style markdown alerts](https://docs.github.com/en/get-st
 > Prefer `rootDir: "src"` when routes live under `src/app/`.
 ```
 
-Supported types: `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Each renders with a colored border and label in `.docs-content`.
+Supported types: `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Each uses global classes `ryx-alert` and `ryx-alert--<type>`.
 
-Plain blockquotes without a marker keep the default purple callout style. You can combine **bold**, links, and multi-paragraph content inside an alert.
+Plain blockquotes without a marker keep the default quote style. You can combine **bold**, links, and multi-paragraph content inside an alert.
 
 ## SSG and MDX
 
@@ -97,4 +115,4 @@ During `ryunix build`, each MDX route is prerendered to static HTML with the cor
 - [Navigation](/en/docs/introduction/navigation) — routing overview
 - [SSG & prerendering](/en/docs/guides/ssg) — prerender pipeline
 - [Functions](/en/docs/api/functions) — `useMetadata` for client-only updates
-- [Configuration](/en/docs/api/configuration) — `mdx: true`
+- [Configuration](/en/docs/api/configuration) — `mdx: true`, `style: true`

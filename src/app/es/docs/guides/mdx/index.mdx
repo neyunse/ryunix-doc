@@ -11,9 +11,8 @@ Habilita MDX en `ryunix.config.js` para escribir páginas de contenido junto a c
 
 ```javascript
 {
-  experimental: {
-    mdx: true,
-  },
+  mdx: true,
+  style: true,
 }
 ```
 
@@ -69,6 +68,25 @@ La UI compartida suele vivir en `src/components/` (con `rootDir: "src"`) o en `a
 
 Envuelve el contenido MDX con `MDXProvider` cuando necesites shortcodes personalizados o mapeos de elementos — consulta [Componentes](/es/docs/api/components).
 
+## Estilos globales y tema
+
+Con `style: true` (por defecto), los elementos MDX heredan los estilos de `@unsetsoft/ryunixjs/style.css` junto al resto de la app. El tema oscuro se activa añadiendo `class="dark"` al `<html>`:
+
+```javascript
+document.documentElement.classList.add("dark");
+// document.documentElement.classList.remove("dark"); // tema claro
+```
+
+Para un bloque sin estilos del framework:
+
+```mdx
+<div data-ryx-unstyled>
+  <h1>Título sin estilos Ryunix</h1>
+</div>
+```
+
+En componentes `.ryx` importados puedes usar `unstyled` (ver [Configuración](/es/docs/api/configuration)).
+
 ## Alertas (`> [!NOTE]`)
 
 Ryunix admite [alertas Markdown al estilo GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) en MDX. Empieza el blockquote con el tipo de alerta en su propia línea:
@@ -84,9 +102,9 @@ Ryunix admite [alertas Markdown al estilo GitHub](https://docs.github.com/en/get
 > Prefiere `rootDir: "src"` cuando las rutas vivan en `src/app/`.
 ```
 
-Tipos admitidos: `NOTE`, `TIP`, `IMPORTANT`, `WARNING` y `CAUTION`. Cada uno se muestra con borde y etiqueta de color en `.docs-content`.
+Tipos admitidos: `NOTE`, `TIP`, `IMPORTANT`, `WARNING` y `CAUTION`. Cada uno usa las clases `ryx-alert` y `ryx-alert--<tipo>` del CSS global.
 
-Los blockquotes sin marcador mantienen el estilo morado por defecto. Puedes combinar **negrita**, enlaces y varios párrafos dentro de una alerta.
+Los blockquotes sin marcador mantienen el estilo de cita por defecto. Puedes combinar **negrita**, enlaces y varios párrafos dentro de una alerta.
 
 ## SSG y MDX
 
@@ -97,4 +115,4 @@ Durante `ryunix build`, cada ruta MDX se prerenderiza a HTML estático con el `<
 - [Navegación](/es/docs/introduction/navigation) — visión general del enrutamiento
 - [SSG y prerenderizado](/es/docs/guides/ssg) — pipeline de prerender
 - [Funciones](/es/docs/api/functions) — `useMetadata` para actualizaciones solo en cliente
-- [Configuración](/es/docs/api/configuration) — `mdx: true`
+- [Configuración](/es/docs/api/configuration) — `mdx: true`, `style: true`
