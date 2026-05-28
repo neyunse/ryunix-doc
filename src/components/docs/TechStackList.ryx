@@ -1,0 +1,16 @@
+import { techStack } from "@/i18n/packages.js";
+import { docUiCopy } from "@/i18n/docUiCopy.js";
+
+export const TechStackList = ({ locale = "en" }) => {
+  const copy = docUiCopy[locale]?.tech ?? docUiCopy.en.tech;
+
+  return (
+    <ul className="list-disc pl-6 space-y-2 my-4 text-theme">
+      {techStack.map((row) => (
+        <li key={row.areaKey}>
+          <strong>{copy.area[row.areaKey]}:</strong> {row.items.join(", ")}
+        </li>
+      ))}
+    </ul>
+  );
+};

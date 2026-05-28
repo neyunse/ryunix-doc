@@ -17,6 +17,12 @@ export const siteCopy = {
       npm: "npm package",
       license: "MIT License",
       copyright: "UnSetSoft",
+      theme: {
+        title: "Theme",
+        light: "Light",
+        system: "System",
+        dark: "Dark",
+      },
     },
   },
   es: {
@@ -37,6 +43,12 @@ export const siteCopy = {
       npm: "Paquete npm",
       license: "Licencia MIT",
       copyright: "UnSetSoft",
+      theme: {
+        title: "Tema",
+        light: "Claro",
+        system: "Sistema",
+        dark: "Oscuro",
+      },
     },
   },
 };

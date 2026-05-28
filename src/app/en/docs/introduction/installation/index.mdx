@@ -5,7 +5,10 @@ section: Introduction
 slug: installation
 ---
 
-import { CodeTabs } from "@/components/ui/CodeTabs";
+import { CraQuickStart } from "@/components/docs/CraQuickStart.ryx";
+import { ManualInstallTabs } from "@/components/docs/ManualInstallTabs.ryx";
+import { NpmPackagesTable } from "@/components/docs/NpmPackagesTable.ryx";
+import { TechStackList } from "@/components/docs/TechStackList.ryx";
 
 # Installation
 
@@ -13,25 +16,40 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 The fastest way to get started is by scaffolding a new project automatically. Works with npm, yarn, bun, and pnpm:
 
-<CodeTabs tabs={[
-  { name: "npm", code: "npx @unsetsoft/cra@canary my-app\ncd my-app\nnpm run dev" },
-  { name: "yarn", code: "yarn create @unsetsoft/cra my-app\ncd my-app\nyarn dev" },
-  { name: "bun", code: "bun create @unsetsoft/cra my-app\ncd my-app\nbun run dev" },
-  { name: "pnpm", code: "pnpm create @unsetsoft/cra my-app\ncd my-app\npnpm run dev" }
-]} />
+<CraQuickStart channel="canary" />
 
+## Package managers
 
-## Package Managers
+You can also install RyunixJS manually into an existing project. It works with all major package managers:
 
-You can also install RyunixJS manually into an existing project. It works perfectly with all major package managers:
+<ManualInstallTabs channel="canary" />
 
-<CodeTabs tabs={[
-  { name: "npm", code: "npm install @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
-  { name: "yarn", code: "yarn add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
-  { name: "bun", code: "bun add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
-  { name: "pnpm", code: "pnpm add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" }
-]} />
+For production apps, omit `@canary` or pass `--latest` to Create Ryunix App so dependencies resolve to the stable npm tag.
+
+## Published packages on npm
+
+RyunixJS is split into focused packages. CRA resolves `latest` or `canary` tags from the registry when scaffolding.
+
+<NpmPackagesTable locale="en" />
+
+| Install | Command |
+| :--- | :--- |
+| Scaffold (canary) | `npx @unsetsoft/cra@canary my-app --canary` |
+| Scaffold (stable) | `npx @unsetsoft/cra my-app` or `npx @unsetsoft/cra my-app --latest` |
+| Core + presets only | See package manager tabs above |
+
+## Toolchain in generated apps
+
+Apps created with CRA typically use:
+
+<TechStackList locale="en" />
 
 ## Requirements
 
 - Node.js **20**, **22**, or **24** (see `engines` in CRA templates)
+
+## Related
+
+- [Ecosystem](/en/docs/guides/ecosystem) — npm packages and framework feature map
+- [Getting started](/en/docs/introduction/getting-started) — first component
+- [Create Ryunix App](/en/docs/guides/create-app) — scaffolding flags

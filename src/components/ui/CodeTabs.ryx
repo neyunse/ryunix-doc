@@ -1,31 +1,25 @@
-import { useStore, useEffect } from "@unsetsoft/ryunixjs";
+import { useStore } from "@unsetsoft/ryunixjs";
 import { Icon } from "./Icon";
 import { Check, Copy } from "lucide";
+import { useCopyFeedback } from "./useCopyFeedback";
 
 export const CodeTabs = ({ tabs = [] }) => {
   const [activeTab, setActiveTab] = useStore(0);
-  const [copied, setCopied] = useStore(false);
+  const [copied, markCopied] = useCopyFeedback();
 
   const copyToClipboard = () => {
     if (typeof window === "undefined") return;
     const currentCode = tabs[activeTab]?.code || "";
     navigator.clipboard.writeText(currentCode);
-    setCopied(true);
+    markCopied();
   };
-
-  useEffect(() => {
-    if (copied) {
-      const timer = setTimeout(() => setCopied(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [copied]);
 
   const lines = tabs[activeTab]?.code?.split("\n") || [];
 
   return (
     <div className="relative overflow-hidden mt-8 mb-8 group perspective-1000">
-      <div className="relative bg-gradient-to-b from-[#161618] to-[#0a0a0b] border border-[#3f3f46] rounded-xl overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_10px_30px_-10px_rgba(0,0,0,0.5)]">
-        <div className="flex items-center justify-between px-6 py-[0.875rem] border-b border-[#2e2e30]">
+      <div className="relative code-tabs-shell">
+        <div className="flex items-center justify-between px-6 py-[0.875rem] border-b border-theme">
           <div className="flex items-center min-w-0">
             <div className="flex space-x-[0.5rem] mr-8 shrink-0 relative">
               <div className="w-[0.75rem] h-[0.75rem] rounded-full bg-[#ff5f56] opacity-90 shadow-[1.25rem_0_0_#ffbd2e,2.5rem_0_0_#27c93f]"></div>
@@ -34,11 +28,11 @@ export const CodeTabs = ({ tabs = [] }) => {
               {tabs.map((tab, i) => (
                 <button
                   key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeTab === i}
                   onClick={() => setActiveTab(i)}
-                  className={`px-3 py-1 text-xs font-mono font-medium rounded-md transition-all whitespace-nowrap ${activeTab === i
-                    ? "bg-white/10 text-white shadow-sm ring-1 ring-white/10"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
-                    }`}
+                  className={`code-tabs-btn ${activeTab === i ? "code-tabs-btn--active" : ""}`}
                 >
                   {tab.name}
                 </button>
@@ -47,15 +41,17 @@ export const CodeTabs = ({ tabs = [] }) => {
           </div>
 
           <button
-            className="flex-shrink-0 ml-2 p-1.5 rounded-md bg-transparent hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
+            className={`cursor-pointer flex-shrink-0 ml-2 p-1.5 rounded-md border transition-all duration-300 ${
+              copied
+                ? "bg-green-500/15 border-green-500/50 text-green-400 shadow-[0_0_16px_rgba(34,197,94,0.35)] scale-110"
+                : "bg-transparent border-transparent text-theme-muted hover:bg-surface-elevated hover:text-theme"
+            }`}
             onClick={copyToClipboard}
             aria-label="Copy code snippet"
             title="Copy"
           >
             {copied ? (
-              <span className="text-[#27c93f]">
-                <Icon icon={Check} className="w-4 h-4" />
-              </span>
+              <Icon icon={Check} className="w-4 h-4" />
             ) : (
               <Icon icon={Copy} className="w-4 h-4" />
             )}
@@ -63,10 +59,10 @@ export const CodeTabs = ({ tabs = [] }) => {
         </div>
 
         <div className="p-6 overflow-x-auto">
-          <div className="flex flex-col font-mono text-sm leading-relaxed text-[#e2e8f0]">
+          <div className="flex flex-col font-mono text-sm leading-relaxed text-theme">
             {lines.map((line, idx) => (
               <div key={idx} className="flex">
-                <span className="text-blue-400 select-none mr-3">$</span>
+                <span className="text-theme-muted select-none mr-3">$</span>
                 <span className="whitespace-pre">{line}</span>
               </div>
             ))}

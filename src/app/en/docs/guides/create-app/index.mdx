@@ -5,18 +5,16 @@ slug: create-app
 section: Guides
 ---
 
+import { CraQuickStart } from "@/components/docs/CraQuickStart.ryx";
+import { CanaryChannelVersions } from "@/components/docs/CanaryChannelVersions.ryx";
+
 # Create Ryunix App
 
 Use **Create Ryunix App** (`@unsetsoft/cra`) to generate a new project from official templates.
 
 ## Quick start
 
-```bash
-npx @unsetsoft/cra@canary my-app
-cd my-app
-pnpm install
-pnpm dev
-```
+<CraQuickStart channel="canary" />
 
 Equivalent with other package managers:
 
@@ -88,6 +86,10 @@ my-app/
 ## Canary vs stable
 
 Documentation and examples often use `@unsetsoft/cra@canary` for the latest framework features. Pin a stable version for production apps when releases are tagged.
+
+<CanaryChannelVersions />
+
+With `--canary`, CRA runs `npm view @unsetsoft/ryunixjs@canary version` (and the same for presets) and writes semver ranges into `package.json`. With `--latest` (default), it resolves the `latest` dist-tag instead.
 
 ## Related
 

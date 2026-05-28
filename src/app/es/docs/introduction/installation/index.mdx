@@ -5,7 +5,10 @@ section: Introducción
 slug: installation
 ---
 
-import { CodeTabs } from "@/components/ui/CodeTabs";
+import { CraQuickStart } from "@/components/docs/CraQuickStart.ryx";
+import { ManualInstallTabs } from "@/components/docs/ManualInstallTabs.ryx";
+import { NpmPackagesTable } from "@/components/docs/NpmPackagesTable.ryx";
+import { TechStackList } from "@/components/docs/TechStackList.ryx";
 
 # Instalación
 
@@ -13,25 +16,40 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 La forma más rápida de empezar es generar un proyecto nuevo de forma automática. Funciona con npm, yarn, bun y pnpm:
 
-<CodeTabs tabs={[
-  { name: "npm", code: "npx @unsetsoft/cra@canary my-app\ncd my-app\nnpm run dev" },
-  { name: "yarn", code: "yarn create @unsetsoft/cra my-app\ncd my-app\nyarn dev" },
-  { name: "bun", code: "bun create @unsetsoft/cra my-app\ncd my-app\nbun run dev" },
-  { name: "pnpm", code: "pnpm create @unsetsoft/cra my-app\ncd my-app\npnpm run dev" }
-]} />
-
+<CraQuickStart channel="canary" />
 
 ## Gestores de paquetes
 
 También puedes instalar RyunixJS manualmente en un proyecto existente. Funciona con todos los gestores principales:
 
-<CodeTabs tabs={[
-  { name: "npm", code: "npm install @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
-  { name: "yarn", code: "yarn add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
-  { name: "bun", code: "bun add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" },
-  { name: "pnpm", code: "pnpm add @unsetsoft/ryunixjs@canary @unsetsoft/ryunix-presets@canary" }
-]} />
+<ManualInstallTabs channel="canary" />
+
+En apps de producción, omite `@canary` o usa `--latest` en Create Ryunix App para resolver las etiquetas estables de npm.
+
+## Paquetes publicados en npm
+
+RyunixJS se divide en paquetes con responsabilidades claras. CRA resuelve las etiquetas `latest` o `canary` del registro al generar el proyecto.
+
+<NpmPackagesTable locale="es" />
+
+| Instalación | Comando |
+| :--- | :--- |
+| Scaffolding (canary) | `npx @unsetsoft/cra@canary my-app --canary` |
+| Scaffolding (estable) | `npx @unsetsoft/cra my-app` o `npx @unsetsoft/cra my-app --latest` |
+| Solo core + presets | Ver pestañas de gestores de paquetes arriba |
+
+## Toolchain en apps generadas
+
+Las apps creadas con CRA suelen usar:
+
+<TechStackList locale="es" />
 
 ## Requisitos
 
 - Node.js **20**, **22** o **24** (ver `engines` en las plantillas CRA)
+
+## Relacionado
+
+- [Ecosistema](/es/docs/guides/ecosystem) — mapa de paquetes y APIs del framework
+- [Primeros pasos](/es/docs/introduction/getting-started) — primer componente
+- [Create Ryunix App](/es/docs/guides/create-app) — flags de scaffolding

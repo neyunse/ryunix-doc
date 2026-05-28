@@ -41,6 +41,27 @@ render(<App />, document.getElementById("root"));
 
 Attaches Ryunix to existing HTML from the server. If hydration detects a mismatch, Ryunix can fall back to a full client render so the UI stays usable.
 
+## Hydration boundaries
+
+| API | Use |
+| :--- | :--- |
+| `<HydrationBoundary id="sidebar">` | **Local** recovery on mismatches inside the subtree without remounting the root |
+| `<ServerBoundary id="stats">` | Preserves server-only markup; the client does not reconcile inner content |
+
+Configure global policy in `ryunix.config.js`:
+
+```javascript
+{
+  hydration: {
+    recover: "boundary",
+    boundaries: "route",
+    strict: false,
+  },
+}
+```
+
+See [Configuration](/en/docs/api/configuration) and [Ecosystem](/en/docs/guides/ecosystem).
+
 ## Server APIs
 
 During SSG or SSR, hooks run in a server-safe mode (`state.isServerRendering`). Stateful hooks do not leak across requests.

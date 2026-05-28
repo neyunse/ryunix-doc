@@ -7,19 +7,19 @@ import Logo from "@/resources/logo-min.svg";
 import { Github } from "lucide";
 
 const headerNavItemClass =
-  "group px-4 py-2 text-sm font-medium text-gray-300 rounded-full border border-transparent transition-all duration-200 hover:text-white hover:bg-purple-500/20 hover:border-purple-400/35 hover:shadow-[0_0_20px_rgba(139,92,246,0.22)]";
+  "group px-4 py-2 text-sm font-medium text-theme-muted rounded-full border border-transparent transition-all duration-200 hover:text-theme hover:bg-purple-500/15 hover:border-purple-400/35 hover:shadow-[0_0_20px_rgba(139,92,246,0.18)]";
 
 const SiteHeader = ({ locale, docsPath, docsNavLabel = "Docs" }) => (
-  <header className="sticky top-0 z-[100] backdrop-blur-md bg-[#111112]/80 border-b border-[#2e2e30] text-white h-[var(--ui-header-height)] transition-all duration-300">
+  <header className="sticky top-0 z-[100] backdrop-blur-md bg-header border-b border-theme text-theme h-[var(--ui-header-height)] transition-all duration-300">
     <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 h-full">
       <div className="lg:flex-1 flex gap-1.5 min-w-0 items-center">
         <NavLink
           to={`/${locale}`}
-          className="flex items-center gap-2 text-xl font-bold px-2.5 py-2 rounded-xl border border-transparent transition-all duration-200 hover:bg-purple-500/15 hover:border-purple-400/25"
+          className="flex items-center gap-2 text-xl font-bold px-2.5 py-2 rounded-xl border border-transparent transition-all duration-200 hover:bg-purple-500/10 hover:border-purple-400/25"
         >
-          <Image src={Logo} width={36} height={36} fill="#fff" alt="Ryunix Logo" />
+          <Image src={Logo} width={36} height={36} fill="var(--color-logo-fill)" alt="Ryunix Logo" />
 
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 hidden sm:block">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 hidden sm:block">
             RyunixJS
           </span>
         </NavLink>
@@ -46,7 +46,7 @@ const SiteHeader = ({ locale, docsPath, docsNavLabel = "Docs" }) => (
                 GitHub
                 <Icon
                   icon={Github}
-                  className="w-4 h-4 text-gray-400 transition-colors duration-200 group-hover:text-purple-200"
+                  className="w-4 h-4 text-theme-muted transition-colors duration-200 group-hover:text-purple-500"
                 />
               </a>
             </li>

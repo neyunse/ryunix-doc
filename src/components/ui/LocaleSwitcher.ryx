@@ -14,7 +14,7 @@ const LocaleSwitcher = ({ className = "" }) => {
   };
 
   return (
-    <div className={`flex items-center gap-1 rounded-full bg-white/5 border border-white/10 p-0.5 ${className}`}>
+    <div className={`flex items-center gap-1 rounded-full bg-surface-elevated border border-theme p-0.5 ${className}`}>
       {locales.map((locale) => (
         <button
           key={locale}
@@ -23,7 +23,7 @@ const LocaleSwitcher = ({ className = "" }) => {
           className={`cursor-pointer px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
             current === locale
               ? "bg-blue-600 text-white"
-              : "text-gray-400 hover:text-white hover:bg-blue-500/30 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]"
+              : "text-theme-muted hover:text-theme hover:bg-blue-500/15 hover:shadow-[0_0_12px_rgba(59,130,246,0.2)]"
           }`}
           aria-current={current === locale ? "true" : undefined}
         >

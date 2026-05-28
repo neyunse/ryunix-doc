@@ -37,6 +37,7 @@ export const docSections = {
       { path: "/en/docs/guides/vscode", label: "VS Code" },
       { path: "/en/docs/guides/typescript", label: "TypeScript" },
       { path: "/en/docs/guides/devtools", label: "DevTools" },
+      { path: "/en/docs/guides/ecosystem", label: "Ecosystem" },
     ],
   },
   es: {
@@ -72,6 +73,7 @@ export const docSections = {
       { path: "/es/docs/guides/vscode", label: "VS Code" },
       { path: "/es/docs/guides/typescript", label: "TypeScript" },
       { path: "/es/docs/guides/devtools", label: "DevTools" },
+      { path: "/es/docs/guides/ecosystem", label: "Ecosistema" },
     ],
   },
 };

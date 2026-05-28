@@ -1,6 +1,7 @@
 import { NavLink } from "@unsetsoft/ryunixjs";
 
 export const NotFound = () => {
+  type 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[var(--ui-main-min-height)] text-white px-4 overflow-hidden">
 

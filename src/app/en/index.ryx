@@ -21,7 +21,11 @@ export const Metatags = {
 };
 
 const EnHome = () => (
-  <HomePage docsPath="/en/docs/introduction/getting-started" copy={homeCopy.en} />
+  <HomePage
+    docsPath="/en/docs/introduction/getting-started"
+    docsBase="/en/docs"
+    copy={homeCopy.en}
+  />
 );
 
 export default EnHome;

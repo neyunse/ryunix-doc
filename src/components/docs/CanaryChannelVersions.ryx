@@ -1,0 +1,11 @@
+import { npmPackages } from "@/i18n/packages.js";
+
+/** Inline reference to current canary versions on npm (single source: packages.js). */
+export const CanaryChannelVersions = () => (
+  <p className="text-sm text-theme-muted my-4">
+    Current <code>canary</code> on npm:{" "}
+    <code>{npmPackages.ryunixjs.name}@{npmPackages.ryunixjs.canary}</code>,{" "}
+    <code>{npmPackages.presets.name}@{npmPackages.presets.canary}</code>,{" "}
+    <code>{npmPackages.cra.name}@{npmPackages.cra.canary}</code>.
+  </p>
+);

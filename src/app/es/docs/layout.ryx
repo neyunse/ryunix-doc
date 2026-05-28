@@ -1,29 +1,8 @@
-import { HydrationBoundary } from "@unsetsoft/ryunixjs";
-import DocLayoutShell from "@/features/docs/DocLayoutShell.ryx";
-import { docSections } from "@/i18n/config.js";
+import LocaleDocLayout from "@/features/docs/LocaleDocLayout.ryx";
+import { localeDocMeta } from "@/i18n/localeDocMeta.js";
 
-export const Metatags = {
-  title: {
-    default: "RyunixJS: El framework JavaScript de nueva generación",
-    template: "%s | RyunixJS",
-  },
-  keywords: [
-    "Ryunix",
-    "Documentación",
-    "Framework JS",
-    "Generador de sitios estáticos",
-    "MDX",
-    "ESLint",
-    "Webpack",
-  ],
-  "og:locale": "es_ES",
-  "og:locale:alternate": "en_US",
-};
+export const Metatags = localeDocMeta.es;
 
-const DocLayout = ({ children }) => (
-  <DocLayoutShell sections={docSections.es} prevLabel="Anterior" nextLabel="Siguiente">
-    <HydrationBoundary id="docs-es">{children}</HydrationBoundary>
-  </DocLayoutShell>
-);
+const DocLayout = ({ children }) => <LocaleDocLayout locale="es">{children}</LocaleDocLayout>;
 
 export default DocLayout;
