@@ -5,7 +5,7 @@ slug: getting-started
 section: Introduction
 ---
 
-import { CodeTabs } from "@/components/ui/CodeTabs";
+import { CraQuickStart } from "@/components/docs/CraQuickStart.ryx";
 
 # Getting Started
 
@@ -16,12 +16,7 @@ RyunixJS is a lightweight JavaScript framework for building user interfaces. Lik
 
 ## Quick Start
 
-<CodeTabs tabs={[
-  { name: "npm", code: "npx @unsetsoft/cra@canary my-app\ncd my-app\nnpm run dev" },
-  { name: "yarn", code: "yarn create @unsetsoft/cra my-app\ncd my-app\nyarn dev" },
-  { name: "bun", code: "bun create @unsetsoft/cra my-app\ncd my-app\nbun run dev" },
-  { name: "pnpm", code: "pnpm create @unsetsoft/cra my-app\ncd my-app\npnpm run dev" }
-]} />
+<CraQuickStart channel="canary" />
 
 Your app is now running at `http://localhost:3000`
 

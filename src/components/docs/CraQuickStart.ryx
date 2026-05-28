@@ -1,0 +1,13 @@
+import { CodeTabs } from "@/components/ui/CodeTabs";
+import { craInstallCommand } from "@/i18n/packages.js";
+
+const PKG_MANAGERS = ["npm", "yarn", "bun", "pnpm"];
+
+export const CraQuickStart = ({ channel = "canary" }) => (
+  <CodeTabs
+    tabs={PKG_MANAGERS.map((name) => ({
+      name,
+      code: craInstallCommand(name, channel),
+    }))}
+  />
+);

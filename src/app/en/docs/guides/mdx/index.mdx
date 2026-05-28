@@ -106,6 +106,19 @@ Supported types: `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Each uses
 
 Plain blockquotes without a marker keep the default quote style. You can combine **bold**, links, and multi-paragraph content inside an alert.
 
+## Bilingual docs without duplicated logic
+
+This documentation site keeps **locale-specific prose** under `src/app/en/` and `src/app/es/`, but centralizes shared data and snippets so EN/ES trees do not drift:
+
+- `src/i18n/packages.js` — npm package names, `latest` / `canary` versions, install command builders
+- `src/i18n/config.js` — sidebar routes per locale
+- `src/i18n/docUiCopy.js` — docs UI labels
+- `src/features/marketing/siteCopy.js` — marketing shell copy
+- `src/components/docs/*` — MDX building blocks (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`, `TechStackList`)
+- `src/features/docs/LocaleDocLayout.ryx` — single docs layout used by both `en/docs/layout.ryx` and `es/docs/layout.ryx`
+
+URLs still use `/en/docs/...` and `/es/docs/...` for SEO and file-based routing; only duplicated **logic** lives under `src/i18n/` and shared components. When publishing a new npm version, update `packages.js` once and every page that imports these components stays in sync.
+
 ## SSG and MDX
 
 During `ryunix build`, each MDX route is prerendered to static HTML with the correct `<title>` and meta tags inherited from layouts. Avoid mixing deprecated global `static.seo` config with per-route `Metatags`.

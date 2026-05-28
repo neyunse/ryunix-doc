@@ -278,6 +278,78 @@ function App() {
 </Suspense>
 ```
 
+## HydrationBoundary y ServerBoundary
+
+Marcadores de reconciliación para SSR (exportados desde `@unsetsoft/ryunixjs`):
+
+```jsx
+import { HydrationBoundary, ServerBoundary } from "@unsetsoft/ryunixjs";
+
+const DocsLayout = ({ children }) => (
+  <HydrationBoundary id="docs-es">
+    {children}
+  </HydrationBoundary>
+);
+
+const Stats = ({ html }) => (
+  <ServerBoundary id="sidebar-stats">
+    <div dangerouslySetInnerHTML={{ __html: html }} />
+  </ServerBoundary>
+);
+```
+
+- **HydrationBoundary** — recuperación local ante desajustes de hidratación.
+- **ServerBoundary** — el cliente no reconcilia el interior; se conserva el HTML del servidor.
+
+Config global: `hydration` en `ryunix.config.js`. Más contexto en [Server Actions](/es/docs/core/server-actions) y [Ecosistema](/es/docs/guides/ecosystem).
+
+## ErrorBoundary
+
+Captura errores de render en un subárbol y muestra UI de respaldo:
+
+```jsx
+import { ErrorBoundary } from "@unsetsoft/ryunixjs";
+
+<ErrorBoundary fallback={<p>Algo falló</p>}>
+  <RiskyWidget />
+</ErrorBoundary>
+```
+
+Complementa `error.ryx` del App Router (límites por ruta). Ver [Manejo de errores](/es/docs/core/error-handling).
+
+## ThemeToggle y tema
+
+API de tema integrada (cookie + `class="dark"` en `<html>`):
+
+```jsx
+import { ThemeToggle, ThemeInitScript } from "@unsetsoft/ryunixjs";
+import "@unsetsoft/ryunixjs/theme-toggle.css";
+
+// En layout.ryx — evita flash de tema incorrecto:
+export const HeadExtras = () => <ThemeInitScript />;
+
+// En el pie o cabecera:
+<ThemeToggle labels={{ title: "Tema", light: "Claro", system: "Sistema", dark: "Oscuro" }} />
+```
+
+Helpers de bajo nivel: `applyTheme`, `resolveThemeFromCookie`, `setThemeCookie`, `createThemeController`, `themeInitScript`.
+
+## Header, Footer y Main
+
+Primitivas de layout semántico con estilos opcionales del preset (`style: true`):
+
+```jsx
+import { Header, Footer, Main } from "@unsetsoft/ryunixjs";
+
+<Header>
+  <nav>...</nav>
+</Header>
+<Main>{children}</Main>
+<Footer>© 2026</Footer>
+```
+
+Importa también `@unsetsoft/ryunixjs/layout-header.css` y `layout-footer.css` si usas estilos globales del framework.
+
 ## Crear componentes personalizados
 
 ### Componente contenedor

@@ -12,7 +12,7 @@
     "lint:fix": "ryunix lint --fix"
   },
   "dependencies": {
-    "@unsetsoft/ryunixjs": "1.2.5-canary.9",
+    "@unsetsoft/ryunixjs": "1.2.5-canary.12",
     "lucide": "^0.575.0"
   },
   "pnpm": {
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
-    "@unsetsoft/ryunix-presets": "1.0.26-canary.39",
+    "@unsetsoft/ryunix-presets": "1.0.26-canary.43",
     "autoprefixer": "^10.5.0",
     "highlight.js": "11.11.1",
     "postcss": "^8.5.15",

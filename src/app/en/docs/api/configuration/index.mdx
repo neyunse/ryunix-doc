@@ -228,17 +228,59 @@ Enable `.mdx` pages under `app/`:
 
 YAML headers (like `title`, `description`) placed at the start of `.mdx` files between `---` are parsed and invisibly transpiled. Ryunix assimilates them directly as the `Metatags` constant, injecting them into the HTML and optimizing SEO without requiring additional wrappers.
 
-### Global styles (`style`)
+### Compiler (`compiler`)
 
-Defaults to `style: true`. Ryunix injects `@unsetsoft/ryunixjs/style.css` for semantic HTML across the whole app (`.ryx`, `.mdx`, and native tags).
+Application source transpilation (not the preset’s own toolchain):
 
 ```javascript
 {
-  style: true, // default; set false to disable
+  compiler: "swc", // default; "babel" for legacy compatibility
 }
 ```
 
-**Light / dark theme:** toggle only via the root element class. No `dark` on `<html>` → light; `class="dark"` → dark.
+CRA sets this when you pass `--compiler babel`. SWC is faster on large apps.
+
+### Hydration (`hydration`)
+
+Policy when server HTML and client VDOM disagree:
+
+```javascript
+{
+  hydration: {
+    recover: "boundary",   // "boundary" | "root" | "none"
+    boundaries: "route",   // "route" | "server-only" | "all-layouts"
+    strict: false,         // extra warnings in development
+  },
+}
+```
+
+Pair with core `<HydrationBoundary>` and `<ServerBoundary>` (see [Rendering](/en/docs/core/rendering) and [Ecosystem](/en/docs/guides/ecosystem)).
+
+### Global styles (`style`)
+
+**`style` is off by default**; use `style: true` or an object to inject `@unsetsoft/ryunixjs/style.css` (typography, tables, native forms, MDX alerts) across the app (`.ryx`, `.mdx`, semantic HTML).
+
+```javascript
+{
+  style: true,
+}
+```
+
+**Typography** (presets via [fonts.bunny.net](https://fonts.bunny.net) or self-hosted):
+
+```javascript
+{
+  style: {
+    padding: "1.5rem",
+    maxWidth: "72rem",
+    font: "inter", // system | inter | source-sans | nunito
+    // font: { family: "Brand", src: "/assets/fonts/brand.woff2", fallback: "sans-serif" },
+    // font: { family: "Inter", google: "Inter:wght@400;600" },
+  },
+}
+```
+
+**Light / dark theme:** `class="dark"` on `<html>`, or core `ThemeToggle` / `applyTheme` (see [Components](/en/docs/api/components)).
 
 ```javascript
 document.documentElement.classList.toggle("dark");
@@ -250,6 +292,36 @@ document.documentElement.classList.toggle("dark");
 - `unstyled` prop on components (maps to `data-ryx-unstyled` via core `ryxProps`).
 
 `ryunix-tailwind` and `ryunix-all` templates ship with `style: false` to avoid conflicting with Tailwind.
+
+### Dev server (`server`)
+
+```javascript
+{
+  server: {
+    csp: true, // or a custom CSP string
+    cors: {
+      enabled: true,
+      origin: "*",
+      credentials: false,
+    },
+  },
+}
+```
+
+### Built-in ESLint (`eslint`)
+
+`ryunix lint` uses the preset’s opinionated config. Customize files and rules:
+
+```javascript
+{
+  eslint: {
+    files: ["**/*.ryx", "**/*.mdx"],
+    rules: {
+      "no-unused-vars": "warn",
+    },
+  },
+}
+```
 
 ### Static site generation (SSG)
 

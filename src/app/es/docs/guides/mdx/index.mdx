@@ -106,6 +106,19 @@ Tipos admitidos: `NOTE`, `TIP`, `IMPORTANT`, `WARNING` y `CAUTION`. Cada uno usa
 
 Los blockquotes sin marcador mantienen el estilo de cita por defecto. Puedes combinar **negrita**, enlaces y varios párrafos dentro de una alerta.
 
+## Documentación bilingüe sin lógica duplicada
+
+Este sitio mantiene la **prosa por idioma** en `src/app/en/` y `src/app/es/`, pero centraliza datos y fragmentos compartidos para que los árboles EN/ES no se desincronicen:
+
+- `src/i18n/packages.js` — nombres npm, versiones `latest` / `canary`, generadores de comandos de instalación
+- `src/i18n/config.js` — rutas del sidebar por locale
+- `src/i18n/docUiCopy.js` — etiquetas de la UI de documentación
+- `src/features/marketing/siteCopy.js` — textos del shell de marketing
+- `src/components/docs/*` — bloques MDX (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`, `TechStackList`)
+- `src/features/docs/LocaleDocLayout.ryx` — layout único usado por `en/docs/layout.ryx` y `es/docs/layout.ryx`
+
+Las URLs siguen usando `/en/docs/...` y `/es/docs/...` por SEO y routing por archivos; solo la **lógica** duplicada vive en `src/i18n/` y componentes compartidos. Al publicar una versión nueva en npm, actualiza `packages.js` una vez y todas las páginas que importan estos componentes quedan alineadas.
+
 ## SSG y MDX
 
 Durante `ryunix build`, cada ruta MDX se prerenderiza a HTML estático con el `<title>` y meta tags correctos heredados de los layouts. Evita mezclar la configuración global obsoleta `static.seo` con `Metatags` por ruta.

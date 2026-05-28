@@ -12,15 +12,14 @@ html:not(.dark) {
   color-scheme: light;
 }
 
-.docs-content pre code.hljs,
-.docs-content pre .hljs,
-.docs-content .hljs {
+.docs-content pre > code.hljs,
+.docs-content pre > code {
   background: transparent;
   color: inherit;
 }
 
-html.dark .docs-content pre code.hljs,
-html.dark .docs-content pre .hljs {
+html.dark .docs-content pre > code.hljs,
+html.dark .docs-content pre > code {
   color: #c9d1d9;
 }
 
@@ -65,8 +64,9 @@ html.dark .docs-content .hljs-built_in { color: #ffa657; }
 
   --color-logo-fill: #0f172a;
   --color-header-bg: rgb(255 255 255 / 0.82);
-  --color-code-pre-from: #f1f5f9;
-  --color-code-pre-to: #e2e8f0;
+  --color-code-block-bg: var(--color-surface-subtle);
+  --color-code-block-border: var(--color-border-base);
+  --color-code-block-shadow: var(--shadow-base);
   --color-glow-blue: rgb(37 99 235 / 0.12);
   --color-glow-purple: rgb(124 58 237 / 0.1);
 
@@ -145,6 +145,13 @@ html.dark .docs-content .hljs-built_in { color: #ffa657; }
   --ryx-theme-icon: var(--color-text-tertiary);
   --ryx-theme-icon-hover: var(--color-text-primary);
   --ryx-theme-icon-active: var(--color-text-primary);
+
+  --code-tab-inactive-text: var(--color-text-tertiary);
+  --code-tab-inactive-hover-bg: color-mix(in srgb, var(--color-surface-base) 70%, transparent);
+  --code-tab-active-bg: var(--color-surface-base);
+  --code-tab-active-text: var(--color-text-primary);
+  --code-tab-active-border: var(--color-border-base);
+  --code-tab-active-shadow: var(--shadow-base);
 }
 
 html.dark {
@@ -166,8 +173,9 @@ html.dark {
 
   --color-logo-fill: #fafafa;
   --color-header-bg: rgb(9 9 11 / 0.88);
-  --color-code-pre-from: #131316;
-  --color-code-pre-to: #0c0c0f;
+  --color-code-block-bg: var(--color-surface-subtle);
+  --color-code-block-border: var(--color-border-base);
+  --color-code-block-shadow: var(--shadow-md);
   --color-glow-blue: rgb(59 130 246 / 0.12);
   --color-glow-purple: rgb(139 92 246 / 0.08);
 
@@ -183,6 +191,13 @@ html.dark {
   --ryx-theme-icon: var(--color-text-tertiary);
   --ryx-theme-icon-hover: var(--color-text-primary);
   --ryx-theme-icon-active: var(--color-text-primary);
+
+  --code-tab-inactive-text: var(--color-text-tertiary);
+  --code-tab-inactive-hover-bg: color-mix(in srgb, var(--color-surface-overlay) 55%, transparent);
+  --code-tab-active-bg: var(--color-surface-overlay);
+  --code-tab-active-text: var(--color-text-primary);
+  --code-tab-active-border: var(--color-border-base);
+  --code-tab-active-shadow: var(--shadow-base);
 }
 
 @layer base {
@@ -238,8 +253,6 @@ html.dark {
   .docs-content {
     container-type: inline-size;
     container-name: docs-content;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 500px;
 
     & h2,
     & h3 {
@@ -250,33 +263,67 @@ html.dark {
   }
 }
 
+@layer components {
+  .code-tabs-shell {
+    background-color: var(--color-code-block-bg);
+    border: 1px solid var(--color-code-block-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--color-code-block-shadow);
+  }
+
+  .code-tabs-btn {
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    font-size: var(--font-size-xs);
+    font-family: var(--font-family-mono);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    color: var(--code-tab-inactive-text);
+    background: transparent;
+    transition:
+      color var(--transition-base),
+      background-color var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+    white-space: nowrap;
+  }
+
+  .code-tabs-btn:hover:not(.code-tabs-btn--active) {
+    color: var(--color-text-primary);
+    background: var(--code-tab-inactive-hover-bg);
+  }
+
+  .code-tabs-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .code-tabs-btn--active {
+    color: var(--code-tab-active-text);
+    background: var(--code-tab-active-bg);
+    border-color: var(--code-tab-active-border);
+    box-shadow: var(--code-tab-active-shadow);
+  }
+}
+
 /* ============================================================================
    CODE BLOCKS & SYNTAX HIGHLIGHTING
    ========================================================================= */
 
 @layer components {
   .docs-content {
-    & pre {
+    & pre,
+    & pre.hljs {
       position: relative;
-      background: linear-gradient(
-        180deg,
-        var(--color-code-pre-from) 0%,
-        var(--color-code-pre-to) 100%
-      );
+      background-color: var(--color-code-block-bg);
       padding: var(--space-16) var(--space-6) var(--space-6) var(--space-6);
       border-radius: var(--radius-xl);
-      border: 1px solid var(--color-border-strong);
+      border: 1px solid var(--color-code-block-border);
       overflow-x: auto;
       margin-block: var(--space-8);
-      box-shadow:
-        inset 0 1px 0 0 rgb(255 255 255 / 0.05),
-        0 10px 30px -10px rgb(0 0 0 / 0.15);
-
-      html.dark & {
-        box-shadow:
-          inset 0 1px 0 0 rgb(255 255 255 / 0.05),
-          0 10px 30px -10px rgb(0 0 0 / 0.5);
-      }
+      box-shadow: var(--color-code-block-shadow);
 
       /* MacOS Window Controls */
       &::before {
@@ -344,11 +391,17 @@ html.dark {
       padding-inline: var(--space-2);
       padding-block: var(--space-1);
       background-color: var(--color-surface-elevated);
-      color: var(--color-primary-600);
+      color: var(--color-text-primary);
       border-radius: var(--radius-sm);
-      border: 1px solid var(--color-border-base);
+      border: 1px solid var(--color-code-block-border);
       white-space: nowrap;
       font-variant-ligatures: none;
+    }
+
+    html.dark & :not(pre)>code {
+      background-color: var(--color-surface-overlay);
+      color: var(--color-text-primary);
+      border-color: var(--color-code-block-border);
     }
 
     /* Code block with title */

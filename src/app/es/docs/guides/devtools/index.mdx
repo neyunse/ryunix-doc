@@ -21,13 +21,13 @@ Se ejecutan automáticamente — no requieren configuración.
 
 ## Extensión Ryunix DevTools
 
-El paquete **`@unsetsoft/ryunix-devtools`** es una extensión de navegador que inspecciona aplicaciones Ryunix:
+El paquete **`@unsetsoft/ryunix-devtools`** (versión actual **1.3.1** en el monorepo) es una extensión Chromium que inspecciona aplicaciones Ryunix:
 
 - Árbol de fibers y props de componentes
 - Estado de hooks adjunto a fibers
 - Integración con la app en ejecución mediante un content script
 
-Instálala desde el repositorio del paquete o el canal de distribución de tu equipo, y abre el panel Ryunix mientras tu app corre en `localhost` (o cualquier URL de desarrollo).
+Compílala desde `packages/ryunix-devtools` en el repositorio [Ryunixjs](https://github.com/UnSetSoft/Ryunixjs) y carga la carpeta sin empaquetar en Chrome (Manifest V3). Luego abre el panel Ryunix mientras tu app corre en `localhost` (o cualquier URL de desarrollo).
 
 > [!NOTE]
 > **DevTools** inspecciona la app en el **navegador**. Para editar `.ryx` en VS Code (sintaxis, LSP, snippets), usa la [extensión VS Code](/es/docs/guides/vscode) — son herramientas complementarias.

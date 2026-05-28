@@ -278,6 +278,78 @@ function App() {
 </Suspense>
 ```
 
+## HydrationBoundary & ServerBoundary
+
+SSR reconciliation markers exported from `@unsetsoft/ryunixjs`:
+
+```jsx
+import { HydrationBoundary, ServerBoundary } from "@unsetsoft/ryunixjs";
+
+const DocsLayout = ({ children }) => (
+  <HydrationBoundary id="docs-en">
+    {children}
+  </HydrationBoundary>
+);
+
+const Stats = ({ html }) => (
+  <ServerBoundary id="sidebar-stats">
+    <div dangerouslySetInnerHTML={{ __html: html }} />
+  </ServerBoundary>
+);
+```
+
+- **HydrationBoundary** — local recovery on hydration mismatches.
+- **ServerBoundary** — client skips inner reconciliation; server HTML is preserved.
+
+Global config: `hydration` in `ryunix.config.js`. See [Server Actions](/en/docs/core/server-actions) and [Ecosystem](/en/docs/guides/ecosystem).
+
+## ErrorBoundary
+
+Catches render errors in a subtree and shows fallback UI:
+
+```jsx
+import { ErrorBoundary } from "@unsetsoft/ryunixjs";
+
+<ErrorBoundary fallback={<p>Something went wrong</p>}>
+  <RiskyWidget />
+</ErrorBoundary>
+```
+
+Complements App Router `error.ryx` route boundaries. See [Error handling](/en/docs/core/error-handling).
+
+## ThemeToggle & theme API
+
+Built-in light / dark / system theme (cookie + `class="dark"` on `<html>`):
+
+```jsx
+import { ThemeToggle, ThemeInitScript } from "@unsetsoft/ryunixjs";
+import "@unsetsoft/ryunixjs/theme-toggle.css";
+
+// In layout.ryx — avoids wrong-theme flash:
+export const HeadExtras = () => <ThemeInitScript />;
+
+// In header or footer:
+<ThemeToggle labels={{ title: "Theme", light: "Light", system: "System", dark: "Dark" }} />
+```
+
+Lower-level helpers: `applyTheme`, `resolveThemeFromCookie`, `setThemeCookie`, `createThemeController`, `themeInitScript`.
+
+## Header, Footer & Main
+
+Semantic layout primitives styled when `style: true`:
+
+```jsx
+import { Header, Footer, Main } from "@unsetsoft/ryunixjs";
+
+<Header>
+  <nav>...</nav>
+</Header>
+<Main>{children}</Main>
+<Footer>© 2026</Footer>
+```
+
+Optional CSS: `@unsetsoft/ryunixjs/layout-header.css`, `layout-footer.css`.
+
 ## Creating Custom Components
 
 ### Wrapper Component

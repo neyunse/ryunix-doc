@@ -139,79 +139,120 @@
       font-style: italic;
     }
 
-    /* GitHub-style MDX alerts (> [!NOTE], etc.) */
+    /* GitHub-style MDX alerts (> [!NOTE], etc.) — grid layout (aligned with ryunix-style.css) */
     & blockquote.ryx-alert {
-      position: relative;
-      padding-block-start: calc(var(--space-4) + var(--space-5));
+      --ryx-doc-alert-tint: 10%;
+      --ryx-doc-alert-border-mix: 32%;
+      --ryx-doc-alert-accent: var(--color-info);
+      --ryx-doc-alert-label: "Note";
+      --ryx-doc-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm-.75 3.5a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0ZM7.75 8.25v4.5a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-1.5 0Z'/%3E%3C/svg%3E");
+
+      display: grid;
+      grid-template-columns: 1rem 1fr;
+      column-gap: 0.625rem;
+      row-gap: 0.375rem;
+      align-items: center;
+      margin-block: var(--space-6);
+      padding: 0.875rem 1rem;
+      max-inline-size: none;
       font-style: normal;
-      border-inline-start-width: 4px;
-      border-inline-start-style: solid;
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      border: 1px solid
+        color-mix(
+          in srgb,
+          var(--ryx-doc-alert-accent) var(--ryx-doc-alert-border-mix),
+          var(--color-border-base)
+        );
+      border-inline-start: 4px solid var(--ryx-doc-alert-accent);
+      border-radius: var(--radius-lg);
+      background: color-mix(
+        in srgb,
+        var(--ryx-doc-alert-accent) var(--ryx-doc-alert-tint),
+        var(--color-surface-card)
+      );
+      box-shadow: var(--shadow-base);
+    }
+
+    html.dark & blockquote.ryx-alert {
+      --ryx-doc-alert-tint: 14%;
+      --ryx-doc-alert-border-mix: 38%;
     }
 
     & blockquote.ryx-alert::before {
-      position: absolute;
-      inset-block-start: var(--space-4);
-      inset-inline-start: var(--space-5);
-      font-size: var(--font-size-xs);
+      content: "";
+      grid-column: 1;
+      grid-row: 1;
+      inline-size: 1rem;
+      block-size: 1rem;
+      background-color: var(--ryx-doc-alert-accent);
+      mask-image: var(--ryx-doc-alert-icon);
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      mask-position: center;
+      -webkit-mask-image: var(--ryx-doc-alert-icon);
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: contain;
+      -webkit-mask-position: center;
+    }
+
+    & blockquote.ryx-alert::after {
+      content: var(--ryx-doc-alert-label);
+      grid-column: 2;
+      grid-row: 1;
+      font-size: 0.8125rem;
       font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--ryx-doc-alert-accent);
     }
 
     & blockquote.ryx-alert p {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      margin-block: 0;
+      padding-inline-start: calc(1rem + 0.625rem);
+      max-inline-size: none;
       font-style: normal;
       color: var(--color-text-secondary);
     }
 
-    & blockquote.ryx-alert--note {
-      border-inline-start-color: var(--color-info);
-      background: color-mix(in srgb, var(--color-info) 12%, transparent);
+    & blockquote.ryx-alert :not(pre) > code {
+      background-color: var(--color-surface-elevated);
+      color: var(--color-text-primary);
+      border-color: var(--color-border-base);
+      white-space: normal;
     }
 
-    & blockquote.ryx-alert--note::before {
-      content: "Note";
-      color: var(--color-info);
+    html.dark & blockquote.ryx-alert :not(pre) > code {
+      background-color: var(--color-surface-overlay);
+    }
+
+    & blockquote.ryx-alert--note {
+      --ryx-doc-alert-accent: var(--color-info);
+      --ryx-doc-alert-label: "Note";
     }
 
     & blockquote.ryx-alert--tip {
-      border-inline-start-color: var(--color-success);
-      background: color-mix(in srgb, var(--color-success) 12%, transparent);
-    }
-
-    & blockquote.ryx-alert--tip::before {
-      content: "Tip";
-      color: var(--color-success);
+      --ryx-doc-alert-accent: var(--color-success);
+      --ryx-doc-alert-label: "Tip";
+      --ryx-doc-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1.5A3.5 3.5 0 0 0 4.5 5c0 1.59.92 2.97 2.26 3.63a.75.75 0 0 1 .49.7V11a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 0 .75-.75v-1.67a.75.75 0 0 1 .49-.7A3.5 3.5 0 0 0 8 1.5ZM6.5 12.25v.25a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 0 .75-.75v-.25H6.5Z'/%3E%3C/svg%3E");
     }
 
     & blockquote.ryx-alert--important {
-      border-inline-start-color: var(--color-accent-500);
-      background: color-mix(in srgb, var(--color-accent-500) 12%, transparent);
-    }
-
-    & blockquote.ryx-alert--important::before {
-      content: "Important";
-      color: var(--color-accent-500);
+      --ryx-doc-alert-accent: var(--color-accent-500);
+      --ryx-doc-alert-label: "Important";
+      --ryx-doc-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm-.75 3.25a.75.75 0 1 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5Zm0 6a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0Z'/%3E%3C/svg%3E");
     }
 
     & blockquote.ryx-alert--warning {
-      border-inline-start-color: var(--color-warning);
-      background: color-mix(in srgb, var(--color-warning) 12%, transparent);
-    }
-
-    & blockquote.ryx-alert--warning::before {
-      content: "Warning";
-      color: var(--color-warning);
+      --ryx-doc-alert-accent: var(--color-warning);
+      --ryx-doc-alert-label: "Warning";
+      --ryx-doc-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8.982 1.566a1.13 1.13 0 0 0-1.964 0L1.075 13.225a1.13 1.13 0 0 0 .982 1.691h11.886a1.13 1.13 0 0 0 .982-1.691L8.982 1.566ZM8 5.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 5.5Zm0 7a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z'/%3E%3C/svg%3E");
     }
 
     & blockquote.ryx-alert--caution {
-      border-inline-start-color: var(--color-error);
-      background: color-mix(in srgb, var(--color-error) 12%, transparent);
-    }
-
-    & blockquote.ryx-alert--caution::before {
-      content: "Caution";
-      color: var(--color-error);
+      --ryx-doc-alert-accent: var(--color-error);
+      --ryx-doc-alert-label: "Caution";
+      --ryx-doc-alert-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M2.343 2.343A8 8 0 1 1 13.657 13.657 8 8 0 0 1 2.343 2.343ZM8 4.75a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 4.75Zm0 7a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z'/%3E%3C/svg%3E");
     }
 
     & hr {
@@ -261,6 +302,42 @@
       max-inline-size: 100%;
       block-size: auto;
       border-radius: var(--radius-md);
+    }
+  }
+
+  /* Sidebar nav — scrollbar visible but understated */
+  .docs-sidebar-scroll {
+    overflow-anchor: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-strong) var(--color-surface-elevated);
+    scrollbar-gutter: stable;
+
+    &::-webkit-scrollbar {
+      inline-size: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin-block: var(--space-2);
+      background: color-mix(in srgb, var(--color-border-base) 55%, transparent);
+      border-radius: var(--radius-full);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: color-mix(in srgb, var(--color-text-tertiary) 55%, var(--color-border-strong));
+      border-radius: var(--radius-full);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      min-block-size: 2.75rem;
+      transition: background-color var(--transition-base);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: color-mix(in srgb, var(--color-primary-500) 35%, var(--color-border-strong));
+    }
+
+    &:hover {
+      scrollbar-color: color-mix(in srgb, var(--color-text-tertiary) 70%, var(--color-border-strong))
+        var(--color-surface-elevated);
     }
   }
 }
