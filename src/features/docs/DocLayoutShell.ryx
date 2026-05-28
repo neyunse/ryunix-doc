@@ -1,13 +1,8 @@
-import { NavLink, useStore, useEffect, useLayoutEffect, useRouter } from "@unsetsoft/ryunixjs";
+import { NavLink, useStore, useEffect, useRouter } from "@unsetsoft/ryunixjs";
 import { ChevronRight, ChevronLeft, Menu, X } from "lucide";
 import { Icon } from "@/components/ui/Icon";
-import {
-  DOCS_SIDEBAR_ID,
-  persistDocsSidebarScroll,
-  restoreDocsSidebarScroll,
-} from "@/features/docs/docsSidebarScroll.js";
 
-const SidebarContent = ({ sections, currentPath, onNavigate }) => (
+const SidebarContent = ({ sections, currentPath }) => (
   <nav className="space-y-8 text-sm">
     {Object.entries(sections).map(([sectionName, routes]) => (
       <div key={sectionName}>
@@ -21,8 +16,6 @@ const SidebarContent = ({ sections, currentPath, onNavigate }) => (
               <li key={route.path}>
                 <NavLink
                   to={route.path}
-                  onMouseDown={onNavigate}
-                  onClick={onNavigate}
                   className={`block px-3 py-2 rounded-xl transition-all duration-300 ${isActive
                     ? "bg-gradient-to-r from-blue-500/20 to-purple-500/10 text-blue-600 dark:text-blue-300 font-medium shadow-[inset_2px_0_0_#3b82f6]"
                     : "text-theme-muted hover:bg-black/5 dark:hover:bg-white/5 hover:text-theme"
@@ -61,20 +54,11 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
     setIsMobileMenuOpen(false);
   }, [currentPath]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
-    restoreDocsSidebarScroll();
   }, [currentPath]);
-
-  useEffect(() => {
-    const aside = document.getElementById(DOCS_SIDEBAR_ID);
-    if (!aside) return;
-    const saveScroll = () => persistDocsSidebarScroll();
-    aside.addEventListener("scroll", saveScroll, { passive: true });
-    return () => aside.removeEventListener("scroll", saveScroll);
-  }, []);
 
   return (
     <div className="max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -111,7 +95,6 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
 
       <div className="lg:grid lg:grid-cols-12 gap-8 lg:gap-12 relative">
         <aside
-          id={DOCS_SIDEBAR_ID}
           className={`
             fixed lg:sticky top-[var(--ui-header-height)] z-[70] lg:z-40
             h-[calc(100vh-var(--ui-header-height))]
@@ -125,11 +108,7 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
             overflow-y-auto docs-sidebar-scroll
           `}
         >
-          <SidebarContent
-            sections={sections}
-            currentPath={currentPath}
-            onNavigate={persistDocsSidebarScroll}
-          />
+          <SidebarContent sections={sections} currentPath={currentPath} />
         </aside>
 
         <div className="lg:col-span-9 min-w-0 py-8 lg:py-12 lg:pl-12">
@@ -147,7 +126,6 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
             {prevRoute ? (
               <NavLink
                 to={prevRoute.path}
-                onMouseDown={persistDocsSidebarScroll}
                 className="group flex flex-col items-start w-full sm:w-1/2 p-4 rounded-2xl border border-theme bg-surface-card hover:bg-surface-card-hover hover:border-blue-500/50 transition-all duration-300"
               >
                 <div className="flex items-center text-theme-muted text-sm mb-1 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
@@ -163,7 +141,6 @@ const DocLayoutShell = ({ children, sections, prevLabel = "Previous", nextLabel 
             {nextRoute ? (
               <NavLink
                 to={nextRoute.path}
-                onMouseDown={persistDocsSidebarScroll}
                 className="group flex flex-col items-end w-full sm:w-1/2 p-4 rounded-2xl border border-theme bg-surface-card hover:bg-surface-card-hover hover:border-blue-500/50 transition-all duration-300 text-right"
               >
                 <div className="flex items-center text-theme-muted text-sm mb-1 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">

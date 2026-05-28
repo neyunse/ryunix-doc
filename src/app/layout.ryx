@@ -1,12 +1,7 @@
 import "@/styles/global.css";
-import { useEffect } from "@unsetsoft/ryunixjs";
-import { applyTheme, resolveThemeFromCookie, themeInitScript } from "@/i18n/themeCookie.js";
+import { themeInitScript } from "@/i18n/themeCookie.js";
 
 const RootLayout = ({ children }) => {
-  useEffect(() => {
-    applyTheme(resolveThemeFromCookie());
-  }, []);
-
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
