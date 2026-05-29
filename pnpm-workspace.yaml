@@ -1,0 +1,8 @@
+packages:
+  - "."
+
+settings:
+  onlyBuiltDependencies:
+    - "@parcel/watcher"
+    - "@swc/core"
+    - "msgpackr-extract"
