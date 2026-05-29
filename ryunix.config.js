@@ -1,7 +1,9 @@
-/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
+import { docI18nSettings } from "./src/i18n/settings.js";
 
+/** @type {import('@unsetsoft/ryunix-presets').RyunixUserConfig} */
 const RyunixSettings = {
   rootDir: "src",
+  i18n: docI18nSettings,
   ssr: true,
   mdx: true,
   favicon: true,
@@ -39,6 +41,7 @@ const RyunixSettings = {
         "@/features": "./src/features",
         "@/i18n": "./src/i18n",
         "@/resources": "./src/resources",
+        "@/lib": "./src/lib",
       },
     },
   },

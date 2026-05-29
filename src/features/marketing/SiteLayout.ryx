@@ -7,7 +7,6 @@ const SiteLayout = ({ children, locale, docsPath, templatesPath, copy }) => (
       {copy.skipToContent}
     </a>
     <SiteHeader
-      locale={locale}
       homePath={`/${locale}`}
       docsPath={docsPath}
       docsNavLabel={copy.docsNav}

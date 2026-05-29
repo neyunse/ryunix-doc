@@ -1,7 +1,23 @@
-export const locales = ["en", "es"];
-export const defaultLocale = "en";
-export const localeLabels = { en: "English", es: "Español" };
+import {
+  getLocaleFromPath as getLocaleFromPathCore,
+  pickLocale as pickLocaleCore,
+  swapLocalePath as swapLocalePathCore,
+} from "@unsetsoft/ryunixjs";
+import { docI18nSettings } from "./settings.js";
+
+export const locales = [...docI18nSettings.locales];
+export const defaultLocale = docI18nSettings.defaultLocale;
+export const localeLabels = docI18nSettings.localeLabels;
 export const LOCALE_COOKIE_NAME = "ryunix_locale";
+
+export const pickLocale = (record, locale) =>
+  pickLocaleCore(record, locale, defaultLocale);
+
+export const swapLocalePath = (pathname, targetLocale) =>
+  swapLocalePathCore(pathname, targetLocale, { locales, defaultLocale });
+
+export const getLocaleFromPath = (pathname) =>
+  getLocaleFromPathCore(pathname, locales);
 
 /** Build a localized docs URL from a slug (no leading slash on slug). */
 export function docPath(locale, slug) {
@@ -97,21 +113,3 @@ export function getDocSections(locale) {
   return out;
 }
 
-/** Swap locale prefix while keeping the rest of the path. */
-export function swapLocalePath(pathname, targetLocale) {
-  const match = pathname.match(/^\/(en|es)(\/.*)?$/);
-  const rest = match ? match[2] || "" : pathname.replace(/^\/docs/, "/docs");
-  if (match) {
-    return `/${targetLocale}${rest || ""}`;
-  }
-  if (pathname.startsWith("/docs")) {
-    return `/${targetLocale}${pathname}`;
-  }
-  return `/${targetLocale}`;
-}
-
-export function getLocaleFromPath(pathname) {
-  if (typeof pathname !== "string") return null;
-  const match = pathname.match(/^\/(en|es)(\/|$)/);
-  return match ? match[1] : null;
-}
