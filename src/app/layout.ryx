@@ -1,8 +1,19 @@
 import "@/styles/global.css";
 import { headerScrollScript } from "@/components/layout/header/headerScrollScript";
 import { themeInitScript } from "@/i18n/themeCookie";
+import { siteOgImage, siteOgImageAlt } from "@/i18n/siteOgImage";
 
 import type { RyunixNode } from "@unsetsoft/ryunixjs";
+
+export const Metatags = {
+  title: { default: "RyunixJS", template: "%s | RyunixJS" },
+  description:
+    "Official RyunixJS documentation — guides, API reference, and examples for building modern web apps.",
+  "og:type": "website",
+  "og:site_name": "RyunixJS",
+  ...siteOgImage,
+  "og:image:alt": siteOgImageAlt.en,
+};
 
 const RootLayout = ({ children }: { children?: RyunixNode }) => {
   const bootScripts = `${themeInitScript}\n${headerScrollScript}`;

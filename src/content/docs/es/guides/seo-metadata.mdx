@@ -42,6 +42,29 @@ export async function generateMetadata({ params, searchParams }) {
 
 Actualiza `document.title` y `<meta>` tras navegar. En servidor, los metadatos se fusionan en `ssrMetadata` para la inyección HTML.
 
+## Imagen Open Graph del sitio
+
+Este sitio de documentación incluye una imagen de vista previa en `public/screenshot.png` (captura de la página de inicio). Se declara una vez y se reutiliza en las rutas:
+
+1. **Layout raíz** — `export const Metatags` en `src/app/layout.ryx` define `og:image`, dimensiones y tarjeta de Twitter por defecto.
+2. **Layouts por locale** — `generateMetadata` en `src/app/[locale]/layout.ryx` y `src/app/[locale]/docs/layout.ryx` fusionan `og:image:alt` y descripciones desde `src/i18n/siteOgImage.ts`.
+3. **URL estática** — Navegadores y crawlers piden `/screenshot.png`; Ryunix copia los archivos de `public/` al build.
+
+```jsx
+// src/i18n/siteOgImage.ts (extracto)
+export const siteOgImage = {
+  "og:image": "/screenshot.png",
+  "og:image:width": "1830",
+  "og:image:height": "1076",
+  "twitter:card": "summary_large_image",
+  "twitter:image": "/screenshot.png",
+};
+```
+
+<img src="/screenshot.png" alt="Página de inicio de la documentación de RyunixJS" width="1830" height="1076" loading="lazy" />
+
+Sobrescribe por ruta con `Metatags["og:image"]`, `opengraph-image.png` en la carpeta del segmento o un `generateMetadata` específico.
+
 ## Reglas de merge
 
 - Primero los `Metatags` del layout; la página sobrescribe.

@@ -42,6 +42,29 @@ export async function generateMetadata({ params, searchParams }) {
 
 Updates `document.title` and `<meta>` after navigation. On the server, metadata merges into `ssrMetadata` for HTML injection.
 
+## Site-wide Open Graph image
+
+This documentation site ships a default share image at `public/screenshot.png` (homepage preview). It is wired once and reused across routes:
+
+1. **Root layout** — `export const Metatags` in `src/app/layout.ryx` sets `og:image`, dimensions, and Twitter card defaults for the whole app.
+2. **Locale layouts** — `generateMetadata` in `src/app/[locale]/layout.ryx` and `src/app/[locale]/docs/layout.ryx` merge locale-specific `og:image:alt` and descriptions from `src/i18n/siteOgImage.ts`.
+3. **Static URL** — Browsers and crawlers request `/screenshot.png`; Ryunix copies `public/` assets into the build output.
+
+```jsx
+// src/i18n/siteOgImage.ts (excerpt)
+export const siteOgImage = {
+  "og:image": "/screenshot.png",
+  "og:image:width": "1830",
+  "og:image:height": "1076",
+  "twitter:card": "summary_large_image",
+  "twitter:image": "/screenshot.png",
+};
+```
+
+<img src="/screenshot.png" alt="RyunixJS documentation site homepage" width="1830" height="1076" loading="lazy" />
+
+Override per route with `Metatags["og:image"]`, `opengraph-image.png` in a segment folder, or a page-specific `generateMetadata` return value.
+
 ## Merge rules
 
 - Layout `Metatags` merge first; page-level values override.

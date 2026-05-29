@@ -1,36 +1,93 @@
 import { NavLink, useStore } from "@unsetsoft/ryunixjs";
 import { ArrowRight } from "lucide";
 import { Icon } from "@/components/ui/Icon";
+import { cn } from "@/lib/cn";
 
 const SpotlightMedia = ({ image, placeholderLabel }) => {
   const [loaded, setLoaded] = useStore(false);
   const [failed, setFailed] = useStore(false);
   const showImage = image?.src && loaded && !failed;
+  const fitContain = image?.fit === "contain";
 
   return (
-    <div className="relative aspect-16/10 rounded-2xl border border-theme bg-surface-footer overflow-hidden shadow-2xl">
-      {image?.src ? (
-        <img
-          src={image.src}
-          alt={image.alt || ""}
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${
-            showImage ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setLoaded(true)}
-          onError={() => setFailed(true)}
-        />
-      ) : null}
+    <div
+      className={cn(
+        "spotlight-media relative rounded-2xl border border-theme overflow-hidden shadow-2xl",
+        "bg-surface-footer",
+      )}
+    >
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-8 m-3 rounded-xl border border-dashed border-theme bg-surface-card/90 transition-opacity duration-500 ${
-          showImage ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+        className="pointer-events-none absolute -top-[20%] -right-[15%] h-[55%] w-[50%] rounded-full blur-[80px] opacity-50 dark:opacity-30"
+        style={{ background: "var(--color-glow-purple)" }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-[15%] -left-[10%] h-[50%] w-[45%] rounded-full blur-[80px] opacity-45 dark:opacity-25"
+        style={{ background: "var(--color-glow-blue)" }}
+      />
+
+      <div
+        className={cn(
+          "relative w-full",
+          fitContain
+            ? "flex min-h-[13rem] items-center justify-center py-6 sm:min-h-[15rem] sm:py-8"
+            : "aspect-16/10",
+        )}
       >
-        <div className="w-12 h-12 rounded-xl bg-surface-elevated border border-theme flex items-center justify-center text-theme-muted">
+        {image?.src ? (
+          <img
+            src={image.src}
+            alt={image.alt || ""}
+            className={cn(
+              "relative z-[1] transition-[opacity,filter] duration-500 ease-out",
+              fitContain
+                ? "mx-auto block h-auto max-h-[min(22rem,52vw)] w-auto max-w-[calc(100%-2rem)] object-contain px-4 sm:max-w-[calc(100%-3rem)] sm:px-6"
+                : "absolute inset-0 h-full w-full object-cover object-top",
+              showImage
+                ? fitContain
+                  ? "opacity-95 saturate-[0.94] brightness-[0.98]"
+                  : "opacity-90 saturate-[0.9] brightness-[0.96] contrast-[1.02]"
+                : "opacity-0",
+            )}
+            onLoad={() => setLoaded(true)}
+            onError={() => setFailed(true)}
+          />
+        ) : null}
+
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 z-[2]",
+            fitContain
+              ? "bg-linear-to-br from-blue-500/5 via-transparent to-purple-500/6 dark:from-blue-400/6 dark:to-purple-500/8"
+              : "bg-linear-to-br from-blue-500/10 via-transparent to-purple-500/12 mix-blend-soft-light dark:from-blue-400/12 dark:to-purple-500/14 dark:mix-blend-normal",
+          )}
+          aria-hidden="true"
+        />
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 z-[2] bg-linear-to-t to-transparent",
+            fitContain ? "from-surface-footer/25 via-transparent" : "from-surface-footer/55 via-surface-footer/10",
+          )}
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 z-[3] rounded-2xl ring-1 ring-inset ring-white/15 dark:ring-white/8"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div
+        className={cn(
+          "absolute inset-0 z-[4] m-3 flex flex-col items-center justify-center gap-3 rounded-xl",
+          "border border-dashed border-theme bg-surface-card/90 p-8 transition-opacity duration-500",
+          showImage ? "pointer-events-none opacity-0" : "opacity-100",
+        )}
+      >
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-theme bg-surface-elevated text-theme-muted">
           <span className="text-xl">🖼</span>
         </div>
-        <p className="text-sm text-theme-muted text-center max-w-xs leading-relaxed">{placeholderLabel}</p>
+        <p className="max-w-xs text-center text-sm leading-relaxed text-theme-muted">{placeholderLabel}</p>
         {image?.src ? (
-          <p className="text-[11px] font-mono text-theme-muted opacity-70 text-center break-all">{image.src}</p>
+          <p className="break-all text-center font-mono text-[11px] text-theme-muted opacity-70">{image.src}</p>
         ) : null}
       </div>
     </div>
