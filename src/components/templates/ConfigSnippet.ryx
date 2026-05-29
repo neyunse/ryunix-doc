@@ -1,7 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import { useCopyFeedback } from "@/components/ui/useCopyFeedback";
 import { Check, Copy } from "lucide";
-import { copyButtonClass } from "@/lib/uiClasses";
 import { cn } from "@/lib/cn";
 
 import type { WithOptionalKey } from "@/types/components";
@@ -30,7 +29,15 @@ const ConfigSnippet = ({
         <button
           type="button"
           onClick={copy}
-          className={copyButtonClass(copied)}
+          className={cn(
+            "cursor-pointer shrink-0 p-1.5 rounded-md border transition-all duration-300",
+            copied
+              ? cn(
+                  "bg-green-500/15 border-green-500/50 text-green-400",
+                  "shadow-[0_0_16px_rgba(34,197,94,0.35)] scale-110",
+                )
+              : "bg-transparent border-transparent text-theme-muted hover:bg-surface-elevated hover:text-theme",
+          )}
           aria-label={copyLabel}
           title={copyLabel}
         >

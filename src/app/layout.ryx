@@ -1,5 +1,5 @@
 import "@/styles/global.css";
-import { headerScrollScript } from "@/components/layout/headerScrollScript";
+import { headerScrollScript } from "@/components/layout/header/headerScrollScript";
 import { themeInitScript } from "@/i18n/themeCookie";
 
 import type { RyunixNode } from "@unsetsoft/ryunixjs";

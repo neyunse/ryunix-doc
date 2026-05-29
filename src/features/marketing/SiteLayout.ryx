@@ -1,6 +1,6 @@
 import type { RyunixNode } from "@unsetsoft/ryunixjs";
 
-import SiteHeader from "@/components/layout/SiteHeader";
+import SiteHeader from "@/components/layout/header/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 const SiteLayout = ({
@@ -29,7 +29,7 @@ const SiteLayout = ({
       templatesNavLabel={copy?.templatesNav}
       menuNavLabel={copy?.menuNav}
     />
-    <main id="main-content" className="text-theme bg-surface min-h-[var(--ui-main-min-height)]">
+    <main id="main-content" className="text-theme bg-surface min-h-(--ui-main-min-height)">
       {children}
     </main>
     <SiteFooter locale={locale} copy={copy} />

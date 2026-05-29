@@ -3,6 +3,7 @@ node_modules
 .env.*
 !.env.example
 .ryunix
+react-doctor-mirror
 .turbo
 test-results
 package-lock.json

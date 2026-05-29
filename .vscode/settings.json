@@ -16,6 +16,10 @@
   "tailwindCSS.experimental.classRegex": [
     ["className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]", "([^\\s]+)"]
   ],
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "explorer.fileNesting.patterns": {
     "index.ryx": "layout.ryx, loading.ryx, error.ryx, errors.ryx"
   }

@@ -3,17 +3,6 @@ import type { DocSidebarRoute, DocSidebarSections } from "@/i18n/types";
 import { ChevronRight, ChevronLeft, Menu, X } from "lucide";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
-import {
-  docPagerContainerClass,
-  docPagerLabelRowClass,
-  docPagerLinkClass,
-  docSidebarLinkClass,
-  docsMenuToggleClass,
-  docsMobileBarClass,
-  docsOverlayClass,
-  glowOrbBottomClass,
-  glowOrbTopClass,
-} from "@/lib/uiClasses";
 
 const SidebarContent = ({
   sections,
@@ -33,7 +22,18 @@ const SidebarContent = ({
             const isActive = currentPath === route.path;
             return (
               <li key={route.path}>
-                <NavLink to={route.path} className={docSidebarLinkClass(isActive)}>
+                <NavLink
+                  to={route.path}
+                  className={cn(
+                    "block px-3 py-2 rounded-xl transition-all duration-300",
+                    isActive
+                      ? cn(
+                          "bg-gradient-to-r from-blue-500/20 to-purple-500/10",
+                          "text-blue-600 dark:text-blue-300 font-medium shadow-[inset_2px_0_0_#3b82f6]",
+                        )
+                      : "text-theme-muted hover:bg-black/5 dark:hover:bg-white/5 hover:text-theme",
+                  )}
+                >
                   {route.label}
                 </NavLink>
               </li>
@@ -66,7 +66,7 @@ const DocLayoutShell = ({
       ? allRoutes[currentIndex + 1]
       : null;
   const currentSectionEntry = Object.entries(sections).find(([, routes]) =>
-    routes.some((r) => r.path === currentPath)
+    routes.some((r) => r.path === currentPath),
   );
   const currentSectionName = currentSectionEntry ? currentSectionEntry[0] : "";
   const currentRouteLabel = currentSectionEntry
@@ -84,12 +84,29 @@ const DocLayoutShell = ({
   }, [currentPath]);
 
   return (
-    <div className="max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 relative">
-      <div className={glowOrbTopClass} style={{ background: "var(--color-glow-blue)" }} />
-      <div className={glowOrbBottomClass} style={{ background: "var(--color-glow-purple)" }} />
+    <div className="max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div
+        className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none opacity-50 dark:opacity-25 z-0"
+        style={{ background: "var(--color-glow-blue)" }}
+      />
+      <div
+        className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none opacity-40 dark:opacity-20 z-0"
+        style={{ background: "var(--color-glow-purple)" }}
+      />
 
-      <div className={docsMobileBarClass}>
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={docsMenuToggleClass}>
+      <div
+        className={cn(
+          "lg:hidden sticky top-(--ui-header-height) z-50 bg-header backdrop-blur-md",
+          "border-b border-theme -mx-4 px-4 py-3 flex items-center justify-between",
+        )}
+      >
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className={cn(
+            "cursor-pointer flex items-center gap-2 text-sm font-medium text-theme-muted",
+            "hover:text-theme transition-colors",
+          )}
+        >
           <Icon icon={isMobileMenuOpen ? X : Menu} className="w-5 h-5" />
           <span>Menu</span>
         </button>
@@ -101,13 +118,16 @@ const DocLayoutShell = ({
       </div>
 
       {isMobileMenuOpen ? (
-        <div className={docsOverlayClass} onClick={() => setIsMobileMenuOpen(false)} />
+        <div
+          className="cursor-pointer fixed inset-0 z-60 bg-black/40 dark:bg-black/60 backdrop-blur-sm lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
       ) : null}
 
       <div className="lg:grid lg:grid-cols-12 gap-8 lg:gap-12 relative">
         <aside
           className={cn(
-            "fixed lg:sticky top-[var(--ui-header-height)] z-[70] lg:z-40",
+            "fixed lg:sticky top-(--ui-header-height) z-70 lg:z-40",
             "h-[calc(100vh-var(--ui-header-height))] w-72 lg:w-auto bg-transparent",
             "border-r border-theme py-8 px-6 lg:pr-6 lg:pl-0",
             "transition-transform duration-300 ease-in-out lg:translate-x-0 lg:col-span-3 lg:block",
@@ -131,10 +151,27 @@ const DocLayoutShell = ({
 
           <article className="docs-content scroll-smooth">{children}</article>
 
-          <div className={docPagerContainerClass}>
+          <div
+            className={cn(
+              "mt-16 pt-8 border-t border-theme flex flex-col sm:flex-row gap-4",
+              "justify-between items-center sm:items-stretch",
+            )}
+          >
             {prevRoute ? (
-              <NavLink to={prevRoute.path} className={docPagerLinkClass(false)}>
-                <div className={docPagerLabelRowClass}>
+              <NavLink
+                to={prevRoute.path}
+                className={cn(
+                  "group flex flex-col w-full sm:w-1/2 p-4 rounded-2xl border border-theme",
+                  "bg-surface-card hover:bg-surface-card-hover hover:border-blue-500/50 transition-all duration-300",
+                  "items-start",
+                )}
+              >
+                <div
+                  className={cn(
+                    "flex items-center text-theme-muted text-sm mb-1",
+                    "group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors",
+                  )}
+                >
                   <Icon
                     icon={ChevronLeft}
                     className="h-4 w-4 mr-1 transform group-hover:-translate-x-1 transition-transform"
@@ -148,8 +185,20 @@ const DocLayoutShell = ({
             )}
 
             {nextRoute ? (
-              <NavLink to={nextRoute.path} className={docPagerLinkClass(true)}>
-                <div className={docPagerLabelRowClass}>
+              <NavLink
+                to={nextRoute.path}
+                className={cn(
+                  "group flex flex-col w-full sm:w-1/2 p-4 rounded-2xl border border-theme",
+                  "bg-surface-card hover:bg-surface-card-hover hover:border-blue-500/50 transition-all duration-300",
+                  "items-end text-right",
+                )}
+              >
+                <div
+                  className={cn(
+                    "flex items-center text-theme-muted text-sm mb-1",
+                    "group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors",
+                  )}
+                >
                   {nextLabel}
                   <Icon
                     icon={ChevronRight}

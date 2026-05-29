@@ -25,13 +25,13 @@ const HeaderNavLink = ({
         "bg-transparent border-0 shadow-none rounded-none",
         "transition-colors duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/45",
-        "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-header-bg)]",
+        "focus-visible:ring-offset-2 focus-visible:ring-offset-header-bg",
         dropdown &&
           "w-full justify-start px-4 py-3 rounded-lg md:w-auto md:justify-center md:px-4 md:py-2 md:pb-2.5 md:pt-2 md:rounded-none",
         isActive ? "is-active text-theme" : "text-theme-muted hover:text-theme",
       )) as unknown as string}
   >
-    <span className="relative z-[1] whitespace-nowrap">{children}</span>
+    <span className="relative z-1 whitespace-nowrap">{children}</span>
     <span className="header-nav-underline" aria-hidden="true" />
   </NavLink>
 );

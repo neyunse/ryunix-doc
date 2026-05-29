@@ -2,13 +2,12 @@ import { Image, useEffect, useRouter, useStore } from "@unsetsoft/ryunixjs";
 import { Menu, X, Github } from "lucide";
 
 import LocaleSwitcher from "@/components/ui/LocaleSwitcher";
-import HeaderNavLink from "@/components/layout/HeaderNavLink";
-import HeaderBrandLink from "@/components/layout/HeaderBrandLink";
-import HeaderNavMenuToggle from "@/components/layout/HeaderNavMenuToggle";
+import HeaderNavLink from "./HeaderNavLink";
+import HeaderBrandLink from "./HeaderBrandLink";
+import HeaderNavMenuToggle from "./HeaderNavMenuToggle";
 import { Icon } from "@/components/ui/Icon";
 import Logo from "@/resources/logo-min.svg";
 import { cn } from "@/lib/cn";
-import { brandGradientTextClass, siteHeaderInnerClass, siteHeaderShellClass } from "@/lib/uiClasses";
 
 export const SITE_HEADER_ID = "site-header";
 export const SITE_HEADER_NAV_ID = "site-header-nav";
@@ -32,7 +31,12 @@ const SiteHeader = ({
   return (
     <header
       id={SITE_HEADER_ID}
-      className={cn(siteHeaderShellClass, isNavOpen && "is-nav-open")}
+      className={cn(
+        "site-header header-scroll sticky top-0 z-100 text-theme relative",
+        "min-h-(--ui-header-height) h-auto md:h-(--ui-header-height)",
+        "border-b border-theme",
+        isNavOpen && "is-nav-open",
+      )}
     >
       {isNavOpen ? (
         <button
@@ -44,10 +48,16 @@ const SiteHeader = ({
         />
       ) : null}
 
-      <div className={siteHeaderInnerClass}>
+      <div className="site-header-inner">
         <HeaderBrandLink to={homePath}>
           <Image src={Logo} width={36} height={36} fill="var(--color-logo-fill)" alt="Ryunix Logo" />
-          <span className={cn(brandGradientTextClass, "hidden sm:block")}>RyunixJS</span>
+          <span
+            className={cn(
+              "hidden sm:block bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-purple-600",
+            )}
+          >
+            RyunixJS
+          </span>
         </HeaderBrandLink>
 
         <nav id={SITE_HEADER_NAV_ID} className="site-header-nav" aria-label="Main">
@@ -85,9 +95,10 @@ const SiteHeader = ({
           <a
             href="https://github.com/UnSetSoft/Ryunixjs"
             className={cn(
-              "inline-flex items-center justify-center gap-2 min-h-10 px-2 sm:px-3",
+              "group/github inline-flex items-center justify-center gap-2 min-h-10 px-2 sm:px-3",
               "text-sm font-medium text-theme-muted rounded-lg border-0 bg-transparent",
-              "transition-colors duration-200 hover:text-theme",
+              "transition-colors duration-200",
+              "hover:text-theme hover:bg-black/5 dark:hover:bg-white/5",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/45",
             )}
             target="_blank"
@@ -95,7 +106,10 @@ const SiteHeader = ({
             aria-label="GitHub"
           >
             <span className="hidden md:inline">GitHub</span>
-            <Icon icon={Github} className="w-4 h-4 shrink-0 opacity-80" />
+            <Icon
+              icon={Github}
+              className="w-4 h-4 shrink-0 opacity-80 transition-opacity duration-200 group-hover/github:opacity-100"
+            />
           </a>
         </div>
       </div>

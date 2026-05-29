@@ -2,7 +2,6 @@ import { NavLink } from "@unsetsoft/ryunixjs";
 import { CodeTabs } from "@/components/ui/CodeTabs";
 import ConfigSnippet from "@/components/templates/ConfigSnippet";
 import { cn } from "@/lib/cn";
-import { sectionEyebrowClass, templateBadgeClass, templateFileListClass } from "@/lib/uiClasses";
 import {
   craTemplateCommandTabs,
   craTemplateWorkflowTabs,
@@ -26,13 +25,18 @@ const TemplateDetailPanel = ({ template, copy, docsBase }) => {
     <div
       className={cn(
         "flex flex-col rounded-2xl border border-theme bg-surface-card shadow-sm ring-1",
-        "bg-gradient-to-br to-transparent",
+        "bg-linear-to-br to-transparent",
         ring,
       )}
     >
       <header className="p-6 sm:p-8 border-b border-theme">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className={templateBadgeClass}>
+          <span
+            className={cn(
+              "inline-flex items-center rounded-full border border-theme",
+              "px-2.5 py-0.5 text-xs font-medium text-theme-muted",
+            )}
+          >
             {badge}
           </span>
           <span className="font-mono text-xs text-theme-muted">{flagsHint}</span>
@@ -56,18 +60,28 @@ const TemplateDetailPanel = ({ template, copy, docsBase }) => {
 
       <div className="p-6 sm:p-8 flex flex-col gap-10">
         <section>
-          <h2 className={sectionEyebrowClass("mb-1")}>{copy.detail.workflowTitle}</h2>
+          <h2
+            className={cn(
+              "text-sm font-semibold uppercase tracking-wider text-theme-muted mb-1",
+            )}
+          >
+            {copy.detail.workflowTitle}
+          </h2>
           <p className="text-sm text-theme-muted mb-4">{copy.detail.workflowBody}</p>
           <CodeTabs tabs={craTemplateWorkflowTabs(template.id)} />
         </section>
 
         <section>
-          <h2 className={sectionEyebrowClass()}>{copy.card.scaffoldLabel}</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-theme-muted mb-3">
+            {copy.card.scaffoldLabel}
+          </h2>
           <CodeTabs tabs={craTemplateCommandTabs(template.id)} />
         </section>
 
         <section>
-          <h2 className={sectionEyebrowClass()}>{copy.card.configLabel}</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-theme-muted mb-3">
+            {copy.card.configLabel}
+          </h2>
           <ConfigSnippet
             filename="ryunix.config.js"
             code={template.ryunixConfig}
@@ -77,7 +91,9 @@ const TemplateDetailPanel = ({ template, copy, docsBase }) => {
 
         {template.extraFiles.length > 0 ? (
           <section>
-            <h2 className={sectionEyebrowClass()}>{copy.card.extraFilesLabel}</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-theme-muted mb-3">
+              {copy.card.extraFilesLabel}
+            </h2>
             <div className="flex flex-col gap-4">
               {template.extraFiles.map((file) => (
                 <ConfigSnippet
@@ -93,16 +109,30 @@ const TemplateDetailPanel = ({ template, copy, docsBase }) => {
 
         <div className="grid sm:grid-cols-2 gap-6">
           <section>
-            <h2 className={sectionEyebrowClass()}>{copy.card.structureLabel}</h2>
-            <ul className={templateFileListClass}>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-theme-muted mb-3">
+              {copy.card.structureLabel}
+            </h2>
+            <ul
+              className={cn(
+                "font-mono text-xs text-theme-muted space-y-1.5",
+                "bg-surface-elevated rounded-xl border border-theme p-4",
+              )}
+            >
               {template.structureKeys.map((key) => (
                 <li key={key}>{copy.structure[key]}</li>
               ))}
             </ul>
           </section>
           <section>
-            <h2 className={sectionEyebrowClass()}>{copy.card.scriptsLabel}</h2>
-            <ul className={templateFileListClass}>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-theme-muted mb-3">
+              {copy.card.scriptsLabel}
+            </h2>
+            <ul
+              className={cn(
+                "font-mono text-xs text-theme-muted space-y-1.5",
+                "bg-surface-elevated rounded-xl border border-theme p-4",
+              )}
+            >
               {template.scriptKeys.map((key) => (
                 <li key={key}>
                   <span className="text-theme">{key === "lintFix" ? "lint:fix" : key}</span>

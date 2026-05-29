@@ -44,7 +44,7 @@ const TemplatePreview = ({ templateId, accent = "blue", compact = false }) => {
       className={cn("relative overflow-hidden rounded-xl border border-theme bg-surface-elevated", height)}
       aria-hidden="true"
     >
-      <div className={cn("absolute inset-0 bg-gradient-to-br pointer-events-none", theme.glow)} />
+      <div className={cn("absolute inset-0 bg-linear-to-br pointer-events-none", theme.glow)} />
 
       <div className="relative flex flex-col h-full p-3 sm:p-4">
         <div className="flex items-center gap-1.5 mb-3 shrink-0">

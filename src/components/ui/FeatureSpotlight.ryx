@@ -8,7 +8,7 @@ const SpotlightMedia = ({ image, placeholderLabel }) => {
   const showImage = image?.src && loaded && !failed;
 
   return (
-    <div className="relative aspect-[16/10] rounded-2xl border border-theme bg-surface-footer overflow-hidden shadow-2xl">
+    <div className="relative aspect-16/10 rounded-2xl border border-theme bg-surface-footer overflow-hidden shadow-2xl">
       {image?.src ? (
         <img
           src={image.src}
