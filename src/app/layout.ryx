@@ -5,10 +5,11 @@ import { themeInitScript } from "@/i18n/themeCookie";
 import type { RyunixNode } from "@unsetsoft/ryunixjs";
 
 const RootLayout = ({ children }: { children?: RyunixNode }) => {
+  const bootScripts = `${themeInitScript}\n${headerScrollScript}`;
+
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      <script dangerouslySetInnerHTML={{ __html: headerScrollScript }} />
+      <script dangerouslySetInnerHTML={{ __html: bootScripts }} />
       {children}
     </>
   );
