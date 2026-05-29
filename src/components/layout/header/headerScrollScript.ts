@@ -4,7 +4,11 @@ export const headerScrollScript = `(function(){
   var ID='site-header';
   var MQ='(min-width: 768px)';
   var desktop=window.matchMedia(MQ);
+  var ticking=false;
   function isDesktop(){return desktop.matches;}
+  function scrollY(){
+    return window.scrollY||document.documentElement.scrollTop||document.body.scrollTop||0;
+  }
   function apply(){
     var el=document.getElementById(ID);
     if(!el)return false;
@@ -12,15 +16,23 @@ export const headerScrollScript = `(function(){
       el.style.setProperty('--header-opacity','1');
       return true;
     }
-    var y=window.scrollY||document.documentElement.scrollTop||0;
-    var p=Math.min(y/FADE,1);
+    var p=Math.min(scrollY()/FADE,1);
     el.style.setProperty('--header-opacity',String(p));
     return true;
   }
-  function onScroll(){apply();}
+  function onScroll(){
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      apply();
+      ticking=false;
+    });
+  }
   function onBreakpoint(){apply();}
   window.addEventListener('scroll',onScroll,{passive:true});
   document.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('popstate',apply);
+  window.addEventListener('pageshow',function(){apply();});
   if(desktop.addEventListener){
     desktop.addEventListener('change',onBreakpoint);
   }else if(desktop.addListener){
@@ -35,5 +47,4 @@ export const headerScrollScript = `(function(){
   }else{
     waitForHeader(120);
   }
-  window.addEventListener('pageshow',function(){waitForHeader(120);});
 })();`;

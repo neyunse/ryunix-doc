@@ -32,9 +32,8 @@ const SiteHeader = ({
     <header
       id={SITE_HEADER_ID}
       className={cn(
-        "site-header header-scroll sticky top-0 z-100 text-theme relative",
+        "site-header header-scroll text-theme",
         "min-h-(--ui-header-height) h-auto md:h-(--ui-header-height)",
-        "border-b border-theme",
         isNavOpen && "is-nav-open",
       )}
     >

@@ -133,7 +133,7 @@ html.dark .docs-content .hljs-built_in { color: #ffa657; }
   --focus-ring-offset: 2px;
   --focus-ring-offset-color: var(--color-surface-base);
 
-  /* Skip link sits below sticky header + gap */
+  /* Skip link sits below fixed header + gap (header z-index 100, docs mobile bar z-50) */
   --skip-link-top: calc(var(--ui-header-height) + var(--space-3));
 
   /* Theme toggle (light defaults) */
@@ -905,8 +905,17 @@ html.dark {
     }
   }
 
+  /* Site header — in document flow on mobile; fixed to viewport from md */
+  .site-header {
+    z-index: 100;
+  }
+
   /* Site header — solid bar on small screens (no scroll fade) */
   @media (max-width: 767px) {
+    .site-header {
+      position: relative;
+    }
+
     .site-header.header-scroll {
       --header-opacity: 1;
       background: var(--color-header-bg);
@@ -918,6 +927,18 @@ html.dark {
 
   /* Site header — scroll fade on md+ (design tokens, light/dark via html.dark) */
   @media (min-width: 768px) {
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+
+    #main-content {
+      padding-top: var(--ui-header-height);
+    }
+
     .site-header.header-scroll {
       --header-opacity: 0;
       background: color-mix(

@@ -96,7 +96,7 @@ const DocLayoutShell = ({
 
       <div
         className={cn(
-          "lg:hidden sticky top-(--ui-header-height) z-50 bg-header backdrop-blur-md",
+          "lg:hidden sticky top-0 md:top-(--ui-header-height) z-50 bg-header backdrop-blur-md",
           "border-b border-theme -mx-4 px-4 py-3 flex items-center justify-between",
         )}
       >
@@ -127,8 +127,8 @@ const DocLayoutShell = ({
       <div className="lg:grid lg:grid-cols-12 gap-8 lg:gap-12 relative">
         <aside
           className={cn(
-            "fixed lg:sticky top-(--ui-header-height) z-70 lg:z-40",
-            "h-[calc(100vh-var(--ui-header-height))] w-72 lg:w-auto bg-transparent",
+            "fixed lg:sticky top-0 md:top-(--ui-header-height) z-70 lg:z-40",
+            "h-dvh md:h-[calc(100vh-var(--ui-header-height))] w-72 lg:w-auto bg-transparent",
             "border-r border-theme py-8 px-6 lg:pr-6 lg:pl-0",
             "transition-transform duration-300 ease-in-out lg:translate-x-0 lg:col-span-3 lg:block",
             "overflow-y-auto docs-sidebar-scroll",
