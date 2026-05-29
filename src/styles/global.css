@@ -200,6 +200,12 @@ html.dark {
   --code-tab-active-shadow: var(--shadow-base);
 }
 
+@property --header-opacity {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
 @layer base {
   * {
     margin: 0px;
@@ -210,6 +216,14 @@ html.dark {
 
   html {
     overflow-x: clip;
+  }
+
+  @media (min-width: 768px) {
+    @supports (animation-timeline: scroll()) {
+      html {
+        scroll-timeline: --site-scroll y;
+      }
+    }
   }
 
   body {
@@ -905,6 +919,10 @@ html.dark {
     }
   }
 
+  .root-layout-shell {
+    display: contents;
+  }
+
   /* Site header — in document flow on mobile; fixed to viewport from md */
   .site-header {
     z-index: 100;
@@ -954,6 +972,28 @@ html.dark {
         );
       backdrop-filter: blur(calc(var(--header-opacity) * 12px));
       -webkit-backdrop-filter: blur(calc(var(--header-opacity) * 12px));
+      transition:
+        background 120ms ease-out,
+        border-color 120ms ease-out,
+        backdrop-filter 120ms ease-out,
+        -webkit-backdrop-filter 120ms ease-out;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .site-header.header-scroll {
+        animation: site-header-scroll-fade linear both;
+        animation-timeline: --site-scroll;
+        animation-range: 0px 100px;
+      }
+    }
+  }
+
+  @keyframes site-header-scroll-fade {
+    from {
+      --header-opacity: 0;
+    }
+    to {
+      --header-opacity: 1;
     }
   }
 

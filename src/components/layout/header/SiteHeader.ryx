@@ -1,15 +1,19 @@
 import { Image, useEffect, useRouter, useStore } from "@unsetsoft/ryunixjs";
-import { Menu, X, Github } from "lucide";
+import { Menu, X } from "lucide";
 
 import LocaleSwitcher from "@/components/ui/LocaleSwitcher";
 import HeaderNavLink from "./HeaderNavLink";
 import HeaderBrandLink from "./HeaderBrandLink";
 import HeaderNavMenuToggle from "./HeaderNavMenuToggle";
+import "./siteHeaderScroll";
+import { SITE_HEADER_ELEMENT_ID } from "./siteHeaderConstants";
+import { useHeaderScroll } from "./useHeaderScroll";
+import GitHubIcon from "@/components/ui/GitHubIcon";
 import { Icon } from "@/components/ui/Icon";
 import Logo from "@/resources/logo-min.svg";
 import { cn } from "@/lib/cn";
 
-export const SITE_HEADER_ID = "site-header";
+export const SITE_HEADER_ID = SITE_HEADER_ELEMENT_ID;
 export const SITE_HEADER_NAV_ID = "site-header-nav";
 
 const SiteHeader = ({
@@ -23,6 +27,7 @@ const SiteHeader = ({
 }) => {
   const [isNavOpen, setIsNavOpen] = useStore(false);
   const { location } = useRouter();
+  useHeaderScroll(location);
 
   useEffect(() => {
     setIsNavOpen(false);
@@ -105,10 +110,7 @@ const SiteHeader = ({
             aria-label="GitHub"
           >
             <span className="hidden md:inline">GitHub</span>
-            <Icon
-              icon={Github}
-              className="w-4 h-4 shrink-0 opacity-80 transition-opacity duration-200 group-hover/github:opacity-100"
-            />
+            <GitHubIcon className="w-4 h-4 opacity-80 transition-opacity duration-200 group-hover/github:opacity-100" />
           </a>
         </div>
       </div>
