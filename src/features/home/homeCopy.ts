@@ -1,0 +1,268 @@
+export const homeCopy = {
+  en: {
+    heroLead: "Build modern apps with",
+    heroHighlight: "RyunixJS",
+    heroBody:
+      "A lightweight JavaScript framework with App Router, SSR, SSG, MDX, and a full toolchain — from VS Code to the browser DevTools panel.",
+    cta: "Get Started",
+    terminalTitle: "~/WEB",
+    copyLabel: "Copy",
+    featuresEyebrow: "Core Features",
+    featuresTitle: "Why RyunixJS?",
+    cards: [
+      {
+        title: "Performance First",
+        body: "Fiber reconciler, priority scheduling, and a minimal runtime footprint for fast loads and smooth UI.",
+      },
+      {
+        title: "App Router",
+        body: "File-system routing with layouts, loading states, error boundaries, and API routes — no extra router library.",
+      },
+      {
+        title: "Developer Experience",
+        body: "Familiar JSX, dual Webpack builds (client + server), MDX, dynamic SSG, and PostCSS out of the box.",
+      },
+    ],
+    ecosystemEyebrow: "Developer ecosystem",
+    ecosystemTitle: "Tools that follow you from editor to browser",
+    spotlights: [
+      {
+        id: "vscode",
+        eyebrow: "VS Code extension",
+        title: "First-class `.ryx` editing",
+        body:
+          "The official unsetsoft.ryunixjs extension adds syntax highlighting, snippets, Emmet, and a TypeScript language server for diagnostics, go-to-definition, and rename across your app.",
+        bullets: [
+          "TextMate grammar + semantic completions for hooks and Metatags",
+          "LSP powered by TypeScript (hover, diagnostics, F2 rename)",
+          "CRA `--vscode` flag writes recommended extensions and workspace settings",
+        ],
+        linkLabel: "VS Code guide",
+        linkPath: "guides/vscode",
+        image: { src: "/home/vscode-extension.png", alt: "RyunixJS VS Code extension editing a .ryx file" },
+        imagePlaceholder: "Add screenshot: VS Code with .ryx syntax and LSP",
+        reverse: false,
+      },
+      {
+        id: "devtools",
+        eyebrow: "Browser DevTools",
+        title: "Inspect fibers, hooks, and props at runtime",
+        body:
+          "The @unsetsoft/ryunix-devtools browser extension connects to your running app to explore the component tree, hook state, and development overlays — alongside built-in runtime warnings.",
+        bullets: [
+          "Fiber tree and props inspection in the browser panel",
+          "RyunixDevOverlay for uncaught render errors in dev",
+          "Built-in profiler APIs (withProfiler, useProfiler) for slow components",
+        ],
+        linkLabel: "DevTools guide",
+        linkPath: "guides/devtools",
+        image: { src: "/home/devtools-panel.png", alt: "Ryunix DevTools browser extension panel" },
+        imagePlaceholder: "Add screenshot: Ryunix DevTools panel in Chrome",
+        reverse: true,
+      },
+    ],
+    buildEyebrow: "Build & ship",
+    buildTitle: "From `ryunix dev` to static HTML",
+    buildSpotlights: [
+      {
+        id: "ssg",
+        eyebrow: "SSG & MDX",
+        title: "Prerender every route automatically",
+        body:
+          "On `ryunix build`, the App Router is scanned, Metatags and MDX frontmatter are merged, and each route is rendered to `.ryunix/static` — with sitemap support when enabled.",
+        bullets: [
+          "Automatic route manifest from `app/` (including `.mdx`)",
+          "SEO injection: title, meta, Open Graph from Metatags",
+          "Optional sitemap generation via `ryunix.config.js`",
+        ],
+        linkLabel: "SSG guide",
+        linkPath: "guides/ssg",
+        image: { src: "/home/ssg-output.png", alt: "Static HTML output from ryunix build" },
+        imagePlaceholder: "Add screenshot: SSG output or docs site build",
+        reverse: false,
+      },
+      {
+        id: "cli",
+        eyebrow: "CLI & scaffolding",
+        title: "`ryunix dev`, `build`, `start`, and Create App",
+        body:
+          "The ryunix CLI from @unsetsoft/ryunix-presets runs dual Webpack compilers in dev, prerenders on build, and serves production output. Create Ryunix App scaffolds official templates with Tailwind, ESLint, and VS Code presets.",
+        bullets: [
+          "`ryunix dev` — HMR with client + server compilers",
+          "`ryunix build` — bundles + SSG prerender to `.ryunix/static`",
+          "`@unsetsoft/cra` — templates: base, Tailwind, ESLint, or all-in-one",
+        ],
+        linkLabel: "CLI & Create App",
+        linkPath: "guides/create-app",
+        image: { src: "/home/cli-terminal.png", alt: "ryunix CLI commands in a terminal" },
+        imagePlaceholder: "Add screenshot: terminal running ryunix dev or build",
+        reverse: true,
+      },
+    ],
+    moreEyebrow: "Also in the box",
+    moreTitle: "More capabilities",
+    moreCards: [
+      {
+        title: "API routes",
+        body: "File-based handlers under `app/api/` compiled with SWC and hot reload in dev.",
+        linkLabel: "API routes",
+        linkPath: "guides/api-routes",
+      },
+      {
+        title: "MDX docs",
+        body: "Write documentation pages as `.mdx` with components, frontmatter, and static prerender.",
+        linkLabel: "MDX guide",
+        linkPath: "guides/mdx",
+      },
+      {
+        title: "Server Actions",
+        body: "Call server functions from components with the core bridge and ServerBoundary.",
+        linkLabel: "Server Actions",
+        linkPath: "core/server-actions",
+      },
+      {
+        title: "TypeScript",
+        body: "Published types for hooks and APIs; jsconfig templates from Create Ryunix App.",
+        linkLabel: "TypeScript",
+        linkPath: "guides/typescript",
+      },
+    ],
+    ctaEyebrow: "Ready to build?",
+    ctaTitle: "Start with Create Ryunix App",
+    ctaBody: "Scaffold a project in seconds, pick your package manager, and open the docs when you need depth.",
+    ctaButton: "Read the docs",
+  },
+  es: {
+    heroLead: "Crea aplicaciones web con",
+    heroHighlight: "RyunixJS",
+    heroBody:
+      "Framework JavaScript ligero con App Router, SSR, SSG, MDX y toolchain completo — desde VS Code hasta DevTools en el navegador.",
+    cta: "Comenzar",
+    terminalTitle: "~/WEB",
+    copyLabel: "Copiar",
+    featuresEyebrow: "Características",
+    featuresTitle: "¿Por qué RyunixJS?",
+    cards: [
+      {
+        title: "Rendimiento",
+        body: "Reconciliador Fiber, cola de prioridad y runtime mínimo para cargas rápidas e interfaz fluida.",
+      },
+      {
+        title: "App Router",
+        body: "Rutas por archivos con layouts, loading, errores y API — sin librería de routing extra.",
+      },
+      {
+        title: "Experiencia de desarrollo",
+        body: "JSX familiar, doble build Webpack (cliente + servidor), MDX, SSG dinámico y PostCSS integrados.",
+      },
+    ],
+    ecosystemEyebrow: "Ecosistema de desarrollo",
+    ecosystemTitle: "Herramientas del editor al navegador",
+    spotlights: [
+      {
+        id: "vscode",
+        eyebrow: "Extensión VS Code",
+        title: "Edición de `.ryx` de primera clase",
+        body:
+          "La extensión oficial unsetsoft.ryunixjs añade resaltado, snippets, Emmet y un language server TypeScript con diagnósticos, ir a definición y renombrar símbolos en tu app.",
+        bullets: [
+          "Gramática TextMate + completions semánticos para hooks y Metatags",
+          "LSP con TypeScript (hover, diagnósticos, renombrar con F2)",
+          "El flag `--vscode` de CRA escribe extensiones y settings recomendados",
+        ],
+        linkLabel: "Guía VS Code",
+        linkPath: "guides/vscode",
+        image: { src: "/home/vscode-extension.png", alt: "Extensión RyunixJS en VS Code editando un " },
+        imagePlaceholder: "Añade captura: VS Code con sintaxis .ryx y LSP",
+        reverse: false,
+      },
+      {
+        id: "devtools",
+        eyebrow: "DevTools del navegador",
+        title: "Inspecciona fibers, hooks y props en runtime",
+        body:
+          "La extensión @unsetsoft/ryunix-devtools se conecta a tu app en ejecución para explorar el árbol de componentes, estado de hooks y overlays de desarrollo — junto a avisos integrados del core.",
+        bullets: [
+          "Árbol de fibers y props en el panel del navegador",
+          "RyunixDevOverlay ante errores de render no capturados en dev",
+          "APIs de profiler (withProfiler, useProfiler) para componentes lentos",
+        ],
+        linkLabel: "Guía DevTools",
+        linkPath: "guides/devtools",
+        image: { src: "/home/devtools-panel.png", alt: "Panel de Ryunix DevTools en el navegador" },
+        imagePlaceholder: "Añade captura: panel Ryunix DevTools en Chrome",
+        reverse: true,
+      },
+    ],
+    buildEyebrow: "Build y despliegue",
+    buildTitle: "De `ryunix dev` a HTML estático",
+    buildSpotlights: [
+      {
+        id: "ssg",
+        eyebrow: "SSG y MDX",
+        title: "Prerenderiza cada ruta automáticamente",
+        body:
+          "Con `ryunix build`, el App Router se escanea, se fusionan Metatags y frontmatter MDX, y cada ruta se renderiza en `.ryunix/static` — con sitemap opcional en la config.",
+        bullets: [
+          "Manifiesto de rutas desde `app/` (incluye `.mdx`)",
+          "Inyección SEO: title, meta y Open Graph desde Metatags",
+          "Generación de sitemap vía `ryunix.config.js`",
+        ],
+        linkLabel: "Guía SSG",
+        linkPath: "guides/ssg",
+        image: { src: "/home/ssg-output.png", alt: "Salida HTML estática de ryunix build" },
+        imagePlaceholder: "Añade captura: salida SSG o build del sitio de docs",
+        reverse: false,
+      },
+      {
+        id: "cli",
+        eyebrow: "CLI y scaffolding",
+        title: "`ryunix dev`, `build`, `start` y Create App",
+        body:
+          "El CLI ryunix de @unsetsoft/ryunix-presets ejecuta dos compiladores Webpack en dev, prerenderiza en build y sirve producción. Create Ryunix App genera plantillas oficiales con Tailwind, ESLint y presets VS Code.",
+        bullets: [
+          "`ryunix dev` — HMR con compiladores cliente + servidor",
+          "`ryunix build` — bundles + prerender SSG en `.ryunix/static`",
+          "`@unsetsoft/cra` — plantillas: base, Tailwind, ESLint o todo en uno",
+        ],
+        linkLabel: "CLI y Create App",
+        linkPath: "guides/create-app",
+        image: { src: "/home/cli-terminal.png", alt: "Comandos ryunix CLI en terminal" },
+        imagePlaceholder: "Añade captura: terminal con ryunix dev o build",
+        reverse: true,
+      },
+    ],
+    moreEyebrow: "También incluye",
+    moreTitle: "Más capacidades",
+    moreCards: [
+      {
+        title: "Rutas API",
+        body: "Handlers bajo `app/api/` compilados con SWC y hot reload en desarrollo.",
+        linkLabel: "Rutas API",
+        linkPath: "guides/api-routes",
+      },
+      {
+        title: "Docs MDX",
+        body: "Páginas `.mdx` con componentes, frontmatter y prerender estático.",
+        linkLabel: "Guía MDX",
+        linkPath: "guides/mdx",
+      },
+      {
+        title: "Server Actions",
+        body: "Funciones servidor invocables desde componentes vía bridge y ServerBoundary.",
+        linkLabel: "Server Actions",
+        linkPath: "core/server-actions",
+      },
+      {
+        title: "TypeScript",
+        body: "Tipos publicados para hooks y APIs; plantillas jsconfig desde CRA.",
+        linkLabel: "TypeScript",
+        linkPath: "guides/typescript",
+      },
+    ],
+    ctaEyebrow: "¿Listo para empezar?",
+    ctaTitle: "Arranca con Create Ryunix App",
+    ctaBody: "Genera un proyecto en segundos, elige tu gestor de paquetes y profundiza en la documentación cuando lo necesites.",
+    ctaButton: "Ver documentación",
+  },
+};

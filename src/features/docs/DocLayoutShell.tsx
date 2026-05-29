@@ -1,0 +1,171 @@
+import { NavLink, useStore, useEffect, useRouter, type RyunixNode } from "@unsetsoft/ryunixjs";
+import type { DocSidebarRoute, DocSidebarSections } from "@/i18n/types";
+import { ChevronRight, ChevronLeft, Menu, X } from "lucide";
+import { Icon } from "@/components/ui/Icon";
+import { cn } from "@/lib/cn";
+import {
+  docPagerContainerClass,
+  docPagerLabelRowClass,
+  docPagerLinkClass,
+  docSidebarLinkClass,
+  docsMenuToggleClass,
+  docsMobileBarClass,
+  docsOverlayClass,
+  glowOrbBottomClass,
+  glowOrbTopClass,
+} from "@/lib/uiClasses";
+
+const SidebarContent = ({
+  sections,
+  currentPath,
+}: {
+  sections: DocSidebarSections;
+  currentPath: string;
+}) => (
+  <nav className="space-y-8 text-sm">
+    {Object.entries(sections).map(([sectionName, routes]) => (
+      <div key={sectionName}>
+        <h4 className="text-xs font-semibold uppercase tracking-wider text-theme-muted mb-3 px-3">
+          {sectionName}
+        </h4>
+        <ul className="space-y-1">
+          {(routes as DocSidebarRoute[]).map((route) => {
+            const isActive = currentPath === route.path;
+            return (
+              <li key={route.path}>
+                <NavLink to={route.path} className={docSidebarLinkClass(isActive)}>
+                  {route.label}
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))}
+  </nav>
+);
+
+const DocLayoutShell = ({
+  children,
+  sections,
+  prevLabel = "Previous",
+  nextLabel = "Next",
+}: {
+  children?: RyunixNode;
+  sections: DocSidebarSections;
+  prevLabel?: string;
+  nextLabel?: string;
+}) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useStore(false);
+  const { location: currentPath } = useRouter();
+  const allRoutes = Object.values(sections).flat();
+  const currentIndex = allRoutes.findIndex((route) => route.path === currentPath);
+  const prevRoute = currentIndex > 0 ? allRoutes[currentIndex - 1] : null;
+  const nextRoute =
+    currentIndex !== -1 && currentIndex < allRoutes.length - 1
+      ? allRoutes[currentIndex + 1]
+      : null;
+  const currentSectionEntry = Object.entries(sections).find(([, routes]) =>
+    routes.some((r) => r.path === currentPath)
+  );
+  const currentSectionName = currentSectionEntry ? currentSectionEntry[0] : "";
+  const currentRouteLabel = currentSectionEntry
+    ? currentSectionEntry[1].find((r) => r.path === currentPath)?.label
+    : "";
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [currentPath]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+  }, [currentPath]);
+
+  return (
+    <div className="max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className={glowOrbTopClass} style={{ background: "var(--color-glow-blue)" }} />
+      <div className={glowOrbBottomClass} style={{ background: "var(--color-glow-purple)" }} />
+
+      <div className={docsMobileBarClass}>
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={docsMenuToggleClass}>
+          <Icon icon={isMobileMenuOpen ? X : Menu} className="w-5 h-5" />
+          <span>Menu</span>
+        </button>
+        {currentRouteLabel ? (
+          <span className="text-sm font-medium text-blue-500 dark:text-blue-400 truncate ml-4">
+            {currentRouteLabel}
+          </span>
+        ) : null}
+      </div>
+
+      {isMobileMenuOpen ? (
+        <div className={docsOverlayClass} onClick={() => setIsMobileMenuOpen(false)} />
+      ) : null}
+
+      <div className="lg:grid lg:grid-cols-12 gap-8 lg:gap-12 relative">
+        <aside
+          className={cn(
+            "fixed lg:sticky top-[var(--ui-header-height)] z-[70] lg:z-40",
+            "h-[calc(100vh-var(--ui-header-height))] w-72 lg:w-auto bg-transparent",
+            "border-r border-theme py-8 px-6 lg:pr-6 lg:pl-0",
+            "transition-transform duration-300 ease-in-out lg:translate-x-0 lg:col-span-3 lg:block",
+            "overflow-y-auto docs-sidebar-scroll",
+            isMobileMenuOpen
+              ? "translate-x-0 left-0"
+              : "-translate-x-full lg:translate-x-0 -left-72 lg:left-0",
+          )}
+        >
+          <SidebarContent sections={sections} currentPath={currentPath} />
+        </aside>
+
+        <div className="lg:col-span-9 min-w-0 py-6 sm:py-8 lg:py-12 lg:pl-8 xl:pl-12">
+          {currentSectionName ? (
+            <div className="flex items-center space-x-2 text-sm text-theme-muted mb-8">
+              <span className="font-medium">{currentSectionName}</span>
+              <Icon icon={ChevronRight} className="h-4 w-4 opacity-60" />
+              <span className="text-blue-500 dark:text-blue-400 font-medium">{currentRouteLabel}</span>
+            </div>
+          ) : null}
+
+          <article className="docs-content scroll-smooth">{children}</article>
+
+          <div className={docPagerContainerClass}>
+            {prevRoute ? (
+              <NavLink to={prevRoute.path} className={docPagerLinkClass(false)}>
+                <div className={docPagerLabelRowClass}>
+                  <Icon
+                    icon={ChevronLeft}
+                    className="h-4 w-4 mr-1 transform group-hover:-translate-x-1 transition-transform"
+                  />
+                  {prevLabel}
+                </div>
+                <div className="text-theme font-medium text-lg">{prevRoute.label}</div>
+              </NavLink>
+            ) : (
+              <div className="hidden sm:block sm:w-1/2" />
+            )}
+
+            {nextRoute ? (
+              <NavLink to={nextRoute.path} className={docPagerLinkClass(true)}>
+                <div className={docPagerLabelRowClass}>
+                  {nextLabel}
+                  <Icon
+                    icon={ChevronRight}
+                    className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform"
+                  />
+                </div>
+                <div className="text-theme font-medium text-lg">{nextRoute.label}</div>
+              </NavLink>
+            ) : (
+              <div className="hidden sm:block sm:w-1/2" />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DocLayoutShell;

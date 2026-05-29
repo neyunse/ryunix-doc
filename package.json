@@ -1,6 +1,7 @@
 {
   "name": "ryunix-doc",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "homepage": "./",
   "scripts": {
@@ -9,7 +10,8 @@
     "start": "ryunix start",
     "build": "ryunix build",
     "lint": "ryunix lint",
-    "lint:fix": "ryunix lint --fix"
+    "lint:fix": "ryunix lint --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@unsetsoft/ryunixjs": "workspace:*",
@@ -23,10 +25,12 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
+    "@types/node": "^25.9.1",
     "@unsetsoft/ryunix-presets": "workspace:*",
     "autoprefixer": "^10.5.0",
     "highlight.js": "11.11.1",
     "postcss": "^8.5.15",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "typescript": "5.9.3"
   }
 }

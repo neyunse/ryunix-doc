@@ -1,0 +1,17 @@
+import "@/styles/global.css";
+import { headerScrollScript } from "@/components/layout/headerScrollScript";
+import { themeInitScript } from "@/i18n/themeCookie";
+
+import type { RyunixNode } from "@unsetsoft/ryunixjs";
+
+const RootLayout = ({ children }: { children?: RyunixNode }) => {
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      <script dangerouslySetInnerHTML={{ __html: headerScrollScript }} />
+      {children}
+    </>
+  );
+};
+
+export default RootLayout;

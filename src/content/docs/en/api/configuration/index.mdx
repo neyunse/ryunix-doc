@@ -127,7 +127,7 @@ import { formatDate } from "@/utils/date";
 {
   webpack: {
     resolve: {
-      extensions: [".js", ".jsx", ".ryx", ".ts", ".tsx"],
+      extensions: [".js", ".jsx", "", ".ts", ".tsx"],
     },
   },
 };
@@ -315,7 +315,7 @@ document.documentElement.classList.toggle("dark");
 ```javascript
 {
   eslint: {
-    files: ["**/*.ryx", "**/*.mdx"],
+    files: ["**/*", "**/*.mdx"],
     rules: {
       "no-unused-vars": "warn",
     },

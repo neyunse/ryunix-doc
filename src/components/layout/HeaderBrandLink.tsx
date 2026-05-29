@@ -1,0 +1,24 @@
+import { NavLink } from "@unsetsoft/ryunixjs";
+import { cn } from "@/lib/cn";
+
+import type { RyunixNode } from "@unsetsoft/ryunixjs";
+
+const HeaderBrandLink = ({ to, children }: { to: string; children?: RyunixNode }) => (
+  <NavLink
+    to={to}
+    exact
+    className={(({ isActive }: { isActive: boolean }) =>
+      cn(
+        "site-header-brand flex items-center gap-2 text-xl font-bold px-2.5 py-2 rounded-xl",
+        "border transition-all duration-200",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/45",
+        isActive
+          ? "border-theme bg-surface-card/80 shadow-[var(--shadow-base)]"
+          : "border-transparent hover:bg-purple-500/10 hover:border-purple-400/25",
+      )) as unknown as string}
+  >
+    {children}
+  </NavLink>
+);
+
+export default HeaderBrandLink;

@@ -1,0 +1,285 @@
+import { NavLink, useStore } from "@unsetsoft/ryunixjs";
+import { ArrowRight, Github, Zap, Database, Code } from "lucide";
+import { Icon } from "@/components/ui/Icon";
+import { useCopyFeedback } from "@/components/ui/useCopyFeedback";
+import FeatureSpotlight from "@/components/ui/FeatureSpotlight";
+import { cn } from "@/lib/cn";
+import {
+  copyButtonClass,
+  homeHeroContainerClass,
+  homeHeroHighlightClass,
+  homeTerminalGlowClass,
+  primaryCtaClass,
+  secondaryCtaClass,
+  terminalManagerActiveClass,
+} from "@/lib/uiClasses";
+
+const PROJECT_NAME = "my-page";
+
+const PACKAGE_MANAGERS = [
+  {
+    id: "npm",
+    label: "npm",
+    lines: [
+      { cwd: "~/WEB", command: "npx @unsetsoft/cra@canary my-page" },
+      { cwd: "~/WEB", command: `cd ${PROJECT_NAME}` },
+      { cwd: "~/WEB/my-page", command: "npm run dev" },
+    ],
+  },
+  {
+    id: "pnpm",
+    label: "pnpm",
+    lines: [
+      { cwd: "~/WEB", command: "pnpm create @unsetsoft/cra@canary my-page" },
+      { cwd: "~/WEB", command: `cd ${PROJECT_NAME}` },
+      { cwd: "~/WEB/my-page", command: "pnpm dev" },
+    ],
+  },
+  {
+    id: "yarn",
+    label: "yarn",
+    lines: [
+      { cwd: "~/WEB", command: "yarn create @unsetsoft/cra my-page" },
+      { cwd: "~/WEB", command: `cd ${PROJECT_NAME}` },
+      { cwd: "~/WEB/my-page", command: "yarn dev" },
+    ],
+  },
+  {
+    id: "bun",
+    label: "bun",
+    lines: [
+      { cwd: "~/WEB", command: "bun create @unsetsoft/cra my-page" },
+      { cwd: "~/WEB", command: `cd ${PROJECT_NAME}` },
+      { cwd: "~/WEB/my-page", command: "bun run dev" },
+    ],
+  },
+];
+
+const HomePage = ({ docsPath, docsBase, copy }) => {
+  const [activeManager, setActiveManager] = useStore(0);
+  const [copied, markCopied] = useCopyFeedback();
+
+  const manager = PACKAGE_MANAGERS[activeManager];
+  const terminalLines = manager.lines;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(terminalLines.map(({ command }) => command).join("\n"));
+    markCopied();
+  };
+
+  const [card1, card2, card3] = copy.cards;
+
+  return (
+    <>
+      <div className="relative overflow-hidden bg-surface">
+        <div
+          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none opacity-50 dark:opacity-25"
+          style={{ background: "var(--color-glow-blue)" }}
+        />
+        <div
+          className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none opacity-40 dark:opacity-20"
+          style={{ background: "var(--color-glow-purple)" }}
+        />
+
+        <div className={homeHeroContainerClass}>
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
+            <h1 className="tracking-tight font-extrabold text-4xl sm:text-6xl md:text-7xl text-theme">
+              {copy.heroLead}{" "}
+              <span className={homeHeroHighlightClass}>{copy.heroHighlight}</span>
+            </h1>
+            <p className="max-w-xl text-lg sm:text-xl leading-8 text-theme-muted mt-6 font-medium">{copy.heroBody}</p>
+            <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
+              <NavLink to={docsPath} className={primaryCtaClass}>
+                {copy.cta}
+                <Icon icon={ArrowRight} className="w-4 h-4 ml-2" />
+              </NavLink>
+              <a
+                href="https://github.com/UnSetSoft/Ryunixjs"
+                className={secondaryCtaClass}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon={Github} className="w-5 h-5 mr-2 text-theme" />
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <div className="relative z-10 w-full max-w-2xl lg:max-w-none mx-auto lg:mx-0 group perspective-1000">
+            <div className={homeTerminalGlowClass} />
+            <div className="relative bg-surface-subtle border border-theme rounded-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center px-4 py-3 bg-surface-card border-b border-theme">
+                <div className="flex space-x-2 shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                </div>
+                <div className="flex-1 text-center text-xs text-theme-muted font-mono select-none">{copy.terminalTitle}</div>
+              </div>
+              <div className="flex flex-wrap gap-2 px-4 py-3 bg-surface-card border-b border-theme">
+                {PACKAGE_MANAGERS.map((pkg, index) => (
+                  <button
+                    key={pkg.id}
+                    type="button"
+                    onClick={() => setActiveManager(index)}
+                    className={cn(
+                      "cursor-pointer px-3 py-1 text-xs font-mono font-medium rounded-md transition-all",
+                      activeManager === index
+                        ? terminalManagerActiveClass
+                        : "text-theme-muted hover:text-theme hover:bg-surface-elevated/70",
+                    )}
+                  >
+                    {pkg.label}
+                  </button>
+                ))}
+              </div>
+              <div className="p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed bg-surface-subtle space-y-3 overflow-x-auto">
+                {terminalLines.map(({ cwd, command }, index) => (
+                  <div key={`${manager.id}-${index}`} className="flex items-center gap-2 text-theme min-w-0">
+                    <span className="text-cyan-400/90 shrink-0 select-none">{cwd}</span>
+                    <span className="text-purple-400 shrink-0 select-none">❯</span>
+                    <span className="flex-1 min-w-0 whitespace-nowrap">{command}</span>
+                    {index === 0 ? (
+                      <button
+                        type="button"
+                        className={cn(
+                          "cursor-pointer flex-shrink-0 text-xs px-3 py-1.5 rounded-md border transition-all duration-300",
+                          copied
+                            ? cn(
+                                "bg-green-500/15 border-green-500/50 text-green-400",
+                                "shadow-[0_0_16px_rgba(34,197,94,0.35)] scale-105",
+                              )
+                            : "bg-surface-elevated border-theme text-theme-muted hover:bg-surface-card-hover",
+                        )}
+                        onClick={copyToClipboard}
+                      >
+                        {copied ? "✓" : copy.copyLabel}
+                      </button>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section className="relative bg-surface-subtle border-t border-theme-muted py-24 sm:py-32">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-sm font-semibold text-blue-400 tracking-wide uppercase">{copy.featuresEyebrow}</h2>
+            <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.featuresTitle}</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[card1, card2, card3].map((card, index) => (
+              <div
+                key={card.title}
+                className={cn(
+                  "group relative bg-surface-card border border-theme rounded-2xl p-8",
+                  "hover:bg-surface-card-hover transition-colors text-center",
+                  index === 2 && "sm:col-span-2 lg:col-span-1",
+                )}
+              >
+                <div
+                  className={`w-14 h-14 mx-auto mb-6 rounded-2xl flex items-center justify-center ${
+                    index === 0
+                      ? "bg-blue-500/10 text-blue-400"
+                      : index === 1
+                        ? "bg-purple-500/10 text-purple-400"
+                        : "bg-indigo-500/10 text-indigo-400"
+                  }`}
+                >
+                  <Icon icon={index === 0 ? Zap : index === 1 ? Database : Code} className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-theme">{card.title}</h3>
+                <p className="text-theme-muted leading-relaxed text-sm">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative bg-surface border-t border-theme-muted py-24 sm:py-32">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <h2 className="text-sm font-semibold text-purple-400 tracking-wide uppercase">{copy.ecosystemEyebrow}</h2>
+            <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.ecosystemTitle}</p>
+          </div>
+          <div className="space-y-24 sm:space-y-32">
+            {copy.spotlights.map((item) => (
+              <FeatureSpotlight key={item.id} item={item} docsBase={docsBase} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative bg-surface-subtle border-t border-theme-muted py-24 sm:py-32">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <h2 className="text-sm font-semibold text-blue-400 tracking-wide uppercase">{copy.buildEyebrow}</h2>
+            <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.buildTitle}</p>
+          </div>
+          <div className="space-y-24 sm:space-y-32">
+            {copy.buildSpotlights.map((item) => (
+              <FeatureSpotlight key={item.id} item={item} docsBase={docsBase} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative bg-surface border-t border-theme-muted py-24 sm:py-32">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-sm font-semibold text-indigo-400 tracking-wide uppercase">{copy.moreEyebrow}</h2>
+            <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.moreTitle}</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {copy.moreCards.map((card) => (
+              <NavLink
+                key={card.linkPath}
+                to={`${docsBase}/${card.linkPath}`}
+                className="group flex flex-col bg-surface-subtle border border-theme rounded-2xl p-6 hover:bg-surface-card-hover hover:border-blue-500/30 transition-all duration-300"
+              >
+                <h3 className="text-lg font-semibold text-theme mb-2 group-hover:text-blue-300 transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-theme-muted text-sm leading-relaxed flex-1 mb-4">{card.body}</p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400">
+                  {card.linkLabel}
+                  <Icon
+                    icon={ArrowRight}
+                    className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"
+                  />
+                </span>
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t border-theme-muted bg-surface-subtle py-24 sm:py-32">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-70 dark:opacity-40"
+          style={{
+            background:
+              "linear-gradient(135deg, var(--color-glow-blue) 0%, transparent 45%, var(--color-glow-purple) 100%)",
+          }}
+        />
+        <div className="relative w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm font-semibold text-blue-400 tracking-wide uppercase mb-3">{copy.ctaEyebrow}</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-theme mb-4 tracking-tight">{copy.ctaTitle}</h2>
+          <p className="text-theme-muted max-w-xl mx-auto mb-10 leading-relaxed">{copy.ctaBody}</p>
+          <NavLink
+            to={docsPath}
+            className={primaryCtaClass}
+          >
+            {copy.ctaButton}
+            <Icon icon={ArrowRight} className="w-4 h-4 ml-2" />
+          </NavLink>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default HomePage;

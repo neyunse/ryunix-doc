@@ -1,0 +1,42 @@
+import { npmPackages } from "@/i18n/packages";
+import { useDocCopy } from "@/features/docs/DocLocaleContext";
+
+const thClass =
+  "text-left text-xs font-semibold uppercase tracking-wider text-theme-muted px-4 py-3 border-b border-theme";
+const tdClass = "px-4 py-3 text-sm text-theme border-b border-theme align-top";
+
+export const NpmPackagesTable = () => {
+  const copy = useDocCopy("install");
+  const rows = Object.values(npmPackages);
+
+  return (
+    <div className="overflow-x-auto my-6 rounded-xl border border-theme">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-surface-elevated/50">
+            <th className={thClass}>Package</th>
+            <th className={thClass}>{copy.channelStable}</th>
+            <th className={thClass}>{copy.channelCanary}</th>
+            <th className={thClass}>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((pkg) => (
+            <tr key={pkg.name}>
+              <td className={tdClass}>
+                <code className="text-blue-500 dark:text-blue-300">{pkg.name}</code>
+              </td>
+              <td className={tdClass}>
+                <code>{pkg.latest}</code>
+              </td>
+              <td className={tdClass}>
+                {pkg.canary ? <code>{pkg.canary}</code> : "—"}
+              </td>
+              <td className={tdClass}>{copy.packageRole[pkg.roleKey]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};

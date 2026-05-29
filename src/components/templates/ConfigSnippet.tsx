@@ -1,0 +1,56 @@
+import { Icon } from "@/components/ui/Icon";
+import { useCopyFeedback } from "@/components/ui/useCopyFeedback";
+import { Check, Copy } from "lucide";
+import { copyButtonClass } from "@/lib/uiClasses";
+import { cn } from "@/lib/cn";
+
+import type { WithOptionalKey } from "@/types/components";
+
+const ConfigSnippet = ({
+  filename,
+  code,
+  copyLabel = "Copy",
+}: {
+  filename: string;
+  code: string;
+  copyLabel?: string;
+} & WithOptionalKey) => {
+  const [copied, markCopied] = useCopyFeedback();
+
+  const copy = () => {
+    if (typeof window === "undefined") return;
+    navigator.clipboard.writeText(code);
+    markCopied();
+  };
+
+  return (
+    <div className="code-tabs-shell">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-theme">
+        <span className="font-mono text-xs text-theme-muted">{filename}</span>
+        <button
+          type="button"
+          onClick={copy}
+          className={copyButtonClass(copied)}
+          aria-label={copyLabel}
+          title={copyLabel}
+        >
+          {copied ? (
+            <Icon icon={Check} className="w-4 h-4" />
+          ) : (
+            <Icon icon={Copy} className="w-4 h-4" />
+          )}
+        </button>
+      </div>
+      <pre
+        className={cn(
+          "p-4 m-0 overflow-x-auto text-sm font-mono leading-relaxed text-theme",
+          "bg-transparent border-0 rounded-none shadow-none",
+        )}
+      >
+        <code>{code}</code>
+      </pre>
+    </div>
+  );
+};
+
+export default ConfigSnippet;

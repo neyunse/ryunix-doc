@@ -1,0 +1,67 @@
+import { NavLink } from "@unsetsoft/ryunixjs";
+import { ChevronRight } from "lucide";
+import { Icon } from "@/components/ui/Icon";
+import TemplatePreview from "@/components/templates/TemplatePreview";
+import TemplateDetailPanel from "@/components/templates/TemplateDetailPanel";
+import TemplateGalleryCard from "@/components/templates/TemplateGalleryCard";
+import { templatesCatalog } from "@/i18n/templatesCatalog";
+
+const TemplateDetailPage = ({ template, copy, docsBase, locale }) => {
+  const t = copy.templates[template.id];
+  const related = templatesCatalog.filter((item) => item.id !== template.id);
+
+  return (
+    <>
+      <section className="border-b border-theme bg-surface">
+        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <nav
+            className="flex flex-wrap items-center gap-2 text-sm text-theme-muted mb-6 min-w-0"
+            aria-label="Breadcrumb"
+          >
+            <NavLink
+              to={`/${locale}/templates`}
+              className="hover:text-theme transition-colors"
+            >
+              {copy.detail.breadcrumbGallery}
+            </NavLink>
+            <Icon icon={ChevronRight} className="w-4 h-4 opacity-50 shrink-0" />
+            <span className="text-theme font-medium font-mono truncate min-w-0 max-w-full">{t.title}</span>
+          </nav>
+
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div>
+              <p className="text-sm font-medium text-purple-500 mb-2">{copy.badges[template.badgeKey]}</p>
+              <h1 className="text-3xl sm:text-4xl font-bold text-theme font-mono tracking-tight">{t.title}</h1>
+              <p className="mt-4 text-lg text-theme-muted leading-relaxed">{t.description}</p>
+            </div>
+            <TemplatePreview templateId={template.id} accent={template.accent} />
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <TemplateDetailPanel template={template} copy={copy} docsBase={docsBase} />
+      </section>
+
+      {related.length > 0 ? (
+        <section className="border-t border-theme bg-surface-elevated/40">
+          <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+            <h2 className="text-xl font-bold text-theme mb-6">{copy.detail.relatedTitle}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {related.map((item) => (
+                <TemplateGalleryCard
+                  key={item.id}
+                  template={item}
+                  copy={copy}
+                  locale={locale}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+    </>
+  );
+};
+
+export default TemplateDetailPage;

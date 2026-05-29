@@ -1,0 +1,29 @@
+import { Image } from "@unsetsoft/ryunixjs";
+import Logo from "@/resources/logo-min.svg";
+import { localeLabels, locales } from "@/i18n/config";
+
+const LocaleHubPage = ({ onChooseLocale }) => {
+  return (
+    <div className="min-h-[var(--ui-main-min-height)] flex flex-col items-center justify-center px-4 bg-surface text-theme">
+      <Image src={Logo} width={64} height={64} fill="var(--color-logo-fill)" alt="RyunixJS" className="mb-8" />
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-2">RyunixJS</h1>
+      <p className="text-theme-muted text-center mb-10 max-w-md">
+        Choose your language / Elige tu idioma
+      </p>
+      <div className="flex flex-wrap gap-4 justify-center">
+        {locales.map((locale) => (
+          <button
+            key={locale}
+            type="button"
+            onClick={() => onChooseLocale?.(locale)}
+            className="px-10 py-4 text-lg font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-500 transition-all duration-300 hover:-translate-y-0.5"
+          >
+            {localeLabels[locale]}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default LocaleHubPage;
