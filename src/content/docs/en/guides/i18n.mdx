@@ -1,0 +1,92 @@
+---
+title: Internationalization (i18n)
+description: Locales, translations, cookies, and SSG with generateStaticParams
+slug: i18n
+section: Guides
+---
+
+# Internationalization (i18n)
+
+Ryunix ships i18n helpers in `@unsetsoft/ryunixjs` for locale detection, translated copy, and static generation of localized routes.
+
+## Configuration
+
+```javascript
+// ryunix.config.js
+export default {
+  i18n: {
+    locales: ["en", "es"],
+    defaultLocale: "en",
+    localeLabels: { en: "English", es: "Español" },
+  },
+};
+```
+
+## Messages and provider
+
+```javascript
+// i18n.js
+import { createAppI18n } from "@unsetsoft/ryunixjs";
+import messages from "./messages/index.js";
+
+export const i18n = createAppI18n(messages);
+
+export const {
+  Provider: I18nProvider,
+  useTranslations,
+  useLocale,
+  LocaleSwitcher,
+  generateStaticParams,
+} = i18n;
+```
+
+Wrap your app (often in `app/[locale]/layout.ryx`):
+
+```jsx
+import { I18nProvider } from "../../i18n.js";
+
+export default function LocaleLayout({ children, params }) {
+  return <I18nProvider locale={params.locale}>{children}</I18nProvider>;
+}
+```
+
+## Hooks
+
+| Hook | Purpose |
+| :--- | :--- |
+| `useTranslations(namespace?)` | Returns `t(key)` for the active locale |
+| `useLocale()` | Current locale string |
+| `LocaleSwitcher` | UI control to change locale (sets cookie) |
+
+Cookie name defaults to `ryunix_locale`.
+
+## App Router pattern
+
+```
+app/
+└── [locale]/
+    ├── layout.ryx      // I18nProvider + Metatags
+    └── index.ryx
+```
+
+Export `generateStaticParams` from the locale layout or re-export from `i18n.js` so SSG prerenders each locale:
+
+```jsx
+export { generateStaticParams } from "../../i18n.js";
+```
+
+## Path helpers
+
+| Function | Use |
+| :--- | :--- |
+| `pickLocale(record, locale)` | Pick localized string/object from a map |
+| `swapLocalePath(pathname, targetLocale)` | Build same page in another locale |
+| `getLocaleFromPath(pathname)` | Parse locale prefix from URL |
+
+This docs site uses the same pattern under `src/i18n/` with MDX content in `src/content/docs/{locale}/`.
+
+## Related
+
+- [SSG & Prerendering](/en/docs/guides/ssg)
+- [Project structure](/en/docs/introduction/project-structure)
+- [Configuration](/en/docs/api/configuration)

@@ -1,0 +1,90 @@
+---
+title: SEO & Metadata
+description: Metatags, generateMetadata, file-based OG images, and SSR injection
+slug: seo-metadata
+section: Guides
+---
+
+# SEO & Metadata
+
+Ryunix merges metadata from **layouts → pages**, **MDX frontmatter**, **dynamic `generateMetadata`**, and **static files** in `app/`. During SSR/SSG, the framework resolves titles and injects `<title>`, `<meta>`, and `<link>` tags into HTML.
+
+## Static exports
+
+### `Metatags`
+
+```jsx
+// app/layout.ryx
+export const Metatags = {
+  title: { default: "My App", template: "%s | My App" },
+  description: "Site description",
+  "og:type": "website",
+};
+```
+
+### `frontmatter` (MDX alias)
+
+MDX pages can export YAML as `frontmatter`; the App Router treats it like `Metatags`.
+
+### `generateMetadata`
+
+```jsx
+export async function generateMetadata({ params, searchParams }) {
+  return {
+    title: params.slug,
+    description: `Page ${params.slug}`,
+    canonical: `https://example.com/docs/${params.slug}`,
+  };
+}
+```
+
+### `useMetadata` (client)
+
+Updates `document.title` and `<meta>` after navigation. On the server, metadata merges into `ssrMetadata` for HTML injection.
+
+## Merge rules
+
+- Layout `Metatags` merge first; page-level values override.
+- String page titles keep layout `title.template` when present (`mergeRouteMetadata`).
+- Final HTML uses `resolvePageMetadata` (supports `pageTitle`, `titleTemplate`, `titleDefault`, `canonical`, Open Graph, Twitter keys).
+
+## File-based assets (App Router)
+
+Place files in a route segment folder:
+
+| File | Result |
+| :--- | :--- |
+| `favicon.ico` | `<link rel="icon">` |
+| `icon.png` / `icon.svg` / … | segment icon |
+| `apple-icon.png` | apple touch icon |
+| `opengraph-image.png` | `og:image` |
+| `twitter-image.png` | `twitter:image` |
+| `opengraph-image.alt.txt` | `og:image:alt` |
+| `twitter-image.alt.txt` | `twitter:image:alt` |
+
+Supported extensions follow Next.js-style conventions (images: `jpg`, `jpeg`, `png`, `gif`, `webp`; icons also `ico` / `svg` where applicable).
+
+Assets copy to `.ryunix/static/<route>/<filename>` at build time. Child segments inherit parent layout files; the nearest segment wins on conflict.
+
+**Note:** Dynamic `opengraph-image.js` generators are not supported yet — use static files or `Metatags["og:image"]`.
+
+## Custom meta tags
+
+Use the `custom` object for arbitrary name/property tags:
+
+```jsx
+export const Metatags = {
+  title: "Dashboard",
+  custom: { "theme-color": "#0f172a" },
+};
+```
+
+## Legacy config
+
+Prefer App Router metadata. The deprecated `legacy.seo.meta` block in `ryunix.config.js` still merges as defaults during prerender when no route metadata overrides it.
+
+## Related
+
+- [SSG & Prerendering](/en/docs/guides/ssg)
+- [Special files](/en/docs/api/special-files)
+- [Navigation](/en/docs/introduction/navigation)
