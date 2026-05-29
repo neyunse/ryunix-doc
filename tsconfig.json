@@ -30,7 +30,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/**/*.ryx",
     "src/**/*.d.ts",
     "ryunix.config.ts",
     "middleware.ts"

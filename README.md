@@ -67,7 +67,7 @@ src/
 ├── app/                # File-based routes only (thin wrappers)
 │   ├── en/docs/        # English MDX pages
 │   ├── es/docs/        # Spanish MDX pages
-│   └── index.tsx       # Locale hub (redirects via cookie)
+│   └── index.ryx       # Locale hub (redirects via cookie)
 ├── components/         # Shared UI (Icon, CodeTabs, layout header/footer)
 ├── features/           # Domain modules (docs shell, home, marketing layout)
 ├── i18n/               # Locale config and cookie helpers (TypeScript)
@@ -81,7 +81,7 @@ middleware.js           # Vercel Edge redirect for /
 ## Configuration
 
 - **`ryunix.config.ts`** — RyunixJS settings (MDX, SSR, webpack aliases, ESLint)
-- **`tsconfig.json`** — TypeScript for `src/**/*.ts` and `src/**/*.tsx`
+- **`tsconfig.json`** — TypeScript for `src/**/*.ts` and typed `src/**/*.ryx`
 
 ### Troubleshooting
 
@@ -93,7 +93,7 @@ pnpm clean && pnpm dev
 
 > **Warning — `webpack.production`:** During local development (`ryunix dev`), the CLI sets `RYUNIX_MODE=development` so builds stay unminified for faster iteration. For production deploys (Vercel), keep `webpack.production: true` in `ryunix.config.ts`.
 
-Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `src/app/layout.tsx` (RyunixJS App Router metadata).
+Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `src/app/layout.ryx` (RyunixJS App Router metadata).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS
 - **`vercel.json`** — Vercel deployment (build output: `.ryunix/static`)
 

@@ -48,7 +48,7 @@ export const docUiCopy = {
         "`src/i18n/docPageRegistry.js` — static MDX imports and `getDocPage(locale, slug)`",
         "`src/i18n/locale.js` — `pickLocale()` for shared locale records",
         "`src/i18n/docUiCopy.js` — labels for docs UI and install sections",
-        "`src/features/docs/DocLocaleContext.tsx` — `useDocLocale()` / `useDocCopy()` inside MDX components",
+        "`src/features/docs/DocLocaleContext.ryx` — `useDocLocale()` / `useDocCopy()` inside MDX components",
         "`src/components/docs/*` — MDX building blocks (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`)",
       ],
       i18nNote:
@@ -103,7 +103,7 @@ export const docUiCopy = {
         "`src/i18n/docPageRegistry.js` — imports estáticos de MDX y `getDocPage(locale, slug)`",
         "`src/i18n/locale.js` — `pickLocale()` para registros por locale",
         "`src/i18n/docUiCopy.js` — etiquetas de la UI de docs y secciones de instalación",
-        "`src/features/docs/DocLocaleContext.tsx` — `useDocLocale()` / `useDocCopy()` en componentes MDX",
+        "`src/features/docs/DocLocaleContext.ryx` — `useDocLocale()` / `useDocCopy()` en componentes MDX",
         "`src/components/docs/*` — bloques MDX (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`)",
       ],
       i18nNote:
