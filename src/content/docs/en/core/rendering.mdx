@@ -85,10 +85,10 @@ const html = renderToString(<Page />);
 
 ## App Router integration
 
-With the `app/` directory, you usually **do not** call `render` manually. The Ryunix CLI builds client and server bundles; `ryunix build` prerenders routes into `.ryunix/static`.
+With the app/ directory, you usually do not call render manually. The Ryunix CLI builds client and server bundles; ryunix build prerenders routes into .ryunix/static.
 
-- **Development:** `pnpm dev` — dual Webpack compilers (client + server) with HMR.
-- **Production:** `pnpm build` then `pnpm start` — static files plus the built-in Node server.
+- Development: pnpm dev — dual Webpack compilers (client + server) with HMR.
+- Production: pnpm build then pnpm start — static files plus the built-in Node server.
 
 ## When to use which mode
 
@@ -99,8 +99,8 @@ With the `app/` directory, you usually **do not** call `render` manually. The Ry
 | Attach to existing SSR HTML | `init()` / `hydrate()` on the client |
 | Custom Node integration | `renderToString` / `renderToReadableStream` |
 
-## Related
+## Next Steps
 
-- [SSG & prerendering](/en/docs/guides/ssg) — build output and route manifests
-- [Server actions](/en/docs/core/server-actions) — server functions from the client
-- [Configuration](/en/docs/api/configuration) — `ssr`, `mdx`
+- [Error Handling](/en/docs/core/error-handling) — boundaries and `error.ryx`
+- [SSG & Prerendering](/en/docs/guides/ssg) — build output and route manifests
+- [Configuration](/en/docs/api/configuration) — `ssr`, `mdx`, hydration

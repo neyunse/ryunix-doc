@@ -93,7 +93,7 @@ Ryunix admite [alertas Markdown al estilo GitHub](https://docs.github.com/en/get
 
 ```mdx
 > [!WARNING]
-> **Routing integrado** ya no está soportado. Usa el **App Router** en su lugar.
+> El routing integrado ya no está soportado. Usa el App Router en su lugar.
 
 > [!NOTE]
 > Información útil que el lector debería ver al repasar la página.
@@ -125,9 +125,8 @@ Las URLs siguen usando `/en/docs/...` y `/es/docs/...` por SEO; `src/app/[locale
 
 Durante `ryunix build`, cada ruta MDX se prerenderiza a HTML estático con el `<title>` y meta tags correctos heredados de los layouts. Evita mezclar la configuración global obsoleta `static.seo` con `Metatags` por ruta.
 
-## Relacionado
+## Siguientes pasos
 
-- [Navegación](/es/docs/introduction/navigation) — visión general del enrutamiento
-- [SSG y prerenderizado](/es/docs/guides/ssg) — pipeline de prerender
-- [Funciones](/es/docs/api/functions) — `useMetadata` para actualizaciones solo en cliente
+- [SSG y prerender](/es/docs/guides/ssg) — pipeline de prerender para rutas MDX
+- [SEO y metadatos](/es/docs/guides/seo-metadata) — frontmatter y Metatags
 - [Configuración](/es/docs/api/configuration) — `mdx: true`, `style: true`

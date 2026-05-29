@@ -14,7 +14,7 @@ const LocaleDocsIndex = ({ params }) => {
   const locale = params?.locale === "es" ? "es" : defaultLocale;
 
   useEffect(() => {
-    navigate(`/${locale}/docs/introduction/getting-started`);
+    navigate(`/${locale}/docs/introduction/about`);
   }, [locale]);
 
   return null;

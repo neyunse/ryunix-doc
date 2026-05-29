@@ -7,7 +7,7 @@
   "redirects": [
     {
       "source": "/docs",
-      "destination": "/en/docs/introduction/getting-started",
+      "destination": "/en/docs/introduction/about",
       "permanent": true
     },
     {

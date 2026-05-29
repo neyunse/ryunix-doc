@@ -11,6 +11,7 @@ export const siteCopy = {
       docsTitle: "Documentation",
       projectTitle: "Project",
       links: {
+        about: "About",
         gettingStarted: "Getting Started",
         installation: "Installation",
         configuration: "Configuration",
@@ -41,6 +42,7 @@ export const siteCopy = {
       docsTitle: "Documentación",
       projectTitle: "Proyecto",
       links: {
+        about: "Acerca de",
         gettingStarted: "Primeros pasos",
         installation: "Instalación",
         configuration: "Configuración",

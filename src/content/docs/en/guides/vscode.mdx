@@ -7,7 +7,7 @@ section: Guides
 
 # VS Code
 
-The official **RyunixJS** extension for Visual Studio Code improves editing of `.ryx` files with syntax highlighting, snippets, completions, and a TypeScript-based language server (LSP).
+The official RyunixJS extension for Visual Studio Code improves editing of `.ryx` files with syntax highlighting, snippets, completions, and a TypeScript-based language server (LSP).
 
 Install it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=unsetsoft.ryunixjs) (`unsetsoft.ryunixjs`, current release **1.1.3** in `packages/ryunix-vscode`).
 
@@ -55,10 +55,10 @@ npx @unsetsoft/cra@canary my-app --vscode --eslint
 
 That recommends:
 
-- **RyunixJS** (`unsetsoft.ryunixjs`) — syntax and LSP for `.ryx`
-- **ESLint** — lint aligned with Ryunix conventions
-- **Prettier** (when using `--eslint`) — consistent formatting
-- **Tailwind CSS IntelliSense** (when using `--tailwind`)
+- RyunixJS (`unsetsoft.ryunixjs`) — syntax and LSP for `.ryx`
+- ESLint — lint aligned with Ryunix conventions
+- Prettier (when using `--eslint`) — consistent formatting
+- Tailwind CSS IntelliSense (when using `--tailwind`)
 
 It also configures Emmet, `*.ryx` file associations, and the ESLint probe for the `ryunix` language.
 
@@ -66,12 +66,12 @@ It also configures Emmet, `*.ryx` file associations, and the ESLint probe for th
 
 | Supported | Not supported (use another tool) |
 | :--- | :--- |
-| Highlighting, snippets, completions in `.ryx` | **MDX** validation (happens at build time) |
-| ESLint integration via workspace | TypeScript **inside** `.ryx` as syntax |
+| Highlighting, snippets, completions in `.ryx` | MDX validation (happens at build time) |
+| ESLint integration via workspace | TypeScript inside `.ryx` as syntax |
 | Emmet in `ryunix` mode | Bundled formatter — use Prettier in your project |
 
-## Related
+## Next Steps
 
+- [DevTools](/en/docs/guides/devtools) — browser extension for runtime inspection
 - [Create Ryunix App](/en/docs/guides/create-app) — `--vscode`, `--eslint`, `--tailwind` flags
 - [TypeScript](/en/docs/guides/typescript) — published types and `jsconfig.json`
-- [DevTools](/en/docs/guides/devtools) — **browser** extension (complementary, not a replacement)

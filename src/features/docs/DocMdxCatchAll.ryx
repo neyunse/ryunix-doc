@@ -22,10 +22,10 @@ const DocMdxCatchAll = ({ params: routeParams }) => {
         <h1 className="text-2xl font-bold text-theme mb-4">Page not found</h1>
         <p className="text-theme-muted mb-6">No documentation page for this path.</p>
         <NavLink
-          to={`/${locale}/docs/introduction/getting-started`}
+          to={`/${locale}/docs/introduction/about`}
           className="text-blue-500 dark:text-blue-400 font-medium"
         >
-          Go to getting started
+          Go to documentation
         </NavLink>
       </div>
     );

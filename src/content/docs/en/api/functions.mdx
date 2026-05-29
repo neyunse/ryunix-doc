@@ -30,7 +30,7 @@ function Counter() {
 }
 ```
 
-**Equivalent to React's `useState`.**
+Equivalent to React's `useState`.
 
 ### Functional Updates
 
@@ -219,7 +219,7 @@ function Button() {
 }
 ```
 
-**Different from React - returns `{ Provider, useContext }`.**
+Different from React — returns `{ Provider, useContext }`.
 
 ## useRouter
 
@@ -523,9 +523,9 @@ function useFetch(url) {
 
 ## Rules of Hooks
 
-1. **Only call at top level** - Not inside loops, conditions, or nested functions
-2. **Only call from function components** - Or custom hooks
-3. **Always in same order** - Don't conditionally call hooks
+1. Only call at top level — not inside loops, conditions, or nested functions
+2. Only call from function components — or custom hooks
+3. Always in same order — don't conditionally call hooks
 
 ```jsx
 // ❌ Wrong
@@ -547,9 +547,15 @@ function Component({ condition }) {
 
 ## Best Practices
 
-1. **Name custom hooks with `use` prefix**
-2. **Extract complex logic to custom hooks**
-3. **Use useMemo for expensive computations**
-4. **Use useCallback for event handlers**
-5. **Minimize dependencies in useEffect**
-6. **Clean up effects properly**
+1. Name custom hooks with the `use` prefix
+2. Extract complex logic to custom hooks
+3. Use useMemo for expensive computations
+4. Use useCallback for event handlers passed to memoized children
+5. Minimize dependencies in useEffect
+6. Clean up effects properly
+
+## Next Steps
+
+- [Special Files](/en/docs/api/special-files) — sitemap, robots, manifest
+- [Server Actions](/en/docs/core/server-actions) — `"use server"` functions
+- [SEO & Metadata](/en/docs/guides/seo-metadata) — `useMetadata` and `Metatags`

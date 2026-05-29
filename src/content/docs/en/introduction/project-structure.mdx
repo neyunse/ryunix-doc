@@ -7,7 +7,7 @@ slug: project-structure
 
 # Project Structure
 
-A Ryunix project organizes **pages** (`app/` folder), **styles**, **assets**, and a **`ryunix.config.js`** file for SSR, import aliases, and build settings. If you know Next.js, think `app/` + `next.config.js`; here page files use `.ryx` instead of `.tsx`.
+A Ryunix project organizes pages (app/ folder), styles, assets, and a ryunix.config.js file for SSR, import aliases, and build settings. If you know Next.js, think app/ + next.config.js; here page files use .ryx instead of .tsx.
 
 ## Basic Structure
 
@@ -89,7 +89,7 @@ Keep route files in `app/`; colocate or share UI from `src/components/` via webp
 
 ## Static assets
 
-CRA templates use **`assets/`** for images and files copied into the build. You can also use **`public/`** (e.g. `public/favicon.png` when `favicon: true`).
+CRA templates use `assets/` for images and files copied into the build. You can also use `public/` (e.g. `public/favicon.png` when `favicon: true`).
 
 ```jsx
 <img src="/images/logo.png" />
@@ -161,11 +161,17 @@ const RyunixSettings = {
 const key = ryunix.config.env.RYUNIX_APP_KEY;
 ```
 
-All environment variables **must** start with `RYUNIX_APP_` to be exposed to the client.
+All environment variables must start with `RYUNIX_APP_` to be exposed to the client.
 
 ## Best Practices
 
-1. **Keep components small** - Single responsibility
-2. **Use feature folders** - Group related files
-3. **Consistent naming** - PascalCase for components
-4. **Organize by feature** - Not by file type
+1. Keep components small — single responsibility
+2. Use feature folders — group related files
+3. Consistent naming — PascalCase for components
+4. Organize by feature — not by file type
+
+## Next Steps
+
+- [Navigation](/en/docs/introduction/navigation) — routing and App Router in depth
+- [CSS](/en/docs/introduction/css) — styling approaches
+- [Configuration](/en/docs/api/configuration) — full `ryunix.config.js` reference

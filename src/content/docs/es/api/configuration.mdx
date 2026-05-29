@@ -37,7 +37,7 @@ export default RyunixSettings;
 ```
 
 > [!WARNING]
-> **Claves legacy:** `experimental.ssr`, `experimental.mdx`, `static.favicon` y `webpack.output.buildDirectory` siguen funcionando con avisos de deprecación. Prefiere las opciones de raíz (`ssr`, `mdx`, `favicon`, `buildDir`, `port`, `proxy`).
+> Claves legacy: `experimental.ssr`, `experimental.mdx`, `static.favicon` y `webpack.output.buildDirectory` siguen funcionando con avisos de deprecación. Prefiere las opciones de raíz (`ssr`, `mdx`, `favicon`, `buildDir`, `port`, `proxy`).
 
 ## Ajustes de Webpack
 
@@ -185,9 +185,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 ### Plantilla personalizada (obsoleta)
 
 > [!WARNING]
-> **Función obsoleta:** Modificar atributos raíz mediante `customTemplate` está obsoleto en el App Router.
+> Función obsoleta: modificar atributos raíz mediante `customTemplate` está obsoleto en el App Router.
 >
-> **Alternativa:** Usa un `app/layout.ryx` base (layout raíz) para definir el esqueleto principal que se conecta al DOM.
+> Alternativa: usa un `app/layout.ryx` base (layout raíz) para definir el esqueleto principal que se conecta al DOM.
 
 ```javascript
 {
@@ -201,9 +201,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 ### Configuración SEO (obsoleta)
 
 > [!WARNING]
-> **Función obsoleta:** La configuración SEO global en `ryunix.config.js` mediante `static.seo` está obsoleta.
+> Función obsoleta: la configuración SEO global en `ryunix.config.js` mediante `static.seo` está obsoleta.
 >
-> **Alternativa:** Exporta un objeto `Metatags` local en tus componentes base, `layout.ryx`, o usa frontmatter YAML en archivos `.mdx`.
+> Alternativa: exporta un objeto `Metatags` local en tus componentes base, `layout.ryx`, o usa frontmatter YAML en archivos `.mdx`.
 
 ```javascript
 {
@@ -282,7 +282,7 @@ Ver [Internacionalización](/es/docs/guides/i18n).
 
 ### Estilos globales (`style`)
 
-Por defecto **`style` está desactivado**; usa `style: true` u objeto para inyectar `@unsetsoft/ryunixjs/style.css` (tipografía, tablas, formularios nativos, alertas MDX) en **toda la app** (`.ryx`, `.mdx` y HTML semántico).
+Por defecto `style` está desactivado; usa `style: true` u objeto para inyectar `@unsetsoft/ryunixjs/style.css` (tipografía, tablas, formularios nativos, alertas MDX) en toda la app (`.ryx`, `.mdx` y HTML semántico).
 
 ```javascript
 {
@@ -411,3 +411,9 @@ Acceso en código:
 ```javascript
 const myEnv = ryunix.env.RYUNIX_APP_TEST;
 ```
+
+## Siguientes pasos
+
+- [Componentes](/es/docs/api/components) — primitivas de UI integradas
+- [Renderizado y SSR](/es/docs/core/rendering) — hidratación y salida en servidor
+- [MDX y frontmatter](/es/docs/guides/mdx) — páginas de contenido junto a `.ryx`

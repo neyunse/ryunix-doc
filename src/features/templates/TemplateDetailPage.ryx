@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/Icon";
 import TemplatePreview from "@/components/templates/TemplatePreview";
 import TemplateDetailPanel from "@/components/templates/TemplateDetailPanel";
 import TemplateGalleryCard from "@/components/templates/TemplateGalleryCard";
+import TemplateFlagsPanel from "@/components/templates/TemplateFlagsPanel";
 import { templatesCatalog } from "@/i18n/templatesCatalog";
 
 const TemplateDetailPage = ({ template, copy, docsBase, locale }) => {
@@ -40,7 +41,10 @@ const TemplateDetailPage = ({ template, copy, docsBase, locale }) => {
       </section>
 
       <section className="w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <TemplateDetailPanel template={template} copy={copy} docsBase={docsBase} />
+        <div className="flex flex-col gap-8 lg:gap-10">
+          <TemplateDetailPanel template={template} copy={copy} docsBase={docsBase} />
+          <TemplateFlagsPanel template={template} copy={copy} />
+        </div>
       </section>
 
       {related.length > 0 ? (

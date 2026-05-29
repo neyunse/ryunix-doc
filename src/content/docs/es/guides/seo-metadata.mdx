@@ -7,7 +7,7 @@ section: Guías
 
 # SEO y metadatos
 
-Ryunix fusiona metadatos de **layouts → páginas**, **frontmatter MDX**, **`generateMetadata` dinámico** y **archivos estáticos** en `app/`. En SSR/SSG, el framework resuelve títulos e inyecta `<title>`, `<meta>` y `<link>` en el HTML.
+Ryunix fusiona metadatos de layouts, páginas, frontmatter MDX, `generateMetadata` dinámico y archivos estáticos en `app/`. En SSR/SSG, el framework resuelve títulos e inyecta `<title>`, `<meta>` y `<link>` en el HTML.
 
 ## Exports estáticos
 
@@ -106,8 +106,8 @@ export const Metatags = {
 
 Prefiere metadatos del App Router. El bloque deprecado `legacy.seo.meta` en `ryunix.config.js` sigue actuando como valores por defecto en prerender.
 
-## Relacionado
+## Siguientes pasos
 
-- [SSG y prerender](/es/docs/guides/ssg)
-- [Archivos especiales](/es/docs/api/special-files)
-- [Navegación](/es/docs/introduction/navigation)
+- [Internacionalización](/es/docs/guides/i18n) — metadatos y rutas localizadas
+- [SSG y prerender](/es/docs/guides/ssg) — inyección de metadatos en el build
+- [Navegación](/es/docs/introduction/navigation) — `Metatags` y `generateMetadata`

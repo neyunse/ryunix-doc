@@ -74,7 +74,6 @@
     & p {
       margin-block: var(--space-4);
       color: var(--color-text-secondary);
-      max-inline-size: 70ch;
       text-wrap: pretty;
       line-height: var(--line-height-relaxed);
     }
@@ -101,7 +100,25 @@
     & strong,
     & b {
       font-weight: var(--font-weight-semibold);
+      color: inherit;
+    }
+
+    /* Inline code — subtle in prose; blocks keep full styling in global.css */
+    & :not(pre) > code {
+      font-family: var(--font-family-mono);
+      font-size: 0.875em;
+      padding-inline: 0.2em;
+      padding-block: 0.05em;
+      background: color-mix(in srgb, var(--color-surface-elevated) 65%, transparent);
       color: var(--color-text-primary);
+      border: none;
+      border-radius: var(--radius-sm);
+      white-space: normal;
+      font-variant-ligatures: none;
+    }
+
+    html.dark & :not(pre) > code {
+      background: color-mix(in srgb, var(--color-surface-overlay) 55%, transparent);
     }
 
     & em,

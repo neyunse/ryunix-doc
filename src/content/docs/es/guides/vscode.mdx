@@ -7,7 +7,7 @@ section: Guías
 
 # VS Code
 
-La extensión oficial **RyunixJS** para Visual Studio Code mejora la edición de archivos `.ryx` con resaltado de sintaxis, snippets, autocompletado y un servidor de lenguaje (LSP) basado en TypeScript.
+La extensión oficial RyunixJS para Visual Studio Code mejora la edición de archivos `.ryx` con resaltado de sintaxis, snippets, autocompletado y un servidor de lenguaje (LSP) basado en TypeScript.
 
 Instálala desde [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=unsetsoft.ryunixjs) (`unsetsoft.ryunixjs`, versión actual **1.1.3** en `packages/ryunix-vscode`).
 
@@ -55,10 +55,10 @@ npx @unsetsoft/cra@canary my-app --vscode --eslint
 
 Eso recomienda:
 
-- **RyunixJS** (`unsetsoft.ryunixjs`) — sintaxis y LSP para `.ryx`
-- **ESLint** — lint alineado con convenciones Ryunix
-- **Prettier** (si usas `--eslint`) — formateo consistente
-- **Tailwind CSS IntelliSense** (si usas `--tailwind`)
+- RyunixJS (`unsetsoft.ryunixjs`) — sintaxis y LSP para `.ryx`
+- ESLint — lint alineado con convenciones Ryunix
+- Prettier (si usas `--eslint`) — formateo consistente
+- Tailwind CSS IntelliSense (si usas `--tailwind`)
 
 También configura Emmet, asociación de archivos `*.ryx` y el probe ESLint para el lenguaje `ryunix`.
 
@@ -66,12 +66,12 @@ También configura Emmet, asociación de archivos `*.ryx` y el probe ESLint para
 
 | Soportado | No soportado (usa otra herramienta) |
 | :--- | :--- |
-| Resaltado, snippets, completions en `.ryx` | Validación **MDX** (ocurre en build) |
-| Integración ESLint vía workspace | TypeScript **dentro** de `.ryx` como sintaxis |
+| Resaltado, snippets, completions en `.ryx` | Validación MDX (ocurre en build) |
+| Integración ESLint vía workspace | TypeScript dentro de `.ryx` como sintaxis |
 | Emmet en modo `ryunix` | Formatter empaquetado — usa Prettier en el proyecto |
 
-## Relacionado
+## Siguientes pasos
 
+- [DevTools](/es/docs/guides/devtools) — extensión de navegador para inspección en runtime
 - [Create Ryunix App](/es/docs/guides/create-app) — flags `--vscode`, `--eslint`, `--tailwind`
 - [TypeScript](/es/docs/guides/typescript) — tipos publicados y `jsconfig.json`
-- [DevTools](/es/docs/guides/devtools) — extensión de **navegador** (complementaria, no sustituta)

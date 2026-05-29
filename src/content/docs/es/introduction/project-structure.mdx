@@ -7,7 +7,7 @@ slug: project-structure
 
 # Estructura del proyecto
 
-Un proyecto Ryunix organiza **páginas** (carpeta `app/`), **estilos**, **assets** y un archivo **`ryunix.config.js`** que configura SSR, alias de importación y build. Si vienes de Next.js, piensa en `app/` + `next.config.js`; aquí los archivos de página usan `.ryx` en lugar de `.tsx`.
+Un proyecto Ryunix organiza páginas (carpeta app/), estilos, assets y un archivo ryunix.config.js que configura SSR, alias de importación y build. Si vienes de Next.js, piensa en app/ + next.config.js; aquí los archivos de página usan .ryx en lugar de .tsx.
 
 ## Estructura básica
 
@@ -85,7 +85,7 @@ src/
 
 ## Archivos estáticos
 
-Plantillas CRA: **`assets/`**. Opcional **`public/`** para `favicon.png`.
+Plantillas CRA: `assets/`. Opcional `public/` para `favicon.png`.
 
 ## Archivo de configuración
 
@@ -150,11 +150,17 @@ const RyunixSettings = {
 const key = ryunix.config.env.RYUNIX_APP_KEY;
 ```
 
-Todas las variables de entorno **deben** empezar por `RYUNIX_APP_` para exponerse al cliente.
+Todas las variables de entorno deben empezar por `RYUNIX_APP_` para exponerse al cliente.
 
 ## Buenas prácticas
 
-1. **Mantén los componentes pequeños** - Responsabilidad única
-2. **Usa carpetas por funcionalidad** - Agrupa archivos relacionados
-3. **Nombres consistentes** - PascalCase para componentes
-4. **Organiza por feature** - No por tipo de archivo
+1. Mantén los componentes pequeños — responsabilidad única
+2. Usa carpetas por funcionalidad — agrupa archivos relacionados
+3. Nombres consistentes — PascalCase para componentes
+4. Organiza por feature — no por tipo de archivo
+
+## Siguientes pasos
+
+- [Navegación](/es/docs/introduction/navigation) — enrutamiento y App Router en profundidad
+- [CSS](/es/docs/introduction/css) — enfoques de estilos
+- [Configuración](/es/docs/api/configuration) — referencia completa de `ryunix.config.js`

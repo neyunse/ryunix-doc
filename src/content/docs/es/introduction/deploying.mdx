@@ -9,6 +9,8 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 # Despliegue
 
+Tras el desarrollo, ejecuta un build de producción y sirve la salida desde `.ryunix/static/` o usa el servidor Node integrado con `ryunix start`. Activa `webpack.production: true` en `ryunix.config.js` antes de publicar.
+
 ## Compilar para producción
 
 ### 1. Actualizar la configuración
@@ -32,3 +34,9 @@ module.exports = {
 ]} />
 
 El build de producción quedará en `.ryunix/static/`.
+
+## Siguientes pasos
+
+- [Diferencias con React](/es/docs/introduction/differences-with-react) — API y convenciones si migras
+- [Renderizado y SSR](/es/docs/core/rendering) — cómo corre el build en servidor y cliente
+- [SSG y prerender](/es/docs/guides/ssg) — qué genera el build

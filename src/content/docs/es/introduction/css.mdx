@@ -9,7 +9,7 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 # CSS
 
-RyunixJS admite varios enfoques de CSS.
+Ryunix admite importación global de CSS, estilos en línea, clases y Tailwind CSS v4 vía PostCSS. La mayoría de apps empiezan con una hoja de estilos global en el layout raíz.
 
 ## Importar CSS (App Router)
 
@@ -139,3 +139,9 @@ Añade un `@import` en tu archivo CSS principal (p. ej. `styles/global.css` o `s
 ```
 
 *Nota: Con Tailwind v4 ya no necesitas un archivo `tailwind.config.js`. El framework detecta automáticamente tus plantillas. Puedes configurar el tema directamente en CSS con la directiva `@theme` si lo necesitas.*
+
+## Siguientes pasos
+
+- [Despliegue](/es/docs/introduction/deploying) — build de producción y hosting
+- [Diferencias con React](/es/docs/introduction/differences-with-react) — si migras desde React
+- [Configuración](/es/docs/api/configuration) — PostCSS, alias y estilos globales
