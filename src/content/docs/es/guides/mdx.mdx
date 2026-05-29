@@ -18,17 +18,17 @@ Habilita MDX en `ryunix.config.js` para escribir páginas de contenido junto a c
 
 ## Ubicación de archivos
 
-Los archivos MDX viven en el árbol del App Router como cualquier ruta:
+Los archivos MDX viven en el árbol del App Router como cualquier ruta. Puedes usar un archivo **plano** por segmento de URL (recomendado) o una carpeta con `index.mdx`:
 
 ```txt
-app/
-└── docs/
-    └── introduction/
-        └── getting-started/
-            └── index.mdx
+app/docs/introduction/getting-started.mdx
+# → /docs/introduction/getting-started
+
+app/docs/introduction/getting-started/index.mdx
+# → misma URL
 ```
 
-La URL sigue la ruta de carpetas: `/docs/introduction/getting-started`.
+Si coexisten `getting-started.mdx` y `getting-started/`, gana el directorio y el archivo plano se ignora.
 
 ## Frontmatter YAML
 
@@ -108,7 +108,7 @@ Los blockquotes sin marcador mantienen el estilo de cita por defecto. Puedes com
 
 ## Documentación bilingüe sin lógica duplicada
 
-Este sitio usa un único árbol de rutas en `src/app/[locale]/` con la prosa por idioma en `src/content/docs/{locale}/`, y centraliza datos y fragmentos compartidos para que el contenido EN/ES no se desincronice:
+Este sitio usa un único árbol de rutas en `src/app/[locale]/` con la prosa por idioma en `src/content/docs/{locale}/<slug>.mdx` (por ejemplo `introduction/about.mdx`), y centraliza datos y fragmentos compartidos para que el contenido EN/ES no se desincronice:
 
 - `src/i18n/packages.js` — nombres npm, versiones `latest` / `canary`, generadores de comandos de instalación
 - `src/i18n/config.js` — rutas del sidebar por locale

@@ -18,17 +18,17 @@ Enable MDX in `ryunix.config.js` to author content pages alongside `.ryx` compon
 
 ## File placement
 
-MDX files live in the App Router tree like any route:
+MDX files live in the App Router tree like any route. You can use a **flat** file per URL segment (recommended) or a folder with `index.mdx`:
 
 ```txt
-app/
-└── docs/
-    └── introduction/
-        └── getting-started/
-            └── index.mdx
+app/docs/introduction/getting-started.mdx
+# → /docs/introduction/getting-started
+
+app/docs/introduction/getting-started/index.mdx
+# → same URL
 ```
 
-The URL follows the folder path: `/docs/introduction/getting-started`.
+If both `getting-started.mdx` and `getting-started/` exist, the directory wins and the flat file is ignored.
 
 ## YAML frontmatter
 
@@ -108,7 +108,7 @@ Plain blockquotes without a marker keep the default quote style. You can combine
 
 ## Bilingual docs without duplicated logic
 
-This documentation site uses a single route tree under `src/app/[locale]/` with locale-specific prose in `src/content/docs/{locale}/`, and centralizes shared data and snippets so EN/ES content does not drift:
+This documentation site uses a single route tree under `src/app/[locale]/` with locale-specific prose in `src/content/docs/{locale}/<slug>.mdx` (for example `introduction/about.mdx`), and centralizes shared data and snippets so EN/ES content does not drift:
 
 - `src/i18n/packages.js` — npm package names, `latest` / `canary` versions, install command builders
 - `src/i18n/config.js` — sidebar routes per locale

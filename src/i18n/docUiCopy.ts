@@ -41,7 +41,7 @@ export const docUiCopy = {
     mdx: {
       i18nHeading: "Bilingual docs without duplicated logic",
       i18nIntro:
-        "This site uses a single app route tree under `src/app/[locale]/` with locale-specific prose in `src/content/docs/{locale}/`, and centralizes shared data and snippets so EN/ES content does not drift:",
+        "This site uses a single app route tree under `src/app/[locale]/` with locale-specific prose in `src/content/docs/{locale}/<slug>.mdx`, and centralizes shared data and snippets so EN/ES content does not drift:",
       i18nItems: [
         "`src/i18n/packages.js` — npm names, `latest` / `canary` versions, install command builders",
         "`src/i18n/config.js` — sidebar routes per locale",
@@ -96,7 +96,7 @@ export const docUiCopy = {
     mdx: {
       i18nHeading: "Documentación bilingüe sin lógica duplicada",
       i18nIntro:
-        "Este sitio usa un único árbol de rutas en `src/app/[locale]/` con la prosa por idioma en `src/content/docs/{locale}/`, y centraliza datos y fragmentos compartidos para que el contenido EN/ES no se desincronice:",
+        "Este sitio usa un único árbol de rutas en `src/app/[locale]/` con la prosa por idioma en `src/content/docs/{locale}/<slug>.mdx`, y centraliza datos y fragmentos compartidos para que el contenido EN/ES no se desincronice:",
       i18nItems: [
         "`src/i18n/packages.js` — nombres npm, versiones `latest` / `canary`, generadores de comandos de instalación",
         "`src/i18n/config.js` — rutas del sidebar por locale",
