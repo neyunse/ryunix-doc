@@ -1,10 +1,10 @@
 import SiteLayout from "@/features/marketing/SiteLayout.ryx";
 import { siteCopy } from "@/features/marketing/siteCopy.js";
-import { locales } from "@/i18n/config.js";
-import { pickLocale } from "@/i18n/locale.js";
+import { I18nProvider, generateStaticParams } from "@/i18n/app.js";
+import { pickLocale } from "@/i18n/config.js";
 import { localeMarketingMeta } from "@/i18n/localeMarketingMeta.js";
 
-export const generateStaticParams = () => locales.map((locale) => ({ locale }));
+export { generateStaticParams };
 
 export const generateMetadata = async ({ params }) => {
   const locale = params?.locale === "es" ? "es" : "en";
@@ -14,13 +14,16 @@ export const generateMetadata = async ({ params }) => {
 const LocaleLayout = ({ children, params }) => {
   const locale = params?.locale === "es" ? "es" : "en";
   return (
-    <SiteLayout
-      locale={locale}
-      docsPath={`/${locale}/docs/introduction/getting-started`}
-      copy={pickLocale(siteCopy, locale)}
-    >
-      {children}
-    </SiteLayout>
+    <I18nProvider locale={locale}>
+      <SiteLayout
+        locale={locale}
+        docsPath={`/${locale}/docs`}
+        templatesPath={`/${locale}/templates`}
+        copy={pickLocale(siteCopy, locale)}
+      >
+        {children}
+      </SiteLayout>
+    </I18nProvider>
   );
 };
 

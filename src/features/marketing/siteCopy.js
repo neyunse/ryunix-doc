@@ -1,6 +1,7 @@
 export const siteCopy = {
   en: {
     docsNav: "Docs",
+    templatesNav: "Templates",
     skipToContent: "Skip to content",
     footer: {
       description:
@@ -12,6 +13,7 @@ export const siteCopy = {
         installation: "Installation",
         configuration: "Configuration",
         cli: "CLI",
+        templates: "Templates",
       },
       github: "GitHub",
       npm: "npm package",
@@ -27,6 +29,7 @@ export const siteCopy = {
   },
   es: {
     docsNav: "Docs",
+    templatesNav: "Plantillas",
     skipToContent: "Saltar al contenido",
     footer: {
       description:
@@ -38,6 +41,7 @@ export const siteCopy = {
         installation: "Instalación",
         configuration: "Configuración",
         cli: "CLI",
+        templates: "Plantillas",
       },
       github: "GitHub",
       npm: "Paquete npm",

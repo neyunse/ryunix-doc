@@ -1,5 +1,6 @@
 import { docSlugs } from "../i18n/docSlugs.js";
 import { docPath, locales } from "../i18n/config.js";
+import { templateIds } from "../i18n/templatesCatalog.js";
 
 const BASE_URL = "https://ryunixjs.unsetsoft.com";
 
@@ -20,6 +21,22 @@ export default async function sitemap() {
     priority: locale === "en" ? 1 : 0.9,
   }));
 
+  const templatesIndex = locales.map((locale) => ({
+    url: `${BASE_URL}/${locale}/templates`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.85,
+  }));
+
+  const templateDetails = locales.flatMap((locale) =>
+    templateIds.map((templateId) => ({
+      url: `${BASE_URL}/${locale}/templates/${templateId}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    })),
+  );
+
   return [
     {
       url: BASE_URL,
@@ -28,6 +45,8 @@ export default async function sitemap() {
       priority: 1,
     },
     ...homes,
+    ...templatesIndex,
+    ...templateDetails,
     ...docs,
   ];
 }

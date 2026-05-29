@@ -1,12 +1,19 @@
 import SiteHeader from "@/components/layout/SiteHeader.ryx";
 import SiteFooter from "@/components/layout/SiteFooter.ryx";
 
-const SiteLayout = ({ children, locale, docsPath, copy }) => (
+const SiteLayout = ({ children, locale, docsPath, templatesPath, copy }) => (
   <>
     <a href="#main-content" className="skip-to-content">
       {copy.skipToContent}
     </a>
-    <SiteHeader locale={locale} docsPath={docsPath} docsNavLabel={copy.docsNav} />
+    <SiteHeader
+      locale={locale}
+      homePath={`/${locale}`}
+      docsPath={docsPath}
+      docsNavLabel={copy.docsNav}
+      templatesPath={templatesPath}
+      templatesNavLabel={copy.templatesNav}
+    />
     <main id="main-content" className="text-theme bg-surface min-h-[var(--ui-main-min-height)]">
       {children}
     </main>
