@@ -84,7 +84,7 @@ pnpm clean && pnpm dev
 > **Aviso — `webpack.production`:** En desarrollo local (`ryunix dev`), el CLI usa `RYUNIX_MODE=development` y el build no se minifica para iterar más rápido. En deploys de producción (Vercel), mantén `webpack.production: true` en `ryunix.config.js`.
 
 La imagen Open Graph / Twitter del sitio es `public/screenshot.png`, declarada con `export const Metatags` en `src/app/layout.ryx` (metadatos del App Router de RyunixJS).
-- **`postcss.config.js`** — PostCSS / Tailwind CSS
+- **`postcss.config.cjs`** + enlace **`postcss.config.js`** — Tailwind/PostCSS (Ryunix hace `require()` del `.js` enlazado; mantén `"type": "module"` en `package.json` para la hidratación). No sustituyas por un `.js` ESM con `export default`.
 - **`vercel.json`** — Despliegue en Vercel (salida del build: `.ryunix/static`)
 
 ## Despliegue
