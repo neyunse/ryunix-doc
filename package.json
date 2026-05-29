@@ -15,12 +15,6 @@
     "@unsetsoft/ryunixjs": "workspace:*",
     "lucide": "^0.575.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core"
-    ]
-  },
   "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": "^20 || ^22 || ^24"
