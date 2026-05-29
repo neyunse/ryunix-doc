@@ -9,14 +9,16 @@ import { CraQuickStart } from "@/components/docs/CraQuickStart";
 
 # Getting Started
 
-RyunixJS is a lightweight JavaScript framework for building user interfaces. Like React, but smaller and with integrated routing.
+RyunixJS is a **standalone** JavaScript framework for building web UIs. You program with **components and JSX** much like React, but Ryunix ships its own engine. The **App Router** (file-based routes), **SSR**, **SSG**, **MDX**, and the **toolchain** (`ryunix dev`, `build`, `start`) are built in — you do not install React or a separate router.
 
-This documentation site is built with the same App Router, MDX, and metadata stack described in [SEO & Metadata](/en/docs/guides/seo-metadata):
+If you know **Next.js**, the layout will feel familiar: pages under `app/`, layouts in `layout.ryx`, and APIs in `app/api/`. If you know **React**, swap `useState` for `useStore` and skip manual react-router setup.
+
+This documentation site uses the same stack: App Router, MDX, and metadata as described in [SEO & Metadata](/en/docs/guides/seo-metadata):
 
 <img src="/screenshot.png" alt="RyunixJS documentation site homepage" width="1830" height="1076" loading="lazy" />
 
 > [!WARNING]
-> **Integrated Routing** (the legacy way of defining routes manually) is no longer supported. Please use the **App Router** instead.
+> **Integrated Routing** (manual routes with `RouterProvider`) is no longer supported. Use the **App Router** with folders under `app/` instead.
 
 ## Quick Start
 
@@ -25,6 +27,8 @@ This documentation site is built with the same App Router, MDX, and metadata sta
 Your app is now running at `http://localhost:3000`
 
 ## Your First Component
+
+A **component** is a function that returns JSX — the mix of HTML and JavaScript that describes what appears on screen. The **`useStore`** hook holds a value that can change (like a counter):
 
 ```jsx
 // app/index.ryx
@@ -46,22 +50,23 @@ export default App;
 
 ## Key Concepts
 
-- **Components** - Functions that return JSX
-- **Hooks** - `useStore`, `useEffect`, `useMemo`, etc.
-- **Routing** - Built-in App Router, no external packages needed
-- **JSX** - Same syntax as React
+- **Components** — Functions that return JSX; the building blocks of your UI.
+- **Hooks** — Functions like `useStore`, `useEffect`, or `useMemo` for state, effects, and optimization.
+- **App Router** — Each folder under `app/` is a route; no external routing package required.
+- **JSX** — Same syntax as React; page files use the `.ryx` extension.
+- **`ryunix` CLI** — `dev` for development with hot reload, `build` for production (and SSG), `start` to serve the compiled app.
 
 ## Project Structure
 
 ```
 my-app/
 ├── app/               # App Router (or src/app/ when rootDir is "src")
-│   ├── layout.ryx     # Root layout
+│   ├── layout.ryx     # Shared layout (header, footer…)
 │   ├── index.ryx      # Home (/)
 │   └── error.ryx      # Global 404 (export NotFound)
 ├── assets/            # Static files (CRA default)
-├── styles/            # Global CSS (optional)
-└── ryunix.config.js
+├── styles/
+└── ryunix.config.js   # Framework configuration
 ```
 
 > [!TIP]
@@ -69,6 +74,7 @@ my-app/
 
 ## Next Steps
 
-- [Installation](/en/docs/introduction/installation) - Detailed setup guide
-- [Differences with React](/en/docs/introduction/differences-with-react) - Coming from React?
-- [Navigation](/en/docs/introduction/navigation) - Routing and navigation
+- [About Ryunix](/en/docs/introduction/about) — what the framework is and how it relates to React/Next.js
+- [Installation](/en/docs/introduction/installation) — detailed setup guide
+- [Differences with React](/en/docs/introduction/differences-with-react) — coming from React?
+- [Navigation](/en/docs/introduction/navigation) — routing and App Router in depth

@@ -3,7 +3,7 @@ export const homeCopy = {
     heroLead: "Build modern apps with",
     heroHighlight: "RyunixJS",
     heroBody:
-      "A lightweight JavaScript framework with App Router, SSR, SSG, MDX, and a full toolchain — from VS Code to the browser DevTools panel.",
+      "A standalone JavaScript framework with a React-like API — App Router, SSR, SSG, and full-stack tooling built in. No React dependency; familiar if you know Next.js, lighter if you want your own runtime.",
     cta: "Get Started",
     terminalTitle: "~/WEB",
     copyLabel: "Copy",
@@ -11,16 +11,16 @@ export const homeCopy = {
     featuresTitle: "Why RyunixJS?",
     cards: [
       {
-        title: "Performance First",
-        body: "Fiber reconciler, priority scheduling, and a minimal runtime footprint for fast loads and smooth UI.",
+        title: "Standalone engine",
+        body: "Your own UI runtime — not React or Preact. Components, JSX, and hooks feel familiar; events use the native DOM for less overhead.",
       },
       {
-        title: "App Router",
-        body: "File-system routing with layouts, loading states, error boundaries, and API routes — no extra router library.",
+        title: "Next.js-like full stack",
+        body: "File-based App Router, SSR, SSG, Server Actions, and API routes — like Next.js conventions, without shipping React.",
       },
       {
-        title: "Developer Experience",
-        body: "Familiar JSX, dual Webpack builds (client + server), MDX, dynamic SSG, and PostCSS out of the box.",
+        title: "Ready to ship",
+        body: "Create Ryunix App, the ryunix CLI, VS Code extension, DevTools, MDX docs, and dual Webpack builds from dev to static HTML.",
       },
     ],
     ecosystemEyebrow: "Developer ecosystem",
@@ -132,14 +132,14 @@ export const homeCopy = {
     ],
     ctaEyebrow: "Ready to build?",
     ctaTitle: "Start with Create Ryunix App",
-    ctaBody: "Scaffold a project in seconds, pick your package manager, and open the docs when you need depth.",
+    ctaBody: "Scaffold a project in seconds. If you know React or Next.js, you will recognize components and file-based routes — with a standalone runtime underneath.",
     ctaButton: "Read the docs",
   },
   es: {
     heroLead: "Crea aplicaciones web con",
     heroHighlight: "RyunixJS",
     heroBody:
-      "Framework JavaScript ligero con App Router, SSR, SSG, MDX y toolchain completo — desde VS Code hasta DevTools en el navegador.",
+      "Framework JavaScript independiente con API parecida a React — App Router, SSR, SSG y full-stack integrados. Sin depender de React; familiar si conoces Next.js, más ligero si quieres motor propio.",
     cta: "Comenzar",
     terminalTitle: "~/WEB",
     copyLabel: "Copiar",
@@ -147,16 +147,16 @@ export const homeCopy = {
     featuresTitle: "¿Por qué RyunixJS?",
     cards: [
       {
-        title: "Rendimiento",
-        body: "Reconciliador Fiber, cola de prioridad y runtime mínimo para cargas rápidas e interfaz fluida.",
+        title: "Motor independiente",
+        body: "Runtime de UI propio — no es React ni Preact. Componentes, JSX y hooks familiares; eventos nativos del DOM con menos sobrecarga.",
       },
       {
-        title: "App Router",
-        body: "Rutas por archivos con layouts, loading, errores y API — sin librería de routing extra.",
+        title: "Full-stack tipo Next.js",
+        body: "App Router por archivos, SSR, SSG, Server Actions y rutas API — convenciones similares a Next.js, sin arrastrar React.",
       },
       {
-        title: "Experiencia de desarrollo",
-        body: "JSX familiar, doble build Webpack (cliente + servidor), MDX, SSG dinámico y PostCSS integrados.",
+        title: "Listo para producir",
+        body: "Create Ryunix App, CLI ryunix, extensión VS Code, DevTools, docs MDX y doble build Webpack del dev al HTML estático.",
       },
     ],
     ecosystemEyebrow: "Ecosistema de desarrollo",
@@ -268,7 +268,7 @@ export const homeCopy = {
     ],
     ctaEyebrow: "¿Listo para empezar?",
     ctaTitle: "Arranca con Create Ryunix App",
-    ctaBody: "Genera un proyecto en segundos, elige tu gestor de paquetes y profundiza en la documentación cuando lo necesites.",
+    ctaBody: "Genera un proyecto en segundos. Si conoces React o Next.js, reconocerás componentes y rutas por archivos — con un runtime independiente debajo.",
     ctaButton: "Ver documentación",
   },
 };

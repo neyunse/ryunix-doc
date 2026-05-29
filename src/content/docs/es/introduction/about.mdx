@@ -1,84 +1,101 @@
 ---
 title: Acerca de Ryunix
-description: Conoce más sobre RyunixJS
+description: Qué es RyunixJS, cómo funciona y en qué se parece — o no — a React y Next.js
 slug: about
 section: Introducción
 ---
 
 # Introducción
 
-**RyunixJS** es un framework JavaScript moderno creado para desarrollar **sitios estáticos y aplicaciones de una sola página (SPA) rápidas y ligeras**, con un fuerte enfoque en rendimiento, claridad y mantenibilidad a largo plazo.
+**RyunixJS** es un framework JavaScript para crear **sitios web y aplicaciones interactivas**: desde un portfolio o una documentación hasta un panel de administración o una app con login, formularios y datos del servidor.
 
-Inspirado en herramientas como **React, Next.js, Preact y Vite**, RyunixJS adopta un enfoque distinto:  
-es **totalmente independiente** y **no depende de React ni de ningún motor de renderizado externo**.
+Si ya programaste algo de web (HTML, CSS, JavaScript), Ryunix te da una forma moderna de construir la interfaz **sin montar todo a mano**: rutas, estado, render en servidor y herramientas de desarrollo vienen integrados.
 
-Esta decisión de diseño permite que RyunixJS se mantenga:
+## ¿Qué es, en pocas palabras?
 
-- Simple y fácil de entender
-- Altamente personalizable
-- Estable y mantenible con el tiempo
+Ryunix es un **motor de interfaz de usuario** con una forma de programar **parecida a React** (componentes, JSX, hooks), pero **sin usar React por dentro**. Tiene su propio runtime — reconciliador, hooks y render — pensado para ser **ligero, rápido y fácil de mantener**.
 
-En lugar de seguir convenciones existentes, RyunixJS introduce su **propio sistema reactivo y arquitectura**, diseñados cuidadosamente para priorizar **rendimiento, estabilidad y libertad para el desarrollador**.
+En la práctica escribes archivos `.ryx` con JSX, organizas las páginas en carpetas bajo `app/` y usas comandos como `ryunix dev`, `ryunix build` y `ryunix start` para desarrollar y publicar.
 
+## ¿Cómo funciona?
 
+El flujo habitual es sencillo:
+
+1. **Escribes componentes** — funciones que devuelven la interfaz (botones, listas, formularios).
+2. **Defines rutas con carpetas** — cada carpeta en `app/` es una URL (`app/about/index.ryx` → `/about`).
+3. **El CLI compila tu app** — Webpack genera bundles para el navegador y para el servidor.
+4. **El runtime pinta la UI** — en el cliente, en el servidor (SSR) o como HTML estático (SSG), según lo que necesites.
+
+No hace falta instalar React, react-router ni Next.js: el framework trae motor, routing y toolchain en paquetes `@unsetsoft/*`.
+
+## Parentesco con React y Next.js
+
+Ryunix **no es React ni Next.js**, pero si los conoces la curva de aprendizaje es baja.
+
+### Si vienes de React
+
+| Concepto | React | RyunixJS |
+| :--- | :--- | :--- |
+| Componentes y JSX | ✅ | ✅ Misma idea |
+| Estado local | `useState` | `useStore` (mismo patrón) |
+| Efectos, memo, refs | `useEffect`, `useMemo`, … | Hooks equivalentes |
+| Eventos | Sistema sintético | Eventos nativos del DOM |
+| Routing | Librería externa (p. ej. react-router) | **App Router integrado** por carpetas |
+
+Ryunix **recuerda** la API de React, pero el motor es **propio**. No puedes instalar librerías que dependan de `react` como peer dependency sin adaptarlas.
+
+### Si vienes de Next.js
+
+| Concepto | Next.js | RyunixJS |
+| :--- | :--- | :--- |
+| Routing por archivos | `app/page.tsx`, `layout.tsx` | `app/index.ryx`, `layout.ryx` |
+| Render híbrido | CSR, SSR, SSG | CSR, SSR, SSG |
+| Full-stack | API routes, Server Actions | `app/api/.../router.js`, Server Actions |
+| Comandos | `next dev`, `build`, `start` | `ryunix dev`, `build`, `start` |
+| Motor de UI | React | **Motor propio** (`@unsetsoft/ryunixjs`) |
+
+**Analogía rápida:** React es el motor de UI; Next.js es React + full-stack. En Ryunix, `@unsetsoft/ryunixjs` es el motor y `@unsetsoft/ryunix-presets` + Create Ryunix App aportan la capa full-stack.
+
+## Ventajas propias de RyunixJS
+
+### Arquitectura independiente
+
+El core **no embebe React ni Preact**. Eso implica un runtime más pequeño, sin depender de los ciclos de release de terceros, y control directo sobre cómo evoluciona el framework.
+
+### API familiar, convenciones propias
+
+Hooks como `useEffect` o `useMemo` se sienten como en React; otros son específicos de Ryunix (`useStore`, `usePersistentStore`, `useSwitch`, `useDebounce`). Los archivos usan extensión `.ryx` y la config vive en `ryunix.config.js`.
+
+### Full-stack integrado
+
+App Router, SSR, SSG, Server Components, Server Actions, rutas API y MDX nativo forman parte del ecosistema oficial — no son plugins opcionales dispersos.
+
+### Toolchain listo para trabajar
+
+Create Ryunix App genera el proyecto en segundos. La extensión de VS Code resalta `.ryx`, DevTools inspecciona el árbol de componentes y el CLI unifica desarrollo, build y producción.
+
+### Rendimiento y simplicidad
+
+Reconciliador basado en fibers, eventos nativos del DOM y un núcleo sin dependencias externas en el runtime. La filosofía prioriza **claridad y mantenibilidad** frente a abstracciones innecesarias.
+
+## ¿Para qué proyectos encaja?
+
+- Sitios estáticos, landings y blogs (SSG)
+- Documentación con MDX (como este sitio)
+- SPAs y paneles interactivos
+- Aplicaciones full-stack con APIs y lógica en servidor
 
 ## Filosofía
 
-El desarrollo frontend moderno suele traer complejidad innecesaria. Abstracciones grandes, herramientas fuertemente acopladas y cambios constantes de API pueden frenar el desarrollo y dificultar el mantenimiento a largo plazo.
-
-RyunixJS nació para ofrecer una alternativa más limpia.
-
-Su filosofía es directa:
+El desarrollo frontend moderno a menudo acumula complejidad: muchas capas, herramientas acopladas y cambios frecuentes de API. Ryunix busca una alternativa más directa:
 
 > **Construye aplicaciones web modernas con control total y complejidad mínima.**
 
-Con RyunixJS, los desarrolladores se benefician de:
+Con Ryunix obtienes lógica explícita, una experiencia de desarrollo predecible y una base pensada para proyectos que duren.
 
-- Lógica de aplicación clara y explícita
-- Una experiencia de desarrollo predecible y consistente
-- Una base sólida para proyectos de larga duración
+## Siguientes pasos
 
-
-
-## ¿Por qué RyunixJS?
-
-### Arquitectura verdaderamente independiente
-
-RyunixJS está diseñado para funcionar de forma autónoma, sin depender de frameworks externos ni capas de renderizado.
-
-Esto se traduce en:
-
-- Mayor libertad arquitectónica
-- Sin dependencia de ciclos de vida de terceros
-- Control total sobre cómo se comportan y evolucionan las aplicaciones
-
-
-
-### Ligero y performante
-
-Al centrarse en un núcleo mínimo y reactividad diseñada a propósito, RyunixJS ofrece:
-
-- Alto rendimiento en tiempo de ejecución
-- Flujos de trabajo eficientes para sitios estáticos y SPA
-
-Es una buena opción para:
-
-- Sitios web estáticos
-- Paneles y dashboards administrativos
-- Plataformas de documentación
-- Aplicaciones web ligeras
-
-
-
-### Estabilidad ante todo
-
-La estabilidad es un principio central de RyunixJS.
-
-En lugar de cambios disruptivos frecuentes, el framework prioriza:
-
-- Actualizaciones compatibles hacia atrás
-- Mejoras incrementales
-- Optimización cuidadosa de los internos
-
-Este enfoque garantiza que tu código base siga siendo fiable y fácil de mantener a medida que crece el proyecto.
-
+- [Primeros pasos](/es/docs/introduction/getting-started) — crea tu primera app en minutos
+- [Diferencias con React](/es/docs/introduction/differences-with-react) — tabla detallada si migras desde React
+- [Navegación](/es/docs/introduction/navigation) — cómo funciona el App Router
+- [Renderizado y SSR](/es/docs/core/rendering) — CSR, SSR, SSG e hidratación

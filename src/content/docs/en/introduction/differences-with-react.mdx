@@ -1,39 +1,51 @@
 ---
 title: Differences with React
-description: Technical differences between RyunixJS and React
+description: How RyunixJS compares to React and Next.js — similarities, differences, and its own strengths
 slug: differences-with-react
 section: Introduction
 ---
 
-# Differences with React
+# Differences with React and Next.js
 
-RyunixJS is not intended to be a reimplementation of React. There are differences. Many of these differences are trivial, or exist to keep RyunixJS small and focused.
+RyunixJS **is not a clone of React** or a metaframework on top of it. The API **feels like** React (components, JSX, hooks), but the rendering engine is **its own**. If you know React or Next.js, much of what you already know transfers; what changes are names, conventions, and what ships built in.
 
 > [!WARNING]
-> **Integrated Routing** (the legacy way of defining routes manually) is no longer supported and will be removed in future versions. Use the **App Router** instead.
+> **Integrated Routing** (manual routes with `RouterProvider`) is no longer supported. Use the **App Router** with folders under `app/` instead.
 
-## Main Differences
+## At a glance if you come from another framework
 
-The main difference is that **RyunixJS uses native DOM events** instead of a synthetic event system. RyunixJS uses the browser's standard `addEventListener`, which means event naming and behavior works the same as in plain JavaScript.
+| | React | Next.js | RyunixJS |
+| :--- | :--- | :--- | :--- |
+| **What it is** | UI library | React + full-stack | Own UI engine + full-stack |
+| **Routing** | External (react-router, etc.) | Built-in App Router | Built-in App Router (`app/*.ryx`) |
+| **Local state** | `useState` | `useState` (React) | `useStore` |
+| **SSR / SSG** | Manual or extra libs | Built in | Built in (`ryunix dev/build`) |
+| **Server Actions** | Not in React core | Yes | Yes |
+| **Depends on React** | — | Yes | **No** |
+
+**Ryunix advantage:** you get a React + Next.js–like experience **without shipping React** in the runtime. Fewer layers, a unified toolchain under `@unsetsoft/*`, and clear conventions (`.ryx`, `ryunix.config.js`).
+
+## Main differences from React
+
+### Native DOM events
+
+Ryunix **does not use synthetic events**. Handlers use the browser’s `addEventListener`, like plain JavaScript:
 
 ```jsx
 // React (synthetic events)
 <button onClick={(e) => console.log(e.nativeEvent)}>
 
 // RyunixJS (native events)
-<button onClick={(e) => console.log(e)}>  // Already native
+<button onClick={(e) => console.log(e)}>
 ```
 
-**In RyunixJS:**
-
-- Events are native (better performance, no overhead)
+- Better performance, no extra normalization layer
 - No event pooling
-- No automatic cross-browser normalization
-- Behavior follows DOM specification
+- Behavior follows the DOM specification
 
-## Hooks Nomenclature
+### Hooks nomenclature
 
-### useState → useStore
+#### useState → useStore
 
 ```jsx
 // React
@@ -47,21 +59,23 @@ import { useStore } from "@unsetsoft/ryunixjs";
 const [count, setCount] = useStore(0);
 ```
 
-**Reason:** More explicit about storing component state.
+Same pattern; the name makes it explicit that you store component state.
 
-### Identical Hooks
+#### Hooks equivalent to React
 
-These work exactly like React:
+- `useEffect` — Side effects
+- `useMemo` — Memoize values
+- `useCallback` — Memoize functions
+- `useRef` — Refs
+- `useReducer` — Reducer pattern
+- `useTransition` — Transitions
+- `useDeferredValue` — Defer updates
 
-- `useEffect` - Side effects
-- `useMemo` - Memoize values
-- `useCallback` - Memoize functions
-- `useRef` - Refs
-- `useReducer` - Reducer pattern
-- `useTransition` - Transitions
-- `useDeferredValue` - Defer updates
+#### Ryunix-specific hooks
 
-## Context API
+Including `usePersistentStore` (syncs with `localStorage`), `useSwitch`, `useDebounce`, `useThrottle`, `useMetadata`.
+
+### Context API
 
 Different syntax, same purpose:
 
@@ -74,161 +88,79 @@ const theme = useContext(ThemeContext);
 ```jsx
 // RyunixJS
 const { Provider, useContext } = createContext("theme", "light");
-const theme = useContext(); // No argument
+const theme = useContext();
 ```
 
-**Key differences:**
-
-1. `createContext` requires unique ID
+1. `createContext` requires a unique ID
 2. Returns `{ Provider, useContext }`
-3. `useContext()` without arguments
+3. `useContext()` is called with no arguments
 
-## Initialization
+## App Router vs react-router
 
-```jsx
-// React
-import ReactDOM from "react-dom/client";
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+With plain React you usually add **react-router** and define routes in code. In Ryunix (and Next.js) routes come from **folders and files**:
+
+```
+app/
+├── layout.ryx
+├── index.ryx          → /
+└── about/
+    └── index.ryx      → /about
 ```
 
+Layouts, loading, errors, and metadata live next to each segment. See [Navigation](/en/docs/introduction/navigation) for details.
+
+## What Ryunix includes (that React alone does not)
+
+These are part of the official stack; with React they typically come via Next.js or other libraries:
+
+| Capability | In Ryunix |
+| :--- | :--- |
+| **SSR & SSG** | `ryunix dev`, `ryunix build`; see [Rendering](/en/docs/core/rendering) |
+| **Server Components** | Inferred at compile time from `app/` |
+| **Server Actions** | `"use server"` functions; see [Server Actions](/en/docs/core/server-actions) |
+| **API routes** | `app/api/**/router.js` |
+| **Native MDX** | `.mdx` pages in the App Router |
+| **SEO metadata** | `Metatags`, `generateMetadata`, `useMetadata` |
+
+### Page metadata
+
 ```jsx
-// RyunixJS
-import Ryunix from "@unsetsoft/ryunixjs";
-Ryunix.init(<App />);
-```
+export const Metatags = {
+  title: "My page",
+  description: "Description for search engines",
+};
 
-Single import, single method.
-
-## Features Unique to RyunixJS
-
-### 1. Integrated Routing
-
-No need for react-router:
-
-```jsx
-import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
-
-const routes = [
-  { path: "/", component: Home },
-  { path: "/about", component: About },
-];
-
-function App() {
-  return (
-    <RouterProvider routes={routes}>
-      <Children />
-    </RouterProvider>
-  );
+export default function Page() {
+  return <main>Content</main>;
 }
 ```
 
-### 2. useMetadata Hook
+## Not available (vs classic React)
 
-```jsx
-import { useMetadata } from "@unsetsoft/ryunixjs";
-
-function Page() {
-  useMetadata({
-    title: "My Page",
-    description: "Page description",
-  });
-
-  return <div>Content</div>;
-}
-```
-
-### 3. Native MDX Support
-
-Works without extra configuration:
-
-```jsx
-import Article from "./article.mdx";
-
-function App() {
-  return <Article />;
-}
-```
-
-## Not Available
-
-These React features are **not implemented**:
-
-- ❌ **Class Components** - Use functional components
+- ❌ **Class components** — Use functional components
 - ❌ **PropTypes**
-- ❌ **Concurrent Mode**
-- ❌ **Server Components**
-- ❌ **SSR**
+- ❌ **Full React 18 concurrent mode** (basic Suspense yes)
+- ❌ **npm ecosystem packages that require `react` as a peer** — without adaptation
 
-## Comparison Table (NPM Package)
+## Comparison table
 
-| Feature              | React             | RyunixJS                                                       |
-| -------------------- | ----------------- | -------------------------------------------------------------- |
-| **Hooks**            | `useState`        | `useStore`                                                     |
-| **Events**           | Synthetic         | Native                                                         |
-| **Routing**          | External          | Built-in                                                       |
-| **Metadata**         | External          | `useMetadata` (Document Level, can be extended if you use MDX) |
-| **Context**          | `useContext(Ctx)` | `createContext().useContext()`                                 |
-| **Fragments**        | ✅                | ✅                                                             |
-| **Refs**             | ✅                | ✅                                                             |
-| **Lazy**             | ✅                | ✅                                                             |
-| **Class components** | ✅                | ❌                                                             |
-| **PropTypes**        | ✅                | ❌                                                             |
+| Feature | React | Next.js | RyunixJS |
+| :--- | :--- | :--- | :--- |
+| **State hooks** | `useState` | `useState` | `useStore` |
+| **Events** | Synthetic | Synthetic (React) | Native |
+| **Routing** | External | App Router | App Router |
+| **SSR / SSG** | Manual | Built in | Built in |
+| **Server Actions** | — | Yes | Yes |
+| **MDX** | Plugin | Built in | Built in |
+| **Engine** | React | React | **Own** |
+| **Class components** | ✅ | ✅ | ❌ |
 
-## Version Compatibility
+## Quick migration tips from React
 
-RyunixJS implements features from React 16.x to 18.x:
+1. Change imports from `react` to `@unsetsoft/ryunixjs` and `useState` → `useStore`.
+2. Remove `ReactDOM.createRoot`; with the App Router the preset generates the entry.
+3. Replace react-router with folders under `app/`.
+4. Update Context to `createContext(id, default)`.
+5. Convert class components to functional ones.
 
-**React 16.x:**
-
-- ✅ Hooks
-- ✅ Fragments
-- ✅ Context
-
-**React 17.x:**
-
-- ✅ JSX Transform
-- ✅ Event delegation
-
-**React 18.x:**
-
-- ✅ useTransition
-- ✅ useDeferredValue
-- ⚠️ Suspense (basic)
-- ❌ Concurrent Mode
-
-## Migration Quick Tips
-
-1. Change imports:
-
-```jsx
-// Before
-import { useState } from "react";
-
-// After
-import { useStore } from "@unsetsoft/ryunixjs";
-```
-
-2. Update initialization:
-
-```jsx
-// Before
-ReactDOM.createRoot(...).render(<App />);
-
-// After
-Ryunix.init(<App />);
-```
-
-3. Update Context:
-
-```jsx
-// Before
-const value = useContext(MyContext);
-
-// After
-const { useContext } = createContext('id', default);
-const value = useContext();
-```
-
-4. Convert class components to functional
-
-See [Configuration](/en/docs/api/configuration) for build setup.
+See [About Ryunix](/en/docs/introduction/about) for the big picture and [Configuration](/en/docs/api/configuration) for build setup.
