@@ -9,6 +9,17 @@ section: Api
 
 RyunixJS supports several special files in the `app/` directory to handle SEO and web standards automatically.
 
+## Route metadata assets
+
+| File | Output |
+| :--- | :--- |
+| `opengraph-image.{png,jpg,jpeg,gif,webp}` | `og:image` |
+| `twitter-image.{png,jpg,jpeg,gif,webp}` | `twitter:image` |
+| `icon.{png,ico,svg,jpg,jpeg}` / `favicon.ico` | `<link rel="icon">` |
+| `apple-icon.{png,jpg,jpeg}` | apple touch icon |
+
+See [SEO & Metadata](/en/docs/guides/seo-metadata).
+
 ## Sitemap (sitemap.js)
 
 The `sitemap.js` file allows you to programmatically generate a sitemap for your application. This is essential for SEO, as it tells search engines which pages are available for crawling.

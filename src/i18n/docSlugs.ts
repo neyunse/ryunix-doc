@@ -15,6 +15,8 @@ export const docSlugs = [
   "guides/devtools",
   "guides/ecosystem",
   "guides/mdx",
+  "guides/seo-metadata",
+  "guides/i18n",
   "guides/ssg",
   "guides/typescript",
   "guides/vscode",

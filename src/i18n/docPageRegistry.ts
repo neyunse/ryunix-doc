@@ -57,6 +57,10 @@ import s24e from '@/content/docs/en/introduction/navigation.mdx';
 import s24s from '@/content/docs/es/introduction/navigation.mdx';
 import s25e from '@/content/docs/en/introduction/project-structure.mdx';
 import s25s from '@/content/docs/es/introduction/project-structure.mdx';
+import s26e from '@/content/docs/en/guides/seo-metadata.mdx';
+import s26s from '@/content/docs/es/guides/seo-metadata.mdx';
+import s27e from '@/content/docs/en/guides/i18n.mdx';
+import s27s from '@/content/docs/es/guides/i18n.mdx';
 
 export const docPages = {
   'api/components': { en: s0e, es: s0s },
@@ -85,6 +89,8 @@ export const docPages = {
   'introduction/installation': { en: s23e, es: s23s },
   'introduction/navigation': { en: s24e, es: s24s },
   'introduction/project-structure': { en: s25e, es: s25s },
+  'guides/seo-metadata': { en: s26e, es: s26s },
+  'guides/i18n': { en: s27e, es: s27s },
 };
 
 export function getDocPage(

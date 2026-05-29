@@ -495,6 +495,32 @@ function useFetch(url) {
 }
 ```
 
+## Router helpers
+
+| Export | Purpose |
+| :--- | :--- |
+| `Link` | Declarative client navigation |
+| `usePathname()` | Current path without query |
+| `useSearchParams()` | URL search params object |
+| `useRouter()` | Full router (`params`, `query`, navigation) |
+
+## Additional hooks
+
+| Hook | Purpose |
+| :--- | :--- |
+| `useId()` | Stable IDs for SSR + hydration |
+| `useLayoutEffect()` | DOM reads/writes before paint |
+| `useDebounce(value, delay)` | Built-in debounced value |
+| `useThrottle(fn, delay)` | Throttled callbacks |
+| `usePersistentStore(key, initial)` | State persisted to storage |
+
+## Metadata helpers
+
+| Export | Purpose |
+| :--- | :--- |
+| `mergeRouteMetadata(base, next)` | Layout → page merge preserving title templates |
+| `resolvePageMetadata(meta, options?)` | Normalize title + flat tags for `<head>` injection |
+
 ## Rules of Hooks
 
 1. **Only call at top level** - Not inside loops, conditions, or nested functions

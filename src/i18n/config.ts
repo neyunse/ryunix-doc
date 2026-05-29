@@ -53,6 +53,8 @@ export const docSections = {
     Guides: [
       { slug: "guides/cli", label: "CLI Commands" },
       { slug: "guides/ssg", label: "SSG & Prerendering" },
+      { slug: "guides/seo-metadata", label: "SEO & Metadata" },
+      { slug: "guides/i18n", label: "Internationalization" },
       { slug: "guides/api-routes", label: "API Routes" },
       { slug: "guides/mdx", label: "MDX & Frontmatter" },
       { slug: "guides/create-app", label: "Create Ryunix App" },
@@ -89,6 +91,8 @@ export const docSections = {
     Guías: [
       { slug: "guides/cli", label: "Comandos CLI" },
       { slug: "guides/ssg", label: "SSG y prerender" },
+      { slug: "guides/seo-metadata", label: "SEO y metadatos" },
+      { slug: "guides/i18n", label: "Internacionalización" },
       { slug: "guides/api-routes", label: "Rutas API" },
       { slug: "guides/mdx", label: "MDX y frontmatter" },
       { slug: "guides/create-app", label: "Create Ryunix App" },

@@ -48,6 +48,20 @@ export default function DashboardLayout({ children }) {
 | `app/<segment>/error.ryx` | Route segment | Error boundary for that subtree |
 | `app/<segment>/loading.ryx` | Route segment | Loading UI while async content resolves |
 
+## Metadata files
+
+Static SEO assets (Next.js-style) in a segment folder:
+
+| File | Purpose |
+| :--- | :--- |
+| `opengraph-image.png` | Open Graph image for the route |
+| `twitter-image.png` | Twitter card image |
+| `icon.png` / `favicon.ico` | Favicon for the segment |
+| `apple-icon.png` | Apple touch icon |
+| `*.alt.txt` | Alt text for OG/Twitter images |
+
+See [SEO & Metadata](/en/docs/guides/seo-metadata).
+
 ```jsx
 // app/error.ryx — global not found
 export const NotFound = () => <div>404 Not Found</div>;

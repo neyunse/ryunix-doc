@@ -68,10 +68,14 @@ Durante SSG o SSR, los hooks se ejecutan en modo seguro para servidor (`state.is
 
 | API | Caso de uso |
 | :--- | :--- |
-| `renderToString(element)` | Cadenas HTML estáticas para pre-render SSG |
-| `renderToReadableStream(element)` | HTML en streaming para SSR |
-| `renderToStringAsync(element)` | Árboles asíncronos en servidor |
-| `escapeHtml(unsafe)` | Escapar texto para salida HTML segura |
+| `renderToString(element)` | HTML sincrónico para árboles simples (sin async) |
+| `renderToReadableStream(element)` | HTML en streaming con Suspense |
+| `renderToStringAsync(element)` | **Ruta por defecto del App Router** en SSG/SSR dev |
+| `escapeHtml(unsafe)` | Escapar texto para HTML seguro |
+
+El SSR en dev sirve HTML vía middleware webpack. Los renders exitosos marcan el root con `data-ryunix-ssr-root` para que `init()` hidrate sin borrar el DOM.
+
+Metadatos de `useMetadata` en servidor se fusionan en `ssrMetadata`. Helpers: `mergeRouteMetadata`, `resolvePageMetadata`.
 
 ```jsx
 import { renderToString } from "@unsetsoft/ryunixjs";

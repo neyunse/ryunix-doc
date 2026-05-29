@@ -13,8 +13,8 @@ Ryunix genera HTML estático para cada página del App Router durante `ryunix bu
 
 1. **Escaneo del App Router** — Webpack descubre `index.ryx`, `layout.ryx`, carpetas dinámicas `[param]` y documentos `.mdx`.
 2. **Manifiesto de rutas** — Se escribe un archivo `routes.json` bajo `.ryunix/cache/ssg/` con rutas y metadatos fusionados.
-3. **Prerender** — El bundle del servidor renderiza cada ruta con `renderToString` (o APIs de streaming donde estén habilitadas).
-4. **Inyección HTML** — `<title>`, `<meta>`, enlaces canónicos y etiquetas Open Graph se inyectan desde `Metatags` / frontmatter.
+3. **Prerender** — El bundle servidor renderiza cada ruta con `renderToStringAsync` (Suspense en streaming cuando aplica).
+4. **Inyección HTML** — `<title>`, `<meta>`, canonical, iconos y Open Graph se inyectan con `resolvePageMetadata` desde `Metatags`, `generateMetadata` y archivos por ruta.
 
 La salida se guarda en `.ryunix/static` reflejando las rutas URL (p. ej. `/docs/introduction/about/index.html`).
 
@@ -33,7 +33,15 @@ export const Metatags = {
 
 Los archivos MDX pueden usar frontmatter YAML en su lugar; Ryunix lo mapea a la misma forma de `Metatags`.
 
-Los layouts anidados **fusionan** metadatos: layout raíz → layout del segmento → página / frontmatter MDX.
+Los layouts anidados **fusionan** metadatos con `mergeRouteMetadata`. Ver [SEO y metadatos](/es/docs/guides/seo-metadata).
+
+## generateStaticParams
+
+```jsx
+export { generateStaticParams } from "../../i18n.js";
+```
+
+Ver [Internacionalización](/es/docs/guides/i18n).
 
 ## Configuración del sitemap
 

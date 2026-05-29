@@ -50,6 +50,17 @@ Ryunix ofrece soporte nativo para estados de carga y error personalizados en cua
 | `app/<segmento>/error.ryx` | Segmento | Límite de error del subárbol |
 | `app/<segmento>/loading.ryx` | Segmento | UI de carga |
 
+## Archivos de metadata
+
+| Archivo | Uso |
+| :--- | :--- |
+| `opengraph-image.png` | Imagen Open Graph |
+| `twitter-image.png` | Imagen Twitter |
+| `icon.png` / `favicon.ico` | Favicon del segmento |
+| `apple-icon.png` | Apple touch icon |
+
+Ver [SEO y metadatos](/es/docs/guides/seo-metadata).
+
 ```jsx
 // app/error.ryx
 export const NotFound = () => <div>404 No encontrado</div>;

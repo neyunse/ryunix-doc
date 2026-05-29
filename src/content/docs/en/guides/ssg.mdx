@@ -13,8 +13,8 @@ Ryunix prerenders static HTML for App Router pages during `ryunix build`. The ro
 
 1. **App Router scan** — Webpack discovers `index.ryx`, `layout.ryx`, dynamic `[param]` folders, and `.mdx` docs.
 2. **Route manifest** — A `routes.json` file is written under `.ryunix/cache/ssg/` with paths and merged metadata.
-3. **Prerender** — The server bundle renders each route with `renderToString` (or streaming APIs where enabled).
-4. **HTML injection** — `<title>`, `<meta>`, canonical links, and Open Graph tags are injected from `Metatags` / frontmatter.
+3. **Prerender** — The server bundle renders each route with `renderToStringAsync` (streaming Suspense when used).
+4. **HTML injection** — `<title>`, `<meta>`, canonical links, icons, and Open Graph tags are injected via `resolvePageMetadata` from `Metatags`, `generateMetadata`, and file-based assets.
 
 Output lands in `.ryunix/static` mirroring URL paths (e.g. `/docs/introduction/about/index.html`).
 
@@ -33,7 +33,18 @@ export const Metatags = {
 
 MDX files can use YAML frontmatter instead; Ryunix maps it to the same `Metatags` shape.
 
-Nested layouts **merge** metadata: root layout → segment layout → page / MDX frontmatter.
+Nested layouts **merge** metadata via `mergeRouteMetadata`: root layout → segment layout → page / MDX frontmatter. See [SEO & Metadata](/en/docs/guides/seo-metadata).
+
+## generateStaticParams
+
+Export from a dynamic layout or page so SSG knows which paths to prerender:
+
+```jsx
+// app/[locale]/layout.ryx
+export { generateStaticParams } from "../../i18n.js";
+```
+
+See [Internationalization](/en/docs/guides/i18n).
 
 ## Sitemap configuration
 

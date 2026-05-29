@@ -256,6 +256,28 @@ Policy when server HTML and client VDOM disagree:
 
 Pair with core `<HydrationBoundary>` and `<ServerBoundary>` (see [Rendering](/en/docs/core/rendering) and [Ecosystem](/en/docs/guides/ecosystem)).
 
+### Internationalization (`i18n`)
+
+```javascript
+{
+  i18n: {
+    locales: ["en", "es"],
+    defaultLocale: "en",
+    localeLabels: { en: "English", es: "Español" },
+  },
+}
+```
+
+See [Internationalization](/en/docs/guides/i18n).
+
+### Debug (`debug`)
+
+```javascript
+{
+  debug: true,
+}
+```
+
 ### Global styles (`style`)
 
 **`style` is off by default**; use `style: true` or an object to inject `@unsetsoft/ryunixjs/style.css` (typography, tables, native forms, MDX alerts) across the app (`.ryx`, `.mdx`, semantic HTML).
