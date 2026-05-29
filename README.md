@@ -69,18 +69,19 @@ React Doctor only lints `.tsx`/`.jsx`. `pnpm doctor` copies `src/**/*.ryx` into 
 
 ```txt
 src/
-├── app/                # File-based routes only (thin wrappers)
-│   ├── en/docs/        # English MDX pages
-│   ├── es/docs/        # Spanish MDX pages
-│   └── index.ryx       # Locale hub (redirects via cookie)
-├── components/         # Shared UI (Icon, CodeTabs, layout header/footer)
-├── features/           # Domain modules (docs shell, home, marketing layout)
-├── i18n/               # Locale config and cookie helpers (TypeScript)
+├── app/                      # Rutas file-based (wrappers finos)
+│   ├── [locale]/             # Shell localizado
+│   │   └── docs/[...slug]/   # Catch-all MDX
+│   └── index.ryx             # Hub de idioma (redirect por cookie)
+├── content/docs/             # MDX por locale (en/, es/)
+├── components/
+├── features/
+├── i18n/                     # docPageRegistry, settings, i18n runtime
 ├── styles/
 └── resources/
 public/
-├── index.html          # HTML template with locale redirect script
-middleware.js           # Vercel Edge redirect for /
+├── index.html
+middleware.js
 ```
 
 ## Configuration
