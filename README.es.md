@@ -23,6 +23,21 @@ cd ryunix-doc
 pnpm install
 ```
 
+### Enlace local al monorepo RyunixJS
+
+Si este repo está junto a [`Ryunixjs`](https://github.com/UnSetSoft/Ryunixjs) (p. ej. `ryx/ryunix-doc` + `ryx/Ryunixjs`), `package.json` usa `workspace:*` en `@unsetsoft/ryunixjs` y `@unsetsoft/ryunix-presets`. Instala desde la **raíz del monorepo**, no solo dentro de `ryunix-doc`:
+
+```bash
+cd ../Ryunixjs
+pnpm install
+pnpm run build:core
+pnpm run dev:doc
+```
+
+O, tras instalar en la raíz: `pnpm dev` dentro de `ryunix-doc`.
+
+Para **Vercel** o un clone sin el monorepo, sustituye `workspace:*` por versiones canary publicadas en npm antes de `pnpm install`.
+
 ## Desarrollo
 
 ```bash

@@ -1,0 +1,36 @@
+import HomePage from "@/features/home/HomePage.ryx";
+import { homeCopy } from "@/features/home/homeCopy.js";
+import { pickLocale } from "@/i18n/locale.js";
+
+export const Metatags = {
+  title: "RyunixJS — Build modern web apps",
+  description:
+    "RyunixJS is a powerful and flexible JavaScript framework for building modern web applications with ease and efficiency.",
+  "og:title": "RyunixJS — Build modern web apps",
+  "og:description":
+    "RyunixJS is a powerful and flexible JavaScript framework for building modern web applications with ease and efficiency.",
+  keywords: [
+    "Ryunix",
+    "Documentation",
+    "Home",
+    "JS Framework",
+    "Static Site Generator",
+    "MDX Support",
+    "ESLint Integration",
+    "Webpack Configuration",
+  ],
+};
+
+const LocaleHome = ({ params }) => {
+  const locale = params?.locale === "es" ? "es" : "en";
+  const copy = pickLocale(homeCopy, locale);
+  return (
+    <HomePage
+      docsPath={`/${locale}/docs/introduction/getting-started`}
+      docsBase={`/${locale}/docs`}
+      copy={copy}
+    />
+  );
+};
+
+export default LocaleHome;

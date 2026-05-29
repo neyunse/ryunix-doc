@@ -1,18 +1,19 @@
 import { HydrationBoundary } from "@unsetsoft/ryunixjs";
 import DocLayoutShell from "@/features/docs/DocLayoutShell.ryx";
-import { docSections } from "@/i18n/config.js";
+import { DocLocaleProvider } from "@/features/docs/DocLocaleContext.ryx";
+import { getDocSections } from "@/i18n/config.js";
+import { pickLocale } from "@/i18n/locale.js";
 import { docUiCopy } from "@/i18n/docUiCopy.js";
 
 const LocaleDocLayout = ({ locale, children }) => {
-  const copy = docUiCopy[locale] ?? docUiCopy.en;
+  const copy = pickLocale(docUiCopy, locale);
+  const sections = getDocSections(locale);
   return (
-    <DocLayoutShell
-      sections={docSections[locale] ?? docSections.en}
-      prevLabel={copy.prev}
-      nextLabel={copy.next}
-    >
-      <HydrationBoundary id={`docs-${locale}`}>{children}</HydrationBoundary>
-    </DocLayoutShell>
+    <DocLocaleProvider locale={locale}>
+      <DocLayoutShell sections={sections} prevLabel={copy.prev} nextLabel={copy.next}>
+        <HydrationBoundary id={`docs-${locale}`}>{children}</HydrationBoundary>
+      </DocLayoutShell>
+    </DocLocaleProvider>
   );
 };
 

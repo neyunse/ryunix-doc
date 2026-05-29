@@ -1,0 +1,27 @@
+import SiteLayout from "@/features/marketing/SiteLayout.ryx";
+import { siteCopy } from "@/features/marketing/siteCopy.js";
+import { locales } from "@/i18n/config.js";
+import { pickLocale } from "@/i18n/locale.js";
+import { localeMarketingMeta } from "@/i18n/localeMarketingMeta.js";
+
+export const generateStaticParams = () => locales.map((locale) => ({ locale }));
+
+export const generateMetadata = async ({ params }) => {
+  const locale = params?.locale === "es" ? "es" : "en";
+  return localeMarketingMeta[locale] ?? localeMarketingMeta.en;
+};
+
+const LocaleLayout = ({ children, params }) => {
+  const locale = params?.locale === "es" ? "es" : "en";
+  return (
+    <SiteLayout
+      locale={locale}
+      docsPath={`/${locale}/docs/introduction/getting-started`}
+      copy={pickLocale(siteCopy, locale)}
+    >
+      {children}
+    </SiteLayout>
+  );
+};
+
+export default LocaleLayout;

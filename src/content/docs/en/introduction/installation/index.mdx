@@ -1,0 +1,55 @@
+---
+title: Installation
+description: How to install and set up RyunixJS
+section: Introduction
+slug: installation
+---
+
+import { CraQuickStart } from "@/components/docs/CraQuickStart.ryx";
+import { ManualInstallTabs } from "@/components/docs/ManualInstallTabs.ryx";
+import { NpmPackagesTable } from "@/components/docs/NpmPackagesTable.ryx";
+import { TechStackList } from "@/components/docs/TechStackList.ryx";
+
+# Installation
+
+## Using Create Ryunix App
+
+The fastest way to get started is by scaffolding a new project automatically. Works with npm, yarn, bun, and pnpm:
+
+<CraQuickStart channel="canary" />
+
+## Package managers
+
+You can also install RyunixJS manually into an existing project. It works with all major package managers:
+
+<ManualInstallTabs channel="canary" />
+
+For production apps, omit `@canary` or pass `--latest` to Create Ryunix App so dependencies resolve to the stable npm tag.
+
+## Published packages on npm
+
+RyunixJS is split into focused packages. CRA resolves `latest` or `canary` tags from the registry when scaffolding.
+
+<NpmPackagesTable />
+
+| Install | Command |
+| :--- | :--- |
+| Scaffold (canary) | `npx @unsetsoft/cra@canary my-app --canary` |
+| Scaffold (stable) | `npx @unsetsoft/cra my-app` or `npx @unsetsoft/cra my-app --latest` |
+| Core + presets only | See package manager tabs above |
+
+## Toolchain in generated apps
+
+Apps created with CRA typically use:
+
+<TechStackList />
+
+## Requirements
+
+- Node.js **20**, **22**, or **24** (see `engines` in CRA templates)
+
+## Related
+
+- [Ecosystem](/en/docs/guides/ecosystem) — npm packages and framework feature map
+- [Getting started](/en/docs/introduction/getting-started) — first component
+- [Create Ryunix App](/en/docs/guides/create-app) — scaffolding flags

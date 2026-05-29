@@ -3,80 +3,99 @@ export const defaultLocale = "en";
 export const localeLabels = { en: "English", es: "Español" };
 export const LOCALE_COOKIE_NAME = "ryunix_locale";
 
+/** Build a localized docs URL from a slug (no leading slash on slug). */
+export function docPath(locale, slug) {
+  return `/${locale}/docs/${slug}`;
+}
+
 export const docSections = {
   en: {
     Introduction: [
-      { path: "/en/docs/introduction/getting-started", label: "Getting Started" },
-      { path: "/en/docs/introduction/installation", label: "Installation" },
-      { path: "/en/docs/introduction/differences-with-react", label: "Differences with React" },
-      { path: "/en/docs/introduction/about", label: "About" },
-      { path: "/en/docs/introduction/project-structure", label: "Project Structure" },
-      { path: "/en/docs/introduction/navigation", label: "Navigation" },
-      { path: "/en/docs/introduction/css", label: "CSS" },
-      { path: "/en/docs/introduction/deploying", label: "Deploying" },
+      { slug: "introduction/getting-started", label: "Getting Started" },
+      { slug: "introduction/installation", label: "Installation" },
+      { slug: "introduction/differences-with-react", label: "Differences with React" },
+      { slug: "introduction/about", label: "About" },
+      { slug: "introduction/project-structure", label: "Project Structure" },
+      { slug: "introduction/navigation", label: "Navigation" },
+      { slug: "introduction/css", label: "CSS" },
+      { slug: "introduction/deploying", label: "Deploying" },
     ],
     API: [
-      { path: "/en/docs/api/configuration", label: "Configuration" },
-      { path: "/en/docs/api/components", label: "Components" },
-      { path: "/en/docs/api/functions", label: "Functions" },
-      { path: "/en/docs/api/special-files", label: "Special Files" },
+      { slug: "api/configuration", label: "Configuration" },
+      { slug: "api/components", label: "Components" },
+      { slug: "api/functions", label: "Functions" },
+      { slug: "api/special-files", label: "Special Files" },
     ],
     Core: [
-      { path: "/en/docs/core/rendering", label: "Rendering & SSR" },
-      { path: "/en/docs/core/error-handling", label: "Error Handling" },
-      { path: "/en/docs/core/server-actions", label: "Server Actions" },
-      { path: "/en/docs/core/advanced-components", label: "Advanced Components" },
-      { path: "/en/docs/core/performance", label: "Performance" },
+      { slug: "core/rendering", label: "Rendering & SSR" },
+      { slug: "core/error-handling", label: "Error Handling" },
+      { slug: "core/server-actions", label: "Server Actions" },
+      { slug: "core/advanced-components", label: "Advanced Components" },
+      { slug: "core/performance", label: "Performance" },
     ],
     Guides: [
-      { path: "/en/docs/guides/cli", label: "CLI Commands" },
-      { path: "/en/docs/guides/ssg", label: "SSG & Prerendering" },
-      { path: "/en/docs/guides/api-routes", label: "API Routes" },
-      { path: "/en/docs/guides/mdx", label: "MDX & Frontmatter" },
-      { path: "/en/docs/guides/create-app", label: "Create Ryunix App" },
-      { path: "/en/docs/guides/vscode", label: "VS Code" },
-      { path: "/en/docs/guides/typescript", label: "TypeScript" },
-      { path: "/en/docs/guides/devtools", label: "DevTools" },
-      { path: "/en/docs/guides/ecosystem", label: "Ecosystem" },
+      { slug: "guides/cli", label: "CLI Commands" },
+      { slug: "guides/ssg", label: "SSG & Prerendering" },
+      { slug: "guides/api-routes", label: "API Routes" },
+      { slug: "guides/mdx", label: "MDX & Frontmatter" },
+      { slug: "guides/create-app", label: "Create Ryunix App" },
+      { slug: "guides/vscode", label: "VS Code" },
+      { slug: "guides/typescript", label: "TypeScript" },
+      { slug: "guides/devtools", label: "DevTools" },
+      { slug: "guides/ecosystem", label: "Ecosystem" },
     ],
   },
   es: {
     Introducción: [
-      { path: "/es/docs/introduction/getting-started", label: "Primeros pasos" },
-      { path: "/es/docs/introduction/installation", label: "Instalación" },
-      { path: "/es/docs/introduction/differences-with-react", label: "Diferencias con React" },
-      { path: "/es/docs/introduction/about", label: "Acerca de" },
-      { path: "/es/docs/introduction/project-structure", label: "Estructura del proyecto" },
-      { path: "/es/docs/introduction/navigation", label: "Navegación" },
-      { path: "/es/docs/introduction/css", label: "CSS" },
-      { path: "/es/docs/introduction/deploying", label: "Despliegue" },
+      { slug: "introduction/getting-started", label: "Primeros pasos" },
+      { slug: "introduction/installation", label: "Instalación" },
+      { slug: "introduction/differences-with-react", label: "Diferencias con React" },
+      { slug: "introduction/about", label: "Acerca de" },
+      { slug: "introduction/project-structure", label: "Estructura del proyecto" },
+      { slug: "introduction/navigation", label: "Navegación" },
+      { slug: "introduction/css", label: "CSS" },
+      { slug: "introduction/deploying", label: "Despliegue" },
     ],
     API: [
-      { path: "/es/docs/api/configuration", label: "Configuración" },
-      { path: "/es/docs/api/components", label: "Componentes" },
-      { path: "/es/docs/api/functions", label: "Funciones" },
-      { path: "/es/docs/api/special-files", label: "Archivos especiales" },
+      { slug: "api/configuration", label: "Configuración" },
+      { slug: "api/components", label: "Componentes" },
+      { slug: "api/functions", label: "Funciones" },
+      { slug: "api/special-files", label: "Archivos especiales" },
     ],
     Core: [
-      { path: "/es/docs/core/rendering", label: "Renderizado y SSR" },
-      { path: "/es/docs/core/error-handling", label: "Manejo de errores" },
-      { path: "/es/docs/core/server-actions", label: "Server Actions" },
-      { path: "/es/docs/core/advanced-components", label: "Componentes avanzados" },
-      { path: "/es/docs/core/performance", label: "Rendimiento" },
+      { slug: "core/rendering", label: "Renderizado y SSR" },
+      { slug: "core/error-handling", label: "Manejo de errores" },
+      { slug: "core/server-actions", label: "Server Actions" },
+      { slug: "core/advanced-components", label: "Componentes avanzados" },
+      { slug: "core/performance", label: "Rendimiento" },
     ],
     Guías: [
-      { path: "/es/docs/guides/cli", label: "Comandos CLI" },
-      { path: "/es/docs/guides/ssg", label: "SSG y prerender" },
-      { path: "/es/docs/guides/api-routes", label: "Rutas API" },
-      { path: "/es/docs/guides/mdx", label: "MDX y frontmatter" },
-      { path: "/es/docs/guides/create-app", label: "Create Ryunix App" },
-      { path: "/es/docs/guides/vscode", label: "VS Code" },
-      { path: "/es/docs/guides/typescript", label: "TypeScript" },
-      { path: "/es/docs/guides/devtools", label: "DevTools" },
-      { path: "/es/docs/guides/ecosystem", label: "Ecosistema" },
+      { slug: "guides/cli", label: "Comandos CLI" },
+      { slug: "guides/ssg", label: "SSG y prerender" },
+      { slug: "guides/api-routes", label: "Rutas API" },
+      { slug: "guides/mdx", label: "MDX y frontmatter" },
+      { slug: "guides/create-app", label: "Create Ryunix App" },
+      { slug: "guides/vscode", label: "VS Code" },
+      { slug: "guides/typescript", label: "TypeScript" },
+      { slug: "guides/devtools", label: "DevTools" },
+      { slug: "guides/ecosystem", label: "Ecosistema" },
     ],
   },
 };
+
+/** Sidebar sections with resolved paths for the active locale. */
+export function getDocSections(locale) {
+  const source = docSections[locale] ?? docSections.en;
+  const out = {};
+  for (const [section, routes] of Object.entries(source)) {
+    out[section] = routes.map((route) => ({
+      path: docPath(locale, route.slug),
+      label: route.label,
+      slug: route.slug,
+    }));
+  }
+  return out;
+}
 
 /** Swap locale prefix while keeping the rest of the path. */
 export function swapLocalePath(pathname, targetLocale) {
@@ -92,6 +111,7 @@ export function swapLocalePath(pathname, targetLocale) {
 }
 
 export function getLocaleFromPath(pathname) {
+  if (typeof pathname !== "string") return null;
   const match = pathname.match(/^\/(en|es)(\/|$)/);
   return match ? match[1] : null;
 }

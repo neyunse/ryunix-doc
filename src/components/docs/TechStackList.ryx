@@ -1,8 +1,8 @@
 import { techStack } from "@/i18n/packages.js";
-import { docUiCopy } from "@/i18n/docUiCopy.js";
+import { useDocCopy } from "@/features/docs/DocLocaleContext.ryx";
 
-export const TechStackList = ({ locale = "en" }) => {
-  const copy = docUiCopy[locale]?.tech ?? docUiCopy.en.tech;
+export const TechStackList = () => {
+  const copy = useDocCopy("tech");
 
   return (
     <ul className="list-disc pl-6 space-y-2 my-4 text-theme">

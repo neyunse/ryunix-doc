@@ -1,26 +1,23 @@
+import { docSlugs } from "../i18n/docSlugs.js";
+import { docPath, locales } from "../i18n/config.js";
+
 const BASE_URL = "https://ryunixjs.unsetsoft.com";
 
-const docRoutes = [
-  "/docs/introduction/getting-started",
-  "/docs/introduction/installation",
-  "/docs/introduction/differences-with-react",
-  "/docs/introduction/about",
-  "/docs/introduction/project-structure",
-  "/docs/introduction/navigation",
-  "/docs/introduction/css",
-  "/docs/introduction/deploying",
-  "/docs/api/configuration",
-  "/docs/api/components",
-  "/docs/api/functions",
-  "/docs/api/special-files",
-];
-
 export default async function sitemap() {
-  const docs = docRoutes.map((route) => ({
-    url: `${BASE_URL}${route}`,
+  const docs = locales.flatMap((locale) =>
+    docSlugs.map((slug) => ({
+      url: `${BASE_URL}${docPath(locale, slug)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    })),
+  );
+
+  const homes = locales.map((locale) => ({
+    url: `${BASE_URL}/${locale}`,
     lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.8,
+    changeFrequency: "daily",
+    priority: locale === "en" ? 1 : 0.9,
   }));
 
   return [
@@ -30,6 +27,7 @@ export default async function sitemap() {
       changeFrequency: "daily",
       priority: 1,
     },
+    ...homes,
     ...docs,
   ];
 }

@@ -41,16 +41,18 @@ export const docUiCopy = {
     mdx: {
       i18nHeading: "Bilingual docs without duplicated logic",
       i18nIntro:
-        "This site keeps **locale-specific prose** under `src/app/en/` and `src/app/es/`, but centralizes shared data and snippets so EN/ES folders do not drift:",
+        "This site uses a single app route tree under `src/app/[locale]/` with locale-specific prose in `src/content/docs/{locale}/`, and centralizes shared data and snippets so EN/ES content does not drift:",
       i18nItems: [
         "`src/i18n/packages.js` — npm names, `latest` / `canary` versions, install command builders",
         "`src/i18n/config.js` — sidebar routes per locale",
+        "`src/i18n/docPageRegistry.js` — static MDX imports and `getDocPage(locale, slug)`",
+        "`src/i18n/locale.js` — `pickLocale()` for shared locale records",
         "`src/i18n/docUiCopy.js` — labels for docs UI and install sections",
-        "`src/features/marketing/siteCopy.js` — marketing shell strings",
+        "`src/features/docs/DocLocaleContext.ryx` — `useDocLocale()` / `useDocCopy()` inside MDX components",
         "`src/components/docs/*` — MDX building blocks (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`)",
       ],
       i18nNote:
-        "URLs still use `/en/docs/...` and `/es/docs/...` for SEO and routing; only duplicated **logic** moves to `src/i18n/` and shared components.",
+        "URLs still use `/en/docs/...` and `/es/docs/...` for SEO; the catch-all route `src/app/[locale]/docs/[...slug]/` renders the matching MDX from `src/content/docs/`.",
     },
   },
   es: {
@@ -94,16 +96,18 @@ export const docUiCopy = {
     mdx: {
       i18nHeading: "Documentación bilingüe sin lógica duplicada",
       i18nIntro:
-        "Este sitio mantiene la **prosa por idioma** en `src/app/en/` y `src/app/es/`, pero centraliza datos y fragmentos compartidos para que las carpetas EN/ES no se desincronicen:",
+        "Este sitio usa un único árbol de rutas en `src/app/[locale]/` con la prosa por idioma en `src/content/docs/{locale}/`, y centraliza datos y fragmentos compartidos para que el contenido EN/ES no se desincronice:",
       i18nItems: [
         "`src/i18n/packages.js` — nombres npm, versiones `latest` / `canary`, generadores de comandos de instalación",
         "`src/i18n/config.js` — rutas del sidebar por locale",
+        "`src/i18n/docPageRegistry.js` — imports estáticos de MDX y `getDocPage(locale, slug)`",
+        "`src/i18n/locale.js` — `pickLocale()` para registros por locale",
         "`src/i18n/docUiCopy.js` — etiquetas de la UI de docs y secciones de instalación",
-        "`src/features/marketing/siteCopy.js` — textos del shell de marketing",
+        "`src/features/docs/DocLocaleContext.ryx` — `useDocLocale()` / `useDocCopy()` en componentes MDX",
         "`src/components/docs/*` — bloques MDX (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`)",
       ],
       i18nNote:
-        "Las URLs siguen usando `/en/docs/...` y `/es/docs/...` por SEO y routing; solo la **lógica** duplicada vive en `src/i18n/` y componentes compartidos.",
+        "Las URLs siguen usando `/en/docs/...` y `/es/docs/...` por SEO; la ruta catch-all `src/app/[locale]/docs/[...slug]/` renderiza el MDX correspondiente en `src/content/docs/`.",
     },
   },
 };

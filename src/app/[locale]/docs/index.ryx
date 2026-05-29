@@ -1,0 +1,23 @@
+import { useEffect, useRouter } from "@unsetsoft/ryunixjs";
+import { defaultLocale } from "@/i18n/config.js";
+
+export const generateMetadata = async ({ params }) => {
+  const locale = params?.locale === "es" ? "es" : "en";
+  const title = locale === "es" ? "Documentación" : "Documentation";
+  return {
+    title: `RyunixJS — ${title}`,
+  };
+};
+
+const LocaleDocsIndex = ({ params }) => {
+  const { navigate } = useRouter();
+  const locale = params?.locale === "es" ? "es" : defaultLocale;
+
+  useEffect(() => {
+    navigate(`/${locale}/docs/introduction/getting-started`);
+  }, [locale]);
+
+  return null;
+};
+
+export default LocaleDocsIndex;

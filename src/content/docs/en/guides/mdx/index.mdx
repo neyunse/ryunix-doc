@@ -1,0 +1,133 @@
+---
+title: MDX & Frontmatter
+description: Write documentation and content pages with MDX in RyunixJS
+slug: mdx
+section: Guides
+---
+
+# MDX & Frontmatter
+
+Enable MDX in `ryunix.config.js` to author content pages alongside `.ryx` components.
+
+```javascript
+{
+  mdx: true,
+  style: true,
+}
+```
+
+## File placement
+
+MDX files live in the App Router tree like any route:
+
+```txt
+app/
+└── docs/
+    └── introduction/
+        └── getting-started/
+            └── index.mdx
+```
+
+The URL follows the folder path: `/docs/introduction/getting-started`.
+
+## YAML frontmatter
+
+Start the file with `---` metadata. Ryunix parses it into the same `Metatags` object used for SEO:
+
+```mdx
+---
+title: Getting Started
+description: Quick start guide for RyunixJS
+slug: getting-started
+section: Introduction
+---
+
+# Getting Started
+
+Your content here…
+```
+
+At build time, frontmatter is merged with parent `layout.ryx` `Metatags` (title templates, `og:image`, etc.).
+
+## Importing components in MDX
+
+Use the same imports as `.ryx` files:
+
+```mdx
+import { CodeTabs } from "@/components/ui/CodeTabs";
+
+<CodeTabs tabs={[
+  { name: "pnpm", code: "pnpm dev" },
+  { name: "npm", code: "npm run dev" },
+]} />
+```
+
+Shared UI typically lives in `src/components/` (with `rootDir: "src"`) or `app/components/` when `app/` is at the project root.
+
+## MDXProvider
+
+Wrap MDX content with `MDXProvider` when you need custom shortcodes or element mappings — see [Components](/en/docs/api/components).
+
+## Global styles and theme
+
+With `style: true` (default), MDX elements use `@unsetsoft/ryunixjs/style.css` like the rest of the app. Enable dark mode by adding `class="dark"` on `<html>`:
+
+```javascript
+document.documentElement.classList.add("dark");
+// document.documentElement.classList.remove("dark"); // light theme
+```
+
+For a block without framework styles:
+
+```mdx
+<div data-ryx-unstyled>
+  <h1>Heading without Ryunix styles</h1>
+</div>
+```
+
+Imported `.ryx` components can use the `unstyled` prop (see [Configuration](/en/docs/api/configuration)).
+
+## Alerts (`> [!NOTE]`)
+
+Ryunix supports [GitHub-style markdown alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) in MDX. Start a blockquote with the alert type on its own line:
+
+```mdx
+> [!WARNING]
+> **Built-in routing** is no longer supported. Use the **App Router** instead.
+
+> [!NOTE]
+> Useful information readers should know when skimming.
+
+> [!TIP]
+> Prefer `rootDir: "src"` when routes live under `src/app/`.
+```
+
+Supported types: `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Each uses global classes `ryx-alert` and `ryx-alert--<type>`.
+
+Plain blockquotes without a marker keep the default quote style. You can combine **bold**, links, and multi-paragraph content inside an alert.
+
+## Bilingual docs without duplicated logic
+
+This documentation site uses a single route tree under `src/app/[locale]/` with locale-specific prose in `src/content/docs/{locale}/`, and centralizes shared data and snippets so EN/ES content does not drift:
+
+- `src/i18n/packages.js` — npm package names, `latest` / `canary` versions, install command builders
+- `src/i18n/config.js` — sidebar routes per locale
+- `src/i18n/docPageRegistry.js` — static MDX imports and `getDocPage(locale, slug)`
+- `src/i18n/locale.js` — `pickLocale()` helper for shared records
+- `src/i18n/docUiCopy.js` — docs UI labels
+- `src/features/docs/DocLocaleContext.ryx` — `useDocLocale()` / `useDocCopy()` (no `locale=` prop in MDX)
+- `src/features/docs/LocaleDocLayout.ryx` — shared docs shell for any locale
+- `src/components/docs/*` — MDX building blocks (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`, `TechStackList`)
+
+URLs still use `/en/docs/...` and `/es/docs/...` for SEO; `src/app/[locale]/docs/[...slug]/` renders the matching file from `src/content/docs/`. When publishing a new npm version, update `packages.js` once and every page that imports these components stays in sync.
+
+## SSG and MDX
+
+During `ryunix build`, each MDX route is prerendered to static HTML with the correct `<title>` and meta tags inherited from layouts. Avoid mixing deprecated global `static.seo` config with per-route `Metatags`.
+
+## Related
+
+- [Navigation](/en/docs/introduction/navigation) — routing overview
+- [SSG & prerendering](/en/docs/guides/ssg) — prerender pipeline
+- [Functions](/en/docs/api/functions) — `useMetadata` for client-only updates
+- [Configuration](/en/docs/api/configuration) — `mdx: true`, `style: true`
