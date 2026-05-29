@@ -1,13 +1,35 @@
-import SiteHeader from "@/components/layout/SiteHeader.ryx";
-import SiteFooter from "@/components/layout/SiteFooter.ryx";
+import type { RyunixNode } from "@unsetsoft/ryunixjs";
 
-const SiteLayout = ({ children, locale, docsPath, copy }) => (
+import SiteHeader from "@/components/layout/header/SiteHeader";
+import SiteFooter from "@/components/layout/SiteFooter";
+
+const SiteLayout = ({
+  children,
+  locale,
+  docsPath,
+  templatesPath,
+  copy,
+}: {
+  children?: RyunixNode;
+  locale: string;
+  docsPath: string;
+  templatesPath: string;
+  copy: Record<string, any> | undefined;
+}) => (
   <>
     <a href="#main-content" className="skip-to-content">
-      {copy.skipToContent}
+      {copy?.skipToContent}
     </a>
-    <SiteHeader locale={locale} docsPath={docsPath} docsNavLabel={copy.docsNav} />
-    <main id="main-content" className="text-theme bg-surface min-h-[var(--ui-main-min-height)]">
+    <SiteHeader
+      homePath={`/${locale}`}
+      homeNavLabel={copy?.homeNav}
+      docsPath={docsPath}
+      docsNavLabel={copy?.docsNav}
+      templatesPath={templatesPath}
+      templatesNavLabel={copy?.templatesNav}
+      menuNavLabel={copy?.menuNav}
+    />
+    <main id="main-content" className="text-theme bg-surface min-h-(--ui-main-min-height)">
       {children}
     </main>
     <SiteFooter locale={locale} copy={copy} />

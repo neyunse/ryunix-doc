@@ -1,8 +1,0 @@
-import LocaleDocLayout from "@/features/docs/LocaleDocLayout.ryx";
-import { localeDocMeta } from "@/i18n/localeDocMeta.js";
-
-export const Metatags = localeDocMeta.es;
-
-const DocLayout = ({ children }) => <LocaleDocLayout locale="es">{children}</LocaleDocLayout>;
-
-export default DocLayout;

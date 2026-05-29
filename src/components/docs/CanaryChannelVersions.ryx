@@ -1,4 +1,4 @@
-import { npmPackages } from "@/i18n/packages.js";
+import { npmPackages } from "@/i18n/packages";
 
 /** Inline reference to current canary versions on npm (single source: packages.js). */
 export const CanaryChannelVersions = () => (

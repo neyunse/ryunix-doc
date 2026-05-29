@@ -1,0 +1,297 @@
+---
+title: Navigation
+description: Complete navigation and routing system in RyunixJS
+slug: navigation
+section: Introduction
+---
+
+# Navigation
+
+RyunixJS has built-in routing. No external packages needed.
+
+## File-System Routing (App Router)
+
+RyunixJS features a modern, file-system based router using the `app/` directory. No global configuration is needed.
+
+Any compatible file (`index.ryx`, `.ts`, `.tsx`, `.mdx`) inside a folder in `app/` automatically becomes a route.
+
+```
+app/
+├── index.ryx          // maps to /
+├── about/
+│   └── index.ryx      // maps to /about
+└── contact/
+    └── index.ryx      // maps to /contact
+```
+
+## Nested Layouts (layout.ryx)
+
+Layouts (`layout.ryx`) allow you to wrap child routes. They preserve their state, do not re-render unnecessarily, and maintain persistent UI (like headers and sidebars) when navigating between nested views.
+
+```jsx
+// app/dashboard/layout.ryx
+export default function DashboardLayout({ children }) {
+  return (
+    <div className="flex">
+      <nav>Sidebar</nav>
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+## Error and loading files
+
+| File | Scope | Purpose |
+| :--- | :--- | :--- |
+| `app/error.ryx` | App root | Global **404** — export `NotFound` or `default` |
+| `app/<segment>/error.ryx` | Route segment | Error boundary for that subtree |
+| `app/<segment>/loading.ryx` | Route segment | Loading UI while async content resolves |
+
+## Metadata files
+
+Static SEO assets (Next.js-style) in a segment folder:
+
+| File | Purpose |
+| :--- | :--- |
+| `opengraph-image.png` | Open Graph image for the route |
+| `twitter-image.png` | Twitter card image |
+| `icon.png` / `favicon.ico` | Favicon for the segment |
+| `apple-icon.png` | Apple touch icon |
+| `*.alt.txt` | Alt text for OG/Twitter images |
+
+See [SEO & Metadata](/en/docs/guides/seo-metadata).
+
+```jsx
+// app/error.ryx — global not found
+export const NotFound = () => <div>404 Not Found</div>;
+```
+
+## Dynamic Routes
+
+Dynamic route parameters are created by enclosing a folder name in brackets `[slug]`.
+
+```
+app/
+└── users/
+    └── [id]/
+        └── index.ryx   // matches /users/1, /users/abc, etc.
+```
+
+Access params in your component using the `useRouter` hook:
+
+```jsx
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+export default function UserProfile() {
+  const { params } = useRouter();
+  const userId = params.id;
+
+  return <div>User ID: {userId}</div>;
+}
+```
+
+## API Routes Integrated (Backend)
+
+You can easily create server endpoints using the `app/api/` folder. Supported API controller file names are `route.js`, `route.ts`, `route.ryx`, `router.js`, `router.ts`, and `router.ryx`.
+
+```javascript
+// app/api/hello/route.js
+export const GET = async (req) => {
+  return new Response(JSON.stringify({ message: "Hello World!" }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  })
+}
+```
+
+### Dynamic & Catch-all API Routing
+
+The `/api` directory supports the same bracket syntax as the frontend:
+- **`app/api/users/[id]/route.js`**: Responds to dynamic parameters (e.g., `/api/users/123`). Parameters are available directly via `req.params`.
+- **`app/api/docs/[...path]/route.js`**: The catch-all syntax `[...path]` intercepts multiple route sub-segments (e.g., `/api/docs/es/getting-started/install`).
+
+## Navigation Components
+
+### NavLink
+
+```jsx
+import { NavLink } from "@unsetsoft/ryunixjs";
+
+function Nav() {
+  return (
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/about">About</NavLink>
+      <NavLink to="/contact">Contact</NavLink>
+    </nav>
+  );
+}
+```
+
+**Props:**
+
+- `to` - Target path
+- `exact` - Exact match (default: false)
+- `className` - CSS class
+- `ryunix-class` - Alternative to className
+
+### Active State
+
+```jsx
+<NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
+  About
+</NavLink>
+```
+
+Or use CSS:
+
+```css
+nav a[href="/about"] {
+  color: blue;
+}
+```
+
+## Programmatic Navigation
+
+### useRouter Hook
+
+```jsx
+import { useRouter } from "@unsetsoft/ryunixjs";
+
+function Component() {
+  const { navigate, location, params, query } = useRouter();
+
+  const goToAbout = () => {
+    navigate("/about");
+  };
+
+  return (
+    <div>
+      <p>Current: {location}</p>
+      <button onClick={goToAbout}>Go to About</button>
+    </div>
+  );
+}
+```
+
+**useRouter returns:**
+
+- `navigate(path)` - Navigate to path
+- `location` - Current pathname
+- `params` - Route parameters
+- `query` - Query string object
+- `route` - Current route config
+
+## Query Parameters
+
+### useQuery Hook
+
+```jsx
+import { useQuery } from "@unsetsoft/ryunixjs";
+
+function SearchPage() {
+  const query = useQuery();
+  const searchTerm = query.q;
+  const page = query.page || 1;
+
+  return <div>Search: {searchTerm}</div>;
+}
+```
+
+For URL: `/search?q=react&page=2`
+
+- `query.q` = "react"
+- `query.page` = "2"
+
+## Hash Navigation
+
+### useHash Hook
+
+```jsx
+import { useHash } from "@unsetsoft/ryunixjs";
+
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.slice(1));
+      element?.scrollIntoView();
+    }
+  }, [hash]);
+
+  return <div>Current hash: {hash}</div>;
+}
+```
+
+For URL: `/page#section-2`
+
+- `hash` = "#section-2"
+
+## Scroll Behavior
+
+### Scroll to Hash
+
+Automatic with `useHash`:
+
+```jsx
+function Page() {
+  const hash = useHash();
+
+  useEffect(() => {
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [hash]);
+}
+```
+
+## Route Metadata
+
+### Static Metatags
+
+Add metadata to your App Router pages by exporting a static `Metatags` object:
+
+```jsx
+// app/about/index.ryx
+
+export const Metatags = {
+  title: "About Us",
+  description: "Learn more about our company",
+};
+```
+
+### Dynamic metadata (`generateMetadata`)
+
+For dynamic routes, export an async **`generateMetadata`** function. It receives `{ params, searchParams }` (same shape as in the App Router pipeline):
+
+```jsx
+// app/users/[id]/index.ryx
+
+export async function generateMetadata({ params }) {
+  const user = await fetchUser(params.id);
+  return {
+    title: `Profile: ${user.name}`,
+    description: `View ${user.name}'s profile and posts`,
+  };
+}
+```
+
+Static `Metatags` objects are merged with layout metadata; `generateMetadata` runs for dynamic values at render/SSG time.
+
+> [!NOTE]
+> `Metatags` must be a plain object, not an async function. Use `generateMetadata` for async metadata.
+
+
+
+## Browser History
+
+RyunixJS uses the HTML5 History API:
+
+- ✅ Clean URLs (no `#`)
+- ✅ Back/forward buttons work
+- ✅ `window.history.pushState`
+- ✅ `popstate` events

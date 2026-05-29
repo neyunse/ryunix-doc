@@ -23,6 +23,12 @@ cd ryunix-doc
 pnpm install
 ```
 
+### Paquetes RyunixJS desde npm
+
+`@unsetsoft/ryunixjs` y `@unsetsoft/ryunix-presets` se instalan desde el **registro npm** (tags canary), sin enlace al monorepo local. Ejecuta `pnpm install` solo dentro de `ryunix-doc`.
+
+Para probar un checkout local del framework, apunta temporalmente esas dependencias a tus paquetes en `Ryunixjs` y vuelve a instalar.
+
 ## Desarrollo
 
 ```bash
@@ -48,18 +54,19 @@ Scripts definidos en `package.json` (CLI Ryunix vía `ryunix`):
 
 ```txt
 src/
-├── app/                # Rutas file-based (wrappers finos)
-│   ├── en/docs/        # Páginas MDX en inglés
-│   ├── es/docs/        # Páginas MDX en español
-│   └── index.ryx       # Hub de idioma (redirect por cookie)
-├── components/         # UI compartida (Icon, CodeTabs, layout header/footer)
-├── features/           # Módulos por dominio (docs, home, marketing)
-├── i18n/               # Config de locales y cookie
+├── app/
+│   ├── [locale]/
+│   │   └── docs/[...slug]/
+│   └── index.ryx
+├── content/docs/
+├── components/
+├── features/
+├── i18n/
 ├── styles/
 └── resources/
 public/
-├── index.html          # Plantilla HTML con script de redirect
-middleware.js           # Redirect Edge en Vercel para /
+├── index.html
+middleware.js
 ```
 
 ## Configuración

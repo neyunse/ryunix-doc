@@ -2,7 +2,8 @@ import { NavLink, useStore } from "@unsetsoft/ryunixjs";
 import { ArrowRight, Github, Zap, Database, Code } from "lucide";
 import { Icon } from "@/components/ui/Icon";
 import { useCopyFeedback } from "@/components/ui/useCopyFeedback";
-import FeatureSpotlight from "@/components/ui/FeatureSpotlight.ryx";
+import FeatureSpotlight from "@/components/ui/FeatureSpotlight";
+import { cn } from "@/lib/cn";
 
 const PROJECT_NAME = "my-page";
 
@@ -71,26 +72,45 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
           style={{ background: "var(--color-glow-purple)" }}
         />
 
-        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 lg:py-40 flex flex-col lg:grid lg:grid-cols-2 gap-16 items-center">
+        <div
+          className={cn(
+            "w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8",
+            "py-20 sm:py-32 lg:py-40 flex flex-col lg:grid lg:grid-cols-2 gap-16 items-center",
+          )}
+        >
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
-            <h1 className="tracking-tight font-extrabold text-5xl sm:text-6xl md:text-7xl text-theme">
+            <h1 className="tracking-tight font-extrabold text-4xl sm:text-6xl md:text-7xl text-theme">
               {copy.heroLead}{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-purple-500 animate-pulse">
+              <span
+                className={cn(
+                  "text-transparent bg-clip-text bg-linear-to-r",
+                  "from-blue-400 via-blue-500 to-purple-500 animate-pulse",
+                )}
+              >
                 {copy.heroHighlight}
               </span>
             </h1>
             <p className="max-w-xl text-lg sm:text-xl leading-8 text-theme-muted mt-6 font-medium">{copy.heroBody}</p>
-            <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
               <NavLink
                 to={docsPath}
-                className="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300"
+                className={cn(
+                  "inline-flex w-full sm:w-auto items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5",
+                  "text-base font-semibold text-white bg-blue-600 rounded-xl",
+                  "hover:bg-blue-500 hover:-translate-y-1",
+                  "hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300",
+                )}
               >
                 {copy.cta}
                 <Icon icon={ArrowRight} className="w-4 h-4 ml-2" />
               </NavLink>
               <a
                 href="https://github.com/UnSetSoft/Ryunixjs"
-                className="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-theme bg-surface-elevated border border-theme rounded-xl hover:bg-surface-card-hover hover:-translate-y-1 transition-all duration-300"
+                className={cn(
+                  "inline-flex w-full sm:w-auto items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5",
+                  "text-base font-semibold text-theme bg-surface-elevated border border-theme rounded-xl",
+                  "hover:bg-surface-card-hover hover:-translate-y-1 transition-all duration-300",
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -101,7 +121,12 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
           </div>
 
           <div className="relative z-10 w-full max-w-2xl lg:max-w-none mx-auto lg:mx-0 group perspective-1000">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+            <div
+              className={cn(
+                "absolute inset-0 bg-linear-to-r from-blue-500 to-purple-600 rounded-2xl blur-xl",
+                "opacity-20 group-hover:opacity-40 transition-opacity duration-500",
+              )}
+            />
             <div className="relative bg-surface-subtle border border-theme rounded-2xl shadow-2xl overflow-hidden">
               <div className="flex items-center px-4 py-3 bg-surface-card border-b border-theme">
                 <div className="flex space-x-2 shrink-0">
@@ -117,11 +142,12 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
                     key={pkg.id}
                     type="button"
                     onClick={() => setActiveManager(index)}
-                    className={`cursor-pointer px-3 py-1 text-xs font-mono font-medium rounded-md transition-all ${
+                    className={cn(
+                      "cursor-pointer px-3 py-1 text-xs font-mono font-medium rounded-md transition-all",
                       activeManager === index
-                        ? "bg-surface-elevated text-theme shadow-sm ring-1 ring-[var(--color-border-base)]"
-                        : "text-theme-muted hover:text-theme hover:bg-surface-elevated/70"
-                    }`}
+                        ? "bg-surface-elevated text-theme shadow-sm ring-1 ring-border-base"
+                        : "text-theme-muted hover:text-theme hover:bg-surface-elevated/70",
+                    )}
                   >
                     {pkg.label}
                   </button>
@@ -136,11 +162,15 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
                     {index === 0 ? (
                       <button
                         type="button"
-                        className={`cursor-pointer flex-shrink-0 text-xs px-3 py-1.5 rounded-md border transition-all duration-300 ${
+                        className={cn(
+                          "cursor-pointer shrink-0 text-xs px-3 py-1.5 rounded-md border transition-all duration-300",
                           copied
-                            ? "bg-green-500/15 border-green-500/50 text-green-400 shadow-[0_0_16px_rgba(34,197,94,0.35)] scale-105"
-                            : "bg-surface-elevated border-theme text-theme-muted hover:bg-surface-card-hover hover:scale-100"
-                        }`}
+                            ? cn(
+                                "bg-green-500/15 border-green-500/50 text-green-400",
+                                "shadow-[0_0_16px_rgba(34,197,94,0.35)] scale-105",
+                              )
+                            : "bg-surface-elevated border-theme text-theme-muted hover:bg-surface-card-hover",
+                        )}
                         onClick={copyToClipboard}
                       >
                         {copied ? "✓" : copy.copyLabel}
@@ -155,7 +185,7 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
       </div>
 
       <section className="relative bg-surface-subtle border-t border-theme-muted py-24 sm:py-32">
-        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-sm font-semibold text-blue-400 tracking-wide uppercase">{copy.featuresEyebrow}</h2>
             <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.featuresTitle}</p>
@@ -164,9 +194,11 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
             {[card1, card2, card3].map((card, index) => (
               <div
                 key={card.title}
-                className={`group relative bg-surface-card border border-theme rounded-2xl p-8 hover:bg-surface-card-hover transition-colors text-center ${
-                  index === 2 ? "sm:col-span-2 lg:col-span-1" : ""
-                }`}
+                className={cn(
+                  "group relative bg-surface-card border border-theme rounded-2xl p-8",
+                  "hover:bg-surface-card-hover transition-colors text-center",
+                  index === 2 && "sm:col-span-2 lg:col-span-1",
+                )}
               >
                 <div
                   className={`w-14 h-14 mx-auto mb-6 rounded-2xl flex items-center justify-center ${
@@ -188,7 +220,7 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
       </section>
 
       <section className="relative bg-surface border-t border-theme-muted py-24 sm:py-32">
-        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-20">
             <h2 className="text-sm font-semibold text-purple-400 tracking-wide uppercase">{copy.ecosystemEyebrow}</h2>
             <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.ecosystemTitle}</p>
@@ -202,7 +234,7 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
       </section>
 
       <section className="relative bg-surface-subtle border-t border-theme-muted py-24 sm:py-32">
-        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-20">
             <h2 className="text-sm font-semibold text-blue-400 tracking-wide uppercase">{copy.buildEyebrow}</h2>
             <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.buildTitle}</p>
@@ -216,7 +248,7 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
       </section>
 
       <section className="relative bg-surface border-t border-theme-muted py-24 sm:py-32">
-        <div className="w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-sm font-semibold text-indigo-400 tracking-wide uppercase">{copy.moreEyebrow}</h2>
             <p className="mt-2 text-3xl sm:text-4xl tracking-tight font-extrabold text-theme">{copy.moreTitle}</p>
@@ -253,13 +285,18 @@ const HomePage = ({ docsPath, docsBase, copy }) => {
               "linear-gradient(135deg, var(--color-glow-blue) 0%, transparent 45%, var(--color-glow-purple) 100%)",
           }}
         />
-        <div className="relative w-full max-w-[var(--ui-container)] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm font-semibold text-blue-400 tracking-wide uppercase mb-3">{copy.ctaEyebrow}</p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-theme mb-4 tracking-tight">{copy.ctaTitle}</h2>
           <p className="text-theme-muted max-w-xl mx-auto mb-10 leading-relaxed">{copy.ctaBody}</p>
           <NavLink
             to={docsPath}
-            className="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300"
+            className={cn(
+              "inline-flex w-full sm:w-auto items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5",
+              "text-base font-semibold text-white bg-blue-600 rounded-xl",
+              "hover:bg-blue-500 hover:-translate-y-1",
+              "hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300",
+            )}
           >
             {copy.ctaButton}
             <Icon icon={ArrowRight} className="w-4 h-4 ml-2" />

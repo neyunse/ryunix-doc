@@ -1,0 +1,40 @@
+---
+description: Tailwind en ryunix-doc — clases solo inline en JSX, sin registries de estilos
+globs: src/**/*.{ryx,ts,tsx,js,jsx}
+alwaysApply: true
+---
+
+# Estilos Tailwind inline (ryunix-doc)
+
+En este sitio de documentación, **cada clase Tailwind va en el JSX donde se usa** (`className`, `className={cn(...)}` en el mismo componente).
+
+## Prohibido
+
+- Archivos tipo `uiClasses.ts`, `styles.ts`, `classes.ts` que exporten strings de clases o helpers `*Class`.
+- Exportar `const fooClass = cn(...)` o `function fooClass(...)` para reutilizar en otros archivos.
+- Importar clases Tailwind desde `@/lib/*` u otra carpeta compartida solo por estilos.
+- Variables de módulo cuyo único propósito sea acumular utilidades (`const linkClass = "text-sm ..."`).
+
+## Permitido
+
+- `cn()` **en el mismo** `.ryx`/componente, en el `className` del elemento o en un callback directo (`className={cn(...)}`).
+- `@/lib/cn` como utilidad de merge (no como registry de diseño).
+- Tokens en `src/styles/global.css` (`@theme`, clases semánticas `.site-header`, `.code-tabs-shell`).
+- Subcomponentes **en el mismo archivo** con `className="..."` escrito en el JSX del subcomponente (p. ej. `FooterNavLink`), no como constante exportada ni archivo aparte solo de clases.
+- Refactorizar **el componente** (extraer `FooterNavLink.ryx`) si el markup se repite; las clases siguen inline en ese componente.
+
+## Si hay duplicación real
+
+1. Preferir una clase semántica en CSS global cuando sea layout/shell del sitio.
+2. Si no aplica, extraer un componente `.ryx` con las clases en su JSX — no un módulo de strings.
+
+## Ejemplos
+
+```tsx
+// ❌
+export const cardClass = cn("rounded-xl border border-theme");
+<article className={cardClass} />
+
+// ✅
+<article className={cn("rounded-xl border border-theme", active && "ring-2")} />
+```

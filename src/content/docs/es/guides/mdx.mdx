@@ -1,0 +1,133 @@
+---
+title: MDX y frontmatter
+description: Escribe documentación y páginas de contenido con MDX en RyunixJS
+slug: mdx
+section: Guías
+---
+
+# MDX y frontmatter
+
+Habilita MDX en `ryunix.config.js` para escribir páginas de contenido junto a componentes `.ryx`.
+
+```javascript
+{
+  mdx: true,
+  style: true,
+}
+```
+
+## Ubicación de archivos
+
+Los archivos MDX viven en el árbol del App Router como cualquier ruta. Puedes usar un archivo **plano** por segmento de URL (recomendado) o una carpeta con `index.mdx`:
+
+```txt
+app/docs/introduction/getting-started.mdx
+# → /docs/introduction/getting-started
+
+app/docs/introduction/getting-started/index.mdx
+# → misma URL
+```
+
+Si coexisten `getting-started.mdx` y `getting-started/`, gana el directorio y el archivo plano se ignora.
+
+## Frontmatter YAML
+
+Comienza el archivo con metadatos `---`. Ryunix los parsea al mismo objeto `Metatags` usado para SEO:
+
+```mdx
+---
+title: Getting Started
+description: Quick start guide for RyunixJS
+slug: getting-started
+section: Introduction
+---
+
+# Getting Started
+
+Your content here…
+```
+
+En tiempo de build, el frontmatter se fusiona con `Metatags` del `layout.ryx` padre (plantillas de título, `og:image`, etc.).
+
+## Importar componentes en MDX
+
+Usa las mismas importaciones que en archivos `.ryx`:
+
+```mdx
+import { CodeTabs } from "@/components/ui/CodeTabs";
+
+<CodeTabs tabs={[
+  { name: "pnpm", code: "pnpm dev" },
+  { name: "npm", code: "npm run dev" },
+]} />
+```
+
+La UI compartida suele vivir en `src/components/` (con `rootDir: "src"`) o en `app/components/` si `app/` está en la raíz.
+
+## MDXProvider
+
+Envuelve el contenido MDX con `MDXProvider` cuando necesites shortcodes personalizados o mapeos de elementos — consulta [Componentes](/es/docs/api/components).
+
+## Estilos globales y tema
+
+Con `style: true` (por defecto), los elementos MDX heredan los estilos de `@unsetsoft/ryunixjs/style.css` junto al resto de la app. El tema oscuro se activa añadiendo `class="dark"` al `<html>`:
+
+```javascript
+document.documentElement.classList.add("dark");
+// document.documentElement.classList.remove("dark"); // tema claro
+```
+
+Para un bloque sin estilos del framework:
+
+```mdx
+<div data-ryx-unstyled>
+  <h1>Título sin estilos Ryunix</h1>
+</div>
+```
+
+En componentes `.ryx` importados puedes usar `unstyled` (ver [Configuración](/es/docs/api/configuration)).
+
+## Alertas (`> [!NOTE]`)
+
+Ryunix admite [alertas Markdown al estilo GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) en MDX. Empieza el blockquote con el tipo de alerta en su propia línea:
+
+```mdx
+> [!WARNING]
+> **Routing integrado** ya no está soportado. Usa el **App Router** en su lugar.
+
+> [!NOTE]
+> Información útil que el lector debería ver al repasar la página.
+
+> [!TIP]
+> Prefiere `rootDir: "src"` cuando las rutas vivan en `src/app/`.
+```
+
+Tipos admitidos: `NOTE`, `TIP`, `IMPORTANT`, `WARNING` y `CAUTION`. Cada uno usa las clases `ryx-alert` y `ryx-alert--<tipo>` del CSS global.
+
+Los blockquotes sin marcador mantienen el estilo de cita por defecto. Puedes combinar **negrita**, enlaces y varios párrafos dentro de una alerta.
+
+## Documentación bilingüe sin lógica duplicada
+
+Este sitio usa un único árbol de rutas en `src/app/[locale]/` con la prosa por idioma en `src/content/docs/{locale}/<slug>.mdx` (por ejemplo `introduction/about.mdx`), y centraliza datos y fragmentos compartidos para que el contenido EN/ES no se desincronice:
+
+- `src/i18n/packages.js` — nombres npm, versiones `latest` / `canary`, generadores de comandos de instalación
+- `src/i18n/config.js` — rutas del sidebar por locale
+- `src/i18n/docPageRegistry.js` — imports estáticos de MDX y `getDocPage(locale, slug)`
+- `src/i18n/locale.js` — helper `pickLocale()` para registros compartidos
+- `src/i18n/docUiCopy.js` — etiquetas de la UI de documentación
+- `src/features/docs/DocLocaleContext.ryx` — `useDocLocale()` / `useDocCopy()` (sin prop `locale=` en MDX)
+- `src/features/docs/LocaleDocLayout.ryx` — shell compartido de docs para cualquier locale
+- `src/components/docs/*` — bloques MDX (`CraQuickStart`, `ManualInstallTabs`, `NpmPackagesTable`, `TechStackList`)
+
+Las URLs siguen usando `/en/docs/...` y `/es/docs/...` por SEO; `src/app/[locale]/docs/[...slug]/` renderiza el archivo correspondiente en `src/content/docs/`. Al publicar una versión nueva en npm, actualiza `packages.js` una vez y todas las páginas que importan estos componentes quedan alineadas.
+
+## SSG y MDX
+
+Durante `ryunix build`, cada ruta MDX se prerenderiza a HTML estático con el `<title>` y meta tags correctos heredados de los layouts. Evita mezclar la configuración global obsoleta `static.seo` con `Metatags` por ruta.
+
+## Relacionado
+
+- [Navegación](/es/docs/introduction/navigation) — visión general del enrutamiento
+- [SSG y prerenderizado](/es/docs/guides/ssg) — pipeline de prerender
+- [Funciones](/es/docs/api/functions) — `useMetadata` para actualizaciones solo en cliente
+- [Configuración](/es/docs/api/configuration) — `mdx: true`, `style: true`

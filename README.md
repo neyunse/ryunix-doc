@@ -23,6 +23,12 @@ cd ryunix-doc
 pnpm install
 ```
 
+### RyunixJS packages from npm
+
+`@unsetsoft/ryunixjs` and `@unsetsoft/ryunix-presets` are installed from the **npm registry** (canary tags), not linked to a local monorepo. Run `pnpm install` inside `ryunix-doc` only.
+
+To try a local framework checkout instead, temporarily point those dependencies at your `Ryunixjs` packages and reinstall.
+
 ## Development
 
 ```bash
@@ -43,28 +49,36 @@ Scripts defined in `package.json` (Ryunix CLI via `ryunix`):
 | `start`    | `pnpm start`    | Production server (`ryunix start`; run after build) |
 | `lint`     | `pnpm lint`     | Lint the project (`ryunix lint`)                    |
 | `lint:fix` | `pnpm lint:fix` | Auto-fix lint issues (`ryunix lint --fix`)          |
+| `typecheck`| `pnpm typecheck`| Type-check `src/**/*.ts` and `ryunix.config.ts`     |
+| `doctor`   | `pnpm doctor`   | [React Doctor](https://react.doctor) on mirrored `.ryx` UI |
+| `doctor:verbose` | `pnpm doctor:verbose` | Same with per-file details |
+| `doctor:diff` | `pnpm doctor:diff` | React Doctor on changed files only |
+
+React Doctor only lints `.tsx`/`.jsx`. `pnpm doctor` copies `src/**/*.ryx` into `react-doctor-mirror/` as `.tsx` first (gitignored). Requires `react` as a devDependency for the CLI gate.
 
 ## Project structure
 
 ```txt
 src/
-├── app/                # File-based routes only (thin wrappers)
-│   ├── en/docs/        # English MDX pages
-│   ├── es/docs/        # Spanish MDX pages
-│   └── index.ryx       # Locale hub (redirects via cookie)
-├── components/         # Shared UI (Icon, CodeTabs, layout header/footer)
-├── features/           # Domain modules (docs shell, home, marketing layout)
-├── i18n/               # Locale config and cookie helpers
+├── app/                      # Rutas file-based (wrappers finos)
+│   ├── [locale]/             # Shell localizado
+│   │   └── docs/[...slug]/   # Catch-all MDX
+│   └── index.ryx             # Hub de idioma (redirect por cookie)
+├── content/docs/             # MDX por locale (en/, es/)
+├── components/
+├── features/
+├── i18n/                     # docPageRegistry, settings, i18n runtime
 ├── styles/
 └── resources/
 public/
-├── index.html          # HTML template with locale redirect script
-middleware.js           # Vercel Edge redirect for /
+├── index.html
+middleware.js
 ```
 
 ## Configuration
 
-- **`ryunix.config.js`** — RyunixJS settings (MDX, SSR, webpack aliases, ESLint)
+- **`ryunix.config.ts`** — RyunixJS settings (MDX, SSR, webpack aliases, ESLint)
+- **`tsconfig.json`** — TypeScript for `src/**/*.ts` and typed `src/**/*.ryx`
 
 ### Troubleshooting
 
@@ -74,7 +88,7 @@ If dev shows `Can't resolve '.ryunix/server/app/main.ryx'` (often after changing
 pnpm clean && pnpm dev
 ```
 
-> **Warning — `webpack.production`:** During local development (`ryunix dev`), the CLI sets `RYUNIX_MODE=development` so builds stay unminified for faster iteration. For production deploys (Vercel), keep `webpack.production: true` in `ryunix.config.js`.
+> **Warning — `webpack.production`:** During local development (`ryunix dev`), the CLI sets `RYUNIX_MODE=development` so builds stay unminified for faster iteration. For production deploys (Vercel), keep `webpack.production: true` in `ryunix.config.ts`.
 
 Site-wide Open Graph / Twitter images use `public/screenshot.png` via `export const Metatags` in `src/app/layout.ryx` (RyunixJS App Router metadata).
 - **`postcss.config.js`** — PostCSS / Tailwind CSS

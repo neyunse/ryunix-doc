@@ -1,0 +1,135 @@
+---
+title: Ecosystem & framework features
+description: npm packages, tooling, and RyunixJS APIs not covered elsewhere
+slug: ecosystem
+section: Guides
+---
+
+import { NpmPackagesTable } from "@/components/docs/NpmPackagesTable";
+import { TechStackList } from "@/components/docs/TechStackList";
+
+# Ecosystem & framework features
+
+This page maps **what ships in the RyunixJS monorepo** and points to public docs for each area. Use it when something exists in `@unsetsoft/*` packages but is easy to miss in the sidebar.
+
+## Published npm packages
+
+<NpmPackagesTable />
+
+| Artifact | Distribution |
+| :--- | :--- |
+| `@unsetsoft/ryunixjs`, `@unsetsoft/ryunix-presets`, `@unsetsoft/cra` | [npm](https://www.npmjs.com/~unsetsoft) (`latest` and `canary` dist-tags) |
+| `@unsetsoft/ryunix-devtools` | Chromium extension — build from `packages/ryunix-devtools`, load unpacked |
+| `unsetsoft.ryunixjs` | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=unsetsoft.ryunixjs) |
+
+CRA resolves semver ranges from the registry when you pass `--canary` or `--latest` (see [Create Ryunix App](/en/docs/guides/create-app)).
+
+## Toolchain in apps
+
+<TechStackList />
+
+Configure the transpiler in `ryunix.config.js`:
+
+```javascript
+{
+  compiler: "swc", // default; or "babel"
+}
+```
+
+CRA writes this when you pass `--compiler babel`.
+
+## CLI beyond dev / build / start
+
+| Command | Purpose |
+| :--- | :--- |
+| `ryunix lint` | Opinionated ESLint (`.ryx` and MDX); override `eslint.rules` in config |
+| `ryunix lint --fix` | Same with auto-fix |
+| `ryunix customHtml` | Copies the framework baseline `index.html` into `public/` for customization |
+
+Details: [CLI commands](/en/docs/guides/cli).
+
+## Hydration boundaries (core)
+
+Two helpers ship in `@unsetsoft/ryunixjs` for SSR + client reconciliation:
+
+| Component | Role |
+| :--- | :--- |
+| `<ServerBoundary id="…">` | Preserves server HTML inside the subtree during hydration (skips client reconciliation of inner content). See [Server Actions](/en/docs/core/server-actions). |
+| `<HydrationBoundary id="…">` | Scopes **local** recovery when markup and client VDOM disagree, without remounting the whole app. |
+
+Tune global behavior in `ryunix.config.js`:
+
+```javascript
+{
+  hydration: {
+    recover: "boundary", // "boundary" | "root" | "none"
+    boundaries: "route", // "route" | "server-only" | "all-layouts"
+    strict: false,       // verbose mismatch warnings in development
+  },
+}
+```
+
+This docs site wraps each locale’s docs tree in `<HydrationBoundary id="docs-en">` (see `src/features/docs/LocaleDocLayout.ryx`). Full detail: [Rendering & SSR](/en/docs/core/rendering) and [Configuration](/en/docs/api/configuration).
+
+## Theme system (core)
+
+Ryunix includes a small **light / dark / system** theme API (no third-party dependency):
+
+| Export | Use |
+| :--- | :--- |
+| `ThemeToggle`, `ThemeInitScript` | Ready-made UI and inline boot script |
+| `applyTheme`, `resolveThemeFromCookie`, `setThemeCookie` | Cookie + `class="dark"` on `<html>` |
+| `createThemeController` | Shared controller for custom UI |
+| `@unsetsoft/ryunixjs/theme-toggle.css` | Styles for `ThemeToggle` |
+
+Semantic page styles from `style: true` still use `class="dark"` on `<html>` for dark mode (see [Configuration](/en/docs/api/configuration)). Built-in layout primitives: `Header`, `Footer`, `Main` — documented under [Components](/en/docs/api/components).
+
+## Semantic `style` and typography
+
+`style: true` (or a `style` object) injects `@unsetsoft/ryunixjs/style.css` plus optional typography from the preset:
+
+```javascript
+{
+  style: {
+    padding: "1.5rem",
+    maxWidth: "72rem",
+    font: "inter", // presets: system | inter | source-sans | nunito
+    // or custom / Google Fonts:
+    // font: { family: "Brand", google: "Inter:wght@400;600" },
+  },
+}
+```
+
+Presets `inter`, `source-sans`, and `nunito` load from [fonts.bunny.net](https://fonts.bunny.net) (privacy-friendly CDN). Tailwind CRA templates set `style: false` to avoid clashes.
+
+## Server Actions and API routes
+
+| Pattern | Doc |
+| :--- | :--- |
+| `"use server"` functions → `POST /_ryunix/action` | [Server Actions](/en/docs/core/server-actions) |
+| `app/api/**/router.js` or `route.js` | [API Routes](/en/docs/guides/api-routes) |
+
+## SEO and metadata
+
+| Mechanism | Doc |
+| :--- | :--- |
+| `export const Metatags` | [Navigation](/en/docs/introduction/navigation) |
+| `export async function generateMetadata` | Same |
+| `useMetadata` (client) | [Functions](/en/docs/api/functions) |
+| `app/sitemap.js`, `robots.js`, `manifest.js` | [Special files](/en/docs/api/special-files) |
+| MDX YAML frontmatter | [MDX](/en/docs/guides/mdx) |
+
+## Development diagnostics
+
+| Tool | Doc |
+| :--- | :--- |
+| Built-in dev warnings + `RyunixDevOverlay` | [Error handling](/en/docs/core/error-handling), [DevTools](/en/docs/guides/devtools) |
+| `withProfiler` / `useProfiler` | [Performance](/en/docs/core/performance) |
+| Browser extension `@unsetsoft/ryunix-devtools` | [DevTools](/en/docs/guides/devtools) |
+| Dual Webpack compiler overlay deduplication | [DevTools](/en/docs/guides/devtools), [CLI](/en/docs/guides/cli) |
+
+## Related
+
+- [Installation](/en/docs/introduction/installation) — versions and install commands
+- [Configuration](/en/docs/api/configuration) — full `ryunix.config.js` reference
+- [MDX](/en/docs/guides/mdx) — bilingual docs maintenance in this repository

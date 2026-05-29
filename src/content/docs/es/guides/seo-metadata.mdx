@@ -1,0 +1,113 @@
+---
+title: SEO y metadatos
+description: Metatags, generateMetadata, imágenes OG por archivo e inyección SSR
+slug: seo-metadata
+section: Guías
+---
+
+# SEO y metadatos
+
+Ryunix fusiona metadatos de **layouts → páginas**, **frontmatter MDX**, **`generateMetadata` dinámico** y **archivos estáticos** en `app/`. En SSR/SSG, el framework resuelve títulos e inyecta `<title>`, `<meta>` y `<link>` en el HTML.
+
+## Exports estáticos
+
+### `Metatags`
+
+```jsx
+// app/layout.ryx
+export const Metatags = {
+  title: { default: "Mi App", template: "%s | Mi App" },
+  description: "Descripción del sitio",
+  "og:type": "website",
+};
+```
+
+### `frontmatter` (alias MDX)
+
+Las páginas MDX pueden exportar YAML como `frontmatter`; el App Router lo trata como `Metatags`.
+
+### `generateMetadata`
+
+```jsx
+export async function generateMetadata({ params, searchParams }) {
+  return {
+    title: params.slug,
+    description: `Página ${params.slug}`,
+    canonical: `https://example.com/docs/${params.slug}`,
+  };
+}
+```
+
+### `useMetadata` (cliente)
+
+Actualiza `document.title` y `<meta>` tras navegar. En servidor, los metadatos se fusionan en `ssrMetadata` para la inyección HTML.
+
+## Imagen Open Graph del sitio
+
+Este sitio de documentación incluye una imagen de vista previa en `public/screenshot.png` (captura de la página de inicio). Se declara una vez y se reutiliza en las rutas:
+
+1. **Layout raíz** — `export const Metatags` en `src/app/layout.ryx` define `og:image`, dimensiones y tarjeta de Twitter por defecto.
+2. **Layouts por locale** — `generateMetadata` en `src/app/[locale]/layout.ryx` y `src/app/[locale]/docs/layout.ryx` fusionan `og:image:alt` y descripciones desde `src/i18n/siteOgImage.ts`.
+3. **URL estática** — Navegadores y crawlers piden `/screenshot.png`; Ryunix copia los archivos de `public/` al build.
+
+```jsx
+// src/i18n/siteOgImage.ts (extracto)
+export const siteOgImage = {
+  "og:image": "/screenshot.png",
+  "og:image:width": "1830",
+  "og:image:height": "1076",
+  "twitter:card": "summary_large_image",
+  "twitter:image": "/screenshot.png",
+};
+```
+
+<img src="/screenshot.png" alt="Página de inicio de la documentación de RyunixJS" width="1830" height="1076" loading="lazy" />
+
+Sobrescribe por ruta con `Metatags["og:image"]`, `opengraph-image.png` en la carpeta del segmento o un `generateMetadata` específico.
+
+## Reglas de merge
+
+- Primero los `Metatags` del layout; la página sobrescribe.
+- Un `title` string en la página conserva `title.template` del layout (`mergeRouteMetadata`).
+- El HTML final usa `resolvePageMetadata` (`pageTitle`, `titleTemplate`, `titleDefault`, `canonical`, claves Open Graph y Twitter).
+
+## Archivos por ruta (App Router)
+
+Coloca archivos en la carpeta del segmento:
+
+| Archivo | Resultado |
+| :--- | :--- |
+| `favicon.ico` | `<link rel="icon">` |
+| `icon.png` / `icon.svg` / … | icono del segmento |
+| `apple-icon.png` | apple touch icon |
+| `opengraph-image.png` | `og:image` |
+| `twitter-image.png` | `twitter:image` |
+| `opengraph-image.alt.txt` | `og:image:alt` |
+| `twitter-image.alt.txt` | `twitter:image:alt` |
+
+Extensiones al estilo Next.js (`jpg`, `jpeg`, `png`, `gif`, `webp`; iconos también `ico` / `svg`).
+
+Los assets se copian a `.ryunix/static/<ruta>/<archivo>` en build. Los hijos heredan archivos del layout padre; gana el segmento más cercano.
+
+**Nota:** generadores dinámicos `opengraph-image.js` aún no están soportados — usa archivos estáticos o `Metatags["og:image"]`.
+
+## Meta tags personalizados
+
+Objeto `custom` para tags arbitrarios:
+
+```jsx
+export const Metatags = {
+  title: "Panel",
+  custom: { "theme-color": "#0f172a" },
+};
+```
+
+## Config legacy
+
+Prefiere metadatos del App Router. El bloque deprecado `legacy.seo.meta` en `ryunix.config.js` sigue actuando como valores por defecto en prerender.
+
+## Relacionado
+
+- [SSG y prerender](/es/docs/guides/ssg)
+- [Archivos especiales](/es/docs/api/special-files)
+- [Navegación](/es/docs/introduction/navigation)

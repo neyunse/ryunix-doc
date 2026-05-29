@@ -1,9 +1,34 @@
-import LocaleHubPage from "@/features/locale-hub/LocaleHubPage.ryx";
+import { useEffect, useRouter } from "@unsetsoft/ryunixjs";
+import LocaleHubPage from "@/features/locale-hub/LocaleHubPage";
+import { resolveLocaleFromCookie, setLocaleCookie } from "@/i18n/app";
+
+import { siteOgImage, siteOgImageAlt } from "@/i18n/siteOgImage";
 
 export const Metatags = {
   title: "RyunixJS — Choose your language",
   description: "Official RyunixJS documentation. Select English or Spanish.",
-  "og:image": "/screenshot.png",
+  ...siteOgImage,
+  "og:image:alt": siteOgImageAlt.en,
 };
 
-export default LocaleHubPage;
+const LocaleIndexPage = () => {
+  const { navigate } = useRouter();
+
+  useEffect(() => {
+    const locale = resolveLocaleFromCookie();
+    if (typeof window !== "undefined") {
+      window.location.replace(`/${locale}`);
+      return;
+    }
+    navigate(`/${locale}`);
+  }, []);
+
+  const handleChooseLocale = (locale) => {
+    setLocaleCookie(locale);
+    navigate(`/${locale}`);
+  };
+
+  return <LocaleHubPage onChooseLocale={handleChooseLocale} />;
+};
+
+export default LocaleIndexPage;

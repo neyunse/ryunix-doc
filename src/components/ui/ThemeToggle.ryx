@@ -7,7 +7,8 @@ import {
   resolveThemeFromCookie,
   setThemeCookie,
   watchSystemTheme,
-} from "@/i18n/themeCookie.js";
+  type ThemePreference,
+} from "@/i18n/themeCookie";
 
 const options = [
   { id: "light", icon: Sun },
@@ -16,12 +17,12 @@ const options = [
 ];
 
 const ThemeToggle = ({ labels }) => {
-  const [theme, setTheme] = useStore(defaultTheme);
+  const [theme, setTheme] = useStore<ThemePreference>(defaultTheme);
 
   useEffect(() => {
     const saved = resolveThemeFromCookie();
-    setTheme(saved);
-    applyTheme(saved);
+    setTheme(saved as ThemePreference);
+    applyTheme(saved as ThemePreference);
   }, []);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const ThemeToggle = ({ labels }) => {
     return watchSystemTheme(() => applyTheme("system"));
   }, [theme]);
 
-  const selectTheme = (next) => {
+  const selectTheme = (next: ThemePreference) => {
     if (next === theme) return;
     setTheme(next);
     setThemeCookie(next);
@@ -47,7 +48,7 @@ const ThemeToggle = ({ labels }) => {
             role="radio"
             aria-checked={active}
             title={labels[id]}
-            onClick={() => selectTheme(id)}
+            onClick={() => selectTheme(id as ThemePreference)}
             className={`ryx-theme-segment-btn ${active ? "ryx-theme-segment-btn--active" : ""}`}
           >
             <Icon icon={icon} className="ryx-theme-segment-icon" strokeWidth={1.75} />

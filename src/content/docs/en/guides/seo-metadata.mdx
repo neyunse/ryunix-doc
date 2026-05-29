@@ -1,0 +1,113 @@
+---
+title: SEO & Metadata
+description: Metatags, generateMetadata, file-based OG images, and SSR injection
+slug: seo-metadata
+section: Guides
+---
+
+# SEO & Metadata
+
+Ryunix merges metadata from **layouts → pages**, **MDX frontmatter**, **dynamic `generateMetadata`**, and **static files** in `app/`. During SSR/SSG, the framework resolves titles and injects `<title>`, `<meta>`, and `<link>` tags into HTML.
+
+## Static exports
+
+### `Metatags`
+
+```jsx
+// app/layout.ryx
+export const Metatags = {
+  title: { default: "My App", template: "%s | My App" },
+  description: "Site description",
+  "og:type": "website",
+};
+```
+
+### `frontmatter` (MDX alias)
+
+MDX pages can export YAML as `frontmatter`; the App Router treats it like `Metatags`.
+
+### `generateMetadata`
+
+```jsx
+export async function generateMetadata({ params, searchParams }) {
+  return {
+    title: params.slug,
+    description: `Page ${params.slug}`,
+    canonical: `https://example.com/docs/${params.slug}`,
+  };
+}
+```
+
+### `useMetadata` (client)
+
+Updates `document.title` and `<meta>` after navigation. On the server, metadata merges into `ssrMetadata` for HTML injection.
+
+## Site-wide Open Graph image
+
+This documentation site ships a default share image at `public/screenshot.png` (homepage preview). It is wired once and reused across routes:
+
+1. **Root layout** — `export const Metatags` in `src/app/layout.ryx` sets `og:image`, dimensions, and Twitter card defaults for the whole app.
+2. **Locale layouts** — `generateMetadata` in `src/app/[locale]/layout.ryx` and `src/app/[locale]/docs/layout.ryx` merge locale-specific `og:image:alt` and descriptions from `src/i18n/siteOgImage.ts`.
+3. **Static URL** — Browsers and crawlers request `/screenshot.png`; Ryunix copies `public/` assets into the build output.
+
+```jsx
+// src/i18n/siteOgImage.ts (excerpt)
+export const siteOgImage = {
+  "og:image": "/screenshot.png",
+  "og:image:width": "1830",
+  "og:image:height": "1076",
+  "twitter:card": "summary_large_image",
+  "twitter:image": "/screenshot.png",
+};
+```
+
+<img src="/screenshot.png" alt="RyunixJS documentation site homepage" width="1830" height="1076" loading="lazy" />
+
+Override per route with `Metatags["og:image"]`, `opengraph-image.png` in a segment folder, or a page-specific `generateMetadata` return value.
+
+## Merge rules
+
+- Layout `Metatags` merge first; page-level values override.
+- String page titles keep layout `title.template` when present (`mergeRouteMetadata`).
+- Final HTML uses `resolvePageMetadata` (supports `pageTitle`, `titleTemplate`, `titleDefault`, `canonical`, Open Graph, Twitter keys).
+
+## File-based assets (App Router)
+
+Place files in a route segment folder:
+
+| File | Result |
+| :--- | :--- |
+| `favicon.ico` | `<link rel="icon">` |
+| `icon.png` / `icon.svg` / … | segment icon |
+| `apple-icon.png` | apple touch icon |
+| `opengraph-image.png` | `og:image` |
+| `twitter-image.png` | `twitter:image` |
+| `opengraph-image.alt.txt` | `og:image:alt` |
+| `twitter-image.alt.txt` | `twitter:image:alt` |
+
+Supported extensions follow Next.js-style conventions (images: `jpg`, `jpeg`, `png`, `gif`, `webp`; icons also `ico` / `svg` where applicable).
+
+Assets copy to `.ryunix/static/<route>/<filename>` at build time. Child segments inherit parent layout files; the nearest segment wins on conflict.
+
+**Note:** Dynamic `opengraph-image.js` generators are not supported yet — use static files or `Metatags["og:image"]`.
+
+## Custom meta tags
+
+Use the `custom` object for arbitrary name/property tags:
+
+```jsx
+export const Metatags = {
+  title: "Dashboard",
+  custom: { "theme-color": "#0f172a" },
+};
+```
+
+## Legacy config
+
+Prefer App Router metadata. The deprecated `legacy.seo.meta` block in `ryunix.config.js` still merges as defaults during prerender when no route metadata overrides it.
+
+## Related
+
+- [SSG & Prerendering](/en/docs/guides/ssg)
+- [Special files](/en/docs/api/special-files)
+- [Navigation](/en/docs/introduction/navigation)

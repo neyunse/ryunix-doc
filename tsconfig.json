@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/components/*": ["src/components/*"],
+      "@/features/*": ["src/features/*"],
+      "@/i18n/*": ["src/i18n/*"],
+      "@/resources/*": ["src/resources/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/content/*": ["src/content/*"],
+      "@unsetsoft/ryunixjs": ["node_modules/@unsetsoft/ryunixjs/types/index.d.ts"],
+      "@unsetsoft/ryunix-presets": ["node_modules/@unsetsoft/ryunix-presets/webpack/config.d.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.ryx",
+    "src/**/*.d.ts",
+    "src/types/npm-ryunix-shims.d.ts",
+    "ryunix.config.ts",
+    "middleware.ts"
+  ],
+  "exclude": ["node_modules", ".ryunix", "dist"]
+}

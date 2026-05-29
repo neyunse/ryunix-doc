@@ -1,0 +1,106 @@
+---
+title: Rendering & SSR
+description: Client rendering, hydration, and server-side output in RyunixJS
+slug: rendering
+section: Core
+---
+
+# Rendering & SSR
+
+RyunixJS can render in the browser, hydrate server HTML, and generate static or streamed output on the server. This page covers the public APIs you use in apps and how they relate to the App Router.
+
+## Client entry points
+
+### `init(MainElement, rootId)`
+
+Bootstrap helper. It checks whether the root DOM node already contains server-rendered markup:
+
+- **SSR markup present** → calls `hydrate()` and attaches listeners without wiping HTML.
+- **Empty root** → calls `render()` for a full client render.
+
+You can force a full client render (skip hydration) with `process.env.RYUNIX_SSR = 'false'`.
+
+```jsx
+import { init } from "@unsetsoft/ryunixjs";
+import App from "./app/index";
+
+init(<App />, "__ryunix");
+```
+
+### `render(element, container)`
+
+Destructive client render: clears the container, mounts a new fiber root, and runs the reconciler.
+
+```jsx
+import { render } from "@unsetsoft/ryunixjs";
+
+render(<App />, document.getElementById("root"));
+```
+
+### `hydrate(element, container)`
+
+Attaches Ryunix to existing HTML from the server. If hydration detects a mismatch, Ryunix can fall back to a full client render so the UI stays usable.
+
+## Hydration boundaries
+
+| API | Use |
+| :--- | :--- |
+| `<HydrationBoundary id="sidebar">` | **Local** recovery on mismatches inside the subtree without remounting the root |
+| `<ServerBoundary id="stats">` | Preserves server-only markup; the client does not reconcile inner content |
+
+Configure global policy in `ryunix.config.js`:
+
+```javascript
+{
+  hydration: {
+    recover: "boundary",
+    boundaries: "route",
+    strict: false,
+  },
+}
+```
+
+See [Configuration](/en/docs/api/configuration) and [Ecosystem](/en/docs/guides/ecosystem).
+
+## Server APIs
+
+During SSG or SSR, hooks run in a server-safe mode (`state.isServerRendering`). Stateful hooks do not leak across requests.
+
+| API | Use case |
+| :--- | :--- |
+| `renderToString(element)` | Sync HTML for simple trees (no async components) |
+| `renderToReadableStream(element)` | Streaming HTML for SSR with Suspense |
+| `renderToStringAsync(element)` | **Default App Router path** for SSG/SSR dev |
+| `escapeHtml(unsafe)` | Escape text for safe HTML output |
+
+SSR dev serves HTML via the webpack middleware (`ssrDevHandler`). Successful renders mark the root with `data-ryunix-ssr-root` so `init()` hydrates instead of wiping the DOM.
+
+Metadata from `useMetadata` on the server merges into `ssrMetadata` and is injected into `<head>` during prerender. Helpers: `mergeRouteMetadata`, `resolvePageMetadata`.
+
+```jsx
+import { renderToString } from "@unsetsoft/ryunixjs";
+
+const html = renderToString(<Page />);
+```
+
+## App Router integration
+
+With the `app/` directory, you usually **do not** call `render` manually. The Ryunix CLI builds client and server bundles; `ryunix build` prerenders routes into `.ryunix/static`.
+
+- **Development:** `pnpm dev` — dual Webpack compilers (client + server) with HMR.
+- **Production:** `pnpm build` then `pnpm start` — static files plus the built-in Node server.
+
+## When to use which mode
+
+| Goal | Approach |
+| :--- | :--- |
+| Static docs or marketing site | App Router + `ryunix build` (SSG) |
+| SPA only | App Router; deploy `.ryunix/static` |
+| Attach to existing SSR HTML | `init()` / `hydrate()` on the client |
+| Custom Node integration | `renderToString` / `renderToReadableStream` |
+
+## Related
+
+- [SSG & prerendering](/en/docs/guides/ssg) — build output and route manifests
+- [Server actions](/en/docs/core/server-actions) — server functions from the client
+- [Configuration](/en/docs/api/configuration) — `ssr`, `mdx`

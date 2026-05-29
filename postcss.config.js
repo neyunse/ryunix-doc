@@ -1,7 +1,14 @@
-// postcss.config.js
-module.exports = {
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/** @type {import('postcss-load-config').Config} */
+export default {
   plugins: {
-    '@tailwindcss/postcss': {},
-    autoprefixer: {}, // Optional but recommended for backwards compatibility
-  }
-}
+    "@tailwindcss/postcss": {
+      base: path.join(__dirname, "src"),
+    },
+    autoprefixer: {},
+  },
+};

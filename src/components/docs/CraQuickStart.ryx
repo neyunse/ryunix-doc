@@ -1,5 +1,5 @@
 import { CodeTabs } from "@/components/ui/CodeTabs";
-import { craInstallCommand } from "@/i18n/packages.js";
+import { craInstallCommand } from "@/i18n/packages";
 
 const PKG_MANAGERS = ["npm", "yarn", "bun", "pnpm"];
 
