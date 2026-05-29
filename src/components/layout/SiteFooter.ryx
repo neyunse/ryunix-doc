@@ -1,5 +1,6 @@
 import { Image, NavLink, type RyunixNode } from "@unsetsoft/ryunixjs";
-import { Github, ExternalLink } from "lucide";
+import { ExternalLink } from "lucide";
+import GitHubIcon from "@/components/ui/GitHubIcon";
 import { Icon } from "@/components/ui/Icon";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import Logo from "@/resources/logo-min.svg";
@@ -100,7 +101,7 @@ const SiteFooter = ({ locale, copy }) => {
             <FooterLinkList title={footer.projectTitle}>
               <li>
                 <FooterExternalLink href="https://github.com/UnSetSoft/Ryunixjs">
-                  <Icon icon={Github} className="w-4 h-4 shrink-0 opacity-70" />
+                  <GitHubIcon className="w-4 h-4 opacity-70" />
                   {footer.github}
                 </FooterExternalLink>
               </li>

@@ -50,11 +50,6 @@ Scripts defined in `package.json` (Ryunix CLI via `ryunix`):
 | `lint`     | `pnpm lint`     | Lint the project (`ryunix lint`)                    |
 | `lint:fix` | `pnpm lint:fix` | Auto-fix lint issues (`ryunix lint --fix`)          |
 | `typecheck`| `pnpm typecheck`| Type-check `src/**/*.ts` and `ryunix.config.ts`     |
-| `doctor`   | `pnpm doctor`   | [React Doctor](https://react.doctor) on mirrored `.ryx` UI |
-| `doctor:verbose` | `pnpm doctor:verbose` | Same with per-file details |
-| `doctor:diff` | `pnpm doctor:diff` | React Doctor on changed files only |
-
-React Doctor only lints `.tsx`/`.jsx`. `pnpm doctor` copies `src/**/*.ryx` into `react-doctor-mirror/` as `.tsx` first (gitignored). Requires `react` as a devDependency for the CLI gate.
 
 ## Project structure
 

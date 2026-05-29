@@ -1,5 +1,4 @@
 import "@/styles/global.css";
-import { headerScrollScript } from "@/components/layout/header/headerScrollScript";
 import { themeInitScript } from "@/i18n/themeCookie";
 import { siteOgImage, siteOgImageAlt } from "@/i18n/siteOgImage";
 
@@ -16,13 +15,11 @@ export const Metatags = {
 };
 
 const RootLayout = ({ children }: { children?: RyunixNode }) => {
-  const bootScripts = `${themeInitScript}\n${headerScrollScript}`;
-
   return (
-    <>
-      <script dangerouslySetInnerHTML={{ __html: bootScripts }} />
+    <div className="root-layout-shell">
+      <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       {children}
-    </>
+    </div>
   );
 };
 
