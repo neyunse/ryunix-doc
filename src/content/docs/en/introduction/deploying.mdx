@@ -9,6 +9,8 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 # Deploying
 
+After development, run a production build and serve the output from `.ryunix/static/` or use the built-in Node server with `ryunix start`. Set `webpack.production: true` in `ryunix.config.js` before shipping.
+
 ## Building for Production
 
 ### 1. Update Configuration
@@ -32,3 +34,9 @@ module.exports = {
 ]} />
 
 Your production build will be in `.ryunix/static/`.
+
+## Next Steps
+
+- [Differences with React](/en/docs/introduction/differences-with-react) — API and conventions if you migrate
+- [Rendering & SSR](/en/docs/core/rendering) — how the build runs on server and client
+- [SSG & Prerendering](/en/docs/guides/ssg) — what the build generates

@@ -7,30 +7,30 @@ section: Introduction
 
 # Introduction
 
-**RyunixJS** is a JavaScript framework for building **websites and interactive applications** — from a portfolio or documentation site to an admin dashboard or an app with login, forms, and server data.
+RyunixJS is a JavaScript framework for building websites and interactive applications — from a portfolio or documentation site to an admin dashboard or an app with login, forms, and server data.
 
-If you already know some web basics (HTML, CSS, JavaScript), Ryunix gives you a modern way to build the UI **without wiring everything yourself**: routing, state, server rendering, and dev tooling are built in.
+If you already know some web basics (HTML, CSS, JavaScript), Ryunix gives you a modern way to build the UI without wiring everything yourself: routing, state, server rendering, and dev tooling are built in.
 
 ## What is it, in plain terms?
 
-Ryunix is a **UI runtime** with a programming model **similar to React** (components, JSX, hooks), but **it does not use React internally**. It ships its own engine — reconciler, hooks, and render pipeline — designed to stay **lightweight, fast, and maintainable**.
+Ryunix is a UI runtime with a programming model similar to React (components, JSX, hooks), but it does not use React internally. It ships its own engine — reconciler, hooks, and render pipeline — designed to stay lightweight, fast, and maintainable.
 
-In practice you write `.ryx` files with JSX, organize pages in folders under `app/`, and use commands like `ryunix dev`, `ryunix build`, and `ryunix start` to develop and ship.
+In practice you write .ryx files with JSX, organize pages in folders under app/, and use ryunix dev, ryunix build, and ryunix start to develop and ship.
 
 ## How does it work?
 
 The usual flow is straightforward:
 
-1. **Write components** — functions that return UI (buttons, lists, forms).
-2. **Define routes with folders** — each folder under `app/` becomes a URL (`app/about/index.ryx` → `/about`).
-3. **The CLI compiles your app** — Webpack produces client and server bundles.
-4. **The runtime renders the UI** — in the browser, on the server (SSR), or as static HTML (SSG), depending on what you need.
+1. Write components — functions that return UI (buttons, lists, forms).
+2. Define routes with folders — each folder under app/ becomes a URL (app/about/index.ryx → /about).
+3. The CLI compiles your app — Webpack produces client and server bundles.
+4. The runtime renders the UI — in the browser, on the server (SSR), or as static HTML (SSG), depending on what you need.
 
-You do not install React, react-router, or Next.js: the framework bundles engine, routing, and toolchain in `@unsetsoft/*` packages.
+You do not install React, react-router, or Next.js: the framework bundles engine, routing, and toolchain in @unsetsoft/* packages.
 
 ## Relationship with React and Next.js
 
-Ryunix **is not React or Next.js**, but if you know them the learning curve is gentle.
+Ryunix is not React or Next.js, but if you know them the learning curve is gentle.
 
 ### Coming from React
 
@@ -42,7 +42,7 @@ Ryunix **is not React or Next.js**, but if you know them the learning curve is g
 | Events | Synthetic system | Native DOM events |
 | Routing | External library (e.g. react-router) | **Built-in App Router** (file-based) |
 
-Ryunix **feels like** React’s API, but the runtime is **its own**. You cannot drop in libraries that require `react` as a peer dependency without adapting them.
+Ryunix feels like React’s API, but the runtime is its own. You cannot drop in libraries that require react as a peer dependency without adapting them.
 
 ### Coming from Next.js
 
@@ -54,7 +54,7 @@ Ryunix **feels like** React’s API, but the runtime is **its own**. You cannot 
 | Commands | `next dev`, `build`, `start` | `ryunix dev`, `build`, `start` |
 | UI engine | React | **Own engine** (`@unsetsoft/ryunixjs`) |
 
-**Quick analogy:** React is the UI engine; Next.js is React + full-stack. In Ryunix, `@unsetsoft/ryunixjs` is the engine and `@unsetsoft/ryunix-presets` + Create Ryunix App provide the full-stack layer.
+Quick analogy: React is the UI engine; Next.js is React + full-stack. In Ryunix, @unsetsoft/ryunixjs is the engine and @unsetsoft/ryunix-presets + Create Ryunix App provide the full-stack layer.
 
 ## What Ryunix offers on its own
 
@@ -96,6 +96,6 @@ With Ryunix you get explicit application logic, a predictable dev experience, an
 ## Next steps
 
 - [Getting Started](/en/docs/introduction/getting-started) — create your first app in minutes
-- [Differences with React](/en/docs/introduction/differences-with-react) — detailed comparison if you migrate from React
+- [Installation](/en/docs/introduction/installation) — detailed setup
+- [Project Structure](/en/docs/introduction/project-structure) — folders and conventions
 - [Navigation](/en/docs/introduction/navigation) — how the App Router works
-- [Rendering & SSR](/en/docs/core/rendering) — CSR, SSR, SSG, and hydration

@@ -9,7 +9,7 @@ import { CodeTabs } from "@/components/ui/CodeTabs";
 
 # CSS
 
-RyunixJS supports multiple CSS approaches.
+Ryunix supports global CSS imports, inline styles, class names, and Tailwind CSS v4 via PostCSS. Choose the approach that fits your project — most apps start with a global stylesheet in the root layout.
 
 ## Importing CSS (App Router)
 
@@ -86,7 +86,7 @@ Alternative custom attribute:
 
 ## SASS/SCSS
 
-The supports are not implemented yet.
+SASS/SCSS support is not implemented yet.
 
 ## Conditional Classes
 
@@ -141,3 +141,9 @@ Add an `@import` to your main CSS file (e.g., `styles/global.css` or `styles/ind
 ```
 
 *Note: With Tailwind v4, you no longer need a `tailwind.config.js` file. The framework automatically detects your template files. You can configure your theme directly in your CSS using the `@theme` directive if needed.*
+
+## Next Steps
+
+- [Deploying](/en/docs/introduction/deploying) — production build and hosting
+- [Differences with React](/en/docs/introduction/differences-with-react) — if you migrate from React
+- [Configuration](/en/docs/api/configuration) — PostCSS, aliases, and global styles

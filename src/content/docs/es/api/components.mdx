@@ -119,7 +119,7 @@ Ambas son idénticas.
 Componente proveedor de enrutamiento.
 
 > [!WARNING]
-> **RouterProvider** y el enrutamiento manual están obsoletos. El estándar actual es el **App Router** (enrutamiento basado en el sistema de archivos).
+> RouterProvider y el enrutamiento manual están obsoletos. El estándar actual es el App Router (enrutamiento basado en el sistema de archivos).
 
 ```jsx
 import { RouterProvider, Children } from "@unsetsoft/ryunixjs";
@@ -437,9 +437,15 @@ export default async function Page({ params }) {
 
 ## Buenas prácticas
 
-1. **Usa el componente Image** — Mejor rendimiento que `<img>`
-2. **Usa Fragment** — Evita divs contenedores innecesarios
-3. **Usa NavLink** — Estados activos automáticos
-4. **Carga diferida de componentes pesados** — Mejor carga inicial
-5. **Componentes personalizados** — Reutilizables y mantenibles
-6. **Validación de props** — Usa TypeScript para seguridad de tipos
+1. Usa el componente Image para props consistentes y lazy loading
+2. Usa Fragment para evitar divs contenedores innecesarios
+3. Usa NavLink para estados activos automáticos
+4. Carga diferida de componentes pesados para mejorar la carga inicial
+5. Mantén componentes personalizados reutilizables y enfocados
+6. Usa TypeScript para seguridad de tipos cuando tu proyecto lo soporte
+
+## Siguientes pasos
+
+- [Funciones](/es/docs/api/functions) — referencia de hooks y utilidades
+- [Componentes avanzados](/es/docs/core/advanced-components) — lazy, Suspense, memo
+- [Archivos especiales](/es/docs/api/special-files) — sitemap, robots, manifest

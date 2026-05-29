@@ -93,7 +93,7 @@ Ryunix supports [GitHub-style markdown alerts](https://docs.github.com/en/get-st
 
 ```mdx
 > [!WARNING]
-> **Built-in routing** is no longer supported. Use the **App Router** instead.
+> Built-in routing is no longer supported. Use the App Router instead.
 
 > [!NOTE]
 > Useful information readers should know when skimming.
@@ -104,7 +104,7 @@ Ryunix supports [GitHub-style markdown alerts](https://docs.github.com/en/get-st
 
 Supported types: `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Each uses global classes `ryx-alert` and `ryx-alert--<type>`.
 
-Plain blockquotes without a marker keep the default quote style. You can combine **bold**, links, and multi-paragraph content inside an alert.
+Plain blockquotes without a marker keep the default quote style. You can combine bold, links, and multi-paragraph content inside an alert.
 
 ## Bilingual docs without duplicated logic
 
@@ -125,9 +125,8 @@ URLs still use `/en/docs/...` and `/es/docs/...` for SEO; `src/app/[locale]/docs
 
 During `ryunix build`, each MDX route is prerendered to static HTML with the correct `<title>` and meta tags inherited from layouts. Avoid mixing deprecated global `static.seo` config with per-route `Metatags`.
 
-## Related
+## Next Steps
 
-- [Navigation](/en/docs/introduction/navigation) — routing overview
-- [SSG & prerendering](/en/docs/guides/ssg) — prerender pipeline
-- [Functions](/en/docs/api/functions) — `useMetadata` for client-only updates
+- [SSG & Prerendering](/en/docs/guides/ssg) — prerender pipeline for MDX routes
+- [SEO & Metadata](/en/docs/guides/seo-metadata) — frontmatter and Metatags
 - [Configuration](/en/docs/api/configuration) — `mdx: true`, `style: true`

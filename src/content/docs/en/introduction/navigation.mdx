@@ -7,7 +7,7 @@ section: Introduction
 
 # Navigation
 
-Ryunix’s **App Router** defines your app’s URLs with **folders and files** under `app/` — the same idea as Next.js, without installing react-router or wiring routes by hand. Each segment can have its own layout, loading UI, error boundaries, and SEO metadata.
+Ryunix’s App Router defines your app’s URLs with folders and files under app/ — the same idea as Next.js, without installing react-router or wiring routes by hand. Each segment can have its own layout, loading UI, error boundaries, and SEO metadata.
 
 RyunixJS includes this routing natively; no external packages required.
 
@@ -110,8 +110,9 @@ export const GET = async (req) => {
 ### Dynamic & Catch-all API Routing
 
 The `/api` directory supports the same bracket syntax as the frontend:
-- **`app/api/users/[id]/route.js`**: Responds to dynamic parameters (e.g., `/api/users/123`). Parameters are available directly via `req.params`.
-- **`app/api/docs/[...path]/route.js`**: The catch-all syntax `[...path]` intercepts multiple route sub-segments (e.g., `/api/docs/es/getting-started/install`).
+
+- `app/api/users/[id]/route.js` — responds to dynamic parameters (e.g. `/api/users/123`). Parameters are available via `req.params`.
+- `app/api/docs/[...path]/route.js` — catch-all syntax intercepts multiple route sub-segments (e.g. `/api/docs/es/getting-started/install`).
 
 ## Navigation Components
 
@@ -287,13 +288,17 @@ Static `Metatags` objects are merged with layout metadata; `generateMetadata` ru
 > [!NOTE]
 > `Metatags` must be a plain object, not an async function. Use `generateMetadata` for async metadata.
 
-
-
 ## Browser History
 
 RyunixJS uses the HTML5 History API:
 
-- ✅ Clean URLs (no `#`)
-- ✅ Back/forward buttons work
-- ✅ `window.history.pushState`
-- ✅ `popstate` events
+- Clean URLs (no `#`)
+- Back/forward buttons work
+- `window.history.pushState`
+- `popstate` events
+
+## Next Steps
+
+- [CSS](/en/docs/introduction/css) — styling your application
+- [API Routes](/en/docs/guides/api-routes) — REST endpoints under `app/api/`
+- [SEO & Metadata](/en/docs/guides/seo-metadata) — `Metatags` and Open Graph

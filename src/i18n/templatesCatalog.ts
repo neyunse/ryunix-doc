@@ -253,4 +253,30 @@ export const craCliFlags = [
   { flag: "--eslint", key: "eslint" },
   { flag: "--vscode", key: "vscode" },
   { flag: "--compiler <swc|babel>", key: "compiler" },
-];
+] as const;
+
+export type CraCliFlagKey = (typeof craCliFlags)[number]["key"];
+
+/** Flags grouped for template detail UI. */
+export function craCliFlagsForTemplate(templateId: TemplateId) {
+  const primaryKeys = new Set(
+    craFlagsForTemplate(templateId).map((f) => f.replace(/^--/, "")),
+  );
+  const selectionKeys: CraCliFlagKey[] = ["tailwind", "eslint"];
+  const universalKeys: CraCliFlagKey[] = ["canary", "latest", "vscode", "compiler"];
+
+  const toRow = (key: CraCliFlagKey) => {
+    const entry = craCliFlags.find((row) => row.key === key);
+    return {
+      flag: entry?.flag ?? key,
+      key,
+      primary: primaryKeys.has(key),
+    };
+  };
+
+  const required = selectionKeys.filter((k) => primaryKeys.has(k)).map(toRow);
+  const related = selectionKeys.filter((k) => !primaryKeys.has(k)).map(toRow);
+  const optional = universalKeys.map(toRow);
+
+  return { required, related, optional };
+}

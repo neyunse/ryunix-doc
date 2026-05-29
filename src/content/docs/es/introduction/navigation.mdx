@@ -7,7 +7,7 @@ section: Introducción
 
 # Navegación
 
-El **App Router** de Ryunix define las URLs de tu app con **carpetas y archivos** dentro de `app/` — el mismo enfoque que Next.js, sin instalar react-router ni configurar rutas a mano. Cada segmento puede tener su propio layout, estados de carga, errores y metadatos SEO.
+El App Router de Ryunix define las URLs de tu app con carpetas y archivos dentro de app/ — el mismo enfoque que Next.js, sin instalar react-router ni configurar rutas a mano. Cada segmento puede tener su propio layout, estados de carga, errores y metadatos SEO.
 
 RyunixJS incluye este routing de forma nativa; no hacen falta paquetes externos.
 
@@ -109,8 +109,10 @@ export const GET = async (req) => {
 ### Routing API dinámico y catch-all
 
 El directorio `/api` admite la misma sintaxis de corchetes que el frontend:
-- **`app/api/users/[id]/route.js`**: Responde a parámetros dinámicos (p. ej. `/api/users/123`). Los parámetros están disponibles en `req.params`.
-- **`app/api/docs/[...path]/route.js`**: La sintaxis catch-all `[...path]` intercepta varios subsegmentos de ruta (p. ej. `/api/docs/es/getting-started/install`).
+El directorio `/api` admite la misma sintaxis de corchetes que el frontend:
+
+- `app/api/users/[id]/route.js` — responde a parámetros dinámicos (p. ej. `/api/users/123`). Los parámetros están en `req.params`.
+- `app/api/docs/[...path]/route.js` — la sintaxis catch-all intercepta varios subsegmentos (p. ej. `/api/docs/es/getting-started/install`).
 
 ## Componentes de navegación
 
@@ -283,13 +285,17 @@ export async function generateMetadata({ params }) {
 
 `Metatags` debe ser un objeto estático; no una función async.
 
-
-
 ## Historial del navegador
 
 RyunixJS usa la API History de HTML5:
 
-- ✅ URLs limpias (sin `#`)
-- ✅ Los botones atrás/adelante funcionan
-- ✅ `window.history.pushState`
-- ✅ Eventos `popstate`
+- URLs limpias (sin `#`)
+- Los botones atrás/adelante funcionan
+- `window.history.pushState`
+- Eventos `popstate`
+
+## Siguientes pasos
+
+- [CSS](/es/docs/introduction/css) — estilos de tu aplicación
+- [Rutas API](/es/docs/guides/api-routes) — endpoints REST bajo `app/api/`
+- [SEO y metadatos](/es/docs/guides/seo-metadata) — `Metatags` y Open Graph

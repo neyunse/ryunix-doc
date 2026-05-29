@@ -7,10 +7,10 @@ section: Introducción
 
 # Diferencias con React y Next.js
 
-RyunixJS **no es una copia de React** ni un metaframework encima de él. La API **recuerda** a React (componentes, JSX, hooks), pero el motor de renderizado es **propio**. Si conoces React o Next.js, gran parte de lo que ya sabes te sirve; lo que cambia son nombres, convenciones y lo que viene integrado de fábrica.
+RyunixJS no es una copia de React ni un metaframework encima de él. La API recuerda a React (componentes, JSX, hooks), pero el motor de renderizado es propio. Si conoces React o Next.js, gran parte de lo que ya sabes te sirve; lo que cambia son nombres, convenciones y lo que viene integrado de fábrica.
 
 > [!WARNING]
-> **Routing integrado** (rutas manuales con `RouterProvider`) ya no está soportado. Usa el **App Router** por carpetas bajo `app/`.
+> El routing integrado (rutas manuales con `RouterProvider`) ya no está soportado. Usa el App Router por carpetas bajo `app/`.
 
 ## Resumen para quien llega desde otro framework
 
@@ -23,13 +23,13 @@ RyunixJS **no es una copia de React** ni un metaframework encima de él. La API 
 | **Server Actions** | No (en el core de React) | Sí | Sí |
 | **Depende de React** | — | Sí | **No** |
 
-**Ventaja clave de Ryunix:** obtienes una experiencia parecida a React + Next.js **sin arrastrar React** en el runtime. Menos capas, toolchain unificada bajo `@unsetsoft/*` y convenciones claras (`.ryx`, `ryunix.config.js`).
+Ventaja clave de Ryunix: obtienes una experiencia parecida a React + Next.js sin arrastrar React en el runtime. Menos capas, toolchain unificada bajo `@unsetsoft/*` y convenciones claras (`.ryx`, `ryunix.config.js`).
 
 ## Diferencias principales con React
 
 ### Eventos nativos del DOM
 
-Ryunix **no usa eventos sintéticos**. Los handlers se registran con `addEventListener` del navegador, igual que en JavaScript puro:
+Ryunix no usa eventos sintéticos. Los handlers se registran con `addEventListener` del navegador, igual que en JavaScript puro:
 
 ```jsx
 // React (eventos sintéticos)
@@ -97,7 +97,7 @@ const theme = useContext();
 
 ## App Router frente a react-router
 
-En React puro sueles añadir **react-router** y definir rutas en código. En Ryunix (y en Next.js) las rutas salen de **carpetas y archivos**:
+En React puro sueles añadir react-router y definir rutas en código. En Ryunix (y en Next.js) las rutas salen de carpetas y archivos:
 
 ```
 app/
@@ -137,10 +137,10 @@ export default function Page() {
 
 ## No disponible (respecto a React clásico)
 
-- ❌ **Componentes de clase** — Usa componentes funcionales
-- ❌ **PropTypes**
-- ❌ **Modo concurrente completo** de React 18 (Suspense básico sí)
-- ❌ **Ecosistema npm que exige `react` como peer** — sin adaptación
+- Componentes de clase — usa componentes funcionales
+- PropTypes
+- Modo concurrente completo de React 18 (Suspense básico sí)
+- Ecosistema npm que exige `react` como peer — sin adaptación
 
 ## Tabla comparativa
 
@@ -163,4 +163,10 @@ export default function Page() {
 4. Actualiza Context al patrón `createContext(id, default)`.
 5. Convierte componentes de clase a funcionales.
 
-Consulta [Acerca de Ryunix](/es/docs/introduction/about) para el panorama general y [Configuración](/es/docs/api/configuration) para el setup de build.
+Consulta [Acerca de Ryunix](/es/docs/introduction/about) para el panorama general.
+
+## Siguientes pasos
+
+- [Renderizado y SSR](/es/docs/core/rendering) — hidratación y salida en servidor
+- [Configuración](/es/docs/api/configuration) — setup de build y ryunix.config.js
+- [Funciones](/es/docs/api/functions) — referencia de hooks (useStore, useEffect, …)

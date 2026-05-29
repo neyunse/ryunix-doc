@@ -7,30 +7,30 @@ section: Introducción
 
 # Introducción
 
-**RyunixJS** es un framework JavaScript para crear **sitios web y aplicaciones interactivas**: desde un portfolio o una documentación hasta un panel de administración o una app con login, formularios y datos del servidor.
+RyunixJS es un framework JavaScript para crear sitios web y aplicaciones interactivas: desde un portfolio o una documentación hasta un panel de administración o una app con login, formularios y datos del servidor.
 
-Si ya programaste algo de web (HTML, CSS, JavaScript), Ryunix te da una forma moderna de construir la interfaz **sin montar todo a mano**: rutas, estado, render en servidor y herramientas de desarrollo vienen integrados.
+Si ya programaste algo de web (HTML, CSS, JavaScript), Ryunix te da una forma moderna de construir la interfaz sin montar todo a mano: rutas, estado, render en servidor y herramientas de desarrollo vienen integrados.
 
 ## ¿Qué es, en pocas palabras?
 
-Ryunix es un **motor de interfaz de usuario** con una forma de programar **parecida a React** (componentes, JSX, hooks), pero **sin usar React por dentro**. Tiene su propio runtime — reconciliador, hooks y render — pensado para ser **ligero, rápido y fácil de mantener**.
+Ryunix es un motor de interfaz de usuario con una forma de programar parecida a React (componentes, JSX, hooks), pero sin usar React por dentro. Tiene su propio runtime — reconciliador, hooks y render — pensado para ser ligero, rápido y fácil de mantener.
 
-En la práctica escribes archivos `.ryx` con JSX, organizas las páginas en carpetas bajo `app/` y usas comandos como `ryunix dev`, `ryunix build` y `ryunix start` para desarrollar y publicar.
+En la práctica escribes archivos .ryx con JSX, organizas las páginas en carpetas bajo app/ y usas los comandos ryunix dev, ryunix build y ryunix start para desarrollar y publicar.
 
 ## ¿Cómo funciona?
 
 El flujo habitual es sencillo:
 
-1. **Escribes componentes** — funciones que devuelven la interfaz (botones, listas, formularios).
-2. **Defines rutas con carpetas** — cada carpeta en `app/` es una URL (`app/about/index.ryx` → `/about`).
-3. **El CLI compila tu app** — Webpack genera bundles para el navegador y para el servidor.
-4. **El runtime pinta la UI** — en el cliente, en el servidor (SSR) o como HTML estático (SSG), según lo que necesites.
+1. Escribes componentes — funciones que devuelven la interfaz (botones, listas, formularios).
+2. Defines rutas con carpetas — cada carpeta en app/ es una URL (app/about/index.ryx → /about).
+3. El CLI compila tu app — Webpack genera bundles para el navegador y para el servidor.
+4. El runtime pinta la UI — en el cliente, en el servidor (SSR) o como HTML estático (SSG), según lo que necesites.
 
-No hace falta instalar React, react-router ni Next.js: el framework trae motor, routing y toolchain en paquetes `@unsetsoft/*`.
+No hace falta instalar React, react-router ni Next.js: el framework trae motor, routing y toolchain en paquetes @unsetsoft/*.
 
 ## Parentesco con React y Next.js
 
-Ryunix **no es React ni Next.js**, pero si los conoces la curva de aprendizaje es baja.
+Ryunix no es React ni Next.js, pero si los conoces la curva de aprendizaje es baja.
 
 ### Si vienes de React
 
@@ -42,7 +42,7 @@ Ryunix **no es React ni Next.js**, pero si los conoces la curva de aprendizaje e
 | Eventos | Sistema sintético | Eventos nativos del DOM |
 | Routing | Librería externa (p. ej. react-router) | **App Router integrado** por carpetas |
 
-Ryunix **recuerda** la API de React, pero el motor es **propio**. No puedes instalar librerías que dependan de `react` como peer dependency sin adaptarlas.
+Ryunix recuerda la API de React, pero el motor es propio. No puedes instalar librerías que dependan de react como peer dependency sin adaptarlas.
 
 ### Si vienes de Next.js
 
@@ -54,7 +54,7 @@ Ryunix **recuerda** la API de React, pero el motor es **propio**. No puedes inst
 | Comandos | `next dev`, `build`, `start` | `ryunix dev`, `build`, `start` |
 | Motor de UI | React | **Motor propio** (`@unsetsoft/ryunixjs`) |
 
-**Analogía rápida:** React es el motor de UI; Next.js es React + full-stack. En Ryunix, `@unsetsoft/ryunixjs` es el motor y `@unsetsoft/ryunix-presets` + Create Ryunix App aportan la capa full-stack.
+Analogía rápida: React es el motor de UI; Next.js es React + full-stack. En Ryunix, @unsetsoft/ryunixjs es el motor y @unsetsoft/ryunix-presets + Create Ryunix App aportan la capa full-stack.
 
 ## Ventajas propias de RyunixJS
 
@@ -96,6 +96,6 @@ Con Ryunix obtienes lógica explícita, una experiencia de desarrollo predecible
 ## Siguientes pasos
 
 - [Primeros pasos](/es/docs/introduction/getting-started) — crea tu primera app en minutos
-- [Diferencias con React](/es/docs/introduction/differences-with-react) — tabla detallada si migras desde React
+- [Instalación](/es/docs/introduction/installation) — configuración detallada
+- [Estructura del proyecto](/es/docs/introduction/project-structure) — carpetas y convenciones
 - [Navegación](/es/docs/introduction/navigation) — cómo funciona el App Router
-- [Renderizado y SSR](/es/docs/core/rendering) — CSR, SSR, SSG e hidratación

@@ -2,7 +2,7 @@ import { NavLink } from "@unsetsoft/ryunixjs";
 import { Layers } from "lucide";
 import { Icon } from "@/components/ui/Icon";
 import TemplateGalleryCard from "@/components/templates/TemplateGalleryCard";
-import { templatesCatalog, craCliFlags } from "@/i18n/templatesCatalog";
+import { templatesCatalog } from "@/i18n/templatesCatalog";
 const TemplatesPage = ({ copy, docsBase, locale }) => (
   <>
     <section className="relative overflow-hidden border-b border-theme bg-surface">
@@ -46,33 +46,6 @@ const TemplatesPage = ({ copy, docsBase, locale }) => (
             locale={locale}
           />
         ))}
-      </div>
-    </section>
-
-    <section className="border-t border-theme bg-surface-elevated/50">
-      <div className="w-full max-w-(--ui-container) mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-        <h2 className="text-2xl font-bold text-theme">{copy.flags.title}</h2>
-        <p className="mt-2 text-theme-muted max-w-2xl">{copy.flags.body}</p>
-        <div className="-mx-4 sm:mx-0 px-4 sm:px-0 mt-8 overflow-x-auto rounded-none sm:rounded-2xl border-y sm:border border-theme">
-          <table className="w-full text-xs sm:text-sm text-left min-w-md sm:min-w-lg">
-            <thead>
-              <tr className="border-b border-theme bg-surface-elevated">
-                <th className="px-4 py-3 font-semibold text-theme">{copy.flags.flag}</th>
-                <th className="px-4 py-3 font-semibold text-theme">{copy.flags.description}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-theme">
-              {craCliFlags.map(({ flag, key }) => (
-                <tr key={key} className="bg-surface-card">
-                  <td className="px-4 py-3 font-mono text-xs text-blue-600 dark:text-blue-400 whitespace-nowrap">
-                    {flag}
-                  </td>
-                  <td className="px-4 py-3 text-theme-muted">{copy.flagDescriptions[key]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
   </>

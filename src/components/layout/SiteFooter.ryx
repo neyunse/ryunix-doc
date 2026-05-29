@@ -75,6 +75,11 @@ const SiteFooter = ({ locale, copy }) => {
           <div className="lg:col-span-3 lg:col-start-7">
             <FooterLinkList title={footer.docsTitle}>
               <li>
+                <FooterNavLink to={`${docs}/introduction/about`}>
+                  {footer.links.about}
+                </FooterNavLink>
+              </li>
+              <li>
                 <FooterNavLink to={`${docs}/introduction/getting-started`}>
                   {footer.links.gettingStarted}
                 </FooterNavLink>

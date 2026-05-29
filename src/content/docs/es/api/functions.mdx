@@ -30,7 +30,7 @@ function Counter() {
 }
 ```
 
-**Equivalente a `useState` de React.**
+Equivalente a `useState` de React.
 
 ### Actualizaciones funcionales
 
@@ -219,7 +219,7 @@ function Button() {
 }
 ```
 
-**Diferente de React: devuelve `{ Provider, useContext }`.**
+Diferente de React: devuelve `{ Provider, useContext }`.
 
 ## useRouter
 
@@ -497,9 +497,9 @@ function useFetch(url) {
 
 ## Reglas de los hooks
 
-1. **Solo llamar en el nivel superior** — No dentro de bucles, condiciones ni funciones anidadas
-2. **Solo llamar desde componentes función** — O hooks personalizados
-3. **Siempre en el mismo orden** — No llames hooks de forma condicional
+1. Solo llamar en el nivel superior — no dentro de bucles, condiciones ni funciones anidadas
+2. Solo llamar desde componentes función — o hooks personalizados
+3. Siempre en el mismo orden — no llames hooks de forma condicional
 
 ```jsx
 // ❌ Wrong
@@ -521,9 +521,15 @@ function Component({ condition }) {
 
 ## Buenas prácticas
 
-1. **Nombra los hooks personalizados con prefijo `use`**
-2. **Extrae lógica compleja a hooks personalizados**
-3. **Usa useMemo para cálculos costosos**
-4. **Usa useCallback para manejadores de eventos**
-5. **Minimiza dependencias en useEffect**
-6. **Limpia los efectos correctamente**
+1. Nombra los hooks personalizados con prefijo `use`
+2. Extrae lógica compleja a hooks personalizados
+3. Usa useMemo para cálculos costosos
+4. Usa useCallback para manejadores pasados a hijos memoizados
+5. Minimiza dependencias en useEffect
+6. Limpia los efectos correctamente
+
+## Siguientes pasos
+
+- [Archivos especiales](/es/docs/api/special-files) — sitemap, robots, manifest
+- [Server Actions](/es/docs/core/server-actions) — funciones `"use server"`
+- [SEO y metadatos](/es/docs/guides/seo-metadata) — `useMetadata` y `Metatags`

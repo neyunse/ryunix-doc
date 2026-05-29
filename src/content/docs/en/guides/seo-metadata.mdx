@@ -7,7 +7,7 @@ section: Guides
 
 # SEO & Metadata
 
-Ryunix merges metadata from **layouts → pages**, **MDX frontmatter**, **dynamic `generateMetadata`**, and **static files** in `app/`. During SSR/SSG, the framework resolves titles and injects `<title>`, `<meta>`, and `<link>` tags into HTML.
+Ryunix merges metadata from layouts, pages, MDX frontmatter, dynamic `generateMetadata`, and static files in `app/`. During SSR/SSG, the framework resolves titles and injects `<title>`, `<meta>`, and `<link>` tags into HTML.
 
 ## Static exports
 
@@ -106,8 +106,8 @@ export const Metatags = {
 
 Prefer App Router metadata. The deprecated `legacy.seo.meta` block in `ryunix.config.js` still merges as defaults during prerender when no route metadata overrides it.
 
-## Related
+## Next Steps
 
-- [SSG & Prerendering](/en/docs/guides/ssg)
-- [Special files](/en/docs/api/special-files)
-- [Navigation](/en/docs/introduction/navigation)
+- [Internationalization](/en/docs/guides/i18n) — localized metadata and routes
+- [SSG & Prerendering](/en/docs/guides/ssg) — how metadata is injected at build time
+- [Navigation](/en/docs/introduction/navigation) — `Metatags` and `generateMetadata`

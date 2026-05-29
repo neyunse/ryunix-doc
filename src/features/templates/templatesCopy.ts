@@ -23,6 +23,17 @@ export const templatesCopy = {
       breadcrumbGallery: "Templates",
       workflowTitle: "Quick start",
       workflowBody: "Scaffold the project, enter the folder, and start the dev server.",
+      flagsTitle: "CLI flags for this template",
+      flagsBodyDefault:
+        "This is the default template — run Create Ryunix App without --tailwind or --eslint.",
+      flagsBodyWithSelection:
+        "Pass the highlighted flags when scaffolding to get this template folder from CRA.",
+      flagsRequiredBadge: "Required",
+      flagsRequiredGroup: "Scaffold flags",
+      flagsRelatedGroup: "Other template flags",
+      flagsOptionalGroup: "Optional add-ons",
+      flagsDefaultHint:
+        "No scaffold flags needed. Use the commands above as-is, or add optional flags below.",
       relatedTitle: "Other templates",
     },
     card: {
@@ -139,6 +150,17 @@ export const templatesCopy = {
       breadcrumbGallery: "Plantillas",
       workflowTitle: "Inicio rápido",
       workflowBody: "Genera el proyecto, entra en la carpeta y arranca el servidor de desarrollo.",
+      flagsTitle: "Flags del CLI para esta plantilla",
+      flagsBodyDefault:
+        "Esta es la plantilla por defecto — ejecuta Create Ryunix App sin --tailwind ni --eslint.",
+      flagsBodyWithSelection:
+        "Pasa los flags resaltados al hacer scaffold para obtener esta carpeta desde CRA.",
+      flagsRequiredBadge: "Requerido",
+      flagsRequiredGroup: "Flags de scaffold",
+      flagsRelatedGroup: "Flags de otras plantillas",
+      flagsOptionalGroup: "Extras opcionales",
+      flagsDefaultHint:
+        "No hacen falta flags de scaffold. Usa los comandos de arriba tal cual, o añade los extras opcionales.",
       relatedTitle: "Otras plantillas",
     },
     card: {

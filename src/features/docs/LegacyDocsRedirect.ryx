@@ -10,7 +10,7 @@ const LegacyDocsRedirect = () => {
       typeof window !== "undefined" ? resolveLocaleFromCookie() : defaultLocale;
     const target = location.startsWith("/docs")
       ? `/${locale}${location}`
-      : `/${locale}/docs/introduction/getting-started`;
+      : `/${locale}/docs/introduction/about`;
     navigate(target);
   }, [location]);
 
