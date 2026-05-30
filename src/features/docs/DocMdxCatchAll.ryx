@@ -1,5 +1,5 @@
-import { useRouter, NavLink } from "@unsetsoft/ryunixjs";
-import { getDocPage } from "@/i18n/docPageRegistry";
+import { useRouter, NavLink, useMetadata } from "@unsetsoft/ryunixjs";
+import { getDocPage, getDocPageMeta } from "@/i18n/docPageRegistry";
 import { getLocaleFromPath } from "@/i18n/config";
 
 const resolveSlug = (params) => {
@@ -14,6 +14,9 @@ const DocMdxCatchAll = ({ params: routeParams }) => {
     params?.locale === "es" ? "es" : params?.locale === "en" ? "en" : null;
   const locale = localeFromParams ?? getLocaleFromPath(location) ?? "en";
   const slug = resolveSlug(params);
+  const pageMeta = getDocPageMeta(locale, slug);
+  useMetadata(pageMeta ?? {});
+
   const Page = getDocPage(locale, slug);
 
   if (!Page) {

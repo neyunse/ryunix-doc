@@ -1,10 +1,22 @@
 import { docSlugs } from "@/i18n/docSlugs";
+import { getDocPageMeta } from "@/i18n/docPageRegistry";
 import DocMdxCatchAll from "@/features/docs/DocMdxCatchAll";
 
 export const generateStaticParams = () =>
   docSlugs.map((slug) => ({
     slug: slug.split("/"),
   }));
+
+const resolveSlug = (params) => {
+  if (!params?.slug) return "";
+  return Array.isArray(params.slug) ? params.slug.join("/") : String(params.slug);
+};
+
+export const generateMetadata = async ({ params }) => {
+  const locale = params?.locale === "es" ? "es" : "en";
+  const slug = resolveSlug(params);
+  return getDocPageMeta(locale, slug) ?? {};
+};
 
 const LocalizedDocPage = ({ params }) => <DocMdxCatchAll params={params} />;
 

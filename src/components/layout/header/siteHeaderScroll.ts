@@ -47,7 +47,7 @@ export function bindSiteHeaderScroll() {
   const onScroll = () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       apply();
       ticking = false;
     });
@@ -81,7 +81,7 @@ function waitForHeader(attemptsLeft: number) {
     return;
   }
   if (attemptsLeft <= 0) return;
-  requestAnimationFrame(() => waitForHeader(attemptsLeft - 1));
+  window.requestAnimationFrame(() => waitForHeader(attemptsLeft - 1));
 }
 
 /** Client-only: runs when the header chunk loads (no useEffect / ref required). */
@@ -100,6 +100,14 @@ export function initSiteHeaderScroll() {
   window.addEventListener("pageshow", () => waitForHeader(120));
 }
 
-if (typeof window !== "undefined") {
+const isServerBundle =
+  typeof process !== "undefined" &&
+  String(process.env.RYUNIX_IS_SERVER) === "true";
+
+if (
+  !isServerBundle &&
+  typeof window !== "undefined" &&
+  typeof window.requestAnimationFrame === "function"
+) {
   initSiteHeaderScroll();
 }

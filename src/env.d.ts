@@ -3,6 +3,7 @@ declare module "*.mdx" {
 
   const MDXComponent: RyunixComponent<Record<string, unknown>>;
   export default MDXComponent;
+  export const frontmatter: Record<string, unknown>;
 }
 
 declare module "*.svg" {

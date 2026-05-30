@@ -1,6 +1,7 @@
 import HomePage from "@/features/home/HomePage";
 import { homeCopy } from "@/features/home/homeCopy";
 import { pickLocale } from "@/i18n/locale";
+import { siteOgImage } from "@/i18n/siteOgImage";
 
 export const Metatags = {
   title: "RyunixJS — Build modern web apps",
@@ -9,6 +10,7 @@ export const Metatags = {
   "og:title": "RyunixJS — Build modern web apps",
   "og:description":
     "RyunixJS is a powerful and flexible JavaScript framework for building modern web applications with ease and efficiency.",
+  ...siteOgImage,
   keywords: [
     "Ryunix",
     "Documentation",
