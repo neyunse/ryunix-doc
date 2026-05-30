@@ -1,6 +1,6 @@
 /**
- * Published @unsetsoft/* canary packages ship i18n at runtime but lag on .d.ts.
- * Remove this file once npm types match the canary runtime.
+ * Published @unsetsoft/* stable packages ship runtime APIs ahead of .d.ts.
+ * Remove entries once npm types match the published runtime.
  */
 export {};
 
@@ -56,7 +56,41 @@ declare module "@unsetsoft/ryunix-presets" {
     cookieName?: string;
   }
 
-  interface RyunixConfig {
+  export interface RyunixUserConfig {
+    rootDir?: string;
     i18n?: RyunixI18nConfig;
+    ssr?: boolean;
+    mdx?: boolean;
+    favicon?: boolean;
+    buildDir?: string;
+    hydration?: {
+      recover?: "boundary" | "root" | "none";
+      boundaries?: "route" | "server-only" | "all-layouts";
+      strict?: boolean;
+    };
+    legacy?: {
+      ssg?: {
+        sitemap?: {
+          enable?: boolean;
+          baseURL?: string;
+          settings?: {
+            changefreq?: string;
+            priority?: string;
+          };
+        };
+      };
+    };
+    eslint?: {
+      rules?: Record<string, unknown>;
+    };
+    webpack?: {
+      production?: boolean;
+      resolve?: {
+        alias?: Record<string, string>;
+      };
+    };
   }
+
+  /** @deprecated Use `RyunixUserConfig`. */
+  export type Settings = RyunixUserConfig;
 }

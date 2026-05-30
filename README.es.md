@@ -25,7 +25,7 @@ pnpm install
 
 ### Paquetes RyunixJS desde npm
 
-`@unsetsoft/ryunixjs` y `@unsetsoft/ryunix-presets` se instalan desde el **registro npm** (tags canary), sin enlace al monorepo local. Ejecuta `pnpm install` solo dentro de `ryunix-doc`.
+`@unsetsoft/ryunixjs` y `@unsetsoft/ryunix-presets` se instalan desde el **registro npm** (últimas versiones publicadas), sin enlace al monorepo local. El sitio usa pnpm; `@unsetsoft/ryunix-presets` debe ser una versión que lo soporte (hoy un tag canary hasta el próximo estable). Ejecuta `pnpm install` solo dentro de `ryunix-doc`.
 
 Para probar un checkout local del framework, apunta temporalmente esas dependencias a tus paquetes en `Ryunixjs` y vuelve a instalar.
 
