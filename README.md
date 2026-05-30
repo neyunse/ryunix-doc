@@ -25,7 +25,7 @@ pnpm install
 
 ### RyunixJS packages from npm
 
-`@unsetsoft/ryunixjs` and `@unsetsoft/ryunix-presets` are installed from the **npm registry** (canary tags), not linked to a local monorepo. Run `pnpm install` inside `ryunix-doc` only.
+`@unsetsoft/ryunixjs` and `@unsetsoft/ryunix-presets` are installed from the **npm registry** (latest published releases), not linked to a local monorepo. The docs site uses pnpm; `@unsetsoft/ryunix-presets` must be a release that supports pnpm (currently a canary tag until the next stable). Run `pnpm install` inside `ryunix-doc` only.
 
 To try a local framework checkout instead, temporarily point those dependencies at your `Ryunixjs` packages and reinstall.
 

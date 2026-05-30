@@ -34,8 +34,8 @@ importers:
         specifier: 8.60.0
         version: 8.60.0(eslint@9.39.2(jiti@2.6.1))(typescript@6.0.3)
       '@unsetsoft/ryunix-presets':
-        specifier: 1.0.26-canary.44
-        version: 1.0.26-canary.44(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.13)(terser@5.48.0)(tslib@2.8.1)(typescript@6.0.3)(yaml@2.9.0)
+        specifier: 1.0.26-canary.45
+        version: 1.0.26-canary.45(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.13)(terser@5.48.0)(tslib@2.8.1)(typescript@6.0.3)(yaml@2.9.0)
       autoprefixer:
         specifier: ^10.5.0
         version: 10.5.0(postcss@8.5.15)
@@ -1665,8 +1665,8 @@ packages:
   '@ungap/structured-clone@1.3.1':
     resolution: {integrity: sha512-mUFwbeTqrVgDQxFveS+df2yfap6iuP20NAKAsBt5jDEoOTDew+zwLAOilHCeQJOVSvmgCX4ogqIrA0mnyr08yQ==}
 
-  '@unsetsoft/ryunix-presets@1.0.26-canary.44':
-    resolution: {integrity: sha512-ez347jPQM0DTe2E4dCnfhg2td1qOaJr3l8z1FQx9s/qn9H5FhvlJO7aGLApv8O+HV1f/KfHKcKvy9zqzxyfaQw==}
+  '@unsetsoft/ryunix-presets@1.0.26-canary.45':
+    resolution: {integrity: sha512-zsz/uyo/DqvDAzGWplR1iewEWQsCfAZYUNzkdhVlTY4PShIIwJsBgFVcnLNDP3fcPdsnxXV3C+pTV446IpqENA==}
     engines: {node: ^20 || ^22 || ^24 || ^26}
     hasBin: true
     peerDependencies:
@@ -6851,7 +6851,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.1': {}
 
-  '@unsetsoft/ryunix-presets@1.0.26-canary.44(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.13)(terser@5.48.0)(tslib@2.8.1)(typescript@6.0.3)(yaml@2.9.0)':
+  '@unsetsoft/ryunix-presets@1.0.26-canary.45(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@25.9.1)(@unsetsoft/ryunixjs@1.2.5-canary.13)(terser@5.48.0)(tslib@2.8.1)(typescript@6.0.3)(yaml@2.9.0)':
     dependencies:
       '@babel/cli': 7.28.6(@babel/core@7.28.5)
       '@babel/core': 7.28.5
