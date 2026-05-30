@@ -12,7 +12,7 @@ This repository contains the source code for the RyunixJS docs: guides, API refe
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) **20**, **22** or **24** (see `engines` in `package.json`)
+- [Node.js](https://nodejs.org/) **22** (see `engines` in `package.json`)
 - [pnpm](https://pnpm.io/)
 
 ## Installation

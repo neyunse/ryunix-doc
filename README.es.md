@@ -12,7 +12,7 @@ Este repositorio contiene el código fuente de la documentación de RyunixJS: gu
 
 ## Requisitos
 
-- [Node.js](https://nodejs.org/) **20**, **22** o **24** (ver `engines` en `package.json`)
+- [Node.js](https://nodejs.org/) **22** (ver `engines` en `package.json`)
 - [pnpm](https://pnpm.io/)
 
 ## Instalación
