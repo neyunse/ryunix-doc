@@ -14,6 +14,7 @@ En paralelo cuando tenga sentido:
 1. `git status` — modificados y **sin seguimiento** (`??`). `git diff` solo muestra rastreados; revisar siempre `status` antes de `add`.
 2. `git diff` y, si hace falta, `git diff --staged`.
 3. `git log -15 --oneline` — tono reciente del repo.
+4. **Respetar borrados:** si el diff elimina líneas o archivos, **no restaurarlos** ni "arreglar" el contenido antes del commit salvo petición explícita del usuario. Un borrado suele ser intencional.
 
 **No** incluir secretos (`.env`, credenciales, etc.).
 
